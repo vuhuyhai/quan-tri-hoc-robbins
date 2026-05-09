@@ -1,0 +1,2240 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chương 9 — Quản trị Chiến lược</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap&subset=vietnamese" rel="stylesheet">
+<style>
+  /* ==========================================================
+     NEO-BRUTALISM v3.4 — DESIGN TOKENS
+     ========================================================== */
+  :root {
+    --brand: #c73937;
+    --brand-dark: #a82a28;
+    --paper: #FAF8F5;
+    --paper-pure: #FFFFFF;
+    --ink: #1A1A1A;
+    --ink-soft: #2D2D2D;
+    --ink-muted: #6B6B6B;
+    --yellow: #F5E4B8;
+    --cyan: #C4DEDC;
+    --lime: #DDE4C5;
+    --pink: #F0DCDD;
+    --border-thick: 3px solid var(--ink);
+    --border-medium: 2px solid var(--ink);
+    --shadow-hard: 6px 6px 0 var(--ink);
+    --shadow-hard-sm: 4px 4px 0 var(--ink);
+    --shadow-hard-lg: 8px 8px 0 var(--ink);
+    --shadow-brand: 6px 6px 0 var(--brand);
+    --shadow-yellow: 6px 6px 0 var(--yellow);
+    --shadow-cyan: 6px 6px 0 var(--cyan);
+    --font-display: 'Space Grotesk', system-ui, sans-serif;
+    --font-body: 'Inter', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --gap-xs: 8px;
+    --gap-sm: 12px;
+    --gap-md: 20px;
+    --gap-lg: 32px;
+    --gap-xl: 48px;
+    --gap-2xl: 80px;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-style: normal !important;
+    font-optical-sizing: auto;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+  }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6,
+  .title, .heading,
+  .hero-title, .section-title,
+  .card-title {
+    text-wrap: balance;
+    font-family: var(--font-display);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  p, li, .body-text {
+    text-wrap: pretty;
+  }
+
+  /* Background pattern: diagonal lines (khác Ch7 dots, Ch8 grid) */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 30px,
+      var(--ink) 30px,
+      var(--ink) 31px
+    );
+    opacity: 0.03;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--gap-md);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ==========================================================
+     STICKY NAV
+     ========================================================== */
+  .topnav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--paper);
+    border-bottom: var(--border-thick);
+    padding: var(--gap-sm) 0;
+  }
+
+  .topnav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--gap-md);
+  }
+
+  .nav-logo {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--ink);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .nav-logo .ch-num {
+    background: var(--brand);
+    color: var(--paper-pure);
+    padding: 4px 8px;
+    border: var(--border-medium);
+    box-shadow: 3px 3px 0 var(--ink);
+    font-family: var(--font-mono);
+    font-size: 14px;
+    transform: rotate(-2deg);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: var(--gap-sm);
+    list-style: none;
+    flex-wrap: wrap;
+  }
+
+  .nav-links a {
+    color: var(--ink);
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 500;
+    padding: 6px 10px;
+    border: var(--border-medium);
+    background: var(--paper-pure);
+    transition: all 0.15s;
+  }
+
+  .nav-links a:hover {
+    background: var(--pink);
+    transform: translate(-2px, -2px);
+    box-shadow: 3px 3px 0 var(--ink);
+  }
+
+  /* ==========================================================
+     HERO
+     ========================================================== */
+  .hero {
+    padding: var(--gap-2xl) 0 var(--gap-xl);
+  }
+
+  .hero-meta {
+    display: inline-block;
+    background: var(--pink);
+    border: var(--border-thick);
+    padding: 6px 14px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: var(--gap-md);
+    transform: rotate(-1.5deg);
+    box-shadow: var(--shadow-hard-sm);
+  }
+
+  .hero-title {
+    font-size: clamp(36px, 6vw, 72px);
+    font-weight: 700;
+    margin-bottom: var(--gap-md);
+  }
+
+  .hero-title .accent {
+    background: var(--brand);
+    color: var(--paper-pure);
+    padding: 0 12px;
+    display: inline-block;
+    transform: rotate(-1deg);
+    box-shadow: var(--shadow-hard-sm);
+  }
+
+  .hero-sub {
+    font-size: clamp(17px, 2vw, 22px);
+    color: var(--ink-soft);
+    max-width: 760px;
+    margin-bottom: var(--gap-lg);
+    text-wrap: balance;
+  }
+
+  .hero-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--gap-md);
+    margin-top: var(--gap-xl);
+  }
+
+  .hero-info-card {
+    background: var(--paper-pure);
+    border: var(--border-thick);
+    padding: var(--gap-md);
+    box-shadow: var(--shadow-hard);
+    transition: all 0.15s;
+  }
+
+  .hero-info-card:nth-child(1) { background: var(--cyan); }
+  .hero-info-card:nth-child(2) { background: var(--yellow); transform: rotate(0.5deg); }
+  .hero-info-card:nth-child(3) { background: var(--lime); transform: rotate(-0.8deg); }
+
+  .hero-info-card:hover {
+    transform: translate(-3px, -3px) rotate(0deg);
+    box-shadow: 9px 9px 0 var(--ink);
+  }
+
+  .hero-info-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ink-muted);
+    margin-bottom: 6px;
+  }
+
+  .hero-info-value {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  /* MoviePass opening story */
+  .opening-story {
+    background: var(--ink);
+    color: var(--paper);
+    border: var(--border-thick);
+    padding: var(--gap-lg);
+    box-shadow: var(--shadow-brand);
+    margin-top: var(--gap-xl);
+    transform: rotate(-0.3deg);
+  }
+
+  .opening-label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--brand);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: var(--gap-sm);
+  }
+
+  .opening-title {
+    font-family: var(--font-display);
+    font-size: clamp(22px, 3vw, 32px);
+    font-weight: 700;
+    margin-bottom: var(--gap-sm);
+    color: var(--paper);
+  }
+
+  .opening-text {
+    font-size: 15px;
+    line-height: 1.65;
+    color: #C8C8C8;
+    margin-bottom: var(--gap-sm);
+  }
+
+  .opening-text strong {
+    color: var(--paper);
+  }
+
+  .moviepass-economics {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: var(--gap-md);
+    align-items: center;
+    margin: var(--gap-md) 0;
+    padding: var(--gap-md);
+    background: rgba(199, 57, 55, 0.15);
+    border: 2px dashed var(--brand);
+  }
+
+  @media (max-width: 768px) {
+    .moviepass-economics { grid-template-columns: 1fr; }
+  }
+
+  .me-side {
+    text-align: center;
+  }
+
+  .me-side .num {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--paper);
+    line-height: 1;
+  }
+
+  .me-side .label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: #B0B0B0;
+    margin-top: 4px;
+    text-transform: uppercase;
+  }
+
+  .me-arrow {
+    font-family: var(--font-display);
+    font-size: 32px;
+    color: var(--brand);
+    font-weight: 700;
+    text-align: center;
+  }
+
+  @media (max-width: 768px) {
+    .me-arrow { display: none; }
+  }
+
+  /* ==========================================================
+     SECTION
+     ========================================================== */
+  .section {
+    padding: var(--gap-2xl) 0;
+  }
+
+  .section-tag {
+    display: inline-block;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 5px 12px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    margin-bottom: var(--gap-sm);
+  }
+
+  .section-title {
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 700;
+    margin-bottom: var(--gap-md);
+  }
+
+  .section-sub {
+    font-size: 18px;
+    color: var(--ink-soft);
+    max-width: 760px;
+    margin-bottom: var(--gap-xl);
+    text-wrap: balance;
+  }
+
+  /* ==========================================================
+     LO 9.1 — BLACKBERRY VS APPLE
+     ========================================================== */
+  .vs-wrapper {
+    background: var(--paper-pure);
+    border: var(--border-thick);
+    box-shadow: var(--shadow-hard-lg);
+    padding: var(--gap-lg);
+  }
+
+  .vs-title {
+    text-align: center;
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: var(--gap-md);
+  }
+
+  .vs-grid {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: var(--gap-md);
+    align-items: center;
+  }
+
+  @media (max-width: 768px) {
+    .vs-grid { grid-template-columns: 1fr; }
+  }
+
+  .vs-side {
+    border: var(--border-thick);
+    padding: var(--gap-md);
+    text-align: center;
+  }
+
+  .vs-side.winner {
+    background: var(--lime);
+    box-shadow: var(--shadow-hard-sm);
+  }
+
+  .vs-side.loser {
+    background: var(--pink);
+    box-shadow: var(--shadow-hard-sm);
+  }
+
+  .vs-side .name {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .vs-side .stat {
+    font-family: var(--font-display);
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1;
+    margin: 12px 0 6px;
+  }
+
+  .vs-side.winner .stat { color: #1a6b1a; }
+  .vs-side.loser .stat { color: var(--brand); }
+
+  .vs-side .label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 12px;
+  }
+
+  .vs-side .desc {
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+    text-align: left;
+    padding-top: 12px;
+    border-top: 2px dashed var(--ink);
+  }
+
+  .vs-divider {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 700;
+    background: var(--brand);
+    color: var(--paper-pure);
+    padding: 8px 12px;
+    transform: rotate(-3deg);
+    box-shadow: 3px 3px 0 var(--ink);
+    text-align: center;
+  }
+
+  @media (max-width: 768px) {
+    .vs-divider { display: none; }
+  }
+
+  /* 3 reasons */
+  .reasons-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: var(--gap-md);
+    margin-top: var(--gap-xl);
+  }
+
+  .reason-card {
+    border: var(--border-thick);
+    padding: var(--gap-md);
+    box-shadow: var(--shadow-hard);
+    transition: all 0.15s;
+  }
+
+  .reason-card:nth-child(1) { background: var(--yellow); }
+  .reason-card:nth-child(2) { background: var(--cyan); }
+  .reason-card:nth-child(3) { background: var(--pink); }
+
+  .reason-card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: var(--shadow-hard-lg);
+  }
+
+  .reason-num {
+    font-family: var(--font-mono);
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .reason-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .reason-desc {
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+  }
+
+  /* ==========================================================
+     LO 9.2 — 6 STEPS PROCESS (timeline)
+     ========================================================== */
+  .process-steps {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-md);
+  }
+
+  .process-step {
+    background: var(--paper-pure);
+    border: var(--border-thick);
+    box-shadow: var(--shadow-hard);
+    padding: var(--gap-md);
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: var(--gap-md);
+    transition: all 0.15s;
+  }
+
+  @media (max-width: 640px) {
+    .process-step { grid-template-columns: 60px 1fr; }
+  }
+
+  .process-step:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: var(--shadow-hard-lg);
+  }
+
+  .process-step .step-num {
+    background: var(--brand);
+    color: var(--paper-pure);
+    border: var(--border-thick);
+    font-family: var(--font-display);
+    font-size: 32px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-hard-sm);
+  }
+
+  .process-step:nth-child(2) .step-num,
+  .process-step:nth-child(4) .step-num,
+  .process-step:nth-child(6) .step-num {
+    background: var(--ink);
+  }
+
+  .process-step .step-content {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .process-step .step-eng {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+
+  .process-step .step-name {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  .process-step .step-desc {
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+  }
+
+  .process-step .step-tag {
+    display: inline-block;
+    background: var(--yellow);
+    border: 2px solid var(--ink);
+    padding: 3px 8px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    margin-top: 4px;
+    align-self: flex-start;
+  }
+
+  /* SWOT Box */
+  .swot-box {
+    margin-top: var(--gap-xl);
+    background: var(--paper-pure);
+    border: var(--border-thick);
+    box-shadow: var(--shadow-hard-lg);
+    overflow: hidden;
+  }
+
+  .swot-header {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 14px 18px;
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  .swot-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media (max-width: 640px) {
+    .swot-grid { grid-template-columns: 1fr; }
+  }
+
+  .swot-cell {
+    padding: var(--gap-md);
+    border-right: 2px solid var(--ink);
+    border-bottom: 2px solid var(--ink);
+    min-height: 140px;
+  }
+
+  .swot-cell:nth-child(2),
+  .swot-cell:nth-child(4) {
+    border-right: none;
+  }
+
+  .swot-cell:nth-child(3),
+  .swot-cell:nth-child(4) {
+    border-bottom: none;
+  }
+
+  .swot-cell.s { background: var(--lime); }
+  .swot-cell.w { background: var(--pink); }
+  .swot-cell.o { background: var(--cyan); }
+  .swot-cell.t { background: var(--yellow); }
+
+  .swot-cell .letter {
+    font-family: var(--font-display);
+    font-size: 56px;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .swot-cell.s .letter { color: #1a6b1a; }
+  .swot-cell.w .letter { color: var(--brand); }
+  .swot-cell.o .letter { color: #1a4a6b; }
+  .swot-cell.t .letter { color: var(--brand-dark); }
+
+  .swot-cell .name {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  .swot-cell .from {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .swot-cell .desc {
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+
+  /* ==========================================================
+     LO 9.3 — 3 CORPORATE STRATEGIES + 4 GROWTH WAYS
+     ========================================================== */
+  .corp-strategies {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--gap-md);
+    margin-bottom: var(--gap-xl);
+  }
+
+  .corp-card {
+    background: var(--paper-pure);
+    border: var(--border-thick);
+    box-shadow: var(--shadow-hard);
+    overflow: hidden;
+  }
+
+  .corp-card .header {
+    padding: var(--gap-md);
+    border-bottom: var(--border-medium);
+  }
+
+  .corp-card.growth .header { background: var(--lime); }
+  .corp-card.stability .header { background: var(--cyan); }
+  .corp-card.renewal .header { background: var(--yellow); }
+
+  .corp-card .label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .corp-card .corp-title {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 700;
+  }
+
+  .corp-card .body {
+    padding: var(--gap-md);
+  }
+
+  .corp-card .desc {
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+    margin-bottom: var(--gap-sm);
+  }
+
+  .corp-card .ex {
+    font-size: 13px;
+    font-family: var(--font-mono);
+    color: var(--ink-muted);
+    padding-top: var(--gap-sm);
+    border-top: 2px dashed var(--ink);
+  }
+
+  /* 4 growth ways */
+  .growth-ways {
+    margin-top: var(--gap-md);
+  }
+
+  .growth-title {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: var(--gap-md);
+  }
+
+  .growth-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--gap-sm);
+  }
+
+  .growth-item {
+    background: var(--paper-pure);
+    border: var(--border-thick);
+    box-shadow: var(--shadow-hard-sm);
+    padding: 14px;
+    transition: all 0.15s;
+  }
+
+  .growth-item:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: var(--shadow-hard);
+  }
+
+  .growth-item .way-num {
+    display: inline-block;
+    background: var(--brand);
+    color: var(--paper-pure);
+    padding: 2px 8px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .growth-item .way-name {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .growth-item .way-eng {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink-muted);
+    margin-bottom: 6px;
+  }
+
+  .growth-item .way-ex {
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+
+  /* ==========================================================
+     BCG MATRIX
+     ========================================================== */
+  .bcg-section {
+    background: var(--paper-pure);
+    border: var(--border-thick);
+    box-shadow: var(--shadow-hard-lg);
+    padding: var(--gap-lg);
+    margin: var(--gap-xl) 0;
+  }
+
+  .bcg-title {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: var(--gap-sm);
+  }
+
+  .bcg-sub {
+    text-align: center;
+    color: var(--ink-soft);
+    margin-bottom: var(--gap-lg);
+  }
+
+  .bcg-matrix {
+    display: grid;
+    grid-template-columns: 60px 1fr 1fr;
+    grid-template-rows: 60px 1fr 1fr;
+    max-width: 700px;
+    margin: 0 auto;
+    gap: 0;
+  }
+
+  .bcg-axis-y {
+    grid-row: 2 / 4;
+    grid-column: 1;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    background: var(--ink);
+    color: var(--paper);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    border: var(--border-thick);
+  }
+
+  .bcg-axis-x {
+    grid-row: 1;
+    grid-column: 2 / 4;
+    background: var(--ink);
+    color: var(--paper);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    border: var(--border-thick);
+    border-bottom: none;
+  }
+
+  .bcg-cell {
+    border: var(--border-thick);
+    padding: var(--gap-md);
+    min-height: 160px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .bcg-cell.stars { background: var(--yellow); }
+  .bcg-cell.cash-cows { background: var(--lime); }
+  .bcg-cell.question { background: var(--pink); }
+  .bcg-cell.dogs { background: var(--paper); }
+
+  .bcg-cell .icon {
+    font-size: 36px;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .bcg-cell .cell-name {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .bcg-cell .cell-tag {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .bcg-cell .action {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 6px 10px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    text-align: center;
+    align-self: flex-start;
+  }
+
+  /* Kansas warning */
+  .kansas-callout {
+    background: var(--brand);
+    color: var(--paper-pure);
+    border: var(--border-thick);
+    padding: var(--gap-lg);
+    box-shadow: 8px 8px 0 var(--yellow);
+    margin-top: var(--gap-xl);
+    transform: rotate(-0.3deg);
+  }
+
+  .kansas-label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--yellow);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: var(--gap-sm);
+  }
+
+  .kansas-title {
+    font-family: var(--font-display);
+    font-size: clamp(22px, 3vw, 30px);
+    font-weight: 700;
+    margin-bottom: var(--gap-sm);
+  }
+
+  .kansas-text {
+    font-size: 15px;
+    line-height: 1.65;
+    margin-bottom: var(--gap-md);
+  }
+
+  .kansas-lessons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: var(--gap-sm);
+  }
+
+  .kansas-lesson {
+    background: rgba(255,255,255,0.15);
+    border: 2px solid var(--paper-pure);
+    padding: 12px;
+  }
+
+  .kansas-lesson .num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--yellow);
+    margin-bottom: 4px;
+  }
+
+  .kansas-lesson .text {
+    font-size: 14px;
+    line-height: 1.5;
+    font-weight: 600;
+  }
+
+  /* ==========================================================
+     LO 9.4 — ECONOMIC MOAT (Buffett)
+     ========================================================== */
+  .moat-card {
+    background: var(--ink);
+    color: var(--paper);
+    border: var(--border-thick);
+    box-shadow: var(--shadow-brand);
+    padding: var(--gap-lg);
+    transform: rotate(-0.2deg);
+  }
+
+  .moat-label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--cyan);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: var(--gap-sm);
+  }
+
+  .moat-title {
+    font-family: var(--font-display);
+    font-size: clamp(26px, 4vw, 36px);
+    font-weight: 700;
+    margin-bottom: var(--gap-sm);
+    color: var(--paper);
+  }
+
+  .moat-quote {
+    font-size: 17px;
+    line-height: 1.65;
+    color: #C8C8C8;
+    padding: var(--gap-md);
+    background: rgba(245,228,184,0.1);
+    border-left: 4px solid var(--yellow);
+    margin: var(--gap-md) 0;
+  }
+
+  .moat-quote strong {
+    color: var(--yellow);
+  }
+
+  .moat-examples {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--gap-md);
+    margin-top: var(--gap-md);
+  }
+
+  @media (max-width: 768px) {
+    .moat-examples { grid-template-columns: 1fr; }
+  }
+
+  .moat-side {
+    background: rgba(255,255,255,0.08);
+    border: 2px solid;
+    padding: var(--gap-md);
+  }
+
+  .moat-side.narrow { border-color: var(--brand); }
+  .moat-side.wide { border-color: var(--lime); }
+
+  .moat-side .heading {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .moat-side.narrow .heading { color: var(--brand); }
+  .moat-side.wide .heading { color: var(--lime); }
+
+  .moat-side .moat-h {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--paper);
+  }
+
+  .moat-side .desc {
+    font-size: 13px;
+    line-height: 1.55;
+    color: #C8C8C8;
+  }
+
+  /* ==========================================================
+     FIVE FORCES (Porter)
+     ========================================================== */
+  .five-forces {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto auto auto;
+    gap: var(--gap-sm);
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 768px) {
+    .five-forces {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto;
+    }
+  }
+
+  .force-card {
+    background: var(--paper-pure);
+    border: var(--border-thick);
+    box-shadow: var(--shadow-hard-sm);
+    padding: var(--gap-md);
+    text-align: center;
+  }
+
+  .force-card.center {
+    background: var(--brand);
+    color: var(--paper-pure);
+    grid-column: 2;
+    grid-row: 2;
+    transform: rotate(-1deg);
+    box-shadow: var(--shadow-hard);
+  }
+
+  @media (max-width: 768px) {
+    .force-card.center { grid-column: 1; transform: none; }
+  }
+
+  .force-card.top {
+    grid-column: 2;
+    grid-row: 1;
+    background: var(--yellow);
+  }
+
+  .force-card.bottom {
+    grid-column: 2;
+    grid-row: 3;
+    background: var(--lime);
+  }
+
+  .force-card.left {
+    grid-column: 1;
+    grid-row: 2;
+    background: var(--cyan);
+  }
+
+  .force-card.right {
+    grid-column: 3;
+    grid-row: 2;
+    background: var(--pink);
+  }
+
+  @media (max-width: 768px) {
+    .force-card.top, .force-card.bottom,
+    .force-card.left, .force-card.right {
+      grid-column: 1;
+      grid-row: auto;
+    }
+  }
+
+  .force-card .force-icon {
+    font-size: 28px;
+    margin-bottom: 6px;
+  }
+
+  .force-card .force-name {
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 4px;
+  }
+
+  .force-card .force-eng {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+  }
+
+  .force-card.center .force-eng { color: rgba(255,255,255,0.8); }
+
+  .force-card.center .force-name {
+    font-size: 16px;
+    color: var(--paper);
+  }
+
+  .force-rule {
+    background: var(--ink);
+    color: var(--paper);
+    border: var(--border-thick);
+    padding: var(--gap-md);
+    margin-top: var(--gap-lg);
+    font-size: 15px;
+    line-height: 1.55;
+    box-shadow: var(--shadow-hard);
+  }
+
+  .force-rule strong {
+    color: var(--yellow);
+  }
+
+  /* ==========================================================
+     PORTER 3 STRATEGIES
+     ========================================================== */
+  .porter-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: var(--gap-md);
+  }
+
+  .porter-card {
+    background: var(--paper-pure);
+    border: var(--border-thick);
+    box-shadow: var(--shadow-hard);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .porter-card .head {
+    padding: var(--gap-md);
+    border-bottom: var(--border-thick);
+  }
+
+  .porter-card.cost .head { background: var(--ink); color: var(--paper); }
+  .porter-card.diff .head { background: var(--brand); color: var(--paper); }
+  .porter-card.focus .head { background: var(--yellow); }
+
+  .porter-card .scope {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    opacity: 0.8;
+  }
+
+  .porter-card .p-name {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 700;
+  }
+
+  .porter-card .p-eng {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    margin-top: 4px;
+    opacity: 0.85;
+  }
+
+  .porter-card .body {
+    padding: var(--gap-md);
+    flex: 1;
+  }
+
+  .porter-card .core {
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: var(--gap-sm);
+  }
+
+  .porter-card .ex-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--brand-dark);
+    font-weight: 700;
+    text-transform: uppercase;
+    margin: 12px 0 4px;
+  }
+
+  .porter-card .ex {
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+
+  /* Stuck in middle warning */
+  .stuck-warning {
+    background: var(--paper);
+    border: 3px dashed var(--brand);
+    padding: var(--gap-md);
+    margin-top: var(--gap-md);
+    display: flex;
+    gap: var(--gap-md);
+    align-items: center;
+  }
+
+  @media (max-width: 640px) {
+    .stuck-warning { flex-direction: column; text-align: center; }
+  }
+
+  .stuck-warning .icon {
+    font-size: 48px;
+    flex-shrink: 0;
+  }
+
+  .stuck-warning .stuck-title {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--brand-dark);
+    margin-bottom: 4px;
+  }
+
+  .stuck-warning .stuck-desc {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  /* ==========================================================
+     5 DIFFERENTIATION STRATEGIES
+     ========================================================== */
+  .diff-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--gap-md);
+  }
+
+  .diff-card {
+    background: var(--paper-pure);
+    border: var(--border-thick);
+    box-shadow: var(--shadow-hard);
+    padding: var(--gap-md);
+    transition: all 0.15s;
+  }
+
+  .diff-card:nth-child(1) { background: var(--yellow); }
+  .diff-card:nth-child(2) { background: var(--cyan); transform: rotate(-0.5deg); }
+  .diff-card:nth-child(3) { background: var(--lime); }
+  .diff-card:nth-child(4) { background: var(--pink); transform: rotate(0.5deg); }
+  .diff-card:nth-child(5) { background: var(--paper-pure); }
+
+  .diff-card:hover {
+    transform: translate(-3px, -3px) rotate(0deg);
+    box-shadow: var(--shadow-hard-lg);
+  }
+
+  .diff-num {
+    display: inline-block;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 4px 10px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: var(--gap-sm);
+  }
+
+  .diff-name {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .diff-eng {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink-muted);
+    margin-bottom: 8px;
+  }
+
+  .diff-desc {
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+    margin-bottom: 8px;
+  }
+
+  .diff-ex {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink-muted);
+    padding-top: 8px;
+    border-top: 1px dashed var(--ink);
+  }
+
+  /* ==========================================================
+     KEY TAKEAWAYS
+     ========================================================== */
+  .takeaway-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--gap-md);
+  }
+
+  .takeaway-card {
+    background: var(--paper-pure);
+    border: var(--border-thick);
+    padding: var(--gap-md);
+    box-shadow: var(--shadow-hard);
+    position: relative;
+  }
+
+  .takeaway-card:nth-child(1) { background: var(--yellow); transform: rotate(-0.5deg); }
+  .takeaway-card:nth-child(2) { background: var(--cyan); }
+  .takeaway-card:nth-child(3) { background: var(--lime); transform: rotate(0.5deg); }
+  .takeaway-card:nth-child(4) { background: var(--pink); }
+  .takeaway-card:nth-child(5) { background: var(--paper-pure); transform: rotate(-0.3deg); }
+
+  .takeaway-num {
+    position: absolute;
+    top: -16px;
+    left: 16px;
+    background: var(--brand);
+    color: var(--paper-pure);
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    border: var(--border-thick);
+    box-shadow: var(--shadow-hard-sm);
+    transform: rotate(-3deg);
+  }
+
+  .takeaway-card .takeaway-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 12px 0 8px;
+  }
+
+  .takeaway-card p {
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+  }
+
+  /* ==========================================================
+     STUDY PLAN
+     ========================================================== */
+  .study-table {
+    background: var(--paper-pure);
+    border: var(--border-thick);
+    box-shadow: var(--shadow-hard);
+    overflow: hidden;
+  }
+
+  .study-row {
+    display: grid;
+    grid-template-columns: 80px 1fr 100px;
+    border-bottom: 2px solid var(--ink);
+  }
+
+  .study-row.head {
+    background: var(--ink);
+    color: var(--paper);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+  }
+
+  .study-row:last-child { border-bottom: none; }
+
+  .study-row > div {
+    padding: 12px 14px;
+    font-size: 14px;
+  }
+
+  .study-row > div:not(:last-child) {
+    border-right: 2px solid var(--ink);
+  }
+
+  .study-row .session {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    background: var(--pink);
+  }
+
+  .study-row.head .session { background: var(--ink); }
+
+  /* ==========================================================
+     FOOTER
+     ========================================================== */
+  .footer {
+    background: var(--ink);
+    color: var(--paper);
+    padding: var(--gap-xl) 0;
+    border-top: var(--border-thick);
+    margin-top: var(--gap-2xl);
+  }
+
+  .footer-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--gap-lg);
+  }
+
+  @media (max-width: 768px) {
+    .footer-content { grid-template-columns: 1fr; }
+  }
+
+  .footer-title {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .footer-text {
+    font-size: 14px;
+    color: #B0B0B0;
+    margin-bottom: 8px;
+  }
+
+  .footer-meta {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--pink);
+  }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    .hero { padding: var(--gap-xl) 0; }
+    .nav-links { display: none; }
+    .study-row { grid-template-columns: 60px 1fr 80px; }
+    .study-row > div { padding: 10px 8px; font-size: 12px; }
+  }
+
+  a:focus-visible, button:focus-visible {
+    outline: 3px solid var(--brand);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- ==========================================================
+     STICKY NAV
+     ========================================================== -->
+<nav class="topnav">
+  <div class="container">
+    <div class="topnav-inner">
+      <a href="#top" class="nav-logo">
+        <span class="ch-num">CH.09</span>
+        <span>Quản trị Chiến lược</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#why">Vì sao</a></li>
+        <li><a href="#process">6&nbsp;bước</a></li>
+        <li><a href="#corporate">Tập đoàn</a></li>
+        <li><a href="#bcg">BCG&nbsp;Matrix</a></li>
+        <li><a href="#moat">Moat</a></li>
+        <li><a href="#porter">Porter</a></li>
+        <li><a href="#diff">5&nbsp;khác biệt</a></li>
+        <li><a href="#takeaways">Tổng kết</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- ==========================================================
+     HERO
+     ========================================================== -->
+<section class="hero" id="top">
+  <div class="container">
+    <div class="hero-meta">CHƯƠNG&nbsp;9 — TÓM TẮT CHUYÊN SÂU</div>
+    <h1 class="hero-title">
+      Quản trị<br>
+      <span class="accent">Chiến lược</span>
+    </h1>
+    <p class="hero-sub">
+      Chương <strong>quan trọng nhất phần Planning</strong>. Nơi giới thiệu 5&nbsp;công cụ phân tích chiến lược kinh điển: SWOT, BCG&nbsp;Matrix, Porter's Five&nbsp;Forces, 3&nbsp;Generic Strategies, Economic&nbsp;Moat. Mọi tư vấn chiến lược trên thế giới đều bắt đầu từ đây.
+    </p>
+
+    <div class="hero-info">
+      <div class="hero-info-card">
+        <div class="hero-info-label">Nguồn</div>
+        <div class="hero-info-value">Robbins & Coulter — Management, ấn bản 15 (2021)</div>
+      </div>
+      <div class="hero-info-card">
+        <div class="hero-info-label">Thời gian đọc</div>
+        <div class="hero-info-value">70-80&nbsp;phút</div>
+      </div>
+      <div class="hero-info-card">
+        <div class="hero-info-label">Mục tiêu học tập</div>
+        <div class="hero-info-value">4&nbsp;LO + 5&nbsp;công cụ kinh điển</div>
+      </div>
+    </div>
+
+    <!-- MoviePass opening story -->
+    <div class="opening-story">
+      <div class="opening-label">★ CÂU CHUYỆN MỞ ĐẦU CHƯƠNG</div>
+      <h2 class="opening-title">MoviePass — Khi 3 triệu user vẫn dẫn đến phá sản</h2>
+      <p class="opening-text">
+        MoviePass thành lập 2011. Mô hình: thuê bao 10&nbsp;USD/tháng, xem 1&nbsp;phim/ngày. Hè 2018: <strong>3 triệu người dùng</strong>. Vấn đề: phải trả rạp giá đầy đủ mỗi vé.
+      </p>
+
+      <div class="moviepass-economics">
+        <div class="me-side">
+          <div class="num">10&nbsp;USD</div>
+          <div class="label">Thu mỗi user/tháng</div>
+        </div>
+        <div class="me-arrow">→</div>
+        <div class="me-side">
+          <div class="num">300&nbsp;USD</div>
+          <div class="label">Có thể phải trả rạp/tháng</div>
+        </div>
+      </div>
+
+      <p class="opening-text">
+        <strong>Cuối 2018: mất 40 triệu USD/tháng. Tháng 9/2019: đóng cửa.</strong> Bài học: ngay cả ý tưởng có khách (3 triệu user!), nếu <em>kinh tế đơn vị âm</em>, không công ty nào sống được. Tư vấn phải hiểu mô hình kinh doanh trước khi thiết kế chiến lược.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================
+     LO 9.1 — BLACKBERRY VS APPLE + 3 REASONS
+     ========================================================== -->
+<section class="section" id="why">
+  <div class="container">
+    <span class="section-tag">LO 9.1</span>
+    <h2 class="section-title">Vì sao quản trị chiến lược quan trọng?</h2>
+    <p class="section-sub">
+      Khi quản trị chiến lược kém, ngay cả công ty từng dẫn đầu thị trường cũng có thể bị giết.
+    </p>
+
+    <div class="vs-wrapper">
+      <div class="vs-title">BlackBerry vs Apple — 10 năm sau iPhone (2007 → 2017)</div>
+      <div class="vs-grid">
+        <div class="vs-side winner">
+          <div class="name">Apple</div>
+          <div class="label">Phản ứng chiến lược</div>
+          <div class="stat">17,9%</div>
+          <div class="label">Thị phần smartphone toàn cầu 2017</div>
+          <div class="desc">iPhone vượt trội phần cứng + cho phép developer tạo nhiều app, làm hấp dẫn với khán giả rộng.</div>
+        </div>
+        <div class="vs-divider">VS</div>
+        <div class="vs-side loser">
+          <div class="name">BlackBerry</div>
+          <div class="label">Sai lầm chiến lược</div>
+          <div class="stat">0,2%</div>
+          <div class="label">Thị phần smartphone toàn cầu 2017</div>
+          <div class="desc"><em>Giữ nguyên hướng đi</em> — tiếp tục tập trung doanh nghiệp, ít hỗ trợ developer tạo app cho BlackBerry&nbsp;OS.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="reasons-3">
+      <div class="reason-card">
+        <div class="reason-num">01</div>
+        <div class="reason-title">Tạo khác biệt về hiệu suất</div>
+        <div class="reason-desc">
+          Tổ chức dùng quản trị chiến lược có mức hiệu suất <strong>cao hơn</strong>. Giải thích vì sao một số doanh nghiệp thành công và doanh nghiệp khác thất bại trong cùng điều kiện môi trường.
+        </div>
+      </div>
+      <div class="reason-card">
+        <div class="reason-num">02</div>
+        <div class="reason-title">Đối phó tình huống thay đổi</div>
+        <div class="reason-desc">
+          Nhà quản trị mọi loại và quy mô tổ chức đối mặt thay đổi. Họ đối phó bất định bằng quy trình quản trị chiến lược để <em>xem xét yếu tố liên quan</em> và quyết định hành động.
+        </div>
+      </div>
+      <div class="reason-card">
+        <div class="reason-num">03</div>
+        <div class="reason-title">Tổ chức phức tạp + đa dạng</div>
+        <div class="reason-desc">
+          Mỗi phần cần làm việc cùng nhau hướng đến đạt mục tiêu tổ chức. Quản trị chiến lược giúp <strong>61% lãnh đạo</strong> thừa nhận họ chưa sẵn sàng cho thử thách chiến lược khi được bổ nhiệm.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================
+     LO 9.2 — 6 STEPS PROCESS + SWOT
+     ========================================================== -->
+<section class="section" id="process" style="background: var(--paper-pure); border-top: var(--border-thick); border-bottom: var(--border-thick);">
+  <div class="container">
+    <span class="section-tag">LO 9.2</span>
+    <h2 class="section-title">Quy trình quản trị chiến lược 6 bước</h2>
+    <p class="section-sub">
+      Mặc dù 4 bước đầu mô tả hoạch định, <strong>triển khai và đánh giá quan trọng không kém</strong>. Ngay cả chiến lược tốt nhất cũng có thể thất bại nếu không triển khai hoặc đánh giá đúng.
+    </p>
+
+    <div class="process-steps">
+      <div class="process-step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-eng">IDENTIFY</div>
+          <div class="step-name">Xác định Mission, Goals, Strategies hiện tại</div>
+          <div class="step-desc">Định nghĩa sứ mệnh buộc nhà quản trị xác định họ kinh doanh gì. Sứ mệnh không bất biến — Facebook đổi từ "making the world open" sang "build community" sau vấn đề tin giả.</div>
+        </div>
+      </div>
+
+      <div class="process-step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-eng">EXTERNAL ANALYSIS</div>
+          <div class="step-name">Phân tích môi trường bên ngoài</div>
+          <div class="step-desc">Xem 6 thành phần: kinh tế, dân số, chính trị/pháp lý, văn hóa-xã hội, công nghệ, toàn cầu. Mục đích: xác định <strong>Opportunities</strong> (cơ hội) và <strong>Threats</strong> (đe dọa).</div>
+          <span class="step-tag">→ O + T</span>
+        </div>
+      </div>
+
+      <div class="process-step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-eng">INTERNAL ANALYSIS</div>
+          <div class="step-name">Phân tích nội bộ tổ chức</div>
+          <div class="step-desc">3 khái niệm cần phân biệt: <strong>Resources</strong> (tài sản — WHAT), <strong>Capabilities</strong> (kỹ năng — HOW), <strong>Core Competencies</strong> (năng lực cốt lõi tạo lợi thế cạnh tranh). Mục đích: xác định <strong>Strengths</strong> + <strong>Weaknesses</strong>.</div>
+          <span class="step-tag">→ S + W</span>
+        </div>
+      </div>
+
+      <div class="process-step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-eng">FORMULATE</div>
+          <div class="step-name">Xây dựng chiến lược</div>
+          <div class="step-desc">3 loại chiến lược: <strong>Corporate</strong> (tập đoàn), <strong>Competitive</strong> (cạnh tranh), <strong>Functional</strong> (chức năng). Phù hợp với nguồn lực + cơ hội đã phân tích.</div>
+        </div>
+      </div>
+
+      <div class="process-step">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <div class="step-eng">IMPLEMENT</div>
+          <div class="step-name">Triển khai chiến lược</div>
+          <div class="step-desc">Dù tổ chức hoạch định hiệu quả thế nào, hiệu suất sẽ khó khăn nếu chiến lược <strong>không triển khai đúng</strong>. Đây là bước nhiều công ty thất bại nhất.</div>
+        </div>
+      </div>
+
+      <div class="process-step">
+        <div class="step-num">6</div>
+        <div class="step-content">
+          <div class="step-eng">EVALUATE</div>
+          <div class="step-name">Đánh giá kết quả</div>
+          <div class="step-desc">Bài học Las&nbsp;Vegas: chuyển sang chiến lược "điểm đến gia đình" rồi quay lại giải trí người lớn sau khi đánh giá thấy không hiệu quả. <strong>Quay lại chiến lược cũ không phải thất bại — đó là học hỏi.</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SWOT Matrix -->
+    <div class="swot-box">
+      <div class="swot-header">★ SWOT ANALYSIS — Kết hợp Bước&nbsp;2 + Bước&nbsp;3</div>
+      <div class="swot-grid">
+        <div class="swot-cell s">
+          <div class="letter">S</div>
+          <div class="name">Strengths</div>
+          <div class="from">BÊN TRONG · TÍCH CỰC</div>
+          <div class="desc">Hoạt động tổ chức làm tốt hoặc nguồn lực độc đáo.</div>
+        </div>
+        <div class="swot-cell w">
+          <div class="letter">W</div>
+          <div class="name">Weaknesses</div>
+          <div class="from">BÊN TRONG · TIÊU CỰC</div>
+          <div class="desc">Hoạt động không làm tốt hoặc nguồn lực cần nhưng không có.</div>
+        </div>
+        <div class="swot-cell o">
+          <div class="letter">O</div>
+          <div class="name">Opportunities</div>
+          <div class="from">BÊN NGOÀI · TÍCH CỰC</div>
+          <div class="desc">Xu hướng tích cực trong môi trường bên ngoài.</div>
+        </div>
+        <div class="swot-cell t">
+          <div class="letter">T</div>
+          <div class="name">Threats</div>
+          <div class="from">BÊN NGOÀI · TIÊU CỰC</div>
+          <div class="desc">Xu hướng tiêu cực trong môi trường bên ngoài.</div>
+        </div>
+      </div>
+    </div>
+
+    <p style="margin-top: var(--gap-md); font-size: 14px; color: var(--ink-soft); text-align: center;">
+      <strong>Sau SWOT, chiến lược cần:</strong> (1) khai thác Strengths + Opportunities; (2) bảo vệ khỏi Threats; (3) sửa Weaknesses nguy cấp.
+    </p>
+  </div>
+</section>
+
+<!-- ==========================================================
+     LO 9.3 — 3 CORPORATE STRATEGIES
+     ========================================================== -->
+<section class="section" id="corporate">
+  <div class="container">
+    <span class="section-tag">LO 9.3 — PHẦN 1</span>
+    <h2 class="section-title">Ba chiến lược tập đoàn</h2>
+    <p class="section-sub">
+      Chiến lược tập đoàn xác định <em>doanh nghiệp ở trong ngành gì</em> và <em>muốn làm gì với những ngành đó</em>.
+    </p>
+
+    <div class="corp-strategies">
+      <div class="corp-card growth">
+        <div class="header">
+          <div class="label">LOẠI 01</div>
+          <div class="corp-title">Growth</div>
+        </div>
+        <div class="body">
+          <div class="desc">Mở rộng số thị trường phục vụ hoặc số sản phẩm cung cấp. Có thể tăng doanh thu, số nhân viên, thị phần.</div>
+          <div class="ex">→ 4 cách: Concentration / Vertical / Horizontal / Diversification</div>
+        </div>
+      </div>
+
+      <div class="corp-card stability">
+        <div class="header">
+          <div class="label">LOẠI 02</div>
+          <div class="corp-title">Stability</div>
+        </div>
+        <div class="body">
+          <div class="desc">Tổ chức <em>tiếp tục làm điều đang làm</em>. Không tăng trưởng, nhưng cũng không thụt lùi.</div>
+          <div class="ex">→ Boeing: "Tiếp tục xây sức mạnh-trên-sức mạnh"</div>
+        </div>
+      </div>
+
+      <div class="corp-card renewal">
+        <div class="header">
+          <div class="label">LOẠI 03</div>
+          <div class="corp-title">Renewal</div>
+        </div>
+        <div class="body">
+          <div class="desc">Thiết kế để <em>giải quyết hiệu suất giảm</em>. 2 dạng: <strong>Retrenchment</strong> (cắt giảm nhẹ) và <strong>Turnaround</strong> (xoay chuyển mạnh).</div>
+          <div class="ex">→ GE 2018: tập trung lại vào hàng không, điện, năng lượng tái tạo</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4 Growth ways -->
+    <div class="growth-ways">
+      <div class="growth-title">4 cách thực hiện Growth Strategy</div>
+      <div class="growth-grid">
+        <div class="growth-item">
+          <div class="way-num">CÁCH 01</div>
+          <div class="way-name">Concentration</div>
+          <div class="way-eng">Tập trung dòng chính</div>
+          <div class="way-ex">→ Buick: thương hiệu xe sang. Bose: âm thanh sáng tạo, doanh số 3,8&nbsp;tỷ&nbsp;USD/năm</div>
+        </div>
+        <div class="growth-item">
+          <div class="way-num">CÁCH 02</div>
+          <div class="way-name">Vertical Integration</div>
+          <div class="way-eng">Tích hợp dọc</div>
+          <div class="way-ex">→ Backward: Walmart xây nhà máy sữa. Forward: Apple 500+ cửa hàng bán lẻ</div>
+        </div>
+        <div class="growth-item">
+          <div class="way-num">CÁCH 03</div>
+          <div class="way-name">Horizontal Integration</div>
+          <div class="way-eng">Tích hợp ngang</div>
+          <div class="way-ex">→ Bank of America mua MBNA, Summit, NationsBank, U.S.&nbsp;Trust</div>
+        </div>
+        <div class="growth-item">
+          <div class="way-num">CÁCH 04</div>
+          <div class="way-name">Diversification</div>
+          <div class="way-eng">Đa dạng hóa</div>
+          <div class="way-ex">→ Related: Google mua YouTube, Nest. Unrelated: Tata Group đa ngành không liên quan</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================
+     BCG MATRIX
+     ========================================================== -->
+<section class="section" id="bcg" style="background: var(--paper-pure); border-top: var(--border-thick); border-bottom: var(--border-thick);">
+  <div class="container">
+    <span class="section-tag">LO 9.3 — PHẦN 2</span>
+    <h2 class="section-title">BCG Matrix — Quản lý danh mục đầu tư</h2>
+    <p class="section-sub">
+      <strong>Ma trận 2x2 đầu tiên trên thế giới</strong> do Boston Consulting Group phát triển — xác định kinh doanh nào có tiềm năng cao và kinh doanh nào làm cạn nguồn lực.
+    </p>
+
+    <div class="bcg-section">
+      <div class="bcg-title">★ BCG Matrix</div>
+      <div class="bcg-sub">Trục dọc: <strong>Tăng trưởng thị trường</strong> · Trục ngang: <strong>Thị phần</strong></div>
+
+      <div class="bcg-matrix">
+        <div class="bcg-axis-x">→ THỊ PHẦN: CAO ───────── THẤP</div>
+        <div class="bcg-axis-y">↑ TĂNG TRƯỞNG: CAO ── THẤP</div>
+
+        <div class="bcg-cell stars">
+          <div>
+            <div class="icon">⭐</div>
+            <div class="cell-name">Stars</div>
+            <div class="cell-tag">CAO + CAO</div>
+          </div>
+          <div class="action">ĐẦU TƯ MẠNH</div>
+        </div>
+
+        <div class="bcg-cell question">
+          <div>
+            <div class="icon">❓</div>
+            <div class="cell-name">Question Marks</div>
+            <div class="cell-tag">THẤP + CAO</div>
+          </div>
+          <div class="action">PHÂN TÍCH KỸ</div>
+        </div>
+
+        <div class="bcg-cell cash-cows">
+          <div>
+            <div class="icon">🐮</div>
+            <div class="cell-name">Cash Cows</div>
+            <div class="cell-tag">CAO + THẤP</div>
+          </div>
+          <div class="action">VẮT SỮA</div>
+        </div>
+
+        <div class="bcg-cell dogs">
+          <div>
+            <div class="icon">🐶</div>
+            <div class="cell-name">Dogs</div>
+            <div class="cell-tag">THẤP + THẤP</div>
+          </div>
+          <div class="action">BÁN / THANH LÝ</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Coca-Cola Project Kansas warning -->
+    <div class="kansas-callout">
+      <div class="kansas-label">⚠ BÀI HỌC TỪ THẤT BẠI CHIẾN LƯỢC</div>
+      <h3 class="kansas-title">Coca-Cola "Project Kansas" 1985</h3>
+      <p class="kansas-text">
+        Hoảng loạn trước Pepsi&nbsp;Challenge, Coke đổi <strong>công thức 99 năm</strong> thành "New&nbsp;Coke" ngọt hơn. Khách phẫn nộ. <strong>Chưa đến 3 tháng</strong>, Coke phải đưa lại công thức gốc với tên Coca-Cola&nbsp;Classic. New Coke chính thức bị giết năm 2002.
+      </p>
+      <div class="kansas-lessons">
+        <div class="kansas-lesson">
+          <div class="num">BÀI HỌC 01</div>
+          <div class="text">"Nếu không hỏng, đừng sửa."</div>
+        </div>
+        <div class="kansas-lesson">
+          <div class="num">BÀI HỌC 02</div>
+          <div class="text">Suy nghĩ kỹ trước khi thay sản phẩm dẫn đầu thị trường biểu tượng.</div>
+        </div>
+        <div class="kansas-lesson">
+          <div class="num">BÀI HỌC 03</div>
+          <div class="text">Bình tĩnh — đừng hoảng loạn trước cạnh tranh.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================
+     LO 9.4 — ECONOMIC MOAT
+     ========================================================== -->
+<section class="section" id="moat">
+  <div class="container">
+    <span class="section-tag">LO 9.4 — PHẦN 1</span>
+    <h2 class="section-title">Economic Moat — Hào kinh tế của Buffett</h2>
+    <p class="section-sub">
+      Khi đánh giá doanh nghiệp khách hàng, hỏi: <em>"Hào của doanh nghiệp này là gì?"</em>. Doanh nghiệp không có hào dễ bị đối thủ giá rẻ giết.
+    </p>
+
+    <div class="moat-card">
+      <div class="moat-label">★ KHÁI NIỆM CỦA WARREN BUFFETT</div>
+      <h3 class="moat-title">Hào càng rộng, lợi thế càng an toàn.</h3>
+
+      <div class="moat-quote">
+        Như hào nước bảo vệ <strong>lâu đài thời trung cổ</strong>, economic moat hoạt động để <strong>bảo vệ biên lợi nhuận</strong>. Theo thời gian, nhiều lợi thế cạnh tranh có thể bị nhân bản — nhưng <strong>sáng chế hoặc chi phí chuyển đổi cao</strong> cung cấp hào khó vượt qua hơn.
+      </div>
+
+      <div class="moat-examples">
+        <div class="moat-side narrow">
+          <div class="heading">⚠ HÀO HẸP — DỄ BỊ NHÂN BẢN</div>
+          <div class="moat-h">Lợi thế chi phí thấp đơn thuần</div>
+          <div class="desc">Chỉ cạnh tranh giá rẻ → bất kỳ đối thủ giá rẻ hơn cũng có thể giết. Doanh nghiệp không có hào, sống nhờ biên mỏng.</div>
+        </div>
+        <div class="moat-side wide">
+          <div class="heading">✓ HÀO RỘNG — KHÓ VƯỢT QUA</div>
+          <div class="moat-h">Apple — Hệ sinh thái + Chi phí chuyển đổi</div>
+          <div class="desc">Khách có iPhone + iMac + iPad + Apple&nbsp;Watch → mất toàn bộ hệ sinh thái khi chuyển sang Android. Sáng chế + chi phí chuyển đổi cao = hào không thể vượt.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================
+     FIVE FORCES + 3 GENERIC STRATEGIES
+     ========================================================== -->
+<section class="section" id="porter" style="background: var(--paper-pure); border-top: var(--border-thick); border-bottom: var(--border-thick);">
+  <div class="container">
+    <span class="section-tag">LO 9.4 — PHẦN 2</span>
+    <h2 class="section-title">Porter — Five Forces + 3 chiến lược cạnh tranh chung</h2>
+    <p class="section-sub">
+      <strong>Michael Porter</strong> là người đóng góp lớn nhất cho quản trị chiến lược hiện đại. Hai khung dưới được dùng trong mọi tư vấn ngành.
+    </p>
+
+    <h3 style="font-family: var(--font-display); font-size: 22px; margin-bottom: var(--gap-md); text-align: center;">
+      ★ Five Forces Model — 5 lực quyết định mức hấp dẫn ngành
+    </h3>
+
+    <div class="five-forces">
+      <div class="force-card top">
+        <div class="force-icon">🆕</div>
+        <div class="force-name">Đe dọa từ đối thủ mới</div>
+        <div class="force-eng">Threat of new entrants</div>
+      </div>
+
+      <div class="force-card left">
+        <div class="force-icon">🏭</div>
+        <div class="force-name">Sức mặc cả nhà cung cấp</div>
+        <div class="force-eng">Bargaining power of suppliers</div>
+      </div>
+
+      <div class="force-card center">
+        <div class="force-icon">⚔️</div>
+        <div class="force-name">Cạnh tranh hiện tại trong ngành</div>
+        <div class="force-eng">Current rivalry</div>
+      </div>
+
+      <div class="force-card right">
+        <div class="force-icon">🛒</div>
+        <div class="force-name">Sức mặc cả người mua</div>
+        <div class="force-eng">Bargaining power of buyers</div>
+      </div>
+
+      <div class="force-card bottom">
+        <div class="force-icon">🔄</div>
+        <div class="force-name">Sản phẩm thay thế</div>
+        <div class="force-eng">Threat of substitutes</div>
+      </div>
+    </div>
+
+    <div class="force-rule">
+      <strong>QUY TẮC:</strong> Mỗi lực càng cao, ngành càng <strong>kém hấp dẫn</strong>. Cùng nhau, 5 lực này quyết định mức lợi nhuận trong ngành.
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 22px; margin: var(--gap-2xl) 0 var(--gap-md);">
+      ★ 3 chiến lược cạnh tranh chung — Phải chọn 1
+    </h3>
+    <p style="color: var(--ink-soft); margin-bottom: var(--gap-md); font-size: 15px;">
+      <strong>Theo Porter, không công ty nào có thể thành công bằng cách cố làm mọi thứ cho mọi người.</strong> Phải chọn lợi thế cạnh tranh — chi phí thấp hơn mọi đối thủ ngành <em>hoặc</em> khác biệt đáng kể từ đối thủ.
+    </p>
+
+    <div class="porter-grid">
+      <div class="porter-card cost">
+        <div class="head">
+          <div class="scope">PHẠM VI: RỘNG</div>
+          <div class="p-name">Cost Leadership</div>
+          <div class="p-eng">Dẫn đầu chi phí</div>
+        </div>
+        <div class="body">
+          <div class="core">Cạnh tranh trên cơ sở <strong>chi phí thấp nhất ngành</strong> (chi phí, không phải giá). Cực kỳ hiệu quả, chi phí gián tiếp tối thiểu.</div>
+          <div class="ex-label">VÍ DỤ</div>
+          <div class="ex"><strong>Ross Stores:</strong> "Không cầu kỳ" — không trưng bày, ma-nơ-canh. Bán quần áo thấp hơn 20-60% giá cửa hàng bách hóa.</div>
+        </div>
+      </div>
+
+      <div class="porter-card diff">
+        <div class="head">
+          <div class="scope">PHẠM VI: RỘNG</div>
+          <div class="p-name">Differentiation</div>
+          <div class="p-eng">Khác biệt hóa</div>
+        </div>
+        <div class="body">
+          <div class="core">Cạnh tranh bằng <strong>cung cấp sản phẩm độc đáo được khách rộng coi trọng</strong>. Khác biệt từ chất lượng, dịch vụ, thiết kế, công nghệ, thương hiệu.</div>
+          <div class="ex-label">VÍ DỤ</div>
+          <div class="ex"><strong>3M:</strong> chất lượng + thiết kế. <strong>Coach:</strong> thiết kế + thương hiệu. <strong>Apple:</strong> thiết kế. <strong>L.L.Bean:</strong> dịch vụ khách hàng.</div>
+        </div>
+      </div>
+
+      <div class="porter-card focus">
+        <div class="head">
+          <div class="scope">PHẠM VI: HẸP</div>
+          <div class="p-name">Focus</div>
+          <div class="p-eng">Tập trung niche</div>
+        </div>
+        <div class="body">
+          <div class="core">Lợi thế chi phí (<strong>cost focus</strong>) hoặc lợi thế khác biệt (<strong>differentiation focus</strong>) trong <em>phân khúc hẹp</em>.</div>
+          <div class="ex-label">VÍ DỤ</div>
+          <div class="ex"><strong>Bang & Olufsen</strong> (Đan Mạch): tập trung thiết bị âm thanh cao cấp, doanh thu vượt 318 triệu&nbsp;USD.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stuck-warning">
+      <div class="icon">⚠️</div>
+      <div>
+        <div class="stuck-title">Cảnh báo Porter: "Stuck in the Middle"</div>
+        <div class="stuck-desc">Xảy ra khi chi phí <strong>quá cao để cạnh tranh với người dẫn đầu chi phí thấp</strong> hoặc sản phẩm <strong>không đủ khác biệt</strong>. Cách thoát: chọn lợi thế cạnh tranh nào để theo đuổi và căn chỉnh nguồn lực, năng lực, năng lực cốt lõi. (Cập nhật sau Porter: <em>Southwest Airlines</em> đã làm được cả hai cùng lúc.)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================
+     5 DIFFERENTIATION STRATEGIES
+     ========================================================== -->
+<section class="section" id="diff">
+  <div class="container">
+    <span class="section-tag">5 CHIẾN LƯỢC KHÁC BIỆT HÓA CỤ THỂ</span>
+    <h2 class="section-title">5 cách khác biệt hóa thành công</h2>
+    <p class="section-sub">
+      Sau 3 chiến lược chung, đây là 5 chiến lược cụ thể trong nhóm Differentiation đã được dùng để tạo lợi thế cạnh tranh.
+    </p>
+
+    <div class="diff-grid">
+      <div class="diff-card">
+        <div class="diff-num">CÁCH 01</div>
+        <div class="diff-name">Quality</div>
+        <div class="diff-eng">Chất lượng</div>
+        <div class="diff-desc">Nếu liên tục cải thiện chất lượng + độ tin cậy, có lợi thế <strong>không thể bị lấy đi</strong>.</div>
+        <div class="diff-ex">→ Lexus, Rolex, Viking, Harley-Davidson, Nordstrom</div>
+      </div>
+
+      <div class="diff-card">
+        <div class="diff-num">CÁCH 02</div>
+        <div class="diff-name">Innovation</div>
+        <div class="diff-eng">Đổi mới</div>
+        <div class="diff-desc">2 quyết định: <strong>Emphasis</strong> (basic research / product / process) + <strong>Timing</strong> (first mover hay follower).</div>
+        <div class="diff-ex">→ P&G chuyển công nghệ chống vôi từ kem đánh răng vào thức ăn thú cưng Iams</div>
+      </div>
+
+      <div class="diff-card">
+        <div class="diff-num">CÁCH 03</div>
+        <div class="diff-name">Customer Service</div>
+        <div class="diff-eng">Dịch vụ khách hàng</div>
+        <div class="diff-desc">Cho khách điều họ muốn + giao tiếp hiệu quả + đào tạo nhân viên dịch vụ kỹ lưỡng.</div>
+        <div class="diff-ex">→ Singapore Airlines: hãng tốt nhất thế giới 22&nbsp;năm liên tiếp</div>
+      </div>
+
+      <div class="diff-card">
+        <div class="diff-num">CÁCH 04</div>
+        <div class="diff-name">Mass Customization</div>
+        <div class="diff-eng">Cá nhân hóa hàng loạt</div>
+        <div class="diff-desc">Cung cấp sản phẩm cá nhân hóa ở giá sản xuất hàng loạt. <strong>Xói mòn lợi thế kích thước lớn</strong>.</div>
+        <div class="diff-ex">→ Dell (PC tùy chỉnh), BMW (không 2 xe giống nhau), M&M's in tên</div>
+      </div>
+
+      <div class="diff-card">
+        <div class="diff-num">CÁCH 05</div>
+        <div class="diff-name">Social Media</div>
+        <div class="diff-eng">Truyền thông xã hội</div>
+        <div class="diff-desc">4 lợi thế: Hiring + Marketing + Customer relations + Competitive intelligence. <strong>92%</strong> doanh nghiệp nhỏ tăng đầu tư social media.</div>
+        <div class="diff-ex">→ Charles & Keith: 1,6&nbsp;triệu Facebook + 1&nbsp;triệu Instagram followers</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================
+     KEY TAKEAWAYS
+     ========================================================== -->
+<section class="section" id="takeaways" style="background: var(--paper-pure); border-top: var(--border-thick);">
+  <div class="container">
+    <span class="section-tag">TỔNG KẾT</span>
+    <h2 class="section-title">5 ý quan trọng nhất cho nghề tư vấn</h2>
+    <p class="section-sub">
+      Chương 9 cung cấp 5 vũ khí chính của tư vấn chiến lược. Sẽ dùng <strong>suốt sự nghiệp</strong>.
+    </p>
+
+    <div class="takeaway-grid" style="margin-top: var(--gap-xl);">
+      <div class="takeaway-card">
+        <div class="takeaway-num">01</div>
+        <div class="takeaway-title">6 bước quy trình chiến lược</div>
+        <p>Quy trình chuẩn cho mọi dự án tư vấn chiến lược. Triển khai và đánh giá quan trọng không kém hoạch định.</p>
+      </div>
+      <div class="takeaway-card">
+        <div class="takeaway-num">02</div>
+        <div class="takeaway-title">SWOT Analysis</div>
+        <p>Công cụ <strong>đầu tiên</strong> trong mọi engagement tư vấn chiến lược. Khai thác S+O, bảo vệ khỏi T, sửa W.</p>
+      </div>
+      <div class="takeaway-card">
+        <div class="takeaway-num">03</div>
+        <div class="takeaway-title">Five Forces của Porter</div>
+        <p>Đánh giá mức hấp dẫn ngành <strong>trước khi</strong> tư vấn vào ngành. 5 lực càng cao, ngành càng kém hấp dẫn.</p>
+      </div>
+      <div class="takeaway-card">
+        <div class="takeaway-num">04</div>
+        <div class="takeaway-title">3 chiến lược cạnh tranh Porter</div>
+        <p>Khi khách hỏi "Cạnh tranh thế nào?", đây là 3 lựa chọn cốt lõi: Cost / Differentiation / Focus. Tránh stuck in the middle.</p>
+      </div>
+      <div class="takeaway-card">
+        <div class="takeaway-num">05</div>
+        <div class="takeaway-title">Economic Moat của Buffett</div>
+        <p>Câu hỏi <em>"Hào của doanh nghiệp này là gì?"</em> phải hỏi trong mọi đánh giá doanh nghiệp.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================
+     STUDY PLAN
+     ========================================================== -->
+<section class="section">
+  <div class="container">
+    <span class="section-tag">LỘ TRÌNH ÔN TẬP</span>
+    <h2 class="section-title">7 lần ôn theo Ebbinghaus</h2>
+    <p class="section-sub">
+      Chương 9 là chương <strong>dày và quan trọng nhất phần Planning</strong>. Tổng đầu tư ~5&nbsp;giờ trong 75&nbsp;ngày — cao hơn các chương khác vì 5 công cụ trong chương sẽ dùng suốt sự nghiệp.
+    </p>
+
+    <div class="study-table">
+      <div class="study-row head">
+        <div class="session">LẦN</div>
+        <div>Việc làm</div>
+        <div>Thời lượng</div>
+      </div>
+      <div class="study-row">
+        <div class="session">1</div>
+        <div>Cuối ngày học (Ngày&nbsp;0): Lướt cheatsheet, không đọc lại nội dung</div>
+        <div>20&nbsp;phút</div>
+      </div>
+      <div class="study-row">
+        <div class="session">2</div>
+        <div>Ngày&nbsp;1: Tự kể không nhìn tài liệu — flashcards lần đầu</div>
+        <div>25&nbsp;phút</div>
+      </div>
+      <div class="study-row">
+        <div class="session">3</div>
+        <div>Ngày&nbsp;3: Áp khung vào case Việt Nam (Vingroup, Masan, FPT)</div>
+        <div>35&nbsp;phút</div>
+      </div>
+      <div class="study-row">
+        <div class="session">4</div>
+        <div>Ngày&nbsp;7: Vẽ lại BCG Matrix + Five Forces từ trí nhớ</div>
+        <div>40&nbsp;phút</div>
+      </div>
+      <div class="study-row">
+        <div class="session">5</div>
+        <div>Ngày&nbsp;16: Giảng cho người khác hoặc tự ghi âm 15&nbsp;phút</div>
+        <div>50&nbsp;phút</div>
+      </div>
+      <div class="study-row">
+        <div class="session">6</div>
+        <div>Ngày&nbsp;35: Củng cố trí nhớ trung hạn</div>
+        <div>25&nbsp;phút</div>
+      </div>
+      <div class="study-row">
+        <div class="session">7</div>
+        <div>Ngày&nbsp;75: Chuyển sang trí nhớ rất bền (6+&nbsp;tháng)</div>
+        <div>15&nbsp;phút</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================
+     FOOTER
+     ========================================================== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <div>
+        <div class="footer-title">Chương 9 — Quản trị Chiến lược</div>
+        <div class="footer-text">Chương quan trọng nhất phần Planning. 5&nbsp;công cụ kinh điển dùng suốt sự nghiệp tư vấn.</div>
+        <div class="footer-text">Sách: <em>Management</em> — Stephen P. Robbins & Mary A. Coulter, ấn bản 15 (Pearson, 2021).</div>
+      </div>
+      <div>
+        <div class="footer-meta">★ TÀI LIỆU CỦA</div>
+        <div class="footer-text" style="color: var(--paper); font-weight: 700; font-size: 16px; margin-top: 4px;">Vũ Hải</div>
+        <div class="footer-meta" style="margin-top: 12px;">Business Consultant</div>
+        <div class="footer-text">Fitness · Franchise · Leadership</div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

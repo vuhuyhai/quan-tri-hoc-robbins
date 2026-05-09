@@ -1,0 +1,1581 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chương 7 — Quản trị Thay đổi và Đổi mới Phá vỡ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap&subset=vietnamese" rel="stylesheet">
+<style>
+  /* ==========================================================
+     NEO-BRUTALISM v3.4 — DESIGN TOKENS (Light mode default)
+     ========================================================== */
+  :root {
+    /* Brand */
+    --brand: #c73937;
+    --brand-dark: #a82a28;
+    
+    /* Paper & Ink */
+    --paper: #FAF8F5;
+    --paper-pure: #FFFFFF;
+    --ink: #1A1A1A;
+    --ink-soft: #2D2D2D;
+    --ink-muted: #6B6B6B;
+    
+    /* Muted pastel accents (v3.2) */
+    --yellow: #F5E4B8;
+    --cyan: #C4DEDC;
+    --lime: #DDE4C5;
+    --pink: #F0DCDD;
+    
+    /* Border & shadow */
+    --border-thick: 3px solid var(--ink);
+    --border-medium: 2px solid var(--ink);
+    --shadow-hard: 6px 6px 0 var(--ink);
+    --shadow-hard-sm: 4px 4px 0 var(--ink);
+    --shadow-hard-lg: 8px 8px 0 var(--ink);
+    --shadow-brand: 6px 6px 0 var(--brand);
+    --shadow-yellow: 6px 6px 0 var(--yellow);
+    --shadow-cyan: 6px 6px 0 var(--cyan);
+    
+    /* Radius */
+    --r-card: 4px;
+    --r-btn: 4px;
+    --r-tag: 0;
+    
+    /* Typography */
+    --font-display: 'Space Grotesk', system-ui, sans-serif;
+    --font-body: 'Inter', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    
+    /* Spacing */
+    --gap-xs: 8px;
+    --gap-sm: 12px;
+    --gap-md: 20px;
+    --gap-lg: 32px;
+    --gap-xl: 48px;
+    --gap-2xl: 80px;
+  }
+
+  /* Global reset */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-style: normal !important;
+    font-optical-sizing: auto;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+  }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* Vietnamese typography discipline */
+  h1, h2, h3, h4, h5, h6,
+  .title, .heading,
+  .hero-title, .section-title,
+  .card-title, .lo-title {
+    text-wrap: balance;
+    font-family: var(--font-display);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  p, li, .body-text {
+    text-wrap: pretty;
+  }
+
+  /* ==========================================================
+     BACKGROUND PATTERN
+     ========================================================== */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image: radial-gradient(circle, var(--ink) 1px, transparent 1px);
+    background-size: 24px 24px;
+    opacity: 0.04;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ==========================================================
+     LAYOUT CONTAINER
+     ========================================================== */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--gap-md);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ==========================================================
+     STICKY NAV
+     ========================================================== */
+  .topnav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--paper);
+    border-bottom: var(--border-thick);
+    padding: var(--gap-sm) 0;
+  }
+
+  .topnav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--gap-md);
+  }
+
+  .nav-logo {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--ink);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .nav-logo .ch-num {
+    background: var(--brand);
+    color: var(--paper-pure);
+    padding: 4px 8px;
+    border: var(--border-medium);
+    box-shadow: 3px 3px 0 var(--ink);
+    font-family: var(--font-mono);
+    font-size: 14px;
+    transform: rotate(-2deg);
+    display: inline-block;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: var(--gap-sm);
+    list-style: none;
+    flex-wrap: wrap;
+  }
+
+  .nav-links a {
+    color: var(--ink);
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 500;
+    padding: 6px 10px;
+    border: var(--border-medium);
+    background: var(--paper-pure);
+    transition: all 0.15s;
+  }
+
+  .nav-links a:hover {
+    background: var(--yellow);
+    transform: translate(-2px, -2px);
+    box-shadow: 3px 3px 0 var(--ink);
+  }
+
+  /* ==========================================================
+     HERO SECTION
+     ========================================================== */
+  .hero {
+    padding: var(--gap-2xl) 0;
+    position: relative;
+  }
+
+  .hero-meta {
+    display: inline-block;
+    background: var(--cyan);
+    border: var(--border-thick);
+    padding: 6px 14px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: var(--gap-md);
+    transform: rotate(-1.5deg);
+    box-shadow: var(--shadow-hard-sm);
+  }
+
+  .hero-title {
+    font-size: clamp(36px, 6vw, 72px);
+    font-weight: 700;
+    margin-bottom: var(--gap-md);
+    color: var(--ink);
+  }
+
+  .hero-title .accent {
+    background: var(--brand);
+    color: var(--paper-pure);
+    padding: 0 12px;
+    display: inline-block;
+    transform: rotate(-1deg);
+    box-shadow: var(--shadow-hard-sm);
+  }
+
+  .hero-sub {
+    font-size: clamp(17px, 2vw, 22px);
+    color: var(--ink-soft);
+    max-width: 720px;
+    margin-bottom: var(--gap-lg);
+    text-wrap: balance;
+  }
+
+  .hero-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--gap-md);
+    margin-top: var(--gap-xl);
+  }
+
+  .hero-info-card {
+    background: var(--paper-pure);
+    border: var(--border-thick);
+    padding: var(--gap-md);
+    box-shadow: var(--shadow-hard);
+    transition: all 0.15s;
+  }
+
+  .hero-info-card:nth-child(1) { background: var(--yellow); }
+  .hero-info-card:nth-child(2) { background: var(--lime); transform: rotate(0.5deg); }
+  .hero-info-card:nth-child(3) { background: var(--pink); transform: rotate(-0.8deg); }
+
+  .hero-info-card:hover {
+    transform: translate(-3px, -3px) rotate(0deg);
+    box-shadow: 9px 9px 0 var(--ink);
+  }
+
+  .hero-info-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ink-muted);
+    margin-bottom: 6px;
+  }
+
+  .hero-info-value {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  /* ==========================================================
+     SECTION HEADER
+     ========================================================== */
+  .section {
+    padding: var(--gap-2xl) 0;
+  }
+
+  .section-tag {
+    display: inline-block;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 5px 12px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    margin-bottom: var(--gap-sm);
+  }
+
+  .section-title {
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 700;
+    margin-bottom: var(--gap-md);
+  }
+
+  .section-sub {
+    font-size: 18px;
+    color: var(--ink-soft);
+    max-width: 720px;
+    margin-bottom: var(--gap-xl);
+    text-wrap: balance;
+  }
+
+  /* ==========================================================
+     METAPHOR CARDS (Calm Waters vs White-Water)
+     ========================================================== */
+  .metaphor-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--gap-lg);
+  }
+
+  @media (max-width: 768px) {
+    .metaphor-grid { grid-template-columns: 1fr; }
+  }
+
+  .metaphor-card {
+    background: var(--paper-pure);
+    border: var(--border-thick);
+    padding: var(--gap-lg);
+    box-shadow: var(--shadow-hard);
+    position: relative;
+  }
+
+  .metaphor-card.calm {
+    background: var(--cyan);
+    transform: rotate(-0.5deg);
+  }
+
+  .metaphor-card.rapids {
+    background: var(--yellow);
+    transform: rotate(0.5deg);
+  }
+
+  .metaphor-icon {
+    font-size: 48px;
+    margin-bottom: var(--gap-sm);
+    display: block;
+  }
+
+  .metaphor-name {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 6px;
+  }
+
+  .metaphor-title {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: var(--gap-sm);
+  }
+
+  .metaphor-desc {
+    font-size: 15px;
+    line-height: 1.65;
+    margin-bottom: var(--gap-md);
+  }
+
+  .metaphor-card ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .metaphor-card li {
+    padding: 8px 0;
+    border-bottom: 1px dashed var(--ink);
+    font-size: 14px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .metaphor-card li:last-child {
+    border-bottom: none;
+  }
+
+  .metaphor-card li::before {
+    content: "→";
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  /* ==========================================================
+     LO CARDS (4 lĩnh vực thay đổi)
+     ========================================================== */
+  .lo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--gap-md);
+  }
+
+  .lo-card {
+    background: var(--paper-pure);
+    border: var(--border-thick);
+    padding: var(--gap-md);
+    box-shadow: var(--shadow-hard);
+    transition: all 0.15s;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .lo-card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: var(--shadow-hard-lg);
+  }
+
+  .lo-card .num {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--brand);
+    margin-bottom: 4px;
+  }
+
+  .lo-card .lo-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: var(--gap-sm);
+  }
+
+  .lo-card p {
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+    flex: 1;
+  }
+
+  .lo-card .ex {
+    margin-top: var(--gap-sm);
+    padding-top: var(--gap-sm);
+    border-top: 2px solid var(--ink);
+    font-size: 13px;
+    font-family: var(--font-mono);
+    color: var(--ink-muted);
+  }
+
+  /* ==========================================================
+     RESISTANCE TECHNIQUES TABLE
+     ========================================================== */
+  .tech-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--gap-md);
+  }
+
+  .tech-card {
+    background: var(--paper-pure);
+    border: var(--border-thick);
+    box-shadow: var(--shadow-hard);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tech-card .header {
+    background: var(--brand);
+    color: var(--paper-pure);
+    padding: 12px 16px;
+    border-bottom: var(--border-medium);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .tech-card.warning .header {
+    background: var(--ink);
+  }
+
+  .tech-card .header-num {
+    background: var(--paper-pure);
+    color: var(--ink);
+    padding: 2px 8px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .tech-card .header-title {
+    font-size: 16px;
+    font-weight: 700;
+    flex: 1;
+  }
+
+  .tech-card .body {
+    padding: 16px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .tech-row {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .tech-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+  }
+
+  .tech-text {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .tech-text.pro {
+    color: #1a6b1a;
+  }
+
+  .tech-text.con {
+    color: var(--brand-dark);
+  }
+
+  /* ==========================================================
+     RESISTANCE REASONS (4 reasons)
+     ========================================================== */
+  .reasons-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--gap-md);
+  }
+
+  .reason-card {
+    border: var(--border-thick);
+    padding: var(--gap-md);
+    box-shadow: var(--shadow-hard);
+  }
+
+  .reason-card:nth-child(1) { background: var(--yellow); }
+  .reason-card:nth-child(2) { background: var(--cyan); }
+  .reason-card:nth-child(3) { background: var(--pink); }
+  .reason-card:nth-child(4) { background: var(--lime); }
+
+  .reason-num {
+    font-family: var(--font-mono);
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .reason-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .reason-desc {
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+  }
+
+  /* ==========================================================
+     KEY QUOTE / CALLOUT
+     ========================================================== */
+  .callout {
+    background: var(--ink);
+    color: var(--paper);
+    border: var(--border-thick);
+    padding: var(--gap-lg);
+    box-shadow: var(--shadow-brand);
+    margin: var(--gap-xl) 0;
+    transform: rotate(-0.5deg);
+  }
+
+  .callout-label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--yellow);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: var(--gap-sm);
+  }
+
+  .callout-text {
+    font-family: var(--font-display);
+    font-size: clamp(20px, 3vw, 28px);
+    font-weight: 600;
+    line-height: 1.35;
+    text-wrap: balance;
+  }
+
+  .callout-stat {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    margin-top: var(--gap-md);
+    color: var(--cyan);
+  }
+
+  /* ==========================================================
+     DISRUPTIVE INNOVATION SECTION
+     ========================================================== */
+  .compare-table {
+    background: var(--paper-pure);
+    border: var(--border-thick);
+    box-shadow: var(--shadow-hard-lg);
+    overflow: hidden;
+  }
+
+  .compare-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: var(--border-thick);
+  }
+
+  .compare-header > div {
+    padding: var(--gap-md);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 18px;
+  }
+
+  .compare-header > div:first-child {
+    background: var(--brand);
+    color: var(--paper-pure);
+    border-right: var(--border-thick);
+  }
+
+  .compare-header > div:last-child {
+    background: var(--cyan);
+  }
+
+  .compare-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 2px solid var(--ink);
+  }
+
+  .compare-row:last-child {
+    border-bottom: none;
+  }
+
+  .compare-row > div {
+    padding: 14px 16px;
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .compare-row > div:first-child {
+    border-right: 2px solid var(--ink);
+  }
+
+  /* ==========================================================
+     DISRUPTOR EXAMPLES MARQUEE
+     ========================================================== */
+  .disruptor-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin-top: var(--gap-lg);
+  }
+
+  .disruptor-item {
+    background: var(--paper-pure);
+    border: var(--border-medium);
+    padding: 12px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    box-shadow: 3px 3px 0 var(--ink);
+  }
+
+  .disruptor-item .old {
+    color: var(--ink-muted);
+    text-decoration: line-through;
+    text-decoration-color: var(--brand);
+    text-decoration-thickness: 2px;
+    margin-bottom: 4px;
+  }
+
+  .disruptor-item .new {
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  /* ==========================================================
+     STRESS SECTION (5 stressors + symptoms)
+     ========================================================== */
+  .stress-layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--gap-lg);
+  }
+
+  @media (max-width: 768px) {
+    .stress-layout { grid-template-columns: 1fr; }
+  }
+
+  .stressor-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-sm);
+  }
+
+  .stressor-item {
+    background: var(--paper-pure);
+    border: var(--border-thick);
+    box-shadow: var(--shadow-hard-sm);
+    padding: 14px 18px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .stressor-item .num {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    background: var(--brand);
+    color: var(--paper-pure);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    border: var(--border-medium);
+  }
+
+  .stressor-item .content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .stressor-item .name {
+    font-weight: 700;
+    font-size: 15px;
+    margin-bottom: 2px;
+  }
+
+  .stressor-item .desc {
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+
+  .symptoms-card {
+    background: var(--pink);
+    border: var(--border-thick);
+    box-shadow: var(--shadow-hard);
+    padding: var(--gap-md);
+  }
+
+  .symptoms-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: var(--gap-sm);
+  }
+
+  .symptom-group {
+    margin-bottom: var(--gap-sm);
+  }
+
+  .symptom-group .label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--brand-dark);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .symptom-group .items {
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
+  /* ==========================================================
+     KEY TAKEAWAYS (final section)
+     ========================================================== */
+  .takeaway-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: var(--gap-md);
+  }
+
+  .takeaway-card {
+    background: var(--paper-pure);
+    border: var(--border-thick);
+    padding: var(--gap-md);
+    box-shadow: var(--shadow-hard);
+    position: relative;
+  }
+
+  .takeaway-card:nth-child(odd) {
+    background: var(--yellow);
+  }
+
+  .takeaway-card:nth-child(even) {
+    background: var(--lime);
+  }
+
+  .takeaway-num {
+    position: absolute;
+    top: -16px;
+    left: 16px;
+    background: var(--brand);
+    color: var(--paper-pure);
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    border: var(--border-thick);
+    box-shadow: var(--shadow-hard-sm);
+    transform: rotate(-3deg);
+  }
+
+  .takeaway-card .takeaway-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 12px 0 8px;
+  }
+
+  .takeaway-card p {
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+  }
+
+  /* ==========================================================
+     STUDY PLAN TABLE
+     ========================================================== */
+  .study-table {
+    background: var(--paper-pure);
+    border: var(--border-thick);
+    box-shadow: var(--shadow-hard);
+    overflow: hidden;
+  }
+
+  .study-row {
+    display: grid;
+    grid-template-columns: 80px 1fr 100px;
+    gap: 0;
+    border-bottom: 2px solid var(--ink);
+  }
+
+  .study-row.head {
+    background: var(--ink);
+    color: var(--paper);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+  }
+
+  .study-row:last-child {
+    border-bottom: none;
+  }
+
+  .study-row > div {
+    padding: 12px 14px;
+    font-size: 14px;
+  }
+
+  .study-row > div:not(:last-child) {
+    border-right: 2px solid var(--ink);
+  }
+
+  .study-row .session {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    background: var(--yellow);
+  }
+
+  .study-row.head .session {
+    background: var(--ink);
+  }
+
+  /* ==========================================================
+     FOOTER
+     ========================================================== */
+  .footer {
+    background: var(--ink);
+    color: var(--paper);
+    padding: var(--gap-xl) 0;
+    border-top: var(--border-thick);
+    margin-top: var(--gap-2xl);
+  }
+
+  .footer-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--gap-lg);
+  }
+
+  @media (max-width: 768px) {
+    .footer-content { grid-template-columns: 1fr; }
+  }
+
+  .footer-title {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .footer-text {
+    font-size: 14px;
+    color: #B0B0B0;
+    margin-bottom: 8px;
+  }
+
+  .footer-meta {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--cyan);
+  }
+
+  /* ==========================================================
+     RESPONSIVE
+     ========================================================== */
+  @media (max-width: 640px) {
+    .hero { padding: var(--gap-xl) 0; }
+    .nav-links { display: none; }
+    .study-row { grid-template-columns: 60px 1fr 80px; }
+    .study-row > div { padding: 10px 8px; font-size: 12px; }
+    .compare-row > div { padding: 10px; font-size: 13px; }
+  }
+
+  /* Focus & motion */
+  a:focus-visible, button:focus-visible {
+    outline: 3px solid var(--brand);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- ==========================================================
+     STICKY NAV
+     ========================================================== -->
+<nav class="topnav">
+  <div class="container">
+    <div class="topnav-inner">
+      <a href="#top" class="nav-logo">
+        <span class="ch-num">CH.07</span>
+        <span>Quản trị Thay đổi</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#why">Vì sao</a></li>
+        <li><a href="#metaphors">Phép ẩn dụ</a></li>
+        <li><a href="#areas">4&nbsp;lĩnh vực</a></li>
+        <li><a href="#resistance">Kháng cự</a></li>
+        <li><a href="#stress">Stress</a></li>
+        <li><a href="#disruption">Đổi mới phá vỡ</a></li>
+        <li><a href="#takeaways">Tổng kết</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- ==========================================================
+     HERO
+     ========================================================== -->
+<section class="hero" id="top">
+  <div class="container">
+    <div class="hero-meta">CHƯƠNG&nbsp;7 — TÓM TẮT CHUYÊN SÂU</div>
+    <h1 class="hero-title">
+      Quản trị Thay đổi và<br>
+      <span class="accent">Đổi mới Phá vỡ</span>
+    </h1>
+    <p class="hero-sub">
+      Năng lực sống còn của doanh nghiệp hiện đại: thay đổi nhanh và đổi mới liên tục. Hỏi cựu lãnh đạo Kodak, Blockbuster, Borders thì biết.
+    </p>
+
+    <div class="hero-info">
+      <div class="hero-info-card">
+        <div class="hero-info-label">Nguồn</div>
+        <div class="hero-info-value">Robbins & Coulter — Management, ấn bản 15 (2021)</div>
+      </div>
+      <div class="hero-info-card">
+        <div class="hero-info-label">Thời gian đọc</div>
+        <div class="hero-info-value">60-70&nbsp;phút</div>
+      </div>
+      <div class="hero-info-card">
+        <div class="hero-info-label">Mục tiêu học tập</div>
+        <div class="hero-info-value">7&nbsp;LO chia 3&nbsp;lớp logic</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================
+     LO7.1 — WHY CHANGE
+     ========================================================== -->
+<section class="section" id="why">
+  <div class="container">
+    <span class="section-tag">LO 7.1</span>
+    <h2 class="section-title">Vì sao cần thay đổi?</h2>
+    <p class="section-sub">
+      Trong môi trường <strong>VUCA</strong> (Volatility, Uncertainty, Complexity, Ambiguity), thay đổi là hằng số duy nhất. Nhà quản trị phải sống chung với 8&nbsp;lực thúc đẩy — 4&nbsp;bên ngoài và 4&nbsp;bên trong.
+    </p>
+
+    <div class="reasons-grid">
+      <div class="reason-card">
+        <div class="reason-num">01</div>
+        <div class="reason-title">Nhu cầu khách hàng</div>
+        <div class="reason-desc">
+          Ford mở rộng từ bán xe sang chia sẻ xe, xe đạp điện, app điều hướng đa phương tiện. Burger King thử mở rộng menu nhưng phải bỏ <em>Satisfries</em> sau 1 năm.
+        </div>
+      </div>
+      <div class="reason-card">
+        <div class="reason-num">02</div>
+        <div class="reason-title">Luật chính phủ mới</div>
+        <div class="reason-desc">
+          5 nhóm luật chính: trung thực quảng cáo, lao động, môi trường, quyền riêng tư, an toàn-sức khỏe. EU Directive 2006/114/EC quy định quảng cáo so sánh.
+        </div>
+      </div>
+      <div class="reason-card">
+        <div class="reason-num">03</div>
+        <div class="reason-title">Công nghệ</div>
+        <div class="reason-desc">
+          Xe điện Tesla Model S thay đổi ngành ô&nbsp;tô. Pin solid-state của Toyota và Volkswagen có thể tiếp tục đảo lộn.
+        </div>
+      </div>
+      <div class="reason-card">
+        <div class="reason-num">04</div>
+        <div class="reason-title">Nền kinh tế</div>
+        <div class="reason-desc">
+          Suy thoái 2007-2009 đẩy thất nghiệp Mỹ từ 5% lên 10.8%. Trung Quốc kêu gọi <em>"kiểm soát tăng lương tối thiểu thận trọng"</em> để giúp doanh nghiệp.
+        </div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">★ INSIGHT QUAN TRỌNG</div>
+      <div class="callout-text">
+        "Hầu hết mọi người đều phản kháng bất kỳ thay đổi nào không đem lại tiền cho túi họ."
+      </div>
+      <div class="callout-stat">— Robbins, mở Chương&nbsp;7</div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================
+     LO7.2 — METAPHORS
+     ========================================================== -->
+<section class="section" id="metaphors" style="background: var(--paper-pure); border-top: var(--border-thick); border-bottom: var(--border-thick);">
+  <div class="container">
+    <span class="section-tag">LO 7.2</span>
+    <h2 class="section-title">Hai phép ẩn dụ về quá trình thay đổi</h2>
+    <p class="section-sub">
+      Bạn nhìn doanh nghiệp khách hàng theo phép ẩn dụ nào quyết định bạn đề xuất gì.
+    </p>
+
+    <div class="metaphor-grid">
+      <div class="metaphor-card calm">
+        <span class="metaphor-icon">⛵</span>
+        <div class="metaphor-name">PHÉP ẨN DỤ 1 — LEWIN</div>
+        <h3 class="metaphor-title">Calm Waters</h3>
+        <p class="metaphor-desc">
+          Tàu lớn vượt biển êm. Thuyền trưởng biết chính xác đi đâu. Thay đổi đến dưới dạng <em>cơn bão thỉnh thoảng</em>. Sau bão, mọi thứ trở lại bình thường.
+        </p>
+        <ul>
+          <li><strong>Unfreezing</strong> — chuẩn bị thay đổi (tăng driving forces hoặc giảm restraining forces)</li>
+          <li><strong>Changing</strong> — triển khai thay đổi thực sự</li>
+          <li><strong>Refreezing</strong> — củng cố hành vi mới (nếu bỏ qua, nhân viên quay lại cách làm cũ)</li>
+        </ul>
+      </div>
+
+      <div class="metaphor-card rapids">
+        <span class="metaphor-icon">🛶</span>
+        <div class="metaphor-name">PHÉP ẨN DỤ 2 — THỰC TẾ HÔM NAY</div>
+        <h3 class="metaphor-title">White-Water Rapids</h3>
+        <p class="metaphor-desc">
+          Bè nhỏ trên dòng sông cuồn cuộn ghềnh thác. Nửa tá người chưa từng làm việc với nhau, không quen sông, không chắc đích đến, đi vào ban đêm.
+        </p>
+        <ul>
+          <li>Thay đổi là <strong>bình thường và được mong đợi</strong></li>
+          <li>Quản trị thay đổi là <strong>quá trình liên tục</strong></li>
+          <li><strong>Không có khái niệm "trở về mặt nước phẳng lặng"</strong></li>
+          <li>Nhiều nhà quản trị không bao giờ ra khỏi ghềnh thác</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================
+     LO7.3 — 4 AREAS
+     ========================================================== -->
+<section class="section" id="areas">
+  <div class="container">
+    <span class="section-tag">LO 7.3</span>
+    <h2 class="section-title">Bốn lĩnh vực thay đổi</h2>
+    <p class="section-sub">
+      Nhà quản trị có 4 cái tay nắm để làm thay đổi xảy ra. Đa số dự án tái cơ cấu chạm vào ít nhất 2-3 lĩnh vực này.
+    </p>
+
+    <div class="lo-grid">
+      <div class="lo-card">
+        <div class="num">LĨNH VỰC 01</div>
+        <h3 class="lo-title">Strategy</h3>
+        <p>Thay đổi <em>cách đảm bảo thành công của tổ chức</em>. Không thay đổi chiến lược khi cần có thể chôn vùi cả công ty.</p>
+        <div class="ex">→ Ryanair: từ giá rẻ cắt mọi tiện nghi → buộc nâng chất lượng dịch vụ</div>
+      </div>
+      <div class="lo-card">
+        <div class="num">LĨNH VỰC 02</div>
+        <h3 class="lo-title">Structure</h3>
+        <p>Thay đổi <em>các thành phần cơ cấu và thiết kế</em>. Cách chắc chắn nhất để lay động công ty trì trệ — nhưng có thể gây hỗn loạn nếu thất bại.</p>
+        <div class="ex">→ Microsoft (Nadella 2014): doanh số +27%, cổ phiếu +208%</div>
+      </div>
+      <div class="lo-card">
+        <div class="num">LĨNH VỰC 03</div>
+        <h3 class="lo-title">Technology</h3>
+        <p>Thay đổi <em>công nghệ chuyển đầu vào thành đầu ra</em>: thiết bị mới, công cụ mới, tự động hóa, máy tính hóa.</p>
+        <div class="ex">→ Yotel dùng "nhân viên robot" mang hành lý, dọn phòng</div>
+      </div>
+      <div class="lo-card">
+        <div class="num">LĨNH VỰC 04</div>
+        <h3 class="lo-title">People</h3>
+        <p>Thay đổi <em>thái độ, kỳ vọng, nhận thức, hành vi</em>. Gọi là <strong>Organizational Development (OD)</strong> — phát triển tổ chức.</p>
+        <div class="ex">→ 4 kỹ thuật OD: Sensitivity, Survey feedback, Team building, Process consultation</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================
+     LO7.4 — RESISTANCE
+     ========================================================== -->
+<section class="section" id="resistance" style="background: var(--paper-pure); border-top: var(--border-thick); border-bottom: var(--border-thick);">
+  <div class="container">
+    <span class="section-tag">LO 7.4 — PHẦN 1</span>
+    <h2 class="section-title">Vì sao con người chống thay đổi?</h2>
+    <p class="section-sub">
+      Kháng cự của nhân viên là <strong>lý do hàng đầu khiến 70% sáng kiến thay đổi của công ty không đạt mục tiêu</strong>.
+    </p>
+
+    <div class="reasons-grid" style="margin-bottom: var(--gap-2xl);">
+      <div class="reason-card">
+        <div class="reason-num">01</div>
+        <div class="reason-title">Uncertainty</div>
+        <div class="reason-desc">Thay cái đã biết bằng cái chưa biết. Như sinh viên ra trường — đổi cái đã biết lấy cái chưa biết.</div>
+      </div>
+      <div class="reason-card">
+        <div class="reason-num">02</div>
+        <div class="reason-title">Habit</div>
+        <div class="reason-desc">Cuộc sống đã đủ phức tạp. Ta dựa vào thói quen hoặc phản ứng được lập trình sẵn cho hàng trăm quyết định mỗi ngày.</div>
+      </div>
+      <div class="reason-card">
+        <div class="reason-num">03</div>
+        <div class="reason-title">Fear of Loss</div>
+        <div class="reason-desc">Sợ mất địa vị, tiền, quyền lực, tình bạn, tiện lợi. Càng đầu tư nhiều, càng kháng cự mạnh.</div>
+      </div>
+      <div class="reason-card">
+        <div class="reason-num">04</div>
+        <div class="reason-title">Incompatibility</div>
+        <div class="reason-desc">Tin thay đổi không phù hợp mục tiêu tổ chức. <strong>Loại này có thể có lợi</strong> — tín hiệu nhân viên thực sự quan tâm.</div>
+      </div>
+    </div>
+
+    <span class="section-tag">LO 7.4 — PHẦN 2</span>
+    <h2 class="section-title">6 kỹ thuật giảm kháng cự</h2>
+    <p class="section-sub">
+      Toolbox dùng được ngay khi tư vấn dự án chuyển đổi, tái cơ cấu, M&A. Chọn kỹ thuật theo <em>type</em> và <em>source</em> của kháng cự.
+    </p>
+
+    <div class="tech-grid">
+      <div class="tech-card">
+        <div class="header">
+          <span class="header-num">01</span>
+          <span class="header-title">Education & Communication</span>
+        </div>
+        <div class="body">
+          <div class="tech-row">
+            <div class="tech-label">Khi nào dùng</div>
+            <div class="tech-text">Kháng cự do thông tin sai</div>
+          </div>
+          <div class="tech-row">
+            <div class="tech-label">Lợi ích</div>
+            <div class="tech-text pro">Làm rõ hiểu lầm</div>
+          </div>
+          <div class="tech-row">
+            <div class="tech-label">Bất lợi</div>
+            <div class="tech-text con">Không hiệu quả khi thiếu niềm tin</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tech-card">
+        <div class="header">
+          <span class="header-num">02</span>
+          <span class="header-title">Participation</span>
+        </div>
+        <div class="body">
+          <div class="tech-row">
+            <div class="tech-label">Khi nào dùng</div>
+            <div class="tech-text">Người kháng cự có chuyên môn</div>
+          </div>
+          <div class="tech-row">
+            <div class="tech-label">Lợi ích</div>
+            <div class="tech-text pro">Tăng tham gia và chấp nhận</div>
+          </div>
+          <div class="tech-row">
+            <div class="tech-label">Bất lợi</div>
+            <div class="tech-text con">Tốn thời gian; có thể giải pháp kém</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tech-card">
+        <div class="header">
+          <span class="header-num">03</span>
+          <span class="header-title">Facilitation & Support</span>
+        </div>
+        <div class="body">
+          <div class="tech-row">
+            <div class="tech-label">Khi nào dùng</div>
+            <div class="tech-text">Người kháng cự lo sợ và lo lắng</div>
+          </div>
+          <div class="tech-row">
+            <div class="tech-label">Lợi ích</div>
+            <div class="tech-text pro">Giúp điều chỉnh cần thiết</div>
+          </div>
+          <div class="tech-row">
+            <div class="tech-label">Bất lợi</div>
+            <div class="tech-text con">Tốn kém; không đảm bảo thành công</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tech-card">
+        <div class="header">
+          <span class="header-num">04</span>
+          <span class="header-title">Negotiation</span>
+        </div>
+        <div class="body">
+          <div class="tech-row">
+            <div class="tech-label">Khi nào dùng</div>
+            <div class="tech-text">Kháng cự từ nhóm có quyền lực</div>
+          </div>
+          <div class="tech-row">
+            <div class="tech-label">Lợi ích</div>
+            <div class="tech-text pro">"Mua" được sự cam kết</div>
+          </div>
+          <div class="tech-row">
+            <div class="tech-label">Bất lợi</div>
+            <div class="tech-text con">Chi phí cao; mở cửa cho người khác đòi áp lực</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tech-card warning">
+        <div class="header">
+          <span class="header-num">05</span>
+          <span class="header-title">⚠ Manipulation & Co-optation</span>
+        </div>
+        <div class="body">
+          <div class="tech-row">
+            <div class="tech-label">Khi nào dùng</div>
+            <div class="tech-text">Cần ủng hộ của nhóm có quyền lực</div>
+          </div>
+          <div class="tech-row">
+            <div class="tech-label">Lợi ích</div>
+            <div class="tech-text pro">Rẻ, dễ giành ủng hộ</div>
+          </div>
+          <div class="tech-row">
+            <div class="tech-label">Cảnh báo đạo đức</div>
+            <div class="tech-text con">Có thể phản tác dụng, làm change agent mất uy tín</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tech-card warning">
+        <div class="header">
+          <span class="header-num">06</span>
+          <span class="header-title">⚠ Coercion</span>
+        </div>
+        <div class="body">
+          <div class="tech-row">
+            <div class="tech-label">Khi nào dùng</div>
+            <div class="tech-text">Cần ủng hộ của nhóm có quyền lực</div>
+          </div>
+          <div class="tech-row">
+            <div class="tech-label">Lợi ích</div>
+            <div class="tech-text pro">Rẻ, dễ giành ủng hộ</div>
+          </div>
+          <div class="tech-row">
+            <div class="tech-label">Cảnh báo đạo đức</div>
+            <div class="tech-text con">Có thể bất hợp pháp; mất uy tín</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================
+     LO7.5 — STRESS
+     ========================================================== -->
+<section class="section" id="stress">
+  <div class="container">
+    <span class="section-tag">LO 7.5</span>
+    <h2 class="section-title">Stress của nhân viên</h2>
+    <p class="section-sub">
+      Khảo sát American Institute of Stress: <strong>40% lao động Mỹ nói công việc rất hoặc cực kỳ căng thẳng</strong>. Hơn 2.000 người Nhật tự tử năm 2016 do stress liên quan công việc.
+    </p>
+
+    <div class="stress-layout">
+      <div class="stressor-list">
+        <div class="stressor-item">
+          <div class="num">01</div>
+          <div class="content">
+            <div class="name">Task Demands</div>
+            <div class="desc">Đòi hỏi nhiệm vụ — thiết kế công việc, hạn ngạch, phụ thuộc giữa các nhiệm vụ. <em>Autonomy</em> ngược lại làm giảm stress.</div>
+          </div>
+        </div>
+        <div class="stressor-item">
+          <div class="num">02</div>
+          <div class="content">
+            <div class="name">Role Demands</div>
+            <div class="desc">3 dạng: <em>Role conflict</em> (kỳ vọng khó hòa giải), <em>Role overload</em> (làm nhiều hơn thời gian), <em>Role ambiguity</em> (kỳ vọng không rõ).</div>
+          </div>
+        </div>
+        <div class="stressor-item">
+          <div class="num">03</div>
+          <div class="content">
+            <div class="name">Interpersonal Demands</div>
+            <div class="desc">Áp lực do nhân viên khác. Thiếu hỗ trợ xã hội từ đồng nghiệp gây stress đáng kể, đặc biệt với người có nhu cầu xã hội cao.</div>
+          </div>
+        </div>
+        <div class="stressor-item">
+          <div class="num">04</div>
+          <div class="content">
+            <div class="name">Organization Structure</div>
+            <div class="desc">Quá nhiều quy tắc, hoặc thiếu cơ hội tham gia ra quyết định ảnh hưởng đến mình.</div>
+          </div>
+        </div>
+        <div class="stressor-item">
+          <div class="num">05</div>
+          <div class="content">
+            <div class="name">Organizational Leadership</div>
+            <div class="desc">Phong cách giám sát của các nhà quản trị tạo văn hóa căng thẳng, sợ hãi — áp lực phi thực tế ngắn hạn, kiểm soát quá chặt.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="symptoms-card">
+        <h3 class="symptoms-title">3 nhóm triệu chứng</h3>
+        <div class="symptom-group">
+          <div class="label">Physical (Thể chất)</div>
+          <div class="items">Tăng nhịp tim, huyết áp, đau đầu, nguy cơ đau tim</div>
+        </div>
+        <div class="symptom-group">
+          <div class="label">Psychological (Tâm lý)</div>
+          <div class="items">Bất mãn, lo lắng, cáu gắt, buồn chán, trì hoãn</div>
+        </div>
+        <div class="symptom-group">
+          <div class="label">Behavioral (Hành vi)</div>
+          <div class="items">Vắng mặt, nghỉ việc, thay đổi ăn uống, tăng hút thuốc, rượu, rối loạn giấc ngủ</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================
+     LO7.7 — DISRUPTIVE INNOVATION
+     ========================================================== -->
+<section class="section" id="disruption" style="background: var(--ink); color: var(--paper); border-top: var(--border-thick); border-bottom: var(--border-thick);">
+  <div class="container">
+    <span class="section-tag" style="background: var(--brand); color: var(--paper-pure);">LO 7.7 — STAR ★</span>
+    <h2 class="section-title" style="color: var(--paper);">Đổi mới mang tính phá vỡ</h2>
+    <p class="section-sub" style="color: #B0B0B0;">
+      Năm 1988, Kodak có 170.000 nhân viên và bán 85% giấy ảnh toàn thế giới. Chỉ vài năm sau, mô hình kinh doanh biến mất, họ phá sản. <strong style="color: var(--yellow);">Phim ảnh đi vào dĩ vãng như xe&nbsp;ngựa.</strong>
+    </p>
+
+    <div class="compare-table">
+      <div class="compare-header">
+        <div>★ Disruptive Innovation</div>
+        <div style="color: var(--ink);">Sustaining Innovation</div>
+      </div>
+      <div class="compare-row" style="background: var(--paper-pure); color: var(--ink);">
+        <div>Thay đổi <strong>triệt để</strong> các quy luật ngành</div>
+        <div>Thay đổi <strong>nhỏ và tăng dần</strong> trên sản phẩm đã có</div>
+      </div>
+      <div class="compare-row" style="background: var(--paper-pure); color: var(--ink);">
+        <div>Thường từ <strong>công ty nhỏ</strong>, ít nguồn lực</div>
+        <div>Thường từ <strong>công ty đã thiết lập</strong></div>
+      </div>
+      <div class="compare-row" style="background: var(--paper-pure); color: var(--ink);">
+        <div>Phục vụ <strong>phân khúc bị bỏ qua</strong> với giá thấp</div>
+        <div>Phục vụ <strong>khách hàng hiện tại</strong> với cải tiến</div>
+      </div>
+      <div class="compare-row" style="background: var(--paper-pure); color: var(--ink);">
+        <div><em>Smartphone phá vỡ máy ảnh, GPS riêng</em></div>
+        <div><em>TV độ phân giải cao chỉ cải thiện chất lượng hình</em></div>
+      </div>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 24px; margin: var(--gap-xl) 0 var(--gap-sm); color: var(--yellow);">
+      Disruptor đã thắng
+    </h3>
+    <p style="color: #B0B0B0; margin-bottom: var(--gap-md);">
+      Thành công sinh thành công. Nhưng <strong>thành công cũng có thể sinh thất bại</strong>.
+    </p>
+
+    <div class="disruptor-grid">
+      <div class="disruptor-item">
+        <div class="old">Đĩa CD</div>
+        <div class="new">→ Apple iTunes</div>
+      </div>
+      <div class="disruptor-item">
+        <div class="old">Máy đánh chữ</div>
+        <div class="new">→ IBM PC</div>
+      </div>
+      <div class="disruptor-item">
+        <div class="old">Bách khoa toàn thư</div>
+        <div class="new">→ Wikipedia</div>
+      </div>
+      <div class="disruptor-item">
+        <div class="old">Đại lý du lịch</div>
+        <div class="new">→ Expedia</div>
+      </div>
+      <div class="disruptor-item">
+        <div class="old">Bản đồ giấy</div>
+        <div class="new">→ GPS Garmin</div>
+      </div>
+      <div class="disruptor-item">
+        <div class="old">Sách bìa mềm</div>
+        <div class="new">→ Kindle</div>
+      </div>
+      <div class="disruptor-item">
+        <div class="old">Taxi</div>
+        <div class="new">→ Uber</div>
+      </div>
+      <div class="disruptor-item">
+        <div class="old">Khách sạn</div>
+        <div class="new">→ Airbnb</div>
+      </div>
+    </div>
+
+    <div style="background: var(--brand); color: var(--paper-pure); border: 3px solid var(--paper); padding: var(--gap-lg); margin-top: var(--gap-xl); box-shadow: 8px 8px 0 var(--yellow);">
+      <div style="font-family: var(--font-mono); font-size: 12px; font-weight: 700; color: var(--yellow); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: var(--gap-sm);">
+        Chiến lược cứu công ty lớn
+      </div>
+      <h3 style="font-family: var(--font-display); font-size: 28px; font-weight: 700; margin-bottom: var(--gap-sm); color: var(--paper-pure);">
+        Skunk Works
+      </h3>
+      <p style="font-size: 16px; line-height: 1.65; color: var(--paper-pure);">
+        <strong>Nhóm nhỏ trong tổ chức lớn, có mức tự chủ cao, không bị bộ máy tổ chức cản trở</strong>, có sứ mệnh phát triển dự án vì mục đích đổi mới triệt để. IBM phát triển PC bằng cách lập đội ở Florida — cách trụ sở Armonk, New York 1.200 dặm. Steve Jobs lập đơn vị riêng tại Apple cho Macintosh. Google/Alphabet tạo Google&nbsp;X cách trụ sở nửa dặm để phát triển xe tự lái.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================
+     KEY TAKEAWAYS FOR CONSULTING
+     ========================================================== -->
+<section class="section" id="takeaways">
+  <div class="container">
+    <span class="section-tag">TỔNG KẾT</span>
+    <h2 class="section-title">3 ý quan trọng nhất cho nghề tư vấn</h2>
+    <p class="section-sub">
+      Chương 7 cung cấp 3 khung dùng được ngay khi tư vấn dự án chuyển đổi. Đây là phần dễ áp dụng nhất.
+    </p>
+
+    <div class="takeaway-grid" style="margin-top: var(--gap-xl);">
+      <div class="takeaway-card">
+        <div class="takeaway-num">01</div>
+        <div class="takeaway-title">6 kỹ thuật giảm kháng cự</div>
+        <p>Dùng ngay khi tư vấn dự án chuyển đổi (transformation), tái cơ cấu, M&A. Chọn kỹ thuật theo <em>type</em> và <em>source</em> của kháng cự — không một mình một thuốc.</p>
+      </div>
+      <div class="takeaway-card">
+        <div class="takeaway-num">02</div>
+        <div class="takeaway-title">4 yếu tố thuận lợi cho thay đổi văn hóa</div>
+        <p>Khủng hoảng kịch tính, lãnh đạo đổi chủ, tổ chức trẻ và nhỏ, văn hóa yếu. Đánh giá xem khách có <em>thời điểm phù hợp</em> để thay đổi văn hóa không.</p>
+      </div>
+      <div class="takeaway-card">
+        <div class="takeaway-num">03</div>
+        <div class="takeaway-title">Skunk Works cho công ty lớn</div>
+        <p>Lời khuyên cụ thể nhất Robbins đưa cho công ty lớn muốn không bị disruptor đánh. Khi tư vấn doanh nghiệp lo bị phá vỡ, đề xuất lập skunk works tách biệt cả vật lý và cấu trúc.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================
+     STUDY PLAN
+     ========================================================== -->
+<section class="section" style="background: var(--paper-pure); border-top: var(--border-thick);">
+  <div class="container">
+    <span class="section-tag">LỘ TRÌNH ÔN TẬP</span>
+    <h2 class="section-title">7 lần ôn theo Ebbinghaus</h2>
+    <p class="section-sub">
+      Khoảng cách thời gian quan trọng hơn thời lượng. Học 5&nbsp;lần mỗi lần 15&nbsp;phút trải qua 5&nbsp;ngày tốt hơn nhiều so với 1&nbsp;lần 75&nbsp;phút.
+    </p>
+
+    <div class="study-table">
+      <div class="study-row head">
+        <div class="session">LẦN</div>
+        <div>Việc làm</div>
+        <div>Thời lượng</div>
+      </div>
+      <div class="study-row">
+        <div class="session">1</div>
+        <div>Cuối ngày học (Ngày&nbsp;0): Lướt cheatsheet, không đọc lại nội dung</div>
+        <div>15&nbsp;phút</div>
+      </div>
+      <div class="study-row">
+        <div class="session">2</div>
+        <div>Ngày&nbsp;1: Tự kể không nhìn tài liệu — flashcards lần đầu</div>
+        <div>20&nbsp;phút</div>
+      </div>
+      <div class="study-row">
+        <div class="session">3</div>
+        <div>Ngày&nbsp;3: Áp khái niệm vào case thực tế (Vinamilk, Vietcombank)</div>
+        <div>30&nbsp;phút</div>
+      </div>
+      <div class="study-row">
+        <div class="session">4</div>
+        <div>Ngày&nbsp;7: Vẽ lại sơ đồ tổng thể từ trí nhớ</div>
+        <div>30&nbsp;phút</div>
+      </div>
+      <div class="study-row">
+        <div class="session">5</div>
+        <div>Ngày&nbsp;16: Giảng cho người khác hoặc tự ghi âm 10&nbsp;phút</div>
+        <div>45&nbsp;phút</div>
+      </div>
+      <div class="study-row">
+        <div class="session">6</div>
+        <div>Ngày&nbsp;35: Củng cố trí nhớ trung hạn</div>
+        <div>20&nbsp;phút</div>
+      </div>
+      <div class="study-row">
+        <div class="session">7</div>
+        <div>Ngày&nbsp;75: Chuyển sang trí nhớ rất bền (6+&nbsp;tháng)</div>
+        <div>15&nbsp;phút</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================
+     FOOTER
+     ========================================================== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <div>
+        <div class="footer-title">Chương 7 — Quản trị Thay đổi và Đổi mới Phá vỡ</div>
+        <div class="footer-text">Tóm tắt chuyên sâu phục vụ ôn tập và áp dụng vào nghề tư vấn quản trị doanh nghiệp.</div>
+        <div class="footer-text">Sách: <em>Management</em> — Stephen P. Robbins & Mary A. Coulter, ấn bản 15 (Pearson, 2021).</div>
+      </div>
+      <div>
+        <div class="footer-meta">★ TÀI LIỆU CỦA</div>
+        <div class="footer-text" style="color: var(--paper); font-weight: 700; font-size: 16px; margin-top: 4px;">Vũ Hải</div>
+        <div class="footer-meta" style="margin-top: 12px;">Business Consultant</div>
+        <div class="footer-text">Fitness · Franchise · Leadership</div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,1868 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chương 4 — Quản trị trong Môi trường Toàn cầu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap&subset=vietnamese" rel="stylesheet">
+<style>
+:root {
+  --brand: #c73937;
+  --brand-dark: #a82d2c;
+  --ink: #1a1a1a;
+  --ink-soft: #2d2d2d;
+  --paper: #faf8f3;
+  --paper-warm: #f5f1e8;
+  --yellow: #F5E4B8;
+  --cyan: #C4DEDC;
+  --lime: #DDE4C5;
+  --pink: #F0DCDD;
+  --border-w: 3px;
+  --border-w-thin: 2px;
+  --shadow-offset: 6px 6px 0;
+  --shadow-offset-sm: 4px 4px 0;
+  --shadow-offset-lg: 8px 8px 0;
+  --radius: 4px;
+  --gap-xs: 8px;
+  --gap-sm: 16px;
+  --gap-md: 24px;
+  --gap-lg: 40px;
+  --gap-xl: 64px;
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+* { font-style: normal !important; box-sizing: border-box; font-optical-sizing: auto; }
+*::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.6;
+  font-size: 16px;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  background-image: radial-gradient(circle at 1px 1px, rgba(26,26,26,0.08) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+h1, h2, h3, h4, h5, h6, .title, .heading, .hero-title, .section-title, .card-title {
+  text-wrap: balance;
+  font-family: var(--font-display);
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+p, li, .body-text { text-wrap: pretty; }
+p { margin: 0 0 1em 0; }
+strong, b { font-weight: 700; }
+
+a {
+  color: var(--brand);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  font-weight: 600;
+}
+a:hover { background: var(--yellow); color: var(--ink); }
+a:focus-visible { outline: 3px solid var(--brand); outline-offset: 3px; }
+
+.container { max-width: 1200px; margin: 0 auto; padding: var(--gap-md); }
+@media (min-width: 768px) { .container { padding: var(--gap-lg); } }
+
+/* HERO */
+.hero {
+  border: var(--border-w) solid var(--ink);
+  background: var(--paper);
+  box-shadow: var(--shadow-offset-lg) var(--ink);
+  padding: var(--gap-lg) var(--gap-md);
+  margin-bottom: var(--gap-xl);
+  position: relative;
+  border-radius: var(--radius);
+}
+@media (min-width: 768px) { .hero { padding: var(--gap-xl) var(--gap-lg); } }
+
+.hero-badge {
+  display: inline-block;
+  background: var(--brand);
+  color: var(--paper);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 12px;
+  border: var(--border-w-thin) solid var(--ink);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: var(--gap-md);
+  transform: rotate(-1.5deg);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.hero-title {
+  font-size: clamp(2.25rem, 6vw, 4.5rem);
+  margin-bottom: var(--gap-md);
+  line-height: 1;
+}
+
+.hero-title .accent {
+  background: var(--cyan);
+  padding: 0 8px;
+  border: var(--border-w-thin) solid var(--ink);
+  display: inline-block;
+  transform: rotate(-1deg);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.hero-title .accent-2 {
+  background: var(--yellow);
+  padding: 0 8px;
+  border: var(--border-w-thin) solid var(--ink);
+  display: inline-block;
+  transform: rotate(1deg);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.hero-sub {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  color: var(--ink-soft);
+  max-width: 720px;
+  font-weight: 500;
+  text-wrap: balance;
+}
+
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-sm);
+  margin-top: var(--gap-md);
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+.hero-meta span {
+  background: var(--paper-warm);
+  border: var(--border-w-thin) solid var(--ink);
+  padding: 4px 10px;
+  font-weight: 600;
+}
+
+/* STICKER */
+.sticker {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  background: var(--cyan);
+  border: var(--border-w-thin) solid var(--ink);
+  padding: 6px 10px;
+  box-shadow: 3px 3px 0 var(--ink);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  z-index: 10;
+}
+.sticker-pink { background: var(--pink); }
+.sticker-yellow { background: var(--yellow); }
+.sticker-lime { background: var(--lime); }
+
+/* SECTION */
+.section { margin-bottom: var(--gap-xl); position: relative; }
+.section-num {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--brand);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: var(--gap-xs);
+  display: block;
+}
+.section-title {
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  margin-bottom: var(--gap-md);
+  padding-bottom: var(--gap-sm);
+  border-bottom: var(--border-w) solid var(--ink);
+}
+.section-title .underline {
+  background: var(--lime);
+  padding: 0 6px;
+  border: var(--border-w-thin) solid var(--ink);
+  display: inline-block;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+/* CARD */
+.card {
+  border: var(--border-w) solid var(--ink);
+  background: var(--paper);
+  box-shadow: var(--shadow-offset) var(--ink);
+  border-radius: var(--radius);
+  margin-bottom: var(--gap-md);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.card-header {
+  background: var(--brand);
+  color: var(--paper);
+  border-bottom: var(--border-w-thin) solid var(--ink);
+  padding: var(--gap-sm) var(--gap-md);
+}
+.card-header.bg-yellow { background: var(--yellow); color: var(--ink); }
+.card-header.bg-cyan { background: var(--cyan); color: var(--ink); }
+.card-header.bg-lime { background: var(--lime); color: var(--ink); }
+.card-header.bg-pink { background: var(--pink); color: var(--ink); }
+.card-header.bg-ink { background: var(--ink); color: var(--paper); }
+
+.card-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 4px;
+  opacity: 0.85;
+}
+.card-title {
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  font-weight: 700;
+}
+.card-body { padding: var(--gap-md); }
+.card-body > *:last-child { margin-bottom: 0; }
+.card-tilt-l { transform: rotate(-1deg); }
+.card-tilt-r { transform: rotate(1deg); }
+
+/* GRID */
+.grid { display: grid; gap: var(--gap-md); }
+.grid-2 { grid-template-columns: 1fr; }
+.grid-3 { grid-template-columns: 1fr; }
+.grid-4 { grid-template-columns: 1fr; }
+
+@media (min-width: 640px) { .grid-2 { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 768px) {
+  .grid-3 { grid-template-columns: repeat(3, 1fr); }
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 1024px) { .grid-4 { grid-template-columns: repeat(4, 1fr); } }
+
+/* NUMBERED LIST */
+.num-list { list-style: none; padding: 0; margin: 0; }
+.num-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--gap-sm);
+  padding: var(--gap-sm) 0;
+  border-bottom: var(--border-w-thin) dashed var(--ink);
+  min-width: 0;
+}
+.num-list li:last-child { border-bottom: none; }
+.num-list .num {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  border-radius: var(--radius);
+}
+.num-list .num.brand { background: var(--brand); }
+.num-list .num.lg { width: 44px; height: 44px; font-size: 16px; }
+.num-list .content { flex: 1; min-width: 0; }
+.num-list .content strong {
+  display: block;
+  margin-bottom: 4px;
+  font-family: var(--font-display);
+  font-size: 1.1em;
+}
+
+/* TABLE */
+.table-wrap {
+  border: var(--border-w) solid var(--ink);
+  background: var(--paper);
+  box-shadow: var(--shadow-offset) var(--ink);
+  border-radius: var(--radius);
+  overflow-x: auto;
+  margin-bottom: var(--gap-md);
+}
+table { width: 100%; border-collapse: collapse; font-family: var(--font-body); }
+table th {
+  background: var(--ink);
+  color: var(--paper);
+  text-align: left;
+  padding: var(--gap-sm);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: var(--border-w) solid var(--ink);
+}
+table td {
+  padding: var(--gap-sm);
+  border-bottom: var(--border-w-thin) solid var(--ink);
+  vertical-align: top;
+  font-size: 15px;
+}
+table tr:last-child td { border-bottom: none; }
+table tr:nth-child(even) td { background: var(--paper-warm); }
+table td:first-child {
+  font-weight: 600;
+  border-right: var(--border-w-thin) dashed var(--ink);
+}
+
+/* QUOTE */
+.quote {
+  background: var(--yellow);
+  border: var(--border-w) solid var(--ink);
+  box-shadow: var(--shadow-offset) var(--ink);
+  border-radius: var(--radius);
+  padding: var(--gap-md);
+  margin: var(--gap-md) 0;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 500;
+  position: relative;
+  text-wrap: balance;
+}
+.quote::before {
+  content: """;
+  position: absolute;
+  top: -20px;
+  left: var(--gap-sm);
+  font-size: 5rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--brand);
+  background: var(--paper);
+  border: var(--border-w-thin) solid var(--ink);
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  border-radius: var(--radius);
+}
+.quote-author {
+  display: block;
+  margin-top: var(--gap-sm);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-soft);
+}
+.quote.bg-cyan { background: var(--cyan); }
+.quote.bg-lime { background: var(--lime); }
+.quote.bg-pink { background: var(--pink); }
+
+/* STAT */
+.stat-grid { display: grid; gap: var(--gap-sm); grid-template-columns: 1fr; }
+@media (min-width: 640px) { .stat-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .stat-grid { grid-template-columns: repeat(4, 1fr); } }
+.stat {
+  background: var(--paper);
+  border: var(--border-w) solid var(--ink);
+  box-shadow: var(--shadow-offset-sm) var(--ink);
+  padding: var(--gap-sm);
+  text-align: center;
+  border-radius: var(--radius);
+}
+.stat-num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  color: var(--brand);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.stat-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink-soft);
+}
+
+/* CALLOUT */
+.callout {
+  border: var(--border-w) solid var(--ink);
+  background: var(--cyan);
+  box-shadow: var(--shadow-offset) var(--ink);
+  border-radius: var(--radius);
+  padding: var(--gap-md);
+  margin: var(--gap-md) 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+}
+.callout.tip { background: var(--lime); }
+.callout.warning { background: var(--pink); }
+.callout.example { background: var(--yellow); }
+.callout-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 4px 8px;
+  display: inline-block;
+  align-self: flex-start;
+  border-radius: var(--radius);
+}
+.callout-body { margin: 0; font-size: 15px; }
+.callout-body p:last-child { margin-bottom: 0; }
+
+/* TOC */
+.toc {
+  border: var(--border-w) solid var(--ink);
+  background: var(--paper);
+  box-shadow: var(--shadow-offset) var(--ink);
+  border-radius: var(--radius);
+  padding: var(--gap-md);
+  margin-bottom: var(--gap-xl);
+}
+.toc-title {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 6px 12px;
+  display: inline-block;
+  margin-bottom: var(--gap-md);
+}
+.toc-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: var(--gap-xs);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 768px) { .toc-list { grid-template-columns: repeat(2, 1fr); } }
+.toc-list a {
+  display: block;
+  padding: 10px 14px;
+  background: var(--paper-warm);
+  border: var(--border-w-thin) solid var(--ink);
+  text-decoration: none;
+  color: var(--ink);
+  font-weight: 500;
+  font-size: 14px;
+  border-radius: var(--radius);
+  transition: transform 0.1s ease-out, box-shadow 0.1s ease-out;
+}
+.toc-list a:hover {
+  background: var(--yellow);
+  transform: translate(-2px, -2px);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+.toc-list a .toc-num {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--brand);
+  margin-right: 8px;
+}
+
+/* HIGHLIGHT */
+.hl { background: var(--yellow); padding: 1px 5px; border: var(--border-w-thin) solid var(--ink); font-weight: 600; border-radius: 2px; }
+.hl-cyan { background: var(--cyan); padding: 1px 5px; border: var(--border-w-thin) solid var(--ink); font-weight: 600; border-radius: 2px; }
+.hl-pink { background: var(--pink); padding: 1px 5px; border: var(--border-w-thin) solid var(--ink); font-weight: 600; border-radius: 2px; }
+.hl-lime { background: var(--lime); padding: 1px 5px; border: var(--border-w-thin) solid var(--ink); font-weight: 600; border-radius: 2px; }
+
+/* PENDULUM (con lắc 2 cực) */
+.pendulum {
+  display: grid;
+  gap: var(--gap-md);
+  grid-template-columns: 1fr;
+  align-items: center;
+  margin: var(--gap-md) 0;
+}
+@media (min-width: 1024px) { .pendulum { grid-template-columns: 1fr auto 1fr; } }
+
+.pendulum-side {
+  border: var(--border-w) solid var(--ink);
+  box-shadow: var(--shadow-offset) var(--ink);
+  border-radius: var(--radius);
+  padding: var(--gap-md);
+  text-align: center;
+}
+.pendulum-side.left { background: var(--cyan); }
+.pendulum-side.right { background: var(--pink); }
+
+.pendulum-side .ps-icon {
+  font-size: 2.5rem;
+  line-height: 1;
+  margin-bottom: var(--gap-xs);
+}
+.pendulum-side .ps-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.3rem;
+  margin-bottom: var(--gap-xs);
+}
+.pendulum-side .ps-action {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 4px 10px;
+  display: inline-block;
+  border-radius: var(--radius);
+  margin-top: var(--gap-xs);
+}
+
+.pendulum-arrow {
+  font-family: var(--font-mono);
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  color: var(--brand);
+  display: none;
+}
+@media (min-width: 1024px) { .pendulum-arrow { display: block; } }
+
+/* 3 ATTITUDES */
+.attitude-grid {
+  display: grid;
+  gap: var(--gap-md);
+  grid-template-columns: 1fr;
+  margin: var(--gap-md) 0;
+}
+@media (min-width: 768px) { .attitude-grid { grid-template-columns: repeat(3, 1fr); } }
+
+.attitude-card {
+  border: var(--border-w) solid var(--ink);
+  box-shadow: var(--shadow-offset) var(--ink);
+  border-radius: var(--radius);
+  padding: var(--gap-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+  position: relative;
+}
+.attitude-card .att-num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 3rem;
+  line-height: 1;
+  color: var(--brand);
+  margin-bottom: var(--gap-xs);
+}
+.attitude-card .att-en {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--ink-soft);
+  letter-spacing: 0.05em;
+}
+.attitude-card .att-vi {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.3rem;
+}
+.attitude-card .att-belief {
+  font-style: normal;
+  background: var(--paper);
+  border: var(--border-w-thin) solid var(--ink);
+  padding: 8px 12px;
+  border-radius: var(--radius);
+  font-size: 13px;
+  margin-top: var(--gap-xs);
+}
+.attitude-card.eth { background: var(--pink); }
+.attitude-card.poly { background: var(--cyan); }
+.attitude-card.geo { background: var(--lime); }
+
+/* TIMELINE */
+.timeline-flow {
+  margin: var(--gap-md) 0;
+  position: relative;
+  padding-left: 0;
+}
+.timeline-item {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: var(--gap-sm);
+  padding: var(--gap-sm) 0;
+  border-bottom: var(--border-w-thin) dashed var(--ink);
+  align-items: start;
+}
+.timeline-item:last-child { border-bottom: none; }
+.timeline-year {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 14px;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 6px 10px;
+  border-radius: var(--radius);
+  text-align: center;
+  align-self: start;
+}
+.timeline-year.brand { background: var(--brand); }
+.timeline-event { font-size: 14px; min-width: 0; }
+.timeline-event strong {
+  display: block;
+  margin-bottom: 2px;
+  font-family: var(--font-display);
+  font-size: 1.05em;
+}
+
+/* LADDER (6 bậc) */
+.ladder {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: var(--gap-sm);
+  margin: var(--gap-md) 0;
+}
+.ladder-step {
+  border: var(--border-w) solid var(--ink);
+  box-shadow: var(--shadow-offset-sm) var(--ink);
+  border-radius: var(--radius);
+  padding: var(--gap-md);
+  display: grid;
+  grid-template-columns: 60px 1fr;
+  gap: var(--gap-md);
+  align-items: start;
+  min-width: 0;
+}
+.ladder-step .ls-num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 2.5rem;
+  line-height: 1;
+  color: var(--brand);
+}
+.ladder-step .ls-content { min-width: 0; }
+.ladder-step .ls-name-en {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  letter-spacing: 0.05em;
+  margin-bottom: 2px;
+}
+.ladder-step .ls-name-vi {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+  margin-bottom: var(--gap-xs);
+}
+.ladder-step .ls-desc { font-size: 14px; line-height: 1.5; margin: 0; }
+.ladder-step:nth-child(1) { background: var(--paper-warm); }
+.ladder-step:nth-child(2) { background: var(--lime); }
+.ladder-step:nth-child(3) { background: var(--cyan); }
+.ladder-step:nth-child(4) { background: var(--yellow); }
+.ladder-step:nth-child(5) { background: var(--pink); }
+.ladder-step:nth-child(6) { background: var(--brand); color: var(--paper); }
+.ladder-step:nth-child(6) .ls-num { color: var(--yellow); }
+.ladder-step:nth-child(6) .ls-name-en { color: var(--paper); opacity: 0.85; }
+.ladder-step:nth-child(6) .ls-desc { color: var(--paper); }
+
+/* DIM CARDS (Hofstede 5 + GLOBE 9) */
+.dim-grid {
+  display: grid;
+  gap: var(--gap-md);
+  grid-template-columns: 1fr;
+  margin: var(--gap-md) 0;
+}
+@media (min-width: 640px) { .dim-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .dim-grid { grid-template-columns: repeat(3, 1fr); } }
+
+.dim-card {
+  background: var(--paper);
+  border: var(--border-w) solid var(--ink);
+  box-shadow: var(--shadow-offset-sm) var(--ink);
+  border-radius: var(--radius);
+  padding: var(--gap-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+  min-width: 0;
+}
+.dim-card .dim-num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 2.5rem;
+  line-height: 1;
+  color: var(--brand);
+}
+.dim-card .dim-title-en {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.dim-card .dim-title-vi {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+.dim-card .dim-desc { font-size: 13px; line-height: 1.5; }
+.dim-card .dim-countries {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin-top: var(--gap-xs);
+}
+.dim-card .dim-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 2px 6px;
+  border-radius: var(--radius);
+}
+.dim-card .dim-tag.high { background: var(--brand); }
+
+.dim-card:nth-child(5n+1) { background: var(--yellow); }
+.dim-card:nth-child(5n+2) { background: var(--cyan); }
+.dim-card:nth-child(5n+3) { background: var(--lime); }
+.dim-card:nth-child(5n+4) { background: var(--pink); }
+.dim-card:nth-child(5n+5) { background: var(--paper-warm); }
+
+/* MNC TYPE GRID */
+.mnc-grid {
+  display: grid;
+  gap: var(--gap-md);
+  grid-template-columns: 1fr;
+  margin: var(--gap-md) 0;
+}
+@media (min-width: 768px) { .mnc-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .mnc-grid { grid-template-columns: repeat(4, 1fr); } }
+
+.mnc-card {
+  border: var(--border-w) solid var(--ink);
+  box-shadow: var(--shadow-offset) var(--ink);
+  border-radius: var(--radius);
+  padding: var(--gap-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+}
+.mnc-card .mnc-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+}
+.mnc-card .mnc-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 4px 8px;
+  border-radius: var(--radius);
+  align-self: flex-start;
+}
+.mnc-card .mnc-desc { font-size: 13px; line-height: 1.5; }
+.mnc-card .mnc-ex {
+  font-size: 12px;
+  font-style: normal;
+  background: var(--paper);
+  border: var(--border-w-thin) solid var(--ink);
+  padding: 6px 10px;
+  border-radius: var(--radius);
+  margin-top: var(--gap-xs);
+}
+.mnc-card:nth-child(1) { background: var(--paper-warm); }
+.mnc-card:nth-child(2) { background: var(--cyan); }
+.mnc-card:nth-child(3) { background: var(--pink); }
+.mnc-card:nth-child(4) { background: var(--lime); }
+
+/* FOOTER */
+.footer {
+  margin-top: var(--gap-xl);
+  padding: var(--gap-lg) 0;
+  border-top: var(--border-w) solid var(--ink);
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+.footer strong { color: var(--ink); font-weight: 700; }
+.footer a {
+  color: var(--brand);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  font-weight: 600;
+}
+.footer a:hover { background: var(--yellow); color: var(--ink); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media print {
+  body { background: white; background-image: none; }
+  .card, .hero, .toc, .table-wrap { box-shadow: none; }
+  .sticker { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- HERO -->
+  <header class="hero">
+    <span class="sticker sticker-pink" style="top: -16px; right: 24px; transform: rotate(8deg);">DEEP&nbsp;SUMMARY</span>
+    <span class="sticker sticker-lime" style="bottom: -14px; left: 32px; transform: rotate(-5deg);">~7.100 từ</span>
+
+    <div class="hero-badge">CHƯƠNG&nbsp;04 · ROBBINS&nbsp;&amp;&nbsp;COULTER</div>
+    <h1 class="hero-title">
+      Quản trị trong<br>
+      Môi&nbsp;trường <span class="accent">Toàn&nbsp;cầu</span>
+    </h1>
+    <p class="hero-sub">
+      Tóm tắt chuyên sâu Chương 4 — Sách <em>Management</em> ấn bản 15&nbsp;(2021).
+      Khi tổ chức bước qua biên giới: 3 thái độ, 4 loại MNC, 6 bậc thang ra toàn&nbsp;cầu, và 3 lớp môi trường (chính&nbsp;trị, kinh&nbsp;tế, văn&nbsp;hóa).
+    </p>
+    <div class="hero-meta">
+      <span>📖 12 trang nội bộ</span>
+      <span>⏱ 60-70 phút đọc</span>
+      <span>🎯 6 mục tiêu học tập</span>
+      <span>🇻🇳 Ngôn ngữ Việt</span>
+    </div>
+  </header>
+
+  <!-- TOC -->
+  <nav class="toc">
+    <span class="toc-title">📑 Mục lục</span>
+    <ul class="toc-list">
+      <li><a href="#how-to-use"><span class="toc-num">00</span>Hướng dẫn sử dụng</a></li>
+      <li><a href="#core"><span class="toc-num">01</span>Định nghĩa và bản đồ</a></li>
+      <li><a href="#lo1"><span class="toc-num">LO4.1</span>3 thái độ và thuật ngữ</a></li>
+      <li><a href="#lo2"><span class="toc-num">LO4.2</span>Lịch sử toàn cầu hóa</a></li>
+      <li><a href="#lo3"><span class="toc-num">LO4.3</span>Lập luận ủng hộ &amp; phản đối</a></li>
+      <li><a href="#lo4"><span class="toc-num">LO4.4</span>4 loại tổ chức quốc tế</a></li>
+      <li><a href="#lo5"><span class="toc-num">LO4.5</span>6 bậc ra toàn cầu</a></li>
+      <li><a href="#lo6"><span class="toc-num">LO4.6</span>3 lớp môi trường + Hofstede + GLOBE</a></li>
+      <li><a href="#disney"><span class="toc-num">02</span>Bài học Disney Paris</a></li>
+      <li><a href="#cheatsheet"><span class="toc-num">03</span>Cheatsheet</a></li>
+      <li><a href="#review"><span class="toc-num">04</span>Lộ trình ôn tập</a></li>
+    </ul>
+  </nav>
+
+  <!-- HOW TO USE -->
+  <section class="section" id="how-to-use">
+    <span class="section-num">📍 Trang 1</span>
+    <h2 class="section-title">Hướng&nbsp;dẫn <span class="underline">sử&nbsp;dụng</span> tài&nbsp;liệu này</h2>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="card-header bg-yellow">
+          <div class="card-num">CÁCH ĐỌC</div>
+          <div class="card-title">Cách dùng hiệu quả nhất</div>
+        </div>
+        <div class="card-body">
+          <ul class="num-list">
+            <li><div class="num brand">1</div><div class="content">Đọc trọn vẹn trong 60-70&nbsp;phút.</div></li>
+            <li><div class="num brand">2</div><div class="content">Đến phần <strong>Hofstede và GLOBE</strong> (Trang 8-9), liên hệ với một quốc gia bạn từng đến hoặc làm việc cùng.</div></li>
+            <li><div class="num brand">3</div><div class="content">Phần <strong>"Cách phát triển góc nhìn toàn cầu"</strong> (Trang 7) là kỹ năng nghề có thể áp dụng ngay.</div></li>
+            <li><div class="num brand">4</div><div class="content">Cuối mỗi phần lớn, gập tài liệu lại và tự kể.</div></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-cyan">
+          <div class="card-num">LIÊN HỆ CHƯƠNG 1-3</div>
+          <div class="card-title">Vì sao Chương 4 mở rộng "Global"</div>
+        </div>
+        <div class="card-body">
+          <ul style="margin: 0; padding-left: 20px; font-size: 14px;">
+            <li><strong>Chương 1</strong> — nhà quản trị làm gì</li>
+            <li><strong>Chương 2</strong> — họ ra quyết định ra sao</li>
+            <li><strong>Chương 3</strong> — bối cảnh chung (general + specific environment)</li>
+            <li><strong>Chương 4</strong> — đào sâu thành phần <em>"Global"</em> của general environment</li>
+          </ul>
+          <p style="margin-top: var(--gap-sm);">Khi tổ chức bước ra ngoài biên giới, mọi yếu tố trong Chương 3 trở nên <span class="hl">phức tạp hơn nhiều lần</span> — chính trị/pháp lý đa quốc gia, văn hóa khác biệt, kinh tế nhiều hệ thống.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-label">💡 Quy ước</span>
+      <p class="callout-body">
+        Các thuật ngữ chuyên ngành được giữ nguyên tiếng Anh kèm dịch nghĩa ở lần xuất hiện đầu. Ví dụ: <em>Multinational corporation - MNC (tập đoàn đa quốc gia)</em>, <em>Foreign subsidiary (công ty con ở nước ngoài)</em>.
+      </p>
+    </div>
+  </section>
+
+  <!-- CORE -->
+  <section class="section" id="core">
+    <span class="section-num">📍 Trang 2</span>
+    <h2 class="section-title">Định&nbsp;nghĩa cốt&nbsp;lõi và <span class="underline">bản&nbsp;đồ</span> kiến&nbsp;thức</h2>
+
+    <div class="quote bg-cyan">
+      Khi tổ chức làm việc xuyên biên giới quốc gia, <strong>nhà quản trị phải hiểu gì và xử lý ra sao?</strong>
+      <span class="quote-author">— Câu hỏi trung tâm Chương 4</span>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Phép ẩn dụ: Người leo núi Himalaya</h3>
+
+    <div class="grid grid-2">
+      <div class="card card-tilt-l">
+        <div class="card-header bg-cyan">
+          <div class="card-num">TRONG NƯỚC</div>
+          <div class="card-title">Leo ngọn núi quen thuộc</div>
+        </div>
+        <div class="card-body">
+          <p>Núi quen, không khí dày, thời tiết ổn định, người dẫn đường nói cùng tiếng. Mọi yếu tố trong tầm kiểm soát.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-pink">
+          <div class="card-num">RA TOÀN CẦU</div>
+          <div class="card-title">Chuyển sang dãy Himalaya</div>
+        </div>
+        <div class="card-body">
+          <ul style="margin: 0; padding-left: 20px;">
+            <li><strong>Không khí loãng hơn</strong> — chính trị/pháp lý phức tạp</li>
+            <li><strong>Thời tiết khó đoán</strong> — kinh tế nhiều hệ thống</li>
+            <li><strong>Người dẫn đường nói tiếng khác</strong> — văn hóa khác biệt</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout warning">
+      <span class="callout-label">🎯 Cốt lõi</span>
+      <p class="callout-body">
+        Người leo núi giỏi không phải người mạnh nhất, mà là người <strong>biết chuẩn bị</strong> và <strong>có thái độ đúng</strong> với núi mới. Đây là lý do toàn bộ chương xoay quanh <span class="hl">3 thái độ</span> (ethnocentric/polycentric/geocentric) và <span class="hl">3 lớp môi trường</span> (chính trị/kinh tế/văn hóa).
+      </p>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Sáu mục tiêu học tập (LO) của Chương&nbsp;4</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 90px;">Mục tiêu</th>
+            <th>Câu hỏi giải đáp</th>
+            <th>Khái niệm chính</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>LO4.1</td><td>Toàn cầu hóa, dân tộc, parochialism là gì?</td><td>3 thái độ: Ethnocentric, Polycentric, Geocentric</td></tr>
+          <tr><td>LO4.2</td><td>Lịch sử toàn cầu hóa thế nào?</td><td>14 mốc lịch sử; Con lắc giữa Toàn cầu hóa và Dân tộc</td></tr>
+          <tr><td>LO4.3</td><td>Toàn cầu hóa có lợi/hại gì?</td><td>Lập luận win-win; Mặt trái; Hiện trạng</td></tr>
+          <tr><td>LO4.4</td><td>Có những loại tổ chức quốc tế nào?</td><td>MNC, Multidomestic, Global, Transnational</td></tr>
+          <tr><td>LO4.5</td><td>Tổ chức bước vào toàn cầu bằng cách nào?</td><td>6 bậc thang từ Sourcing đến Subsidiary</td></tr>
+          <tr><td>LO4.6</td><td>Quản trị môi trường toàn cầu khác trong nước ra sao?</td><td>3 lớp: Chính trị/Pháp lý, Kinh tế, Văn hóa (Hofstede 5 + GLOBE 9)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- LO 4.1 -->
+  <section class="section" id="lo1">
+    <span class="section-num">📍 Trang 3 · LO4.1</span>
+    <h2 class="section-title">Làm rõ <span class="underline">thuật&nbsp;ngữ</span> và 3 thái độ quản trị</h2>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-bottom: var(--gap-md);">Ba thuật ngữ nền tảng</h3>
+
+    <div class="grid grid-3">
+      <div class="card">
+        <div class="card-header bg-cyan">
+          <div class="card-num">THUẬT NGỮ 1</div>
+          <div class="card-title">🌍 Globalization · Toàn cầu hóa</div>
+        </div>
+        <div class="card-body">
+          <p>Quá trình mà tổ chức phát triển ảnh hưởng hoặc hoạt động <strong>xuyên biên giới quốc tế</strong>.</p>
+          <p><span class="hl-cyan">Đặc điểm:</span> giả định biên giới mở, thương mại tự do, di chuyển tự do của con người, hàng hóa, đầu tư, công nghệ.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-pink">
+          <div class="card-num">THUẬT NGỮ 2</div>
+          <div class="card-title">🚧 Nationalism · Chủ nghĩa dân tộc</div>
+        </div>
+        <div class="card-body">
+          <p>Các lý tưởng và chính sách yêu nước <strong>tôn vinh giá trị của một quốc gia</strong>.</p>
+          <p><span class="hl-pink">Đặt người dân và doanh nghiệp trong nước lên hàng đầu.</span> Bảo hộ trước cạnh tranh nước ngoài.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-yellow">
+          <div class="card-num">THUẬT NGỮ 3</div>
+          <div class="card-title">🔒 Parochialism · Tính cục bộ</div>
+        </div>
+        <div class="card-body">
+          <p>Việc <strong>nhìn thế giới chỉ qua góc nhìn của chính mình</strong>. Áp dụng cứng nhắc thái độ <em>"của ta tốt hơn của họ"</em>.</p>
+          <p><span class="hl">Rào cản nghiêm trọng cho việc triển khai toàn cầu hóa.</span></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="quote bg-lime">
+      <strong>Toàn cầu hóa</strong> xây cầu — chính phủ làm việc cùng nhau trong mạng lưới phụ thuộc lẫn nhau. <strong>Chủ nghĩa dân tộc</strong> xây tường — chính sách thuế quan rộng rãi để bảo vệ doanh nghiệp và người lao động trong nước.
+      <span class="quote-author">— Hai quan điểm đối lập</span>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-xl); margin-bottom: var(--gap-md);">Ba thái độ quản trị</h3>
+
+    <p>Nhà quản trị thường có một trong <strong>3 thái độ</strong> định hình mức chấp nhận hay kháng cự với toàn cầu hóa:</p>
+
+    <div class="attitude-grid">
+      <div class="attitude-card eth">
+        <div class="att-num">1</div>
+        <div class="att-en">Ethnocentric</div>
+        <div class="att-vi">Vị chủng</div>
+        <div class="att-belief">"Cách làm tốt nhất là ở <strong>nước mẹ</strong> (home country)"</div>
+        <p style="margin: var(--gap-xs) 0 0; font-size: 13px;">Không tin nhân viên nước ngoài đủ khả năng ra quyết định lớn. Không chia sẻ công nghệ then chốt.</p>
+      </div>
+
+      <div class="attitude-card poly">
+        <div class="att-num">2</div>
+        <div class="att-en">Polycentric</div>
+        <div class="att-vi">Đa trung tâm</div>
+        <div class="att-belief">"Nhân viên ở <strong>nước sở tại</strong> (host country) biết cách làm tốt nhất ở đó"</div>
+        <p style="margin: var(--gap-xs) 0 0; font-size: 13px;">Mỗi hoạt động ở mỗi nước được xem là khác biệt. Để nhân viên địa phương tự quyết.</p>
+      </div>
+
+      <div class="attitude-card geo">
+        <div class="att-num">3</div>
+        <div class="att-en">Geocentric</div>
+        <div class="att-vi">Toàn cầu hóa</div>
+        <div class="att-belief">"Tìm <strong>cách làm và người tốt nhất từ khắp nơi</strong>, bất kể nguồn gốc"</div>
+        <p style="margin: var(--gap-xs) 0 0; font-size: 13px;">Loại bỏ parochialism, hiểu khác biệt văn hóa. <span class="hl">Thái độ mà các công ty quốc tế tìm kiếm khi tuyển nhà quản trị toàn cầu.</span></p>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Thái độ</th>
+            <th>Quyết định ở đâu?</th>
+            <th>Tin ai biết nhất?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Ethnocentric</td><td>Tập trung ở home country</td><td>Người ở home country</td></tr>
+          <tr><td>Polycentric</td><td>Phân quyền cho host country</td><td>Người địa phương ở host country</td></tr>
+          <tr><td>Geocentric</td><td>Linh hoạt, tìm tốt nhất ở mọi nơi</td><td>Bất kỳ ai có năng lực tốt nhất</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-label">💼 Áp dụng ngành tư vấn</span>
+      <p class="callout-body">
+        Khi tư vấn cho doanh nghiệp Việt Nam mở rộng ra nước ngoài, câu hỏi đầu tiên là: <em>"Anh/chị đang có thái độ nào — ethnocentric, polycentric, hay geocentric?"</em> Vì thái độ này quyết định cấu trúc nhân sự, mức độ phân quyền, và cách ra quyết định ở chi nhánh nước ngoài. <span class="hl">Nhiều doanh nghiệp Việt mở rộng ra nước ngoài thất bại vì giữ thái độ ethnocentric — nhất quyết áp model trong nước, không tin nhân viên địa phương.</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- LO 4.2 -->
+  <section class="section" id="lo2">
+    <span class="section-num">📍 Trang 4 · LO4.2</span>
+    <h2 class="section-title">Lịch sử <span class="underline">toàn&nbsp;cầu&nbsp;hóa</span></h2>
+
+    <p>Toàn cầu hóa <strong>đã đi qua thăng trầm trong nhiều thế kỷ</strong>. Hiểu lịch sử giúp bạn không nghĩ rằng bối cảnh hiện tại là vĩnh viễn.</p>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-md); margin-bottom: var(--gap-md);">Trước Thế chiến II</h3>
+
+    <div class="callout">
+      <span class="callout-label">📜 Bối cảnh sớm</span>
+      <p class="callout-body">
+        <strong>Thế kỷ 19:</strong> toàn cầu hóa rất thịnh hành. Anh là siêu cường kinh tế toàn cầu với thuộc địa khắp thế giới. Pháp đặt ách thuộc địa lên phần lớn châu Phi.<br><br>
+        <strong>Sau Thế chiến I:</strong> quay lại chính sách bảo hộ. Kéo dài đến giữa thập niên 1940.
+      </p>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Thời kỳ phát triển toàn cầu hóa (1944-2015) — 14 mốc</h3>
+
+    <p>Bắt đầu với <strong>Hội nghị Bretton&nbsp;Woods 1944</strong> — thiết lập bộ quy tắc cho quan hệ thương mại và tài chính. Đây là ví dụ đầu tiên về trật tự tiền tệ được đàm phán giữa các nước độc lập.</p>
+
+    <div class="card">
+      <div class="card-header bg-ink">
+        <div class="card-num">TIMELINE TOÀN CẦU HÓA</div>
+        <div class="card-title">14 mốc quan trọng</div>
+      </div>
+      <div class="card-body">
+        <div class="timeline-flow">
+          <div class="timeline-item">
+            <div class="timeline-year">1945</div>
+            <div class="timeline-event"><strong>IMF (International Monetary Fund)</strong>189&nbsp;nước, cho vay tạm thời, thúc đẩy thương mại quốc tế.</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">1945</div>
+            <div class="timeline-event"><strong>World Bank</strong>Hỗ trợ các nước đang phát triển.</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">1948</div>
+            <div class="timeline-event"><strong>GATT</strong>Giảm thuế quan và rào cản thương mại (sau này được WTO thay thế).</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">1961</div>
+            <div class="timeline-event"><strong>OECD</strong>37&nbsp;nước phát triển, thúc đẩy tăng trưởng kinh tế.</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">1967</div>
+            <div class="timeline-event"><strong>ASEAN</strong>10&nbsp;nước Đông Nam Á (gồm Việt&nbsp;Nam).</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">1974</div>
+            <div class="timeline-event"><strong>World Economic Forum</strong>Họp thường niên ở Davos, Thụy Sĩ.</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">1979</div>
+            <div class="timeline-event"><strong>Margaret&nbsp;Thatcher (PM Anh)</strong>Thúc đẩy thương mại tự do.</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">1980</div>
+            <div class="timeline-event"><strong>Ronald&nbsp;Reagan (Tổng thống Mỹ)</strong>Giảm điều tiết, kích thích kinh tế.</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">1991</div>
+            <div class="timeline-event"><strong>Liên Xô sụp đổ</strong>Mở ra thương mại với các nước xã hội chủ nghĩa cũ.</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">1992</div>
+            <div class="timeline-event"><strong>EU (European Union)</strong>28&nbsp;nước châu Âu.</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">1994</div>
+            <div class="timeline-event"><strong>NAFTA</strong>Mỹ - Canada - Mexico.</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">1995</div>
+            <div class="timeline-event"><strong>WTO (World Trade Organization)</strong>Thay thế GATT, 164&nbsp;nước thành viên.</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2003</div>
+            <div class="timeline-event"><strong>Shanghai Cooperation Organization</strong>8&nbsp;nước, gồm Trung Quốc, Ấn Độ, Pakistan, Nga.</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2015</div>
+            <div class="timeline-event"><strong>"Made in China 2025"</strong>Trung Quốc đẩy mạnh công nghệ cao.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-xl); margin-bottom: var(--gap-md);">Thời kỳ phản ứng dội ngược (2016-hiện nay)</h3>
+
+    <p>Bắt đầu khoảng 2015, <strong>con lắc bắt đầu đu ngược</strong> từ toàn cầu hóa sang chủ nghĩa dân tộc:</p>
+
+    <div class="card">
+      <div class="card-header" style="background: var(--brand); color: var(--paper);">
+        <div class="card-num">PHẢN ỨNG DỘI NGƯỢC</div>
+        <div class="card-title">5 mốc gần đây</div>
+      </div>
+      <div class="card-body">
+        <div class="timeline-flow">
+          <div class="timeline-item">
+            <div class="timeline-year brand">2011</div>
+            <div class="timeline-event"><strong>"We Are the 99%"</strong>Phong trào phản đối, tấn công bất bình đẳng thu nhập và tài sản tại Mỹ.</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year brand">2016</div>
+            <div class="timeline-event"><strong>Brexit</strong>Anh bỏ phiếu rời EU. Cảm giác lợi ích Anh bị dịch chuyển cho EU.</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year brand">2016</div>
+            <div class="timeline-event"><strong>Donald&nbsp;Trump đắc cử (Mỹ)</strong>Mất niềm tin vào chính trị truyền thống, "America&nbsp;First".</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year brand">2016</div>
+            <div class="timeline-event"><strong>TPP (Trans-Pacific Partnership)</strong>Thỏa thuận thương mại 12&nbsp;nước, <em>không bao giờ được thực thi đầy đủ</em> sau khi Mỹ rút.</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year brand">2018</div>
+            <div class="timeline-event"><strong>NAFTA 2.0 / USMCA</strong>Mỹ - Mexico - Canada, thay thế NAFTA.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-xl); margin-bottom: var(--gap-md);">Con lắc đu giữa hai cực</h3>
+
+    <p>Robbins minh họa lịch sử như một <strong>con lắc</strong> đu giữa hai cực <em>Globalism</em> và <em>Nationalism</em>:</p>
+
+    <div class="pendulum">
+      <div class="pendulum-side left">
+        <div class="ps-icon">🌉</div>
+        <div class="ps-name">Globalism</div>
+        <p style="margin: 0; font-size: 14px;">Đỉnh điểm khoảng <strong>2015s</strong>. WTO, EU, NAFTA mở rộng.</p>
+        <div class="ps-action">Xây cầu</div>
+      </div>
+      <div class="pendulum-arrow">⇆</div>
+      <div class="pendulum-side right">
+        <div class="ps-icon">🚧</div>
+        <div class="ps-name">Nationalism</div>
+        <p style="margin: 0; font-size: 14px;">Đỉnh điểm <strong>1940s</strong> và <strong>2020s</strong>. Brexit, "America First".</p>
+        <div class="ps-action">Xây tường</div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-label">💼 Bài học cho nhà tư vấn</span>
+      <p class="callout-body">
+        Đừng giả định bối cảnh chính sách thương mại quốc tế hiện tại sẽ kéo dài 10&nbsp;năm. Khi tư vấn về chiến lược mở rộng toàn cầu, luôn có <span class="hl">kịch bản dự phòng cho cả 2 hướng</span> — toàn cầu hóa tăng và chủ nghĩa dân tộc tăng.
+      </p>
+    </div>
+  </section>
+
+  <!-- LO 4.3 -->
+  <section class="section" id="lo3">
+    <span class="section-num">📍 Trang 5 · LO4.3</span>
+    <h2 class="section-title">Lập luận <span class="underline">ủng&nbsp;hộ</span> và phản đối toàn cầu hóa</h2>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="card-header bg-lime">
+          <div class="card-num">LẬP LUẬN WIN-WIN</div>
+          <div class="card-title">Đôi bên cùng có lợi</div>
+        </div>
+        <div class="card-body">
+          <p>Dựa trên <em>Law of Comparative Advantage</em> (Định luật Lợi thế So sánh) — quốc gia nên sản xuất hàng có <strong>chi phí cơ hội thấp nhất</strong>.</p>
+          <p><span class="hl-lime">Toàn cầu hóa giải phóng "thủy triều" kinh tế nâng tất cả các thuyền lên.</span></p>
+          <p><strong>Bằng chứng thập niên 1990-2000:</strong></p>
+          <ul style="margin: 0; padding-left: 20px; font-size: 14px;">
+            <li>Hàng hóa và vốn di chuyển không bị cản trở</li>
+            <li>Outsourcing toàn cầu khả thi hơn</li>
+            <li><strong>Hàng trăm triệu người</strong> hưởng tăng đáng kể về mức sống</li>
+            <li>Người tiêu dùng ở các nước phát triển hưởng giá thấp hơn</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-pink">
+          <div class="card-num">MẶT TRÁI</div>
+          <div class="card-title">Bắt đầu thay đổi từ 2015</div>
+        </div>
+        <div class="card-body">
+          <p>Các nhà phê bình lập luận toàn cầu hóa là <strong>lý do chính</strong> khiến tầng lớp trung lưu Bắc Mỹ và châu Âu chịu trì trệ về lương:</p>
+          <ul style="margin: 0; padding-left: 20px; font-size: 14px;">
+            <li>Công ty toàn cầu chuyển sản xuất sang nước có lương thấp</li>
+            <li>Sự di chuyển tự do của lao động giữ lương xuống</li>
+            <li>Tăng <strong>bất bình đẳng</strong> ở các nước phương Tây</li>
+            <li>Lợi ích chảy về tập đoàn lớn và giới tinh hoa</li>
+            <li>Lương trung bình ở Mỹ đi ngang hoặc giảm <strong>ít nhất một chục năm</strong></li>
+            <li>Tâm lý chống nhập cư tăng</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="stat-grid" style="grid-template-columns: 1fr;">
+      <div class="stat" style="text-align: left; display: flex; align-items: center; gap: var(--gap-md);">
+        <div class="stat-num" style="font-size: 3rem;">44%</div>
+        <div class="stat-label" style="font-size: 14px; text-transform: none; letter-spacing: 0; color: var(--ink);">
+          millennial ở Mỹ có cái nhìn <strong>tích cực về chủ nghĩa xã hội</strong>. Phong trào "Occupy Wall Street" với khẩu hiệu <em>"We are the 99%"</em>.
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Toàn cầu hóa hôm nay — 3 lý do chưa chết</h3>
+
+    <p>Tiếng nói của chủ nghĩa dân tộc to nhất trong 80&nbsp;năm qua. Nhưng <strong>toàn cầu hóa chưa chết</strong>:</p>
+
+    <ul class="num-list">
+      <li>
+        <div class="num brand">1</div>
+        <div class="content"><strong>Hạ tầng và chuỗi cung ứng đã mất hàng thập kỷ để xây</strong>Apple, IKEA, Royal&nbsp;Dutch&nbsp;Shell, KPMG có văn phòng/cửa hàng/nhà máy ở hàng chục nước. Không dễ dỡ bỏ.</div>
+      </li>
+      <li>
+        <div class="num brand">2</div>
+        <div class="content"><strong>Thương mại tự do KHÔNG phải nguyên nhân thất nghiệp</strong>Thủ phạm thực sự là <span class="hl">công nghệ</span>. Nghiên cứu cho thấy chỉ <strong>13% mất việc ngành sản xuất ở Mỹ giai đoạn 2000-2010 là do thương mại; phần còn lại là do tự động hóa nâng năng suất.</strong></div>
+      </li>
+      <li>
+        <div class="num brand">3</div>
+        <div class="content"><strong>Phần lớn người vẫn tin lợi ích vượt chi phí</strong>Người tiêu dùng thích giá thấp. Nhà đầu tư thích lợi nhuận cao hơn. Người lao động ở các nước đang phát triển thích lương cao hơn.</div>
+      </li>
+    </ul>
+
+    <div class="callout">
+      <span class="callout-label">📌 Ý nghĩa cho nhà quản trị</span>
+      <p class="callout-body">
+        <strong>Phát triển thái độ geocentric</strong> và xây dựng cảm thức xuyên văn hóa.<br>
+        <strong>Có kinh nghiệm quốc tế</strong> bằng cách làm việc cho các hãng toàn cầu, tìm kiếm cơ hội ở nước ngoài.<br>
+        <strong>Học ngôn ngữ thứ hai/ba.</strong> Người châu Âu thường nói 3-4 ngôn ngữ; người Mỹ chỉ nói tiếng Anh — <span class="hl-pink">bất lợi lớn</span> trong tổ chức toàn cầu.<br>
+        <strong>Hiểu thị trường toàn cầu</strong> ngay cả với doanh nghiệp nhỏ và doanh nhân.
+      </p>
+    </div>
+  </section>
+
+  <!-- LO 4.4 -->
+  <section class="section" id="lo4">
+    <span class="section-num">📍 Trang 6 · LO4.4</span>
+    <h2 class="section-title">Bốn loại <span class="underline">tổ&nbsp;chức</span> quốc tế</h2>
+
+    <p>Doanh nghiệp toàn cầu không phải chuyện mới. <em>DuPont</em> đã làm ăn ở Trung Quốc từ <strong>1863</strong>. <em>H.&nbsp;J.&nbsp;Heinz</em> sản xuất thực phẩm ở Anh từ <strong>1905</strong>. <em>Ford</em> lập chi nhánh đầu tiên ở nước ngoài tại Pháp năm <strong>1908</strong>.</p>
+
+    <div class="mnc-grid">
+      <div class="mnc-card">
+        <div class="mnc-tag">BAO TRÙM</div>
+        <div class="mnc-name">MNC</div>
+        <p style="font-size: 13px; margin: 0; font-weight: 600;">Multinational Corporation</p>
+        <p class="mnc-desc">Thuật ngữ chung chỉ <strong>bất kỳ loại công ty quốc tế nào</strong> duy trì hoạt động ở nhiều quốc gia. Khái niệm bao trùm cho 3 loại bên dưới.</p>
+      </div>
+
+      <div class="mnc-card">
+        <div class="mnc-tag">POLYCENTRIC</div>
+        <div class="mnc-name">Multidomestic</div>
+        <p style="font-size: 13px; margin: 0; font-weight: 600;">Tập đoàn đa nội địa</p>
+        <p class="mnc-desc">MNC <strong>phân quyền</strong> quản trị cho từng nước sở tại. Thuê nhân viên địa phương quản lý. Marketing điều chỉnh theo đặc thù từng nước.</p>
+        <div class="mnc-ex"><strong>Nestlé:</strong> bán sản phẩm khác ở châu Âu vs. Mỹ. <strong>Frito-Lay:</strong> Doritos ở Anh khác cả vị và kết cấu so với Mỹ.</div>
+      </div>
+
+      <div class="mnc-card">
+        <div class="mnc-tag">ETHNOCENTRIC</div>
+        <div class="mnc-name">Global</div>
+        <p style="font-size: 13px; margin: 0; font-weight: 600;">Công ty toàn cầu</p>
+        <p class="mnc-desc">MNC <strong>tập trung</strong> quản trị ở nước nhà. Đối xử thị trường thế giới như tổng thể tích hợp. Tập trung hiệu quả toàn cầu và tiết kiệm chi phí.</p>
+        <div class="mnc-ex"><strong>Sony, Deutsche&nbsp;Bank&nbsp;AG, Marriott&nbsp;International, Merrill&nbsp;Lynch.</strong></div>
+      </div>
+
+      <div class="mnc-card">
+        <div class="mnc-tag">GEOCENTRIC</div>
+        <div class="mnc-name">Transnational</div>
+        <p style="font-size: 13px; margin: 0; font-weight: 600;">Tổ chức xuyên/không biên giới</p>
+        <p class="mnc-desc">MNC <strong>loại bỏ các rào cản địa lý nhân tạo</strong>. Linh hoạt cao nhất.</p>
+        <div class="mnc-ex"><strong>Ford "One&nbsp;Ford":</strong> tích hợp hoạt động trên toàn thế giới. Giảm số nền tảng xe từ <strong>27 xuống 9</strong>.</div>
+      </div>
+    </div>
+
+    <div class="callout warning">
+      <span class="callout-label">⚠️ Lưu ý</span>
+      <p class="callout-body">
+        Đây là <strong>3 loại MNC</strong>, không phải 3 cách thay nhau. Việc chọn loại nào phụ thuộc vào: <em>ngành, mức độ khác biệt giữa thị trường, văn hóa quản trị của ban điều hành</em>.
+      </p>
+    </div>
+  </section>
+
+  <!-- LO 4.5 -->
+  <section class="section" id="lo5">
+    <span class="section-num">📍 Trang 7 · LO4.5</span>
+    <h2 class="section-title">Sáu <span class="underline">bậc&nbsp;thang</span> ra toàn cầu</h2>
+
+    <p>Khi tổ chức ra toàn cầu, họ <strong>không nhảy vọt</strong>. Có <strong>6 bậc thang</strong> — mỗi bậc cao hơn yêu cầu đầu tư nhiều hơn và rủi ro hơn.</p>
+
+    <div class="ladder">
+      <div class="ladder-step">
+        <div class="ls-num">1</div>
+        <div class="ls-content">
+          <div class="ls-name-en">Global Sourcing · Đầu tư tối thiểu</div>
+          <div class="ls-name-vi">Mua sắm toàn cầu</div>
+          <p class="ls-desc">Mua nguyên vật liệu hoặc lao động từ khắp thế giới ở nơi <strong>rẻ nhất</strong>. <em>Ví dụ:</em> Bệnh viện Mỹ và Canada dùng bác sĩ chẩn đoán hình ảnh ở Ấn&nbsp;Độ để phân tích kết quả CT&nbsp;scan.</p>
+        </div>
+      </div>
+
+      <div class="ladder-step">
+        <div class="ls-num">2</div>
+        <div class="ls-content">
+          <div class="ls-name-en">Exporting / Importing · Đầu tư thấp</div>
+          <div class="ls-name-vi">Xuất khẩu / Nhập khẩu</div>
+          <p class="ls-desc"><strong>Exporting:</strong> làm sản phẩm trong nước rồi bán ra ngoài. <strong>Importing:</strong> mua sản phẩm làm ở nước ngoài rồi bán trong nước. Vì sao nhiều doanh nghiệp nhỏ chọn cách này.</p>
+        </div>
+      </div>
+
+      <div class="ladder-step">
+        <div class="ls-num">3</div>
+        <div class="ls-content">
+          <div class="ls-name-en">Licensing / Franchising · Đầu tư trung bình thấp</div>
+          <div class="ls-name-vi">Cấp phép / Nhượng quyền</div>
+          <p class="ls-desc">Cho tổ chức khác quyền dùng <strong>tên thương hiệu, công nghệ, đặc điểm sản phẩm</strong>. <em>Licensing</em> = sản xuất (Anheuser-Busch cho Kirin sản xuất bia Budweiser ở Nhật). <em>Franchising</em> = dịch vụ (gà rán Pollo&nbsp;Campero kiểu Guatemala ở Chicago, Dunkin'&nbsp;Donuts ở Hàn Quốc).</p>
+        </div>
+      </div>
+
+      <div class="ladder-step">
+        <div class="ls-num">4</div>
+        <div class="ls-content">
+          <div class="ls-name-en">Strategic Alliance · Đầu tư trung bình</div>
+          <div class="ls-name-vi">Liên minh chiến lược</div>
+          <p class="ls-desc">Đối tác giữa tổ chức và đối tác công ty nước ngoài, <strong>cùng chia sẻ nguồn lực và kiến thức</strong>. <em>Ví dụ:</em> Leica (Đức) hợp tác với Moncler (Ý) tạo máy ảnh thời trang phiên bản giới hạn.</p>
+        </div>
+      </div>
+
+      <div class="ladder-step">
+        <div class="ls-num">5</div>
+        <div class="ls-content">
+          <div class="ls-name-en">Joint Venture · Đầu tư trung bình cao</div>
+          <div class="ls-name-vi">Liên doanh</div>
+          <p class="ls-desc">Loại strategic alliance cụ thể trong đó các đối tác <strong>lập ra một tổ chức riêng biệt, độc lập</strong>. <em>Ví dụ:</em> Jaguar&nbsp;Land&nbsp;Rover (Anh) và Chery (Trung Quốc) lập JV kết hợp kinh nghiệm xe sang Anh với hiểu biết thị trường Trung Quốc.</p>
+        </div>
+      </div>
+
+      <div class="ladder-step">
+        <div class="ls-num">6</div>
+        <div class="ls-content">
+          <div class="ls-name-en">Foreign Subsidiary · ĐẦU TƯ CAO NHẤT</div>
+          <div class="ls-name-vi">Công ty con ở nước ngoài</div>
+          <p class="ls-desc">Đầu tư trực tiếp bằng cách <strong>lập cơ sở sản xuất hoặc văn phòng độc lập, tách biệt</strong>. Cam kết nguồn lực lớn nhất, rủi ro lớn nhất. <em>Ví dụ:</em> United&nbsp;Plastics&nbsp;Group (Houston) xây 2 cơ sở đúc nhựa ở Tô&nbsp;Châu, Trung Quốc.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-label">💼 Áp dụng ngành tư vấn</span>
+      <p class="callout-body">
+        Khi tư vấn cho doanh nghiệp Việt mở rộng ra nước ngoài, <strong>đừng đề xuất nhảy vọt</strong> từ Bậc&nbsp;1 lên Bậc&nbsp;6. Mỗi bậc cần thời gian học và xây dựng năng lực. <span class="hl">Doanh nghiệp Việt thường vấp khi nhảy quá nhanh</span> — ví dụ từ exporting (Bậc&nbsp;2) thẳng lên foreign subsidiary (Bậc&nbsp;6) vì <em>"thấy đối thủ làm vậy"</em>.
+      </p>
+    </div>
+  </section>
+
+  <!-- LO 4.6 -->
+  <section class="section" id="lo6">
+    <span class="section-num">📍 Trang 8-9 · LO4.6</span>
+    <h2 class="section-title">Ba <span class="underline">lớp&nbsp;môi&nbsp;trường</span> + Hofstede + GLOBE</h2>
+
+    <p>Khi nhà quản trị làm việc ở chi nhánh nước ngoài, họ đối mặt với <strong>3 lớp môi trường</strong>: chính trị/pháp lý, kinh tế, và văn hóa.</p>
+
+    <div class="grid grid-3">
+      <div class="card">
+        <div class="card-header bg-pink">
+          <div class="card-num">LỚP 1</div>
+          <div class="card-title">⚖️ Chính trị / Pháp lý</div>
+        </div>
+        <div class="card-body">
+          <p><strong>Nguồn bất ổn quan trọng.</strong> Nhà quản trị cần biết luật ở các nước họ hoạt động.</p>
+          <p style="font-size: 13px;"><strong>Khác biệt pháp lý:</strong></p>
+          <ul style="margin: 0; padding-left: 20px; font-size: 13px;">
+            <li>Việt&nbsp;Nam, Indonesia: gần như không thể sa thải ai</li>
+            <li>EU: sa thải phải đàm phán với đại diện công nhân</li>
+            <li>Saudi&nbsp;Arabia: không cấp visa cho phụ nữ độc thân</li>
+            <li>Ấn&nbsp;Độ: doanh nghiệp nước ngoài phải có giám đốc là cư dân Ấn</li>
+            <li>Cambodia, Yemen, Ukraine: hối lộ là <span class="hl-pink">thông lệ phổ biến</span> dù bất hợp pháp ở Bắc Mỹ và Tây Âu</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-cyan">
+          <div class="card-num">LỚP 2</div>
+          <div class="card-title">💰 Kinh tế</div>
+        </div>
+        <div class="card-body">
+          <p>Hai loại hệ thống chính:</p>
+          <ul style="margin: 0; padding-left: 20px; font-size: 13px;">
+            <li><strong>Free Market:</strong> tư nhân kiểm soát, cung-cầu xác định giá (<em>Mỹ</em>)</li>
+            <li><strong>Planned Economy:</strong> chính phủ trung ương lên kế hoạch, xác định giá (<em>Trung Quốc</em>)</li>
+          </ul>
+          <p style="font-size: 13px; margin-top: var(--gap-sm);"><strong>3 vấn đề khác:</strong> tỷ giá hối đoái (yen tăng giá → giảm lợi nhuận KFC); lạm phát (Argentina <strong>23%</strong> vs. Israel dưới 1%); chính sách thuế.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-yellow">
+          <div class="card-num">LỚP 3</div>
+          <div class="card-title">🌐 Văn hóa</div>
+        </div>
+        <div class="card-body">
+          <p><em>National culture</em> là các giá trị và thái độ chia sẻ bởi một quốc gia.</p>
+          <p><span class="hl">Phát hiện quan trọng:</span> <strong>Văn hóa quốc gia có tác động lớn hơn lên nhân viên so với văn hóa tổ chức.</strong> Nhân viên Đức ở chi nhánh IBM tại Munich chịu ảnh hưởng nhiều hơn từ văn hóa Đức so với văn hóa IBM.</p>
+          <p style="font-size: 13px; margin-top: var(--gap-sm);"><strong>Đặc điểm "người Mỹ":</strong> không trang trọng, trực tiếp, cạnh tranh, hướng thành tích, độc lập, cá nhân chủ nghĩa, coi trọng đúng giờ.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-xl); margin-bottom: var(--gap-md);">Khung Hofstede — 5 chiều văn hóa quốc gia</h3>
+
+    <p><strong>Geert&nbsp;Hofstede</strong> phát triển một trong các cách tiếp cận được tham chiếu nhiều nhất để hiểu khác biệt văn hóa.</p>
+
+    <div class="dim-grid">
+      <div class="dim-card">
+        <div class="dim-num">1</div>
+        <div class="dim-title-en">Individualism vs. Collectivism</div>
+        <div class="dim-title-vi">Cá nhân vs. Tập thể</div>
+        <p class="dim-desc">Cao = lo cho mình và gia đình. Thấp = kỳ vọng nhóm chăm sóc và bảo vệ.</p>
+        <div class="dim-countries">
+          <span class="dim-tag high">CAO: Mỹ, Canada, Úc</span>
+          <span class="dim-tag">THẤP: Mexico, Thái Lan</span>
+        </div>
+      </div>
+
+      <div class="dim-card">
+        <div class="dim-num">2</div>
+        <div class="dim-title-en">Power Distance</div>
+        <div class="dim-title-vi">Khoảng cách quyền lực</div>
+        <p class="dim-desc">Cao = chấp nhận khác biệt quyền lực lớn. Thấp = giảm bất bình đẳng, không sợ tiếp cận sếp.</p>
+        <div class="dim-countries">
+          <span class="dim-tag high">CAO: Mexico, Singapore, Pháp</span>
+          <span class="dim-tag">THẤP: Mỹ, Thụy Điển</span>
+        </div>
+      </div>
+
+      <div class="dim-card">
+        <div class="dim-num">3</div>
+        <div class="dim-title-en">Uncertainty Avoidance</div>
+        <div class="dim-title-vi">Tránh sự bất định</div>
+        <p class="dim-desc">Cao = bị đe dọa bởi sự mơ hồ, lo âu cao. Thấp = thoải mái với rủi ro.</p>
+        <div class="dim-countries">
+          <span class="dim-tag high">CAO: Ý, Mexico, Pháp</span>
+          <span class="dim-tag">THẤP: Anh, Canada, Mỹ, Singapore</span>
+        </div>
+      </div>
+
+      <div class="dim-card">
+        <div class="dim-num">4</div>
+        <div class="dim-title-en">Achievement vs. Nurturing</div>
+        <div class="dim-title-vi">Thành tích vs. Nuôi dưỡng</div>
+        <p class="dim-desc">Achievement = quyết đoán, cạnh tranh. Nurturing = quan hệ và quan tâm người khác.</p>
+        <div class="dim-countries">
+          <span class="dim-tag high">CAO: Mỹ, Nhật, Mexico</span>
+          <span class="dim-tag">THẤP: Pháp, Thụy Điển</span>
+        </div>
+      </div>
+
+      <div class="dim-card">
+        <div class="dim-num">5</div>
+        <div class="dim-title-en">Long-term vs. Short-term</div>
+        <div class="dim-title-vi">Định hướng dài/ngắn hạn</div>
+        <p class="dim-desc">Long-term = hướng tương lai, coi trọng tiết kiệm. Short-term = coi trọng truyền thống và quá khứ.</p>
+        <div class="dim-countries">
+          <span class="dim-tag high">CAO: Trung Quốc, Đài Loan, Nhật</span>
+          <span class="dim-tag">THẤP: Đức, Úc, Mỹ, Canada</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-label">💼 Áp dụng tư vấn — Việt Nam</span>
+      <p class="callout-body">
+        Khi tư vấn cho doanh nghiệp Việt mở rộng sang nước cụ thể, dùng 5&nbsp;chiều Hofstede như checklist:
+      </p>
+      <ul style="margin: 0; padding-left: 20px; font-size: 14px;">
+        <li>Việt&nbsp;Nam có <strong>power distance cao</strong> → khi mở chi nhánh ở Thụy&nbsp;Điển (power distance thấp), nhân viên Thụy&nbsp;Điển sẽ bị sốc khi thấy sếp Việt yêu cầu tôn trọng cao và ra lệnh trực tiếp.</li>
+        <li>Việt&nbsp;Nam có <strong>collectivism cao</strong> → khi vào Mỹ (individualism cao), hệ thống thưởng theo nhóm có thể không hiệu quả vì người Mỹ thích thưởng cá nhân.</li>
+      </ul>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-xl); margin-bottom: var(--gap-md);">Khung GLOBE — 9 chiều văn hóa</h3>
+
+    <p>Chương trình <em>Global Leadership and Organizational Behavior Effectiveness (GLOBE)</em> mở rộng công trình Hofstede. Với dữ liệu từ <strong>hơn 18.000 nhà quản trị ở 62&nbsp;nước</strong>, nhóm xác định <strong>9 chiều</strong>.</p>
+
+    <div class="grid grid-3">
+      <div class="card" style="background: var(--paper-warm);">
+        <div class="card-body">
+          <div class="card-num" style="color: var(--brand);">CHIỀU 1-6 (TƯƠNG TỰ HOFSTEDE)</div>
+          <p style="font-size: 13px; margin: 0;">2 chiều trùng (power distance, uncertainty avoidance) + 4 chiều tương tự (assertiveness ~ achievement; humane orientation ~ nurturing; future orientation ~ long-term; institutional collectivism ~ individualism).</p>
+        </div>
+      </div>
+
+      <div class="card" style="background: var(--cyan);">
+        <div class="card-body">
+          <div class="card-num" style="color: var(--brand);">CHIỀU 7 (MỚI)</div>
+          <h4 style="font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; margin-bottom: 4px;">Gender Differentiation</h4>
+          <p style="font-size: 13px; margin: 0;">Mức xã hội tối đa hóa khác biệt vai trò giới.</p>
+          <p style="font-size: 12px; margin-top: 8px;"><strong>Cao:</strong> Hàn Quốc, Ai Cập, Morocco<br><strong>Thấp:</strong> Thụy Điển, Đan Mạch, Slovenia</p>
+        </div>
+      </div>
+
+      <div class="card" style="background: var(--lime);">
+        <div class="card-body">
+          <div class="card-num" style="color: var(--brand);">CHIỀU 8 (MỚI)</div>
+          <h4 style="font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; margin-bottom: 4px;">In-group Collectivism</h4>
+          <p style="font-size: 13px; margin: 0;">Mức tự hào về tư cách thành viên trong nhóm nhỏ (gia đình, bạn thân, tổ chức).</p>
+          <p style="font-size: 12px; margin-top: 8px;"><strong>Cao:</strong> Ai Cập, Trung Quốc, Morocco<br><strong>Thấp:</strong> Đan Mạch, Thụy Điển, New Zealand</p>
+        </div>
+      </div>
+
+      <div class="card" style="background: var(--pink);">
+        <div class="card-body">
+          <div class="card-num" style="color: var(--brand);">CHIỀU 9 (MỚI)</div>
+          <h4 style="font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; margin-bottom: 4px;">Performance Orientation</h4>
+          <p style="font-size: 13px; margin: 0;">Mức xã hội khuyến khích và thưởng cải tiến hiệu suất và xuất sắc.</p>
+          <p style="font-size: 12px; margin-top: 8px;"><strong>Cao:</strong> Mỹ, Đài Loan, New Zealand<br><strong>Thấp:</strong> Nga, Argentina, Hy Lạp</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="quote bg-cyan">
+      Ở mức đơn giản, nó nói <strong>"Khi ở Roma, hãy làm như người Roma làm"</strong>. Ở mức phân tích, Hofstede và GLOBE cung cấp hướng dẫn xác định "người Roma làm gì" — cảnh báo nhà quản trị về các vùng có thể có vấn đề khi nhận nhiệm vụ nước ngoài.
+      <span class="quote-author">— Lời khuyên thực dụng từ Robbins</span>
+    </div>
+  </section>
+
+  <!-- DISNEY PARIS -->
+  <section class="section" id="disney">
+    <span class="section-num">📍 Bài học thất bại</span>
+    <h2 class="section-title">Bài học từ <span class="underline">Disney&nbsp;Paris</span></h2>
+
+    <div class="card">
+      <div class="card-header" style="background: var(--brand); color: var(--paper);">
+        <div class="card-num">CASE STUDY · 1992</div>
+        <div class="card-title">Khi giả định "cái gì hiệu quả ở Florida sẽ hiệu quả ở Pháp"</div>
+      </div>
+      <div class="card-body">
+        <p>Walt&nbsp;Disney Company có hồ sơ thành công với công viên giải trí ở California và Florida. Vậy mở Disney Paris năm 1992 khó đến đâu? <strong>Cái gì hiệu quả ở Florida sẽ hiệu quả ở Pháp, đúng không? Sai!</strong></p>
+
+        <p>Người Pháp khác người Mỹ ở nhiều mặt:</p>
+
+        <ul class="num-list" style="margin-top: var(--gap-sm);">
+          <li>
+            <div class="num">!</div>
+            <div class="content"><strong>Phương tiện đi lại</strong>Người Mỹ đi xe ô&nbsp;tô đến công viên giải trí. Người Pháp đi bằng xe buýt. Kết quả: <span class="hl-pink">bãi đỗ xe lớn trống không</span>, trong khi cơ sở cho tài xế xe buýt nghỉ ngơi không đủ.</div>
+          </li>
+          <li>
+            <div class="num">!</div>
+            <div class="content"><strong>Rượu</strong>Disney Mỹ không phục vụ rượu. Người Pháp coi <strong>rượu vang là phần của cuộc sống hàng ngày</strong>, một ly rượu vang trưa là thiết yếu. Khách phàn nàn dữ dội khi không có rượu.</div>
+          </li>
+          <li>
+            <div class="num">!</div>
+            <div class="content"><strong>Giờ ăn trưa</strong>Người Mỹ ăn khi đi dạo. Đa số khách châu Âu <strong>kéo đến nhà hàng lúc 12:30</strong>, kỳ vọng được phục vụ, xem bữa ăn như sự kiện thư thái. Disney Paris không bố trí đủ nhân viên cho "giờ cao điểm" 1-2 tiếng này.</div>
+          </li>
+          <li>
+            <div class="num">!</div>
+            <div class="content"><strong>Thời gian lưu trú</strong>Khách Mỹ trung bình ở 4&nbsp;ngày. Người Pháp <strong>đến sớm, ở cả ngày, check-in khách sạn rất muộn, check-out sớm sáng hôm sau</strong>. Kết quả: hàng dài người ở sảnh khách sạn cùng lúc.</div>
+          </li>
+        </ul>
+
+        <div class="callout tip" style="margin-top: var(--gap-md);">
+          <span class="callout-label">💡 Disney đã sửa</span>
+          <p class="callout-body">
+            Mở rộng khu xe buýt, sửa chính sách để có rượu vang và bia, điều chỉnh nhân sự nhà hàng, lắp thêm máy tính ở khách sạn để giảm hàng chờ.
+          </p>
+        </div>
+
+        <div class="quote bg-pink" style="margin-top: var(--gap-md);">
+          Văn hóa quan trọng!
+          <span class="quote-author">— Kết luận quan trọng nhất của case Disney Paris</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHEATSHEET -->
+  <section class="section" id="cheatsheet">
+    <span class="section-num">📍 Trang 11</span>
+    <h2 class="section-title">Bảng <span class="underline">tra&nbsp;cứu</span> nhanh (Cheatsheet)</h2>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-md); margin-bottom: var(--gap-md);">4 câu hỏi cốt lõi khi tư vấn mở rộng quốc tế</h3>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="card-header bg-yellow">
+          <div class="card-num">CÂU 1</div>
+          <div class="card-title">Thái độ hiện tại?</div>
+        </div>
+        <div class="card-body">
+          <p style="font-size: 14px;">• <strong>Ethnocentric:</strong> tin home country biết nhất → rủi ro cao</p>
+          <p style="font-size: 14px;">• <strong>Polycentric:</strong> tin host country biết nhất → có thể bỏ lỡ tích hợp toàn cầu</p>
+          <p style="font-size: 14px;">• <strong>Geocentric:</strong> tốt nhất từ mọi nơi → <span class="hl">lý tưởng</span></p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-cyan">
+          <div class="card-num">CÂU 2</div>
+          <div class="card-title">Mô hình tổ chức phù hợp?</div>
+        </div>
+        <div class="card-body">
+          <p style="font-size: 14px;">• <strong>Multidomestic:</strong> thị trường khác biệt lớn (Nestlé)</p>
+          <p style="font-size: 14px;">• <strong>Global:</strong> cần hiệu quả chi phí toàn cầu (Sony)</p>
+          <p style="font-size: 14px;">• <strong>Transnational:</strong> linh hoạt cao nhất (Ford)</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-lime">
+          <div class="card-num">CÂU 3</div>
+          <div class="card-title">Bậc nào trong 6 bậc?</div>
+        </div>
+        <div class="card-body">
+          <p style="font-size: 14px;">Sourcing → Exporting → Licensing → Alliance → JV → Subsidiary. <span class="hl-lime">Đừng nhảy vọt</span> 2-3 bậc.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-pink">
+          <div class="card-num">CÂU 4</div>
+          <div class="card-title">3 lớp môi trường nước đích?</div>
+        </div>
+        <div class="card-body">
+          <p style="font-size: 14px;">• <strong>Chính trị/Pháp lý:</strong> luật lao động, visa, hối lộ?</p>
+          <p style="font-size: 14px;">• <strong>Kinh tế:</strong> free vs. planned? Tỷ giá? Lạm phát?</p>
+          <p style="font-size: 14px;">• <strong>Văn hóa:</strong> dùng Hofstede 5 hoặc GLOBE 9</p>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Phân biệt cặp khái niệm dễ nhầm</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 40%;">Cặp</th>
+            <th>Phân biệt</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Globalization vs. Nationalism</td><td>Toàn cầu hóa = xây cầu, biên giới mở; Dân tộc = xây tường, ưu tiên trong nước</td></tr>
+          <tr><td>Parochialism vs. Geocentric</td><td>Parochialism = cục bộ, "của ta tốt hơn"; Geocentric = mở, "tốt nhất từ mọi nơi"</td></tr>
+          <tr><td>Ethnocentric vs. Polycentric</td><td>Ethnocentric = tập trung quyết định ở home; Polycentric = phân quyền cho host</td></tr>
+          <tr><td>Multidomestic vs. Global</td><td>Multidomestic = phân quyền (polycentric); Global = tập trung (ethnocentric)</td></tr>
+          <tr><td>Licensing vs. Franchising</td><td>Licensing = sản xuất; Franchising = dịch vụ</td></tr>
+          <tr><td>Strategic Alliance vs. Joint Venture</td><td>Alliance = chia sẻ nguồn lực; JV = lập entity riêng biệt</td></tr>
+          <tr><td>Free Market vs. Planned Economy</td><td>Free = tư nhân kiểm soát, cung cầu; Planned = chính phủ trung ương quyết định</td></tr>
+          <tr><td>Hofstede vs. GLOBE</td><td>Hofstede = 5 chiều, công trình gốc; GLOBE = 9 chiều, mở rộng Hofstede</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-label">💼 5 bước phát triển góc nhìn toàn cầu</span>
+      <p class="callout-body">
+        <strong>1.</strong> Nhận thức về độ mở của bản thân với trải nghiệm xuyên văn hóa.<br>
+        <strong>2.</strong> Giả định <em>khác biệt</em> cho đến khi tương đồng được chứng minh.<br>
+        <strong>3.</strong> Nhấn mạnh <em>mô tả</em> thay vì diễn giải/đánh giá. Khác không có nghĩa là sai.<br>
+        <strong>4.</strong> Thể hiện <em>đồng cảm</em>. Đặt mình vào "đôi giày của người khác".<br>
+        <strong>5.</strong> Coi diễn giải ban đầu là <em>giả thuyết làm việc</em>, không phải sự thật.
+      </p>
+    </div>
+  </section>
+
+  <!-- REVIEW -->
+  <section class="section" id="review">
+    <span class="section-num">📍 Trang 12</span>
+    <h2 class="section-title">Lộ trình <span class="underline">ôn&nbsp;tập</span> và 2 nguyên tắc nhớ lâu</h2>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="card-header" style="background: var(--brand); color: var(--paper);">
+          <div class="card-num">NGUYÊN TẮC 1</div>
+          <div class="card-title">Active Recall · Chủ động gợi nhớ</div>
+        </div>
+        <div class="card-body">
+          <p>Đọc lại <strong>không phải ôn tập</strong>. Phải kéo từ não ra.</p>
+          <p>Cách hiệu quả: <span class="hl">gập tài liệu, viết ra giấy, nói thành tiếng</span>. Khi bí thì tra. Quá trình "moi từ trí nhớ" tạo ra trí nhớ bền.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-ink">
+          <div class="card-num">NGUYÊN TẮC 2</div>
+          <div class="card-title">Spaced Repetition · Lặp lại ngắt quãng</div>
+        </div>
+        <div class="card-body">
+          <p>Khoảng cách thời gian quan trọng hơn thời lượng.</p>
+          <p>Học <strong>7 lần × 10 phút cách quãng</strong> hiệu quả hơn nhiều so với <strong>1 lần 70 phút</strong>. Đừng nhồi.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Lộ trình 5 lần ôn tập</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Lần</th>
+            <th>Thời điểm</th>
+            <th>Thời gian</th>
+            <th>Hoạt động</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>L1</strong></td><td>Cuối ngày học (Ngày 0)</td><td>15&nbsp;phút</td><td>Lướt qua Cheatsheet. Nhắc lại: 3&nbsp;thái độ, 4&nbsp;loại MNC, 6&nbsp;bậc ra toàn cầu, 3&nbsp;lớp môi trường.</td></tr>
+          <tr><td><strong>L2</strong></td><td>Ngày 1</td><td>20&nbsp;phút</td><td><strong>Gập tài liệu</strong>. Vẽ sơ đồ "thang 6 bậc ra toàn cầu" và 5 chiều Hofstede. Đối chiếu với tài liệu. Làm 10&nbsp;flashcards.</td></tr>
+          <tr><td><strong>L3</strong></td><td>Ngày 3</td><td>30&nbsp;phút</td><td><strong>Áp khái niệm vào case thực tế.</strong> Chọn 1 doanh nghiệp Việt đã ra nước ngoài (Vinamilk, Viettel, FPT&nbsp;Software, VinFast). Phân tích: thái độ nào? Loại MNC nào? Bậc nào? Khác biệt văn hóa với nước đích?</td></tr>
+          <tr><td><strong>L4</strong></td><td>Ngày 7</td><td>30&nbsp;phút</td><td><strong>Hệ thống hóa.</strong> Vẽ bằng tay sơ đồ tổng thể Chương 4 (toàn cầu hóa → 3 thái độ → 4 loại MNC + 6 bậc → 3 lớp môi trường). Hoàn thành flashcards.</td></tr>
+          <tr><td><strong>L5</strong></td><td>Ngày 16</td><td>45&nbsp;phút</td><td><strong>Giảng cho người khác</strong> hoặc ghi âm. Đặc biệt giảng phần "Bài học Disney&nbsp;Paris" — minh họa sống động cho sức mạnh của văn hóa.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Ghi nhớ dài hạn</h3>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="card-header bg-lime">
+          <div class="card-num">L6</div>
+          <div class="card-title">Ngày 35 · 25&nbsp;phút</div>
+        </div>
+        <div class="card-body">
+          <p>Lướt cheatsheet + làm flashcards toàn bộ.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header bg-yellow">
+          <div class="card-num">L7</div>
+          <div class="card-title">Ngày 75 · 25&nbsp;phút</div>
+        </div>
+        <div class="card-body">
+          <p>Như Lần 6. Sau lần này, kiến thức đã chuyển sang vùng <span class="hl">trí nhớ dài hạn rất bền</span>.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-label">💡 Mẹo bonus cho Chương 4</span>
+      <p class="callout-body">
+        <strong>Phần 5 chiều Hofstede dùng được ngay</strong> khi làm việc với khách/đồng nghiệp nước ngoài. Trước cuộc họp với người khác văn hóa, dành 5&nbsp;phút xem điểm Hofstede của nước họ. Bạn sẽ tránh được nhiều hiểu lầm.<br><br>
+        <strong>Giữ một "cultural journal" 30 ngày</strong> nếu bạn đang làm việc với người nước ngoài. Mỗi tuần ghi 1 quan sát: một khoảnh khắc bạn thấy khác biệt văn hóa, lý giải bằng chiều Hofstede/GLOBE nào.<br><br>
+        <strong>Khi tư vấn quốc tế:</strong> dùng 4 câu hỏi cốt lõi (Trang 11) làm khung mở đầu. Chúng sẽ định hình cả buổi thảo luận.
+      </p>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Kết nối với các chương sau</h3>
+
+    <div class="quote bg-cyan">
+      Chương 4 là <strong>chương đầu trong nhóm 4 chương về môi trường mở rộng</strong> (Chương 4-7). Lưu ý: 5&nbsp;chiều Hofstede và 9&nbsp;chiều GLOBE sẽ được nhắc lại ở <strong>Chương 16 (Tạo động lực)</strong> — vì cách tạo động lực phụ thuộc văn hóa quốc gia. Học kỹ Chương 4 sẽ giúp Chương 16 nhẹ hơn nhiều.
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>
+      <strong>CHƯƠNG&nbsp;04</strong> — Tóm tắt chuyên sâu sách<br>
+      <em>Management</em> · Stephen&nbsp;P.&nbsp;Robbins &amp; Mary&nbsp;A.&nbsp;Coulter · ấn bản 15&nbsp;(2021)
+    </p>
+    <p style="margin-top: var(--gap-md);">
+      Thiết kế Neo-Brutalism v3.4 — by
+      <a href="https://www.facebook.com/vuhai.fitness" target="_blank" rel="noopener noreferrer">Vũ&nbsp;Hải</a>
+      | Business&nbsp;Consultant
+    </p>
+  </footer>
+
+</div>
+
+</body>
+</html>

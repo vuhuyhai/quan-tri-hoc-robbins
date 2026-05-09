@@ -1,0 +1,1388 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chương 11 — Thiết kế Cơ cấu Tổ chức</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap&subset=vietnamese" rel="stylesheet">
+<style>
+:root {
+  /* === Color Tokens — Refined Tempered NB === */
+  --brand: #c73937;
+  --brand-dark: #A52F2D;
+  --ink: #1A1A1A;
+  --paper: #FAF7F2;
+  --paper-dim: #F2EDE5;
+  --line: #1A1A1A;
+  --muted: #6B6B6B;
+
+  /* Muted pastel accents */
+  --acc-yellow: #F5E4B8;
+  --acc-cyan: #C4DEDC;
+  --acc-lime: #DDE4C5;
+  --acc-pink: #F0DCDD;
+
+  /* === Typography === */
+  --font-display: "Space Grotesk", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* === Border & Shadow === */
+  --border: 3px solid var(--ink);
+  --border-thin: 2px solid var(--ink);
+  --radius: 4px;
+  --radius-sticker: 0;
+
+  /* Hard offset shadows */
+  --shadow-sm: 4px 4px 0 var(--ink);
+  --shadow-md: 6px 6px 0 var(--ink);
+  --shadow-lg: 8px 8px 0 var(--ink);
+  --shadow-brand: 6px 6px 0 var(--brand);
+
+  /* === Motion === */
+  --motion-fast: 120ms cubic-bezier(0.25, 0, 0, 1);
+  --motion-base: 200ms cubic-bezier(0.25, 0, 0, 1);
+}
+
+* {
+  font-style: normal !important;
+  box-sizing: border-box;
+  font-optical-sizing: auto;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 17px;
+  line-height: 1.65;
+  min-height: 100vh;
+}
+
+/* Background dot pattern */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(var(--ink) 1px, transparent 1px);
+  background-size: 24px 24px;
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-wrap: balance;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+p, li {
+  text-wrap: pretty;
+}
+
+a { color: var(--ink); text-decoration: none; }
+
+::selection { background: var(--brand); color: var(--paper); }
+
+/* === LAYOUT === */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  position: relative;
+  z-index: 1;
+}
+
+/* === NAV === */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--paper);
+  border-bottom: var(--border);
+}
+.nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.nav-logo {
+  width: 40px;
+  height: 40px;
+  background: var(--brand);
+  border: var(--border);
+  border-radius: var(--radius);
+  display: grid;
+  place-items: center;
+  color: var(--paper);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18px;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+.nav-title {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.nav-links {
+  display: flex;
+  gap: 8px;
+  list-style: none;
+}
+.nav-links a {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 8px 14px;
+  border: var(--border-thin);
+  border-radius: var(--radius);
+  background: var(--paper);
+  transition: all var(--motion-fast);
+}
+.nav-links a:hover {
+  background: var(--acc-yellow);
+  transform: translate(-2px, -2px);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+@media (max-width: 760px) {
+  .nav-links { display: none; }
+}
+
+/* === HERO === */
+.hero {
+  padding: 80px 0 100px;
+  position: relative;
+}
+.hero-tag {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 8px 16px;
+  display: inline-block;
+  margin-bottom: 24px;
+}
+.hero h1 {
+  font-size: clamp(48px, 8vw, 96px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 0.98;
+  margin-bottom: 32px;
+}
+.hero h1 .em {
+  background: var(--brand);
+  color: var(--paper);
+  padding: 0 16px;
+  display: inline-block;
+  transform: rotate(-1.5deg);
+  margin: 0 4px;
+}
+.hero-sub {
+  font-size: 21px;
+  font-weight: 500;
+  color: var(--muted);
+  max-width: 720px;
+  margin-bottom: 40px;
+  text-wrap: balance;
+}
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.meta-pill {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 8px 14px;
+  border: var(--border-thin);
+  border-radius: var(--radius);
+  background: var(--paper);
+}
+.meta-pill.brand { background: var(--brand); color: var(--paper); border-color: var(--ink); }
+.meta-pill.yellow { background: var(--acc-yellow); }
+.meta-pill.cyan { background: var(--acc-cyan); }
+.meta-pill.lime { background: var(--acc-lime); }
+
+/* Sticker hero decoration */
+.hero-sticker {
+  position: absolute;
+  top: 60px;
+  right: 40px;
+  width: 140px;
+  height: 140px;
+  background: var(--acc-yellow);
+  border: var(--border);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.2;
+  transform: rotate(8deg);
+  box-shadow: var(--shadow-md);
+}
+@media (max-width: 900px) {
+  .hero-sticker { display: none; }
+}
+
+/* === SECTION === */
+.section {
+  padding: 80px 0;
+}
+.section-head {
+  margin-bottom: 56px;
+}
+.section-num {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--brand);
+  margin-bottom: 12px;
+}
+.section h2 {
+  font-size: clamp(32px, 5vw, 52px);
+  letter-spacing: -0.02em;
+  margin-bottom: 16px;
+}
+.section-sub {
+  font-size: 18px;
+  color: var(--muted);
+  max-width: 760px;
+  text-wrap: balance;
+}
+
+/* === STAT GRID === */
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-bottom: 60px;
+}
+.stat-card {
+  border: var(--border);
+  border-radius: var(--radius);
+  background: var(--paper);
+  padding: 24px;
+  box-shadow: var(--shadow-md);
+  transition: transform var(--motion-base);
+}
+.stat-card:hover { transform: translate(-3px, -3px); box-shadow: 9px 9px 0 var(--ink); }
+.stat-card.brand { background: var(--brand); color: var(--paper); }
+.stat-card.brand .stat-label { color: var(--paper); opacity: 0.85; }
+.stat-card.yellow { background: var(--acc-yellow); }
+.stat-card.cyan { background: var(--acc-cyan); }
+.stat-card.lime { background: var(--acc-lime); }
+
+.stat-value {
+  font-family: var(--font-display);
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+}
+.stat-label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+
+/* === SIX FACTORS GRID === */
+.factors-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+.factor-card {
+  border: var(--border);
+  border-radius: var(--radius);
+  background: var(--paper);
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-md);
+  transition: transform var(--motion-base);
+  overflow: hidden;
+}
+.factor-card:hover { transform: translate(-4px, -4px); box-shadow: 10px 10px 0 var(--ink); }
+.factor-header {
+  background: var(--ink);
+  color: var(--paper);
+  border-bottom: var(--border-thin);
+  padding: 16px 20px;
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+.factor-card:nth-child(1) .factor-header { background: var(--brand); }
+.factor-card:nth-child(2) .factor-header { background: var(--ink); }
+.factor-card:nth-child(3) .factor-header { background: var(--brand); }
+.factor-card:nth-child(4) .factor-header { background: var(--ink); }
+.factor-card:nth-child(5) .factor-header { background: var(--brand); }
+.factor-card:nth-child(6) .factor-header { background: var(--ink); }
+.factor-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  opacity: 0.7;
+}
+.factor-title {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--paper);
+}
+.factor-en {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  opacity: 0.75;
+  margin-top: 2px;
+  color: var(--paper);
+}
+.factor-body {
+  padding: 20px;
+  flex: 1;
+}
+.factor-body p {
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+.factor-body p:last-child { margin-bottom: 0; }
+.factor-body strong { font-weight: 700; }
+
+/* === COMPARE BLOCK (Mech vs Organic) === */
+.compare-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+@media (max-width: 800px) {
+  .compare-wrap { grid-template-columns: 1fr; }
+}
+.compare-card {
+  border: var(--border);
+  border-radius: var(--radius);
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+}
+.compare-mech { background: var(--paper); }
+.compare-org { background: var(--paper); transform: rotate(0.5deg); }
+.compare-header {
+  padding: 24px;
+  border-bottom: var(--border-thin);
+}
+.compare-mech .compare-header { background: var(--ink); color: var(--paper); }
+.compare-org .compare-header { background: var(--acc-cyan); color: var(--ink); }
+.compare-icon {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  opacity: 0.85;
+}
+.compare-title {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+.compare-en {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  margin-top: 4px;
+  opacity: 0.8;
+}
+.compare-body {
+  padding: 24px;
+  flex: 1;
+}
+.compare-body ul {
+  list-style: none;
+}
+.compare-body li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px dashed rgba(26,26,26,0.2);
+  font-size: 15px;
+}
+.compare-body li:last-child { border-bottom: none; }
+.compare-body li > .li-mark {
+  flex-shrink: 0;
+  width: 20px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--brand);
+}
+.compare-body li > .li-body {
+  flex: 1;
+  min-width: 0;
+}
+
+/* === TIMELINE / Contingency Factors === */
+.timeline {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+.timeline-item {
+  border: var(--border);
+  border-radius: var(--radius);
+  background: var(--paper);
+  padding: 24px;
+  position: relative;
+  box-shadow: var(--shadow-sm);
+}
+.timeline-item:nth-child(1) { background: var(--acc-yellow); }
+.timeline-item:nth-child(2) { background: var(--acc-cyan); }
+.timeline-item:nth-child(3) { background: var(--acc-lime); }
+.timeline-item:nth-child(4) { background: var(--acc-pink); }
+.timeline-num {
+  position: absolute;
+  top: -16px;
+  left: 20px;
+  width: 40px;
+  height: 40px;
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 16px;
+  border: var(--border-thin);
+}
+.timeline-item h3 {
+  margin-top: 12px;
+  margin-bottom: 8px;
+  font-size: 20px;
+}
+.timeline-item p {
+  font-size: 14px;
+  line-height: 1.55;
+}
+.timeline-item .case {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(26,26,26,0.3);
+  color: var(--brand);
+}
+
+/* === TRADITIONAL DESIGN TABLE === */
+.design-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+.design-card {
+  border: var(--border);
+  border-radius: var(--radius);
+  background: var(--paper);
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+}
+.design-header {
+  background: var(--brand);
+  color: var(--paper);
+  padding: 20px;
+  border-bottom: var(--border-thin);
+}
+.design-card:nth-child(2) .design-header { background: var(--ink); }
+.design-card:nth-child(3) .design-header { background: var(--brand-dark); }
+.design-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  opacity: 0.8;
+  margin-bottom: 6px;
+}
+.design-title {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.15;
+}
+.design-en {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  margin-top: 4px;
+  opacity: 0.75;
+}
+.design-body {
+  padding: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.design-body .def {
+  font-size: 14px;
+  line-height: 1.55;
+  padding-bottom: 12px;
+  border-bottom: 1px dashed rgba(26,26,26,0.2);
+}
+.design-body .pros, .design-body .cons {
+  font-size: 13px;
+  line-height: 1.55;
+}
+.design-body .label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 4px;
+}
+.design-body .pros .label { color: #2D7A3E; }
+.design-body .cons .label { color: var(--brand); }
+
+/* === MODERN STRUCTURE GRID === */
+.modern-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+.modern-card {
+  border: var(--border);
+  border-radius: var(--radius);
+  background: var(--paper);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+}
+.modern-card:nth-child(odd) { transform: rotate(-0.5deg); }
+.modern-card:nth-child(even) { transform: rotate(0.5deg); }
+.modern-icon {
+  width: 48px;
+  height: 48px;
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: var(--radius);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 18px;
+  margin-bottom: 16px;
+  border: var(--border-thin);
+}
+.modern-card:nth-child(1) .modern-icon { background: var(--brand); }
+.modern-card:nth-child(2) .modern-icon { background: var(--ink); }
+.modern-card:nth-child(3) .modern-icon { background: var(--brand); }
+.modern-card:nth-child(4) .modern-icon { background: var(--ink); }
+.modern-card h3 {
+  font-size: 20px;
+  margin-bottom: 6px;
+}
+.modern-card .en {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+  margin-bottom: 12px;
+}
+.modern-card p {
+  font-size: 14px;
+  line-height: 1.55;
+  margin-bottom: 10px;
+}
+.modern-card .example {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--brand);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  margin-top: 12px;
+}
+
+/* === FLEX WORK ARRANGEMENTS === */
+.flex-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  border: var(--border);
+  border-radius: var(--radius);
+  background: var(--paper);
+  padding: 24px;
+  box-shadow: var(--shadow-md);
+}
+.flex-row {
+  display: flex;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px dashed rgba(26,26,26,0.2);
+  align-items: flex-start;
+}
+.flex-row:last-child { border-bottom: none; }
+.flex-row > .flex-num {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  background: var(--acc-yellow);
+  border: var(--border-thin);
+  border-radius: var(--radius);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 13px;
+  text-align: center;
+  line-height: 1.1;
+  padding: 4px;
+}
+.flex-row:nth-child(2) > .flex-num { background: var(--acc-cyan); }
+.flex-row:nth-child(3) > .flex-num { background: var(--acc-lime); }
+.flex-row:nth-child(4) > .flex-num { background: var(--acc-pink); }
+.flex-row:nth-child(5) > .flex-num { background: var(--acc-yellow); }
+.flex-row > .flex-content {
+  flex: 1;
+  min-width: 0;
+}
+.flex-row h4 {
+  font-size: 17px;
+  margin-bottom: 4px;
+}
+.flex-row .flex-en {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
+}
+.flex-row p {
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+/* === KEY INSIGHT BOX === */
+.insight {
+  border: var(--border);
+  border-radius: var(--radius);
+  background: var(--acc-yellow);
+  padding: 32px 36px;
+  box-shadow: var(--shadow-brand);
+  margin: 40px 0;
+  position: relative;
+}
+.insight::before {
+  content: "💡";
+  position: absolute;
+  top: -16px;
+  left: 24px;
+  width: 40px;
+  height: 40px;
+  background: var(--paper);
+  border: var(--border-thin);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+}
+.insight-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 8px;
+  margin-top: 8px;
+}
+.insight h3 {
+  font-size: 22px;
+  margin-bottom: 12px;
+}
+.insight p {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* === CASE STUDY === */
+.case-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+.case-card {
+  border: var(--border);
+  border-radius: var(--radius);
+  background: var(--paper);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+}
+.case-card .case-tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 4px 10px;
+  background: var(--brand);
+  color: var(--paper);
+  border-radius: 2px;
+  margin-bottom: 12px;
+}
+.case-card.alt .case-tag { background: var(--ink); }
+.case-card h4 {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+.case-card p {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+/* === CTA / REVIEW SECTION === */
+.cta-box {
+  border: var(--border);
+  border-radius: var(--radius);
+  background: var(--brand);
+  color: var(--paper);
+  padding: 48px;
+  box-shadow: var(--shadow-md);
+  text-align: center;
+}
+.cta-box h2 {
+  color: var(--paper);
+  font-size: 32px;
+  margin-bottom: 16px;
+}
+.cta-box p {
+  font-size: 17px;
+  line-height: 1.6;
+  max-width: 640px;
+  margin: 0 auto 24px;
+  opacity: 0.95;
+}
+.btn {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 15px;
+  padding: 14px 28px;
+  background: var(--paper);
+  color: var(--ink);
+  border: var(--border);
+  border-radius: var(--radius);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  transition: all var(--motion-fast);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+.btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--ink);
+}
+
+/* === FOOTER === */
+.footer {
+  border-top: var(--border);
+  padding: 40px 0;
+  margin-top: 80px;
+  background: var(--paper-dim);
+}
+.footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: space-between;
+  align-items: center;
+}
+.footer-text {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+}
+.footer-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 6px 12px;
+  border-radius: var(--radius);
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 720px) {
+  .hero { padding: 50px 0 60px; }
+  .hero-tag { font-size: 11px; padding: 6px 12px; }
+  .hero h1 { font-size: 44px; }
+  .hero-sub { font-size: 17px; }
+  .section { padding: 50px 0; }
+  .section h2 { font-size: 28px; }
+  .stat-value { font-size: 36px; }
+  .factor-title { font-size: 18px; }
+  .compare-title { font-size: 22px; }
+  .insight { padding: 24px; }
+  .cta-box { padding: 28px; }
+  .cta-box h2 { font-size: 24px; }
+}
+
+/* === FOCUS STATES === */
+*:focus-visible {
+  outline: 3px solid var(--brand);
+  outline-offset: 2px;
+}
+
+/* === REDUCED MOTION === */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+  .compare-org, .modern-card { transform: none !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== NAV ===== -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-brand">
+      <div class="nav-logo">11</div>
+      <div class="nav-title">Chương 11 / Tổ chức</div>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#sixfactors">6 Yếu&nbsp;tố</a></li>
+      <li><a href="#mechorganic">Mech vs Organic</a></li>
+      <li><a href="#contingency">4 Yếu&nbsp;tố</a></li>
+      <li><a href="#traditional">3 Thiết&nbsp;kế</a></li>
+      <li><a href="#modern">Hiện&nbsp;đại</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<header class="hero">
+  <div class="container">
+    <div class="hero-tag">Robbins &amp; Coulter / Management 15e / Phần&nbsp;4</div>
+    <h1>Thiết kế <span class="em">Cơ cấu</span><br>Tổ chức.</h1>
+    <p class="hero-sub">Chương 11 mở đầu Phần Tổ&nbsp;chức. Sau khi có chiến lược, nhà quản trị phải sắp xếp con người và công việc để thực thi. Đây là khung tư duy nền tảng cho bất kỳ ai làm tư vấn vận hành.</p>
+    <div class="hero-meta">
+      <span class="meta-pill brand">5 Mục tiêu học tập</span>
+      <span class="meta-pill yellow">10 trang tóm tắt</span>
+      <span class="meta-pill cyan">~11.500 từ</span>
+      <span class="meta-pill lime">50 flashcards</span>
+    </div>
+    <div class="hero-sticker">6&nbsp;YẾU TỐ<br>CỐT&nbsp;LÕI</div>
+  </div>
+</header>
+
+<!-- ===== STATS ===== -->
+<section class="section" style="padding-top: 0;">
+  <div class="container">
+    <div class="stat-grid">
+      <div class="stat-card brand">
+        <div class="stat-value">350</div>
+        <div class="stat-label">Đội tự quản tại ING&nbsp;Hà&nbsp;Lan</div>
+      </div>
+      <div class="stat-card yellow">
+        <div class="stat-value">9</div>
+        <div class="stat-label">Người mỗi đội ING</div>
+      </div>
+      <div class="stat-card cyan">
+        <div class="stat-value">17</div>
+        <div class="stat-label">Báo cáo trực tiếp của Tim&nbsp;Cook tại Apple</div>
+      </div>
+      <div class="stat-card lime">
+        <div class="stat-value">84%</div>
+        <div class="stat-label">Nhân viên Mỹ trong cấu trúc Matrix</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 6 CORE FACTORS ===== -->
+<section class="section" id="sixfactors">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-num">LO 11.1 / Phần 1+2</div>
+      <h2>6 yếu tố cốt lõi của thiết kế tổ chức</h2>
+      <p class="section-sub">Đây là 6 quyết định nền tảng nhà quản trị phải trả lời khi xây hoặc sửa cơ cấu. Mục tiêu là sắp xếp công việc sao cho tổ chức vừa hiệu quả vừa linh hoạt.</p>
+    </div>
+
+    <div class="factors-grid">
+      <div class="factor-card">
+        <div class="factor-header">
+          <span class="factor-num">01</span>
+          <div>
+            <div class="factor-title">Chuyên môn hoá công việc</div>
+            <div class="factor-en">Work Specialization</div>
+          </div>
+        </div>
+        <div class="factor-body">
+          <p>Chia một công việc lớn thành nhiều bước nhỏ, mỗi bước do một người làm.</p>
+          <p><strong>Ví dụ:</strong> dây chuyền của Henry&nbsp;Ford ra một xe mỗi 10&nbsp;giây nhờ mỗi công nhân chỉ lắp một bộ phận.</p>
+          <p><strong>Cảnh báo:</strong> đẩy quá xa gặp <em>human diseconomies</em> &mdash; chán, mệt, vắng mặt nhiều, năng suất rớt.</p>
+        </div>
+      </div>
+
+      <div class="factor-card">
+        <div class="factor-header">
+          <span class="factor-num">02</span>
+          <div>
+            <div class="factor-title">Gộp bộ phận</div>
+            <div class="factor-en">Departmentalization</div>
+          </div>
+        </div>
+        <div class="factor-body">
+          <p>Sau khi chia việc cho từng người, gộp các việc tương tự lại để phối hợp tốt.</p>
+          <p><strong>5 cách gộp:</strong> Functional (chức năng), Geographical (địa lý), Product (sản phẩm), Process (quy trình), Customer (khách hàng).</p>
+          <p>Đa số tổ chức lớn dùng <em>cross-functional team</em> kết hợp nhiều cách.</p>
+        </div>
+      </div>
+
+      <div class="factor-card">
+        <div class="factor-header">
+          <span class="factor-num">03</span>
+          <div>
+            <div class="factor-title">Chuỗi chỉ huy</div>
+            <div class="factor-en">Chain of Command</div>
+          </div>
+        </div>
+        <div class="factor-body">
+          <p>Đường quyền hạn liên tục từ đỉnh xuống cấp thấp nhất, làm rõ ai báo cáo cho ai.</p>
+          <p><strong>3 khái niệm gốc:</strong> Authority (quyền hạn), Responsibility (trách nhiệm), Unity of Command (mỗi người chỉ một sếp).</p>
+          <p>Hôm nay ít quan trọng hơn xưa do CNTT và nhân viên trao quyền.</p>
+        </div>
+      </div>
+
+      <div class="factor-card">
+        <div class="factor-header">
+          <span class="factor-num">04</span>
+          <div>
+            <div class="factor-title">Tầm hạn quản trị</div>
+            <div class="factor-en">Span of Control</div>
+          </div>
+        </div>
+        <div class="factor-body">
+          <p>Số nhân viên một quản lý có thể giám sát hiệu quả.</p>
+          <p><strong>Hẹp:</strong> 4-6 người, nhiều tầng, kiểm soát chặt nhưng tốn kém.</p>
+          <p><strong>Rộng:</strong> 10+ người, ít tầng, linh hoạt và tiết kiệm. <em>Tim&nbsp;Cook</em> có 17 báo cáo trực tiếp.</p>
+        </div>
+      </div>
+
+      <div class="factor-card">
+        <div class="factor-header">
+          <span class="factor-num">05</span>
+          <div>
+            <div class="factor-title">Tập trung &mdash; Phân quyền</div>
+            <div class="factor-en">Centralization</div>
+          </div>
+        </div>
+        <div class="factor-body">
+          <p>Mức độ quyết định được làm tại các cấp cao của tổ chức.</p>
+          <p><strong>Centralization:</strong> quyết định ở đỉnh. <strong>Decentralization:</strong> giao xuống cấp thấp.</p>
+          <p>Xu hướng hiện đại nghiêng về <em>phân quyền</em> để phản ứng nhanh và trao quyền cho người gần khách hàng.</p>
+        </div>
+      </div>
+
+      <div class="factor-card">
+        <div class="factor-header">
+          <span class="factor-num">06</span>
+          <div>
+            <div class="factor-title">Mức chuẩn hoá</div>
+            <div class="factor-en">Formalization</div>
+          </div>
+        </div>
+        <div class="factor-body">
+          <p>Mức độ công việc được tiêu chuẩn hoá, hành vi nhân viên được hướng dẫn bởi quy tắc và thủ tục.</p>
+          <p><strong>Cao:</strong> mô tả công việc rõ, nhiều quy tắc, ít quyền tự quyết.</p>
+          <p><strong>Thấp:</strong> nhân viên có quyền tự quyết cao hơn về cách làm việc.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== INSIGHT ===== -->
+<section class="section" style="padding-top: 0;">
+  <div class="container">
+    <div class="insight">
+      <div class="insight-tag">CÂU CHUYỆN MỞ ĐẦU CHƯƠNG</div>
+      <h3>ING&nbsp;Hà&nbsp;Lan: 350 đội tự quản, mỗi đội 9&nbsp;người</h3>
+      <p>Thay vì giữ phòng ban truyền thống, ING tổ chức thành 350 đội tự quản, mỗi đội chịu trách nhiệm trọn vẹn một nhóm khách hàng. Kết quả: ngân hàng phản ứng nhanh hơn, nhân viên gắn bó hơn, năng suất cao hơn. Bài học: <strong>không có một mô hình cơ cấu tốt nhất cho mọi tổ chức.</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MECHANISTIC vs ORGANIC ===== -->
+<section class="section" id="mechorganic">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-num">LO 11.2</div>
+      <h2>Hai cực đối lập: Mechanistic vs Organic</h2>
+      <p class="section-sub">Hai hình ảnh ẩn dụ: dàn nhạc giao hưởng (Mechanistic) và ban nhạc jazz (Organic). Cả hai đều có chỗ của mình. Nhà quản trị giỏi biết khi nào dùng cái nào.</p>
+    </div>
+
+    <div class="compare-wrap">
+      <div class="compare-card compare-mech">
+        <div class="compare-header">
+          <div class="compare-icon">DÀN NHẠC GIAO HƯỞNG</div>
+          <div class="compare-title">Mechanistic</div>
+          <div class="compare-en">Tổ chức kiểu máy &mdash; cứng, chính thức, chuẩn hoá cao</div>
+        </div>
+        <div class="compare-body">
+          <ul>
+            <li><span class="li-mark">→</span><span class="li-body">Chuyên môn hoá <strong>cao</strong>, mỗi người một việc cụ thể</span></li>
+            <li><span class="li-mark">→</span><span class="li-body">Nhiều tầng quản lý, chuỗi chỉ huy <strong>rõ ràng</strong></span></li>
+            <li><span class="li-mark">→</span><span class="li-body">Quyền hạn <strong>tập trung</strong> ở đỉnh, hẹp xuống dần</span></li>
+            <li><span class="li-mark">→</span><span class="li-body">Quy tắc và quy định <strong>chính thức cao</strong></span></li>
+            <li><span class="li-mark">→</span><span class="li-body">Phù hợp môi trường <strong>ổn định, dự đoán được</strong></span></li>
+            <li><span class="li-mark">→</span><span class="li-body">Ví dụ: ngân hàng truyền thống, sản xuất hàng loạt</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="compare-card compare-org">
+        <div class="compare-header">
+          <div class="compare-icon">BAN NHẠC JAZZ</div>
+          <div class="compare-title">Organic</div>
+          <div class="compare-en">Tổ chức kiểu hữu cơ &mdash; mềm dẻo, thích nghi, phẳng</div>
+        </div>
+        <div class="compare-body">
+          <ul>
+            <li><span class="li-mark">→</span><span class="li-body">Đội <strong>cross-functional</strong> đa dạng, đa kỹ năng</span></li>
+            <li><span class="li-mark">→</span><span class="li-body">Ít tầng, <strong>luồng thông tin tự do</strong></span></li>
+            <li><span class="li-mark">→</span><span class="li-body">Quyền tự quyết cao, <strong>phân quyền</strong></span></li>
+            <li><span class="li-mark">→</span><span class="li-body">Ít quy tắc chính thức, dựa vào <strong>tin tưởng và kỹ năng</strong></span></li>
+            <li><span class="li-mark">→</span><span class="li-body">Phù hợp môi trường <strong>biến động, đổi mới nhanh</strong></span></li>
+            <li><span class="li-mark">→</span><span class="li-body">Ví dụ: Google, IDEO, ING&nbsp;Hà&nbsp;Lan</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 4 CONTINGENCY FACTORS ===== -->
+<section class="section" id="contingency">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-num">LO 11.3</div>
+      <h2>4 yếu tố ngẫu nhiên ảnh hưởng tới lựa chọn cấu trúc</h2>
+      <p class="section-sub">Không có cấu trúc đúng tuyệt đối. Cấu trúc phải phù hợp với 4 biến số sau. Đây là khung phân tích quan trọng khi tư vấn tái cấu trúc.</p>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-num">1</div>
+        <h3>Strategy &mdash; Chiến lược</h3>
+        <p>Cơ cấu phải <em>phục vụ</em> chiến lược. <strong>Chandler:</strong> "Structure follows strategy". Đổi chiến lược nhưng giữ cấu trúc cũ là sai lầm phổ biến.</p>
+        <div class="case">CASE / CHANDLER 1962</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-num">2</div>
+        <h3>Size &mdash; Kích cỡ</h3>
+        <p>Tổ chức lớn (2.000+ nhân viên) có xu hướng cơ học hơn: chuyên môn hoá cao, tầng nhiều, quy tắc nhiều. Tổ chức nhỏ thường organic hơn.</p>
+        <div class="case">CASE / NHIỀU NGHIÊN CỨU</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-num">3</div>
+        <h3>Technology &mdash; Công nghệ</h3>
+        <p><strong>Woodward</strong> phát hiện 3 loại công nghệ (đơn vị, hàng loạt, liên tục) cần cấu trúc khác nhau. Routine task hợp Mechanistic, non-routine hợp Organic.</p>
+        <div class="case">CASE / WOODWARD 1965</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-num">4</div>
+        <h3>Environment &mdash; Môi trường</h3>
+        <p>Môi trường ổn định, dự đoán được hợp Mechanistic. Môi trường biến động, không chắc chắn cần Organic. <strong>Nokia, Blockbuster</strong> chậm chuyển → tử vong.</p>
+        <div class="case">CASE / NOKIA, BLOCKBUSTER</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 3 TRADITIONAL DESIGNS ===== -->
+<section class="section" id="traditional">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-num">LO 11.4</div>
+      <h2>3 thiết kế tổ chức truyền thống</h2>
+      <p class="section-sub">Đa số tổ chức bắt đầu là Simple, lớn lên thì chọn giữa Functional hoặc Divisional. Hiểu cả ba để biết khi nào nên chuyển.</p>
+    </div>
+
+    <div class="design-grid">
+      <div class="design-card">
+        <div class="design-header">
+          <div class="design-tag">DESIGN 01</div>
+          <div class="design-title">Simple Structure</div>
+          <div class="design-en">Cấu trúc đơn giản</div>
+        </div>
+        <div class="design-body">
+          <div class="def">
+            Ít gộp bộ phận, span of control rộng, quyền tập trung ở 1 người, ít chuẩn hoá. Đa số khởi nghiệp dùng cấu trúc này.
+          </div>
+          <div class="pros">
+            <div class="label">✓ Ưu</div>
+            Nhanh, linh hoạt, chi phí thấp, trách nhiệm rõ ràng.
+          </div>
+          <div class="cons">
+            <div class="label">✗ Nhược</div>
+            Không phù hợp khi tổ chức lớn lên. Phụ thuộc 1 người là rủi ro.
+          </div>
+        </div>
+      </div>
+
+      <div class="design-card">
+        <div class="design-header">
+          <div class="design-tag">DESIGN 02</div>
+          <div class="design-title">Functional Structure</div>
+          <div class="design-en">Cấu trúc theo chức năng</div>
+        </div>
+        <div class="design-body">
+          <div class="def">
+            Gộp các chuyên môn nghề tương tự. Dưới CEO có VP Marketing, VP Tài chính, VP Sản xuất, VP Nhân sự.
+          </div>
+          <div class="pros">
+            <div class="label">✓ Ưu</div>
+            Tiết kiệm nhờ chuyên môn hoá, kinh tế quy mô, ít trùng lặp.
+          </div>
+          <div class="cons">
+            <div class="label">✗ Nhược</div>
+            Mất tầm nhìn tổng thể. Chuyên gia chức năng cô lập.
+          </div>
+        </div>
+      </div>
+
+      <div class="design-card">
+        <div class="design-header">
+          <div class="design-tag">DESIGN 03</div>
+          <div class="design-title">Divisional Structure</div>
+          <div class="design-en">Cấu trúc theo bộ phận</div>
+        </div>
+        <div class="design-body">
+          <div class="def">
+            Gồm các đơn vị bán tự chủ. <strong>Ford</strong> chia 3: The&nbsp;Americas / Europe-Middle&nbsp;East-Africa / Asia&nbsp;Pacific.
+          </div>
+          <div class="pros">
+            <div class="label">✓ Ưu</div>
+            Tập trung kết quả. Quản lý chịu trách nhiệm trọn vẹn.
+          </div>
+          <div class="cons">
+            <div class="label">✗ Nhược</div>
+            Trùng lặp hoạt động và nguồn lực, tăng chi phí.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MODERN STRUCTURES ===== -->
+<section class="section" id="modern">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-num">LO 11.5 / Phần 1</div>
+      <h2>4 cấu trúc tổ chức linh hoạt thế kỷ 21</h2>
+      <p class="section-sub">Khi môi trường ngày càng động và phức tạp, các thiết kế truyền thống không còn đủ. Đây là 4 lựa chọn được dùng phổ biến nhất hiện nay.</p>
+    </div>
+
+    <div class="modern-grid">
+      <div class="modern-card">
+        <div class="modern-icon">T</div>
+        <h3>Team Structure</h3>
+        <div class="en">Cấu trúc đội</div>
+        <p>Toàn bộ tổ chức là các đội làm việc tự thiết kế và tự chịu trách nhiệm. Trao quyền là cốt yếu.</p>
+        <div class="example">Google, Amazon, Boeing, Xerox, Louis&nbsp;Vuitton</div>
+      </div>
+
+      <div class="modern-card">
+        <div class="modern-icon">M</div>
+        <h3>Matrix Structure</h3>
+        <div class="en">Cấu trúc ma trận</div>
+        <p>Chuyên gia từ các phòng chức năng khác nhau làm dự án. Mỗi nhân viên có <strong>2 sếp</strong>: chức năng và dự án.</p>
+        <div class="example">84% nhân viên Mỹ trong matrix ở mức nào đó</div>
+      </div>
+
+      <div class="modern-card">
+        <div class="modern-icon">P</div>
+        <h3>Project Structure</h3>
+        <div class="en">Cấu trúc dự án</div>
+        <p>Nhân viên liên tục chuyển giữa các dự án. Khác matrix: <strong>không có phòng ban chính thức</strong> để quay về.</p>
+        <div class="example">IDEO &mdash; công ty thiết kế</div>
+      </div>
+
+      <div class="modern-card">
+        <div class="modern-icon">V</div>
+        <h3>Virtual Structure</h3>
+        <div class="en">Tổ chức ảo</div>
+        <p>Nhóm nhỏ nhân viên toàn thời gian, thuê ngoài chuyên gia bên ngoài khi cần. Phụ thuộc nặng vào CNTT.</p>
+        <div class="example">Phổ biến trong tech startup, indie business</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FLEX WORK ARRANGEMENTS ===== -->
+<section class="section" id="flexwork">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-num">LO 11.5 / Phần 2</div>
+      <h2>5 kiểu làm việc linh hoạt</h2>
+      <p class="section-sub">Bên cạnh cấu trúc, cách bố trí thời gian và địa điểm làm việc cũng đang thay đổi. 5 hình thức này đều được Robbins đề cập.</p>
+    </div>
+
+    <div class="flex-list">
+      <div class="flex-row">
+        <div class="flex-num">TELE</div>
+        <div class="flex-content">
+          <h4>Telecommuting &mdash; Làm việc từ xa</h4>
+          <div class="flex-en">Workers connect via technology from home</div>
+          <p>Nhân viên kết nối với công ty qua công nghệ từ nhà. Lưu ý: <strong>IBM bỏ chính sách này năm 2017</strong>, gọi nhân viên trở lại văn phòng để tăng hợp tác và đổi mới. Bài học: không phải mọi tổ chức đều hợp.</p>
+        </div>
+      </div>
+      <div class="flex-row">
+        <div class="flex-num">COMP</div>
+        <div class="flex-content">
+          <h4>Compressed Workweek &mdash; Tuần nén</h4>
+          <div class="flex-en">4 days × 10 hours instead of 5 × 8</div>
+          <p>Làm 40 giờ trong 4 ngày thay vì 5 ngày. Cho nhân viên cuối tuần dài hơn, có thể tăng hài lòng và giảm vắng mặt.</p>
+        </div>
+      </div>
+      <div class="flex-row">
+        <div class="flex-num">FLEX</div>
+        <div class="flex-content">
+          <h4>Flextime &mdash; Giờ linh hoạt</h4>
+          <div class="flex-en">Core hours + flexible bands</div>
+          <p>Có khung giờ chính bắt buộc, ngoài ra nhân viên tự chọn giờ làm. Ví dụ ai cũng phải có mặt 10h-15h, ngoài ra tự xếp.</p>
+        </div>
+      </div>
+      <div class="flex-row">
+        <div class="flex-num">SHARE</div>
+        <div class="flex-content">
+          <h4>Job Sharing &mdash; Chia việc</h4>
+          <div class="flex-en">Two part-time workers split one full-time job</div>
+          <p>Hai người làm bán thời gian chia sẻ một công việc toàn thời gian. Phù hợp cha mẹ trẻ, nhân viên cận hưu, hoặc nhu cầu chuyển tiếp.</p>
+        </div>
+      </div>
+      <div class="flex-row">
+        <div class="flex-num">CONT</div>
+        <div class="flex-content">
+          <h4>Contingent Workforce &mdash; Lực lượng tạm thời</h4>
+          <div class="flex-en">Freelance / part-time / contract workers</div>
+          <p>Nhân viên freelance, bán thời gian, hợp đồng ngắn. Tăng linh hoạt cho tổ chức nhưng đặt ra thử thách quản lý: trung thành, đào tạo, tích hợp văn hoá.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== KEY CASES ===== -->
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-num">CASES / KEY EXAMPLES</div>
+      <h2>3 case study đáng nhớ nhất chương</h2>
+      <p class="section-sub">Mỗi case ứng với một bài học cốt lõi. Khi áp dụng vào tư vấn, đây là 3 ví dụ luôn dùng được.</p>
+    </div>
+
+    <div class="case-grid">
+      <div class="case-card">
+        <span class="case-tag">ING / TEAM</span>
+        <h4>ING&nbsp;Hà&nbsp;Lan và 350 đội tự quản</h4>
+        <p>Thay phòng ban bằng đội 9 người tự chịu trách nhiệm trọn vẹn nhóm khách hàng. Kết quả: phản ứng nhanh hơn, gắn bó cao hơn, năng suất tốt hơn.</p>
+      </div>
+      <div class="case-card alt">
+        <span class="case-tag">IBM / TELE</span>
+        <h4>IBM bỏ telecommuting năm&nbsp;2017</h4>
+        <p>Sau nhiều năm khuyến khích làm việc từ xa, IBM gọi nhân viên về văn phòng. Bài học: <strong>cấu trúc phải phù hợp tính chất công việc</strong>, không có lựa chọn đúng tuyệt đối.</p>
+      </div>
+      <div class="case-card">
+        <span class="case-tag">APPLE / SPAN</span>
+        <h4>Tim&nbsp;Cook quản 17 báo cáo trực tiếp</h4>
+        <p>Span of control rộng bất thường ở mức CEO. Cho thấy xu hướng phẳng hoá: ít tầng quản lý, ra quyết định nhanh, giao tiếp trực tiếp.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section class="section">
+  <div class="container">
+    <div class="cta-box">
+      <h2>Sẵn sàng đi sâu vào nội dung đầy đủ?</h2>
+      <p>Bản tóm tắt 10 trang đầy đủ ~11.500 từ kèm 50 flashcards markdown đã có sẵn. Lộ trình ôn tập 5 lần theo Spaced Repetition giúp giữ kiến thức trong trí nhớ dài hạn.</p>
+      <a href="#sixfactors" class="btn">Xem lại 6&nbsp;yếu tố cốt&nbsp;lõi →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-text">Tóm tắt chuyên sâu Chương&nbsp;11 / Robbins &amp; Coulter / Management 15e (2021)</div>
+      <div class="footer-tag">Vũ&nbsp;Hải / Deep&nbsp;Doc&nbsp;Summary</div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

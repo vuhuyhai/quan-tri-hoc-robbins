@@ -1,0 +1,1731 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chương 3 — Môi trường bên ngoài và Văn hóa Tổ chức</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap&subset=vietnamese" rel="stylesheet">
+<style>
+:root {
+  --brand: #c73937;
+  --brand-dark: #a82d2c;
+  --ink: #1a1a1a;
+  --ink-soft: #2d2d2d;
+  --paper: #faf8f3;
+  --paper-warm: #f5f1e8;
+  --yellow: #F5E4B8;
+  --cyan: #C4DEDC;
+  --lime: #DDE4C5;
+  --pink: #F0DCDD;
+  --border-w: 3px;
+  --border-w-thin: 2px;
+  --shadow-offset: 6px 6px 0;
+  --shadow-offset-sm: 4px 4px 0;
+  --shadow-offset-lg: 8px 8px 0;
+  --radius: 4px;
+  --gap-xs: 8px;
+  --gap-sm: 16px;
+  --gap-md: 24px;
+  --gap-lg: 40px;
+  --gap-xl: 64px;
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+* { font-style: normal !important; box-sizing: border-box; font-optical-sizing: auto; }
+*::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.6;
+  font-size: 16px;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  background-image: radial-gradient(circle at 1px 1px, rgba(26,26,26,0.08) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+h1, h2, h3, h4, h5, h6, .title, .heading, .hero-title, .section-title, .card-title {
+  text-wrap: balance;
+  font-family: var(--font-display);
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+p, li, .body-text { text-wrap: pretty; }
+p { margin: 0 0 1em 0; }
+strong, b { font-weight: 700; }
+
+a {
+  color: var(--brand);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  font-weight: 600;
+}
+a:hover { background: var(--yellow); color: var(--ink); }
+a:focus-visible { outline: 3px solid var(--brand); outline-offset: 3px; }
+
+.container { max-width: 1200px; margin: 0 auto; padding: var(--gap-md); }
+@media (min-width: 768px) { .container { padding: var(--gap-lg); } }
+
+/* HERO */
+.hero {
+  border: var(--border-w) solid var(--ink);
+  background: var(--paper);
+  box-shadow: var(--shadow-offset-lg) var(--ink);
+  padding: var(--gap-lg) var(--gap-md);
+  margin-bottom: var(--gap-xl);
+  position: relative;
+  border-radius: var(--radius);
+}
+@media (min-width: 768px) { .hero { padding: var(--gap-xl) var(--gap-lg); } }
+
+.hero-badge {
+  display: inline-block;
+  background: var(--brand);
+  color: var(--paper);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 12px;
+  border: var(--border-w-thin) solid var(--ink);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: var(--gap-md);
+  transform: rotate(-1.5deg);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.hero-title {
+  font-size: clamp(2.25rem, 6vw, 4.5rem);
+  margin-bottom: var(--gap-md);
+  line-height: 1;
+}
+
+.hero-title .accent {
+  background: var(--cyan);
+  padding: 0 8px;
+  border: var(--border-w-thin) solid var(--ink);
+  display: inline-block;
+  transform: rotate(-1deg);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.hero-title .accent-2 {
+  background: var(--yellow);
+  padding: 0 8px;
+  border: var(--border-w-thin) solid var(--ink);
+  display: inline-block;
+  transform: rotate(1deg);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.hero-sub {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  color: var(--ink-soft);
+  max-width: 720px;
+  font-weight: 500;
+  text-wrap: balance;
+}
+
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-sm);
+  margin-top: var(--gap-md);
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+.hero-meta span {
+  background: var(--paper-warm);
+  border: var(--border-w-thin) solid var(--ink);
+  padding: 4px 10px;
+  font-weight: 600;
+}
+
+/* STICKER */
+.sticker {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  background: var(--cyan);
+  border: var(--border-w-thin) solid var(--ink);
+  padding: 6px 10px;
+  box-shadow: 3px 3px 0 var(--ink);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  z-index: 10;
+}
+.sticker-pink { background: var(--pink); }
+.sticker-yellow { background: var(--yellow); }
+.sticker-lime { background: var(--lime); }
+
+/* SECTION */
+.section { margin-bottom: var(--gap-xl); position: relative; }
+.section-num {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--brand);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: var(--gap-xs);
+  display: block;
+}
+.section-title {
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  margin-bottom: var(--gap-md);
+  padding-bottom: var(--gap-sm);
+  border-bottom: var(--border-w) solid var(--ink);
+}
+.section-title .underline {
+  background: var(--lime);
+  padding: 0 6px;
+  border: var(--border-w-thin) solid var(--ink);
+  display: inline-block;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+/* CARD */
+.card {
+  border: var(--border-w) solid var(--ink);
+  background: var(--paper);
+  box-shadow: var(--shadow-offset) var(--ink);
+  border-radius: var(--radius);
+  margin-bottom: var(--gap-md);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.card-header {
+  background: var(--brand);
+  color: var(--paper);
+  border-bottom: var(--border-w-thin) solid var(--ink);
+  padding: var(--gap-sm) var(--gap-md);
+}
+.card-header.bg-yellow { background: var(--yellow); color: var(--ink); }
+.card-header.bg-cyan { background: var(--cyan); color: var(--ink); }
+.card-header.bg-lime { background: var(--lime); color: var(--ink); }
+.card-header.bg-pink { background: var(--pink); color: var(--ink); }
+.card-header.bg-ink { background: var(--ink); color: var(--paper); }
+
+.card-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 4px;
+  opacity: 0.85;
+}
+.card-title {
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  font-weight: 700;
+}
+.card-body { padding: var(--gap-md); }
+.card-body > *:last-child { margin-bottom: 0; }
+
+.card-tilt-l { transform: rotate(-1deg); }
+.card-tilt-r { transform: rotate(1deg); }
+
+/* GRID */
+.grid { display: grid; gap: var(--gap-md); }
+.grid-2 { grid-template-columns: 1fr; }
+.grid-3 { grid-template-columns: 1fr; }
+.grid-4 { grid-template-columns: 1fr; }
+
+@media (min-width: 640px) { .grid-2 { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 768px) {
+  .grid-3 { grid-template-columns: repeat(3, 1fr); }
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 1024px) { .grid-4 { grid-template-columns: repeat(4, 1fr); } }
+
+/* NUMBERED LIST */
+.num-list { list-style: none; padding: 0; margin: 0; }
+.num-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--gap-sm);
+  padding: var(--gap-sm) 0;
+  border-bottom: var(--border-w-thin) dashed var(--ink);
+  min-width: 0;
+}
+.num-list li:last-child { border-bottom: none; }
+.num-list .num {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  border-radius: var(--radius);
+}
+.num-list .num.brand { background: var(--brand); }
+.num-list .num.lg { width: 44px; height: 44px; font-size: 16px; }
+.num-list .content { flex: 1; min-width: 0; }
+.num-list .content strong {
+  display: block;
+  margin-bottom: 4px;
+  font-family: var(--font-display);
+  font-size: 1.1em;
+}
+
+/* TABLE */
+.table-wrap {
+  border: var(--border-w) solid var(--ink);
+  background: var(--paper);
+  box-shadow: var(--shadow-offset) var(--ink);
+  border-radius: var(--radius);
+  overflow-x: auto;
+  margin-bottom: var(--gap-md);
+}
+table { width: 100%; border-collapse: collapse; font-family: var(--font-body); }
+table th {
+  background: var(--ink);
+  color: var(--paper);
+  text-align: left;
+  padding: var(--gap-sm);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: var(--border-w) solid var(--ink);
+}
+table td {
+  padding: var(--gap-sm);
+  border-bottom: var(--border-w-thin) solid var(--ink);
+  vertical-align: top;
+  font-size: 15px;
+}
+table tr:last-child td { border-bottom: none; }
+table tr:nth-child(even) td { background: var(--paper-warm); }
+table td:first-child {
+  font-weight: 600;
+  border-right: var(--border-w-thin) dashed var(--ink);
+}
+
+/* QUOTE */
+.quote {
+  background: var(--yellow);
+  border: var(--border-w) solid var(--ink);
+  box-shadow: var(--shadow-offset) var(--ink);
+  border-radius: var(--radius);
+  padding: var(--gap-md);
+  margin: var(--gap-md) 0;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 500;
+  position: relative;
+  text-wrap: balance;
+}
+.quote::before {
+  content: """;
+  position: absolute;
+  top: -20px;
+  left: var(--gap-sm);
+  font-size: 5rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--brand);
+  background: var(--paper);
+  border: var(--border-w-thin) solid var(--ink);
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  border-radius: var(--radius);
+}
+.quote-author {
+  display: block;
+  margin-top: var(--gap-sm);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-soft);
+}
+.quote.bg-cyan { background: var(--cyan); }
+.quote.bg-lime { background: var(--lime); }
+.quote.bg-pink { background: var(--pink); }
+
+/* STAT */
+.stat-grid { display: grid; gap: var(--gap-sm); grid-template-columns: 1fr; }
+@media (min-width: 640px) { .stat-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .stat-grid { grid-template-columns: repeat(4, 1fr); } }
+.stat {
+  background: var(--paper);
+  border: var(--border-w) solid var(--ink);
+  box-shadow: var(--shadow-offset-sm) var(--ink);
+  padding: var(--gap-sm);
+  text-align: center;
+  border-radius: var(--radius);
+}
+.stat-num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  color: var(--brand);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.stat-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink-soft);
+}
+
+/* CALLOUT */
+.callout {
+  border: var(--border-w) solid var(--ink);
+  background: var(--cyan);
+  box-shadow: var(--shadow-offset) var(--ink);
+  border-radius: var(--radius);
+  padding: var(--gap-md);
+  margin: var(--gap-md) 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+}
+.callout.tip { background: var(--lime); }
+.callout.warning { background: var(--pink); }
+.callout.example { background: var(--yellow); }
+.callout-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 4px 8px;
+  display: inline-block;
+  align-self: flex-start;
+  border-radius: var(--radius);
+}
+.callout-body { margin: 0; font-size: 15px; }
+.callout-body p:last-child { margin-bottom: 0; }
+
+/* TOC */
+.toc {
+  border: var(--border-w) solid var(--ink);
+  background: var(--paper);
+  box-shadow: var(--shadow-offset) var(--ink);
+  border-radius: var(--radius);
+  padding: var(--gap-md);
+  margin-bottom: var(--gap-xl);
+}
+.toc-title {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 6px 12px;
+  display: inline-block;
+  margin-bottom: var(--gap-md);
+}
+.toc-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: var(--gap-xs);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 768px) { .toc-list { grid-template-columns: repeat(2, 1fr); } }
+.toc-list a {
+  display: block;
+  padding: 10px 14px;
+  background: var(--paper-warm);
+  border: var(--border-w-thin) solid var(--ink);
+  text-decoration: none;
+  color: var(--ink);
+  font-weight: 500;
+  font-size: 14px;
+  border-radius: var(--radius);
+  transition: transform 0.1s ease-out, box-shadow 0.1s ease-out;
+}
+.toc-list a:hover {
+  background: var(--yellow);
+  transform: translate(-2px, -2px);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+.toc-list a .toc-num {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--brand);
+  margin-right: 8px;
+}
+
+/* HIGHLIGHT */
+.hl { background: var(--yellow); padding: 1px 5px; border: var(--border-w-thin) solid var(--ink); font-weight: 600; border-radius: 2px; }
+.hl-cyan { background: var(--cyan); padding: 1px 5px; border: var(--border-w-thin) solid var(--ink); font-weight: 600; border-radius: 2px; }
+.hl-pink { background: var(--pink); padding: 1px 5px; border: var(--border-w-thin) solid var(--ink); font-weight: 600; border-radius: 2px; }
+.hl-lime { background: var(--lime); padding: 1px 5px; border: var(--border-w-thin) solid var(--ink); font-weight: 600; border-radius: 2px; }
+
+/* DISCRETION DIAGRAM (vùng tự quyết) */
+.discretion {
+  display: grid;
+  gap: var(--gap-md);
+  grid-template-columns: 1fr;
+  align-items: center;
+  margin: var(--gap-md) 0;
+}
+@media (min-width: 1024px) {
+  .discretion { grid-template-columns: 1fr auto 1fr; }
+}
+
+.discretion-side {
+  background: var(--paper);
+  border: var(--border-w) solid var(--ink);
+  box-shadow: var(--shadow-offset) var(--ink);
+  border-radius: var(--radius);
+  padding: var(--gap-md);
+  text-align: center;
+}
+.discretion-side.left { background: var(--cyan); }
+.discretion-side.right { background: var(--lime); }
+
+.discretion-side .ds-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: var(--gap-xs);
+}
+.discretion-side .ds-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.3rem;
+  margin-bottom: var(--gap-xs);
+}
+
+.discretion-arrow {
+  font-family: var(--font-mono);
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  color: var(--brand);
+  display: none;
+}
+@media (min-width: 1024px) { .discretion-arrow { display: block; } }
+
+.discretion-center {
+  background: var(--brand);
+  color: var(--paper);
+  border: var(--border-w) solid var(--ink);
+  box-shadow: var(--shadow-offset) var(--ink);
+  border-radius: var(--radius);
+  padding: var(--gap-md);
+  text-align: center;
+  margin: var(--gap-md) 0;
+}
+.discretion-center .dc-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0.85;
+  margin-bottom: var(--gap-xs);
+}
+.discretion-center .dc-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+/* 2x2 MATRIX (uncertainty) */
+.matrix {
+  display: grid;
+  grid-template-columns: 100px 1fr 1fr;
+  gap: 4px;
+  margin: var(--gap-md) 0;
+}
+.matrix .m-empty { background: transparent; }
+.matrix .m-cell {
+  background: var(--paper);
+  border: var(--border-w) solid var(--ink);
+  padding: var(--gap-md);
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+  min-height: 140px;
+}
+.matrix .m-label {
+  background: var(--ink);
+  color: var(--paper);
+  padding: var(--gap-sm);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-align: center;
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.matrix .m-cell .m-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--brand);
+}
+.matrix .m-cell .m-desc { font-size: 14px; line-height: 1.5; }
+.matrix .m-cell .m-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 2px 6px;
+  align-self: flex-start;
+  border-radius: var(--radius);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.matrix .m-cell.cell-1 { background: var(--lime); }
+.matrix .m-cell.cell-2 { background: var(--yellow); }
+.matrix .m-cell.cell-3 { background: var(--cyan); }
+.matrix .m-cell.cell-4 { background: var(--pink); }
+
+@media (max-width: 640px) {
+  .matrix { grid-template-columns: 1fr; }
+  .matrix .m-empty { display: none; }
+  .matrix .m-label { padding: var(--gap-sm); min-height: 0; }
+}
+
+/* DIMENSION CARDS (6 chiều văn hóa) */
+.dim-grid {
+  display: grid;
+  gap: var(--gap-md);
+  grid-template-columns: 1fr;
+  margin: var(--gap-md) 0;
+}
+@media (min-width: 640px) { .dim-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .dim-grid { grid-template-columns: repeat(3, 1fr); } }
+
+.dim-card {
+  background: var(--paper);
+  border: var(--border-w) solid var(--ink);
+  box-shadow: var(--shadow-offset-sm) var(--ink);
+  border-radius: var(--radius);
+  padding: var(--gap-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+  min-width: 0;
+}
+.dim-card .dim-num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 2.5rem;
+  line-height: 1;
+  color: var(--brand);
+}
+.dim-card .dim-title-en {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.dim-card .dim-title-vi {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+}
+.dim-card .dim-desc {
+  font-size: 14px;
+  line-height: 1.55;
+}
+.dim-card:nth-child(6n+1) { background: var(--yellow); }
+.dim-card:nth-child(6n+2) { background: var(--cyan); }
+.dim-card:nth-child(6n+3) { background: var(--lime); }
+.dim-card:nth-child(6n+4) { background: var(--pink); }
+.dim-card:nth-child(6n+5) { background: var(--paper-warm); }
+.dim-card:nth-child(6n+6) { background: var(--yellow); }
+
+/* TRANSMISSION (4 cơ chế truyền tải) */
+.trans-grid {
+  display: grid;
+  gap: var(--gap-md);
+  grid-template-columns: 1fr;
+  margin: var(--gap-md) 0;
+}
+@media (min-width: 640px) { .trans-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .trans-grid { grid-template-columns: repeat(4, 1fr); } }
+
+.trans-card {
+  background: var(--paper);
+  border: var(--border-w) solid var(--ink);
+  box-shadow: var(--shadow-offset) var(--ink);
+  border-radius: var(--radius);
+  padding: var(--gap-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+}
+.trans-card .trans-icon {
+  font-size: 2.5rem;
+  line-height: 1;
+  margin-bottom: var(--gap-xs);
+}
+.trans-card .trans-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+}
+.trans-card .trans-en {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  letter-spacing: 0.05em;
+}
+.trans-card .trans-desc { font-size: 14px; line-height: 1.5; }
+.trans-card:nth-child(1) { background: var(--yellow); }
+.trans-card:nth-child(2) { background: var(--cyan); }
+.trans-card:nth-child(3) { background: var(--lime); }
+.trans-card:nth-child(4) { background: var(--pink); }
+
+/* FOOTER */
+.footer {
+  margin-top: var(--gap-xl);
+  padding: var(--gap-lg) 0;
+  border-top: var(--border-w) solid var(--ink);
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+.footer strong { color: var(--ink); font-weight: 700; }
+.footer a {
+  color: var(--brand);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  font-weight: 600;
+}
+.footer a:hover { background: var(--yellow); color: var(--ink); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media print {
+  body { background: white; background-image: none; }
+  .card, .hero, .toc, .table-wrap { box-shadow: none; }
+  .sticker { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- HERO -->
+  <header class="hero">
+    <span class="sticker sticker-pink" style="top: -16px; right: 24px; transform: rotate(8deg);">DEEP&nbsp;SUMMARY</span>
+    <span class="sticker sticker-lime" style="bottom: -14px; left: 32px; transform: rotate(-5deg);">~7.100 từ</span>
+
+    <div class="hero-badge">CHƯƠNG&nbsp;03 · ROBBINS&nbsp;&amp;&nbsp;COULTER</div>
+    <h1 class="hero-title">
+      Môi&nbsp;trường <span class="accent">bên&nbsp;ngoài</span><br>
+      và <span class="accent-2">Văn&nbsp;hóa</span> Tổ&nbsp;chức
+    </h1>
+    <p class="hero-sub">
+      Tóm tắt chuyên sâu Chương 3 — Sách <em>Management</em> ấn bản 15&nbsp;(2021).
+      Hai lực ép vào vùng tự&nbsp;quyết của nhà&nbsp;quản&nbsp;trị: môi trường bên&nbsp;ngoài và văn hóa nội&nbsp;bộ.
+    </p>
+    <div class="hero-meta">
+      <span>📖 12 trang nội bộ</span>
+      <span>⏱ 60-70 phút đọc</span>
+      <span>🎯 3 mục tiêu học tập</span>
+      <span>🇻🇳 Ngôn ngữ Việt</span>
+    </div>
+  </header>
+
+  <!-- TOC -->
+  <nav class="toc">
+    <span class="toc-title">📑 Mục lục</span>
+    <ul class="toc-list">
+      <li><a href="#how-to-use"><span class="toc-num">00</span>Hướng dẫn sử dụng</a></li>
+      <li><a href="#core"><span class="toc-num">01</span>Định nghĩa và bản đồ</a></li>
+      <li><a href="#lo1"><span class="toc-num">LO3.1</span>Toàn năng hay Biểu tượng?</a></li>
+      <li><a href="#lo2"><span class="toc-num">LO3.2</span>Môi trường bên ngoài</a></li>
+      <li><a href="#lo3"><span class="toc-num">LO3.3</span>Văn hóa Tổ chức</a></li>
+      <li><a href="#wells-fargo"><span class="toc-num">02</span>Bài học Wells Fargo</a></li>
+      <li><a href="#overview"><span class="toc-num">03</span>Tổng quan và liên hệ</a></li>
+      <li><a href="#cheatsheet"><span class="toc-num">04</span>Cheatsheet</a></li>
+      <li><a href="#review"><span class="toc-num">05</span>Lộ trình ôn tập</a></li>
+    </ul>
+  </nav>
+
+  <!-- HOW TO USE -->
+  <section class="section" id="how-to-use">
+    <span class="section-num">📍 Trang 1</span>
+    <h2 class="section-title">Hướng&nbsp;dẫn <span class="underline">sử&nbsp;dụng</span> tài&nbsp;liệu này</h2>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="card-header bg-yellow">
+          <div class="card-num">CÁCH ĐỌC</div>
+          <div class="card-title">Cách dùng hiệu quả nhất</div>
+        </div>
+        <div class="card-body">
+          <ul class="num-list">
+            <li><div class="num brand">1</div><div class="content">Đọc trọn vẹn trong 60-70&nbsp;phút.</div></li>
+            <li><div class="num brand">2</div><div class="content">Đến phần <strong>Văn hóa tổ chức</strong> (Trang 6-8), liên hệ với 2-3 doanh nghiệp bạn từng làm hoặc tư vấn.</div></li>
+            <li><div class="num brand">3</div><div class="content">Phần <strong>"Cách đọc văn hóa tổ chức"</strong> (Trang 7) là kỹ năng mềm rất hữu dụng — học kỹ.</div></li>
+            <li><div class="num brand">4</div><div class="content">Cuối mỗi phần lớn, gập tài liệu lại và tự kể.</div></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-cyan">
+          <div class="card-num">LIÊN HỆ CHƯƠNG 1-2</div>
+          <div class="card-title">Vì sao Chương 3 là chương về "bối cảnh"</div>
+        </div>
+        <div class="card-body">
+          <ul style="margin: 0; padding-left: 20px; font-size: 14px;">
+            <li><strong>Chương 1</strong> — nhà quản trị làm 4 chức năng (POLC)</li>
+            <li><strong>Chương 2</strong> — họ ra quyết định ra sao</li>
+            <li><strong>Chương 3</strong> — họ làm điều đó <em>trong bối cảnh nào?</em></li>
+          </ul>
+          <p style="margin-top: var(--gap-sm);">Bối cảnh có 2&nbsp;lớp: <strong>môi trường bên ngoài</strong> và <strong>văn hóa nội bộ</strong>. Cả hai vừa hạn chế vừa định hình quyết định của nhà quản trị.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-label">💡 Quy ước</span>
+      <p class="callout-body">
+        Các thuật ngữ chuyên ngành được giữ nguyên tiếng Anh kèm dịch nghĩa ở lần xuất hiện đầu. Ví dụ: <em>Stakeholder (các bên liên quan)</em>, <em>Socialization (xã hội hóa)</em>.
+      </p>
+    </div>
+  </section>
+
+  <!-- CORE -->
+  <section class="section" id="core">
+    <span class="section-num">📍 Trang 2</span>
+    <h2 class="section-title">Định&nbsp;nghĩa cốt&nbsp;lõi và <span class="underline">bản&nbsp;đồ</span> kiến&nbsp;thức</h2>
+
+    <div class="quote bg-cyan">
+      Nhà quản trị có thực sự ảnh hưởng đến thành công hay thất bại của tổ chức đến mức nào, và <strong>những gì hạn chế ảnh hưởng đó?</strong>
+      <span class="quote-author">— Câu hỏi trung tâm Chương 3</span>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Phép ẩn dụ: Người đầu bếp trong nhà hàng</h3>
+
+    <div class="grid grid-2">
+      <div class="card card-tilt-l">
+        <div class="card-header bg-cyan">
+          <div class="card-num">LỰC ÉP TỪ NGOÀI</div>
+          <div class="card-title">Môi trường bên ngoài</div>
+        </div>
+        <div class="card-body">
+          <p>Thị trường nông sản, giá nguyên liệu, luật vệ sinh thực phẩm, đối thủ cạnh tranh là quán bên cạnh, khách hàng đang chuyển sang ăn chay.</p>
+          <p><span class="hl-cyan">Đầu bếp không kiểm soát được những yếu tố này, nhưng phải thích nghi với chúng.</span></p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-lime">
+          <div class="card-num">LỰC ÉP TỪ TRONG</div>
+          <div class="card-title">Văn hóa tổ chức</div>
+        </div>
+        <div class="card-body">
+          <p><em>"Cách nấu ăn của nhà hàng này"</em>. Phong cách phục vụ, cách giao tiếp giữa bếp trưởng và phụ bếp, các quy tắc bất thành văn.</p>
+          <p>Ví dụ: <em>"Ở đây mình không bao giờ trả khách dù họ phàn nàn gì."</em></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout warning">
+      <span class="callout-label">🎯 Cốt lõi</span>
+      <p class="callout-body">
+        Người đầu bếp giỏi vẫn tạo nên khác biệt, nhưng <strong>trong vùng tự quyết bị hai bên ép vào</strong>: môi trường bên ngoài và văn hóa nội bộ.
+      </p>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Ba mục tiêu học tập (LO) của Chương&nbsp;3</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 90px;">Mục tiêu</th>
+            <th>Câu hỏi giải đáp</th>
+            <th>Khái niệm chính</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>LO3.1</td><td>Nhà quản trị có quyền lực đến đâu?</td><td>Omnipotent vs. Symbolic view; Vùng tự&nbsp;quyết</td></tr>
+          <tr><td>LO3.2</td><td>Môi trường bên ngoài ảnh hưởng gì?</td><td>General environment (6); Specific environment (5); Ma trận bất ổn 2×2</td></tr>
+          <tr><td>LO3.3</td><td>Văn hóa tổ chức là gì?</td><td>6 chiều; Mạnh/yếu; 4 cơ chế truyền tải</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- LO 3.1 -->
+  <section class="section" id="lo1">
+    <span class="section-num">📍 Trang 3 · LO3.1</span>
+    <h2 class="section-title">Nhà quản trị: <span class="underline">Toàn&nbsp;năng</span> hay Biểu&nbsp;tượng?</h2>
+
+    <div class="quote bg-pink">
+      Nhà quản trị thực sự tạo ra khác biệt đến mức nào trong hiệu quả của tổ chức?
+    </div>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="card-header bg-yellow">
+          <div class="card-num">QUAN ĐIỂM 1</div>
+          <div class="card-title">Omnipotent View · Toàn năng</div>
+        </div>
+        <div class="card-body">
+          <p>Nhà quản trị <strong>chịu trách nhiệm trực tiếp cho thành công hay thất bại</strong> của tổ chức.</p>
+          <ul style="margin: 0; padding-left: 20px; font-size: 14px;">
+            <li>Khác biệt về hiệu quả là do <strong>quyết định và hành động của nhà quản trị</strong></li>
+            <li>Lợi nhuận tăng → nhận công và được thưởng (bonus, stock&nbsp;options)</li>
+            <li>Lợi nhuận giảm → bị sa thải, niềm tin "máu mới" sẽ tốt hơn</li>
+          </ul>
+          <p style="margin-top: var(--gap-sm);"><strong>Ví dụ:</strong> Jack&nbsp;Dorsey (CEO Twitter) sa thải giám đốc kỹ thuật khi tăng trưởng chậm. Cũng giải thích sự thay đổi liên tục của các huấn luyện viên thể thao.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-cyan">
+          <div class="card-num">QUAN ĐIỂM 2</div>
+          <div class="card-title">Symbolic View · Biểu tượng</div>
+        </div>
+        <div class="card-body">
+          <p>Phần lớn thành công hay thất bại là do <strong>các lực lượng bên ngoài ngoài tầm kiểm soát</strong> của nhà quản trị.</p>
+          <p><strong>Ví dụ Levitz Furniture:</strong> Thành lập 1910, rất thành công. Cuối 2007, khủng hoảng cho vay thế chấp dưới chuẩn → thị trường nhà ở sụp đổ. Người ta không chuyển nhà → nhu cầu đồ nội thất cạn kiệt. <strong>10/2008 phá sản.</strong></p>
+          <p style="margin-top: var(--gap-sm);"><span class="hl-cyan">Phần lớn những gì ban quản lý Levitz đã làm hoặc không làm đều không thể chống lại sự sụt giảm nhu cầu.</span></p>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Thực tế: Sự kết hợp — Vùng tự&nbsp;quyết bị ép từ hai phía</h3>
+
+    <p>Nhà quản trị <strong>không phải bất lực, cũng không toàn năng</strong>. Họ làm việc trong một <em>managerial discretion (vùng tự&nbsp;quyết)</em> bị ép từ hai bên:</p>
+
+    <div class="discretion">
+      <div class="discretion-side left">
+        <div class="ds-label">LỰC ÉP TỪ NGOÀI</div>
+        <div class="ds-name">Môi trường bên ngoài</div>
+        <p style="margin: 0; font-size: 14px;">6 thành phần general + 5 nhóm specific stakeholders</p>
+      </div>
+      <div class="discretion-arrow">→ ← →</div>
+      <div class="discretion-side right">
+        <div class="ds-label">LỰC ÉP TỪ TRONG</div>
+        <div class="ds-name">Văn hóa tổ chức</div>
+        <p style="margin: 0; font-size: 14px;">6 chiều, mạnh/yếu, 4 cơ chế truyền tải</p>
+      </div>
+    </div>
+
+    <div class="discretion-center">
+      <div class="dc-label">VÙNG TỰ QUYẾT</div>
+      <div class="dc-name">Nhà quản trị tốt biết tận dụng vùng này trong giới hạn</div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Quan điểm Toàn năng</th>
+            <th>Quan điểm Biểu tượng</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Nhà quản trị quyết định thành công</td><td>Lực lượng bên ngoài quyết định thành công</td></tr>
+          <tr><td>Khi sai, đổi nhà quản trị</td><td>Khi sai, đổ lỗi cho hoàn cảnh</td></tr>
+          <tr><td>Phù hợp văn hóa Mỹ ("anh hùng kinh doanh")</td><td>Phù hợp với cách nhìn hệ thống</td></tr>
+          <tr><td>Quá lạc quan</td><td>Quá bi quan</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-label">💼 Áp dụng ngành tư vấn</span>
+      <p class="callout-body">
+        Khi tư vấn cho khách hàng có công ty đang gặp khó khăn, đừng vội theo một quan điểm. Hỏi: <em>"Bao nhiêu phần của vấn đề này là do quyết định của ban điều hành, bao nhiêu phần là do thị trường?"</em> Câu trả lời thường là 50-50, nhưng có sự khác biệt lớn ở từng case. <span class="hl">Phân tích đúng tỷ lệ này quyết định việc bạn nên đề xuất thay đổi lãnh đạo hay thay đổi mô hình kinh doanh.</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- LO 3.2 -->
+  <section class="section" id="lo2">
+    <span class="section-num">📍 Trang 4-5 · LO3.2</span>
+    <h2 class="section-title">Môi trường <span class="underline">bên&nbsp;ngoài</span>: Ràng buộc và Thách thức</h2>
+
+    <div class="quote bg-lime">
+      <em>Environment (môi&nbsp;trường)</em> là các thể chế hoặc lực lượng bên ngoài tổ chức và có khả năng <strong>ảnh hưởng đến hiệu quả của tổ chức</strong>. Vì sao quan trọng? Vì không phải tất cả môi trường đều giống nhau.
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Bất ổn môi trường — Ma trận 2×2</h3>
+
+    <p>Hai chiều: <strong>Mức độ thay đổi</strong> (Stable vs. Dynamic) × <strong>Mức độ phức tạp</strong> (Simple vs. Complex).</p>
+
+    <div class="callout warning">
+      <span class="callout-label">⚠️ Lưu ý quan trọng</span>
+      <p class="callout-body">
+        Thay đổi <strong>có thể dự đoán</strong> không tính là động. Cửa hàng bách hóa bán nhiều vào tháng 11-12 và ít vào tháng 1 — thay đổi này dự đoán được, nên môi trường vẫn được xem là ổn định. Khi nói về thay đổi, ta nói về <span class="hl">thay đổi không dự đoán được.</span>
+      </p>
+    </div>
+
+    <div class="matrix">
+      <div class="m-empty"></div>
+      <div class="m-label">Stable<br>Ổn định</div>
+      <div class="m-label">Dynamic<br>Động</div>
+
+      <div class="m-label">Simple<br>Đơn giản</div>
+      <div class="m-cell cell-1">
+        <span class="m-tag">Ô 1</span>
+        <div class="m-name">Bất ổn THẤP nhất</div>
+        <div class="m-desc">Ít đối thủ, ít thay đổi công nghệ. Nhà quản trị có ảnh hưởng <strong>lớn nhất</strong>.</div>
+        <div class="m-desc" style="font-size: 12px; color: var(--ink-soft);"><em>Ví dụ: Zippo Manufacturing — sản xuất bật lửa Zippo.</em></div>
+      </div>
+      <div class="m-cell cell-2">
+        <span class="m-tag">Ô 2</span>
+        <div class="m-name">Trung bình</div>
+        <div class="m-desc">Ít thành phần nhưng thay đổi không dự đoán được.</div>
+      </div>
+
+      <div class="m-label">Complex<br>Phức tạp</div>
+      <div class="m-cell cell-3">
+        <span class="m-tag">Ô 3</span>
+        <div class="m-name">Trung bình</div>
+        <div class="m-desc">Nhiều thành phần nhưng ít thay đổi không dự đoán được.</div>
+      </div>
+      <div class="m-cell cell-4">
+        <span class="m-tag">Ô 4</span>
+        <div class="m-name">Bất ổn CAO nhất</div>
+        <div class="m-desc">Nhiều thành phần, thay đổi không dự đoán được. Nhà quản trị có ảnh hưởng <strong>ít nhất</strong>.</div>
+        <div class="m-desc" style="font-size: 12px; color: var(--ink-soft);"><em>Ví dụ: Ngành công nghiệp âm nhạc (Spotify, Pandora).</em></div>
+      </div>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Hai cấp độ của môi trường</h3>
+
+    <div class="card">
+      <div class="card-header bg-ink">
+        <div class="card-num">CẤP ĐỘ 1</div>
+        <div class="card-title">General Environment · Môi trường tổng quát</div>
+      </div>
+      <div class="card-body">
+        <p><em>General environment</em> gồm <strong>mọi thứ bên ngoài tổ chức</strong>, gồm 6 thành phần:</p>
+
+        <div class="dim-grid">
+          <div class="dim-card">
+            <div class="dim-num">1</div>
+            <div class="dim-title-en">Economic</div>
+            <div class="dim-title-vi">Kinh tế</div>
+            <p class="dim-desc">Lãi suất, lạm phát, thay đổi thu nhập khả dụng, biến động chứng khoán, các giai đoạn chu kỳ kinh tế.</p>
+          </div>
+          <div class="dim-card">
+            <div class="dim-num">2</div>
+            <div class="dim-title-en">Demographic</div>
+            <div class="dim-title-vi">Nhân khẩu học</div>
+            <p class="dim-desc">Xu hướng đặc điểm dân số: tuổi, chủng tộc, giới tính, trình độ học vấn, vị trí địa lý, thu nhập, cấu trúc gia đình.</p>
+          </div>
+          <div class="dim-card">
+            <div class="dim-num">3</div>
+            <div class="dim-title-en">Political/Legal</div>
+            <div class="dim-title-vi">Chính trị/Pháp lý</div>
+            <p class="dim-desc">Luật liên bang, bang, địa phương, luật toàn cầu. Cũng gồm điều kiện chính trị và sự ổn định của một quốc gia.</p>
+          </div>
+          <div class="dim-card">
+            <div class="dim-num">4</div>
+            <div class="dim-title-en">Sociocultural</div>
+            <div class="dim-title-vi">Xã hội-Văn hóa</div>
+            <p class="dim-desc">Giá trị, thái độ, xu hướng, truyền thống, lối sống, niềm tin, sở thích, mẫu hành vi.</p>
+          </div>
+          <div class="dim-card">
+            <div class="dim-num">5</div>
+            <div class="dim-title-en">Technological</div>
+            <div class="dim-title-vi">Công nghệ</div>
+            <p class="dim-desc">Đổi mới khoa học hoặc công nghiệp.</p>
+          </div>
+          <div class="dim-card">
+            <div class="dim-num">6</div>
+            <div class="dim-title-en">Global</div>
+            <div class="dim-title-vi">Toàn cầu</div>
+            <p class="dim-desc">Các vấn đề liên quan đến toàn cầu hóa và nền kinh tế thế giới.</p>
+          </div>
+        </div>
+
+        <p style="margin-top: var(--gap-sm); font-size: 14px; color: var(--ink-soft);">
+          <strong>Đặc điểm:</strong> Có thể ảnh hưởng nhưng <em>mức độ liên quan không rõ ràng</em>. Sức mạnh USD so với GBP và JPY có thể là yếu tố cho Apple và Boeing, nhưng ít ảnh hưởng đến công ty chỉ có khách Mỹ.
+        </p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header" style="background: var(--brand); color: var(--paper);">
+        <div class="card-num">CẤP ĐỘ 2</div>
+        <div class="card-title">Specific Environment · Môi trường cụ thể</div>
+      </div>
+      <div class="card-body">
+        <p><em>Specific environment</em> là phần môi trường <strong>liên quan trực tiếp đến việc đạt mục tiêu</strong> của tổ chức. Gồm các <em>stakeholders</em> (các bên liên quan) ảnh hưởng tích cực hay tiêu cực.</p>
+
+        <ul class="num-list" style="margin-top: var(--gap-sm);">
+          <li>
+            <div class="num brand">1</div>
+            <div class="content"><strong>Suppliers · Nhà cung cấp</strong>Cung cấp lao động, vật tư, thiết bị. Đảm bảo dòng đầu vào ổn định ở mức giá thấp nhất.</div>
+          </li>
+          <li>
+            <div class="num brand">2</div>
+            <div class="content"><strong>Customers · Khách hàng</strong>Tổ chức tồn tại để đáp ứng nhu cầu khách. <em>Campbell Soup, Kraft Heinz, PepsiCo</em> đang chịu thiệt hại từ sự dịch chuyển sang nhãn hàng riêng (private-label) của Walmart, Costco, Aldi.</div>
+          </li>
+          <li>
+            <div class="num brand">3</div>
+            <div class="content"><strong>Competitors · Đối thủ cạnh tranh</strong>Mọi tổ chức đều có đối thủ. <em>USPS</em> độc quyền dịch vụ thư nhưng cạnh tranh với FedEx, UPS, điện thoại, email, tin nhắn. <span class="hl">Bỏ qua đối thủ trả giá đắt.</span></div>
+          </li>
+          <li>
+            <div class="num brand">4</div>
+            <div class="content"><strong>Government · Chính phủ</strong>Luật liên bang, bang, địa phương ảnh hưởng đến điều tổ chức được làm. <em>San&nbsp;Francisco</em> tăng lương tối thiểu lên 15&nbsp;USD/giờ (cao hơn mức 11&nbsp;USD của bang California).</div>
+          </li>
+          <li>
+            <div class="num brand">5</div>
+            <div class="content"><strong>Pressure Groups · Nhóm áp lực</strong>Các nhóm lợi ích đặc biệt cố ảnh hưởng. <em>Black Lives Matter</em> buộc Starbucks thay đổi chính sách sau khi quản lý ở Philadelphia gọi cảnh sát bắt 2 người đàn ông da đen.</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout">
+      <span class="callout-label">🛡️ Quản lý môi trường</span>
+      <p class="callout-body">
+        Dù môi trường ràng buộc nhà quản trị, <strong>nó không hoàn toàn trói tay họ</strong>. Nhà quản trị có thể giảm ràng buộc bằng cách <em>xác định các bên liên quan then chốt và xây dựng quan hệ với họ</em>.<br><br>
+        <strong>Ví dụ:</strong> Lockheed thuê các sĩ quan quân đội cấp cao đã nghỉ hưu để vận động Bộ Quốc phòng. Kraft&nbsp;Heinz đáp lại nhãn hàng riêng giá rẻ bằng quảng cáo xây lòng trung thành. Apple xây quan hệ với nhiều nhà cung cấp module bộ nhớ để giảm rủi ro gián đoạn.
+      </p>
+    </div>
+  </section>
+
+  <!-- LO 3.3 -->
+  <section class="section" id="lo3">
+    <span class="section-num">📍 Trang 6-8 · LO3.3</span>
+    <h2 class="section-title">Văn hóa <span class="underline">Tổ&nbsp;chức</span>: Ràng buộc và Thách thức</h2>
+
+    <div class="quote bg-yellow">
+      Văn hóa <strong>không nhìn thấy được nhưng cảm nhận được</strong>. Bạn bước vào văn phòng Google và Goldman&nbsp;Sachs sẽ cảm nhận khác hẳn — dù không ai chỉ tay vào "đây là văn hóa".
+      <span class="quote-author">— Robbins &amp; Coulter</span>
+    </div>
+
+    <p><em>Organizational culture (văn&nbsp;hóa tổ&nbsp;chức)</em> là <strong>các giá trị, nguyên tắc, truyền thống, và cách làm việc chung</strong> ảnh hưởng đến cách thành viên hành xử và phân biệt tổ chức này với tổ chức khác.</p>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-md); margin-bottom: var(--gap-md);">Ba điều quan trọng từ định nghĩa</h3>
+
+    <div class="grid grid-3">
+      <div class="card">
+        <div class="card-header bg-yellow">
+          <div class="card-num">ĐIỂM 1</div>
+          <div class="card-title">Cảm nhận (Perception)</div>
+        </div>
+        <div class="card-body">
+          <p>Không thể chạm hay nhìn thấy, nhưng nhân viên <strong>cảm nhận được</strong> dựa trên trải nghiệm trong tổ chức.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header bg-cyan">
+          <div class="card-num">ĐIỂM 2</div>
+          <div class="card-title">Mô tả (Descriptive)</div>
+        </div>
+        <div class="card-body">
+          <p>Liên quan đến cách thành viên <strong>cảm nhận và mô tả</strong> văn hóa, không liên quan đến việc họ có thích nó không.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header bg-lime">
+          <div class="card-num">ĐIỂM 3</div>
+          <div class="card-title">Chia sẻ (Shared)</div>
+        </div>
+        <div class="card-body">
+          <p>Dù mỗi cá nhân có nền tảng khác nhau, họ thường <strong>mô tả văn hóa bằng các thuật ngữ tương tự nhau</strong>.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Sáu chiều của Văn hóa Tổ chức</h3>
+
+    <div class="dim-grid">
+      <div class="dim-card">
+        <div class="dim-num">1</div>
+        <div class="dim-title-en">Adaptability</div>
+        <div class="dim-title-vi">Khả năng thích nghi</div>
+        <p class="dim-desc">Mức độ nhân viên được khuyến khích <strong>sáng tạo, linh hoạt, chấp nhận rủi ro, và thử nghiệm</strong>.</p>
+      </div>
+      <div class="dim-card">
+        <div class="dim-num">2</div>
+        <div class="dim-title-en">Attention to Detail</div>
+        <div class="dim-title-vi">Chú ý đến chi tiết</div>
+        <p class="dim-desc">Mức độ nhân viên được kỳ vọng thể hiện sự <strong>chính xác, phân tích, và tập trung vào chi tiết</strong>.</p>
+      </div>
+      <div class="dim-card">
+        <div class="dim-num">3</div>
+        <div class="dim-title-en">Outcome Orientation</div>
+        <div class="dim-title-vi">Định hướng kết quả</div>
+        <p class="dim-desc">Mức độ ban quản trị nhấn mạnh <strong>kết quả thay vì kỹ thuật và quy trình</strong> để đạt kết quả.</p>
+      </div>
+      <div class="dim-card">
+        <div class="dim-num">4</div>
+        <div class="dim-title-en">People Orientation</div>
+        <div class="dim-title-vi">Định hướng con người</div>
+        <p class="dim-desc">Mức độ quyết định quản trị xét đến <strong>tác động lên con người</strong> trong và ngoài tổ chức.</p>
+      </div>
+      <div class="dim-card">
+        <div class="dim-num">5</div>
+        <div class="dim-title-en">Team Orientation</div>
+        <div class="dim-title-vi">Định hướng nhóm</div>
+        <p class="dim-desc">Mức độ khuyến khích <strong>cộng tác và tổ chức công việc quanh nhóm</strong> thay vì cá nhân.</p>
+      </div>
+      <div class="dim-card">
+        <div class="dim-num">6</div>
+        <div class="dim-title-en">Integrity</div>
+        <div class="dim-title-vi">Tính chính trực</div>
+        <p class="dim-desc">Mức độ con người thể hiện <strong>trung thực và nguyên tắc đạo đức cao</strong> trong công việc.</p>
+      </div>
+    </div>
+
+    <div class="callout example">
+      <span class="callout-label">🎯 Ví dụ minh họa</span>
+      <p class="callout-body">
+        <strong>Tổ chức A</strong> (kim tự tháp truyền thống): cấp trên giám sát chặt, mọi quyết định phải có tài liệu chi tiết, không khuyến khích quyết định sáng tạo có rủi ro. <em>"Không hỏng thì đừng sửa".</em><br><br>
+        <strong>Tổ chức B</strong> (linh hoạt, hiện đại): khuyến khích và thưởng cho việc <strong>chấp nhận rủi ro và thay đổi</strong>. Có ý tưởng tốt thì được "chạy với nó". Thất bại được coi là <em>"trải nghiệm học hỏi"</em>.<br><br>
+        Cùng là "công ty sản xuất", nhưng văn hóa hoàn toàn khác nhau.
+      </p>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Văn hóa Mạnh và Văn hóa Yếu</h3>
+
+    <div class="stat-grid" style="grid-template-columns: 1fr;">
+      <div class="stat" style="text-align: left; display: flex; align-items: center; gap: var(--gap-md);">
+        <div class="stat-num" style="font-size: 3rem;">92%</div>
+        <div class="stat-label" style="font-size: 14px; text-transform: none; letter-spacing: 0; color: var(--ink);">
+          lãnh đạo từ các công ty thành công tin rằng <strong>văn hóa nơi làm việc có ảnh hưởng lớn đến hiệu quả tài chính</strong> của công ty họ.
+        </div>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Văn hóa Mạnh</th>
+            <th>Văn hóa Yếu</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Giá trị được chia sẻ rộng rãi</td><td>Giá trị giới hạn ở vài người (top management)</td></tr>
+          <tr><td>Truyền thông điệp nhất quán về điều quan trọng</td><td>Truyền thông điệp mâu thuẫn</td></tr>
+          <tr><td>Hầu hết nhân viên kể được câu chuyện về lịch sử công ty hoặc các "anh hùng"</td><td>Nhân viên ít biết về lịch sử công ty hoặc các anh hùng</td></tr>
+          <tr><td>Nhân viên gắn bó mạnh với văn hóa</td><td>Nhân viên ít gắn bó với văn hóa</td></tr>
+          <tr><td>Liên kết mạnh giữa giá trị được chia sẻ và hành vi</td><td>Liên kết yếu giữa giá trị và hành vi</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout warning">
+      <span class="callout-label">⚠️ Mặt trái của văn hóa mạnh</span>
+      <p class="callout-body">
+        Văn hóa mạnh gắn với hiệu quả tổ chức cao — nhân viên biết mình phải làm gì và được kỳ vọng gì, nên có thể hành động nhanh. <span class="hl-pink">Mặt trái: văn hóa mạnh có thể ngăn nhân viên thử cách tiếp cận mới, đặc biệt khi điều kiện thay đổi nhanh.</span>
+      </p>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-xl); margin-bottom: var(--gap-md);">Văn hóa đến từ đâu và làm sao tiếp tục tồn tại</h3>
+
+    <div class="card">
+      <div class="card-header bg-ink">
+        <div class="card-num">SƠ ĐỒ HÌNH THÀNH</div>
+        <div class="card-title">Người sáng lập → Lựa chọn → Top management → Xã hội hóa → Văn hóa</div>
+      </div>
+      <div class="card-body">
+        <ul class="num-list">
+          <li>
+            <div class="num brand">0</div>
+            <div class="content"><strong>Nguồn gốc — Người sáng lập</strong>Văn hóa thường phản ánh <em>tầm nhìn của người sáng lập</em>. Văn hóa W.&nbsp;L.&nbsp;Gore phản ánh giá trị của Bill&nbsp;Gore. Người sáng lập không bị ràng buộc bởi truyền thống cũ.</div>
+          </li>
+          <li>
+            <div class="num">1</div>
+            <div class="content"><strong>Duy trì 1 — Selection (Quy trình lựa chọn)</strong>Tổ chức cố tìm những cá nhân có giá trị nhất quán với giá trị tổ chức. Lựa chọn là <span class="hl">đường hai chiều</span>. Các công ty tư vấn lớn (McKinsey, BCG, Bain) nổi tiếng với <em>"fit interview"</em>.</div>
+          </li>
+          <li>
+            <div class="num">2</div>
+            <div class="content"><strong>Duy trì 2 — Top Management</strong>Hành động của lãnh đạo cấp cao có tác động lớn. Họ đặt ra các chuẩn về: rủi ro được khuyến khích không, mức tự do, cách ăn mặc, hành động nào được tăng lương/thăng chức/thưởng.</div>
+          </li>
+          <li>
+            <div class="num">3</div>
+            <div class="content"><strong>Duy trì 3 — Socialization (Xã hội hóa)</strong>Quy trình giúp nhân viên mới <em>học cách làm việc của tổ chức</em>: học nghề, thực tập, định hướng chính thức, mentor, đào tạo, luân chuyển công việc, shadowing.</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-xl); margin-bottom: var(--gap-md);">Bốn cơ chế nhân viên học văn hóa</h3>
+
+    <div class="trans-grid">
+      <div class="trans-card">
+        <div class="trans-icon">📖</div>
+        <div class="trans-en">01 · Stories</div>
+        <div class="trans-name">Câu chuyện</div>
+        <p class="trans-desc">Kể về sự kiện hoặc người quan trọng. <strong>Nike:</strong> Bill&nbsp;Bowerman đổ cao su vào máy nướng waffle của vợ → đế giày chạy. Thông điệp: <em>Nike coi trọng đổi mới</em>.</p>
+      </div>
+      <div class="trans-card">
+        <div class="trans-icon">🎭</div>
+        <div class="trans-en">02 · Rituals</div>
+        <div class="trans-name">Nghi lễ</div>
+        <p class="trans-desc">Chuỗi hành động lặp lại biểu đạt và củng cố giá trị. <strong>Gentle Giant Moving:</strong> bắt nhân viên mới chạy bậc thang ở Harvard&nbsp;Stadium như bài kiểm tra thể lực và quyết tâm.</p>
+      </div>
+      <div class="trans-card">
+        <div class="trans-icon">🏛️</div>
+        <div class="trans-en">03 · Symbols</div>
+        <div class="trans-name">Biểu tượng vật chất</div>
+        <p class="trans-desc">Bố trí, kích thước văn phòng, đồ nội thất, cách ăn mặc, xe cấp cho lãnh đạo. <strong>Sân bocce của Google</strong>, ngày mang chó đi làm của Autodesk.</p>
+      </div>
+      <div class="trans-card">
+        <div class="trans-icon">💬</div>
+        <div class="trans-en">04 · Language</div>
+        <div class="trans-name">Ngôn ngữ riêng</div>
+        <p class="trans-desc">Từ vựng riêng để xác định và đoàn kết thành viên. <strong>Walmart:</strong> "Action Alley" (lối đi đông), "The Cross" (giao gạch men và xi măng), "Bowling Alley" (khu trước cửa hàng).</p>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Cơ chế</th>
+            <th>Tính chất</th>
+            <th>Ví dụ Nike</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Story</td><td>Lời kể, có nhân vật và tình tiết</td><td>Câu chuyện Bowerman với máy nướng waffle</td></tr>
+          <tr><td>Ritual</td><td>Hành động lặp lại có ý nghĩa</td><td>"Founders&nbsp;Day" (kỷ niệm ngày thành lập)</td></tr>
+          <tr><td>Symbol</td><td>Vật chất, không gian, ngoại hình</td><td>Logo "swoosh", thiết kế mở của trụ sở</td></tr>
+          <tr><td>Language</td><td>Từ vựng riêng</td><td>"Just Do It", các thuật ngữ riêng về sản phẩm</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-xl); margin-bottom: var(--gap-md);">Năm cách đọc văn hóa của một tổ chức</h3>
+
+    <p>Đây là kỹ năng cực kỳ hữu ích nếu bạn đang phỏng vấn xin việc, đi tư vấn, hoặc tham gia M&amp;A.</p>
+
+    <ul class="num-list">
+      <li>
+        <div class="num brand lg">1</div>
+        <div class="content"><strong>Làm bài tập về nhà.</strong>Xem website, ấn tượng đầu tiên ra sao? Có liệt kê giá trị, sứ mệnh không? Xem tin tức gần đây — có dấu hiệu turnover cao hay biến động lãnh đạo không? Nói chuyện với cựu nhân viên nếu có thể.</div>
+      </li>
+      <li>
+        <div class="num brand lg">2</div>
+        <div class="content"><strong>Quan sát môi trường vật chất và biểu tượng.</strong>Logo, biển hiệu, áp phích, ảnh. Phong cách ăn mặc của nhân viên. Mức mở giữa các văn phòng. Bố trí và trang trí. Nhân viên đỗ xe ở đâu? Tình trạng tòa nhà ra sao?</div>
+      </li>
+      <li>
+        <div class="num brand lg">3</div>
+        <div class="content"><strong>Đặc điểm hóa người bạn gặp.</strong>Họ trang trọng hay thoải mái? Nghiêm túc hay vui vẻ? Cởi mở hay hạn chế cung cấp thông tin? Câu chuyện nào được kể đi kể lại? Có dùng đùa giỡn trong giao tiếp không? Cách xưng hô ra sao?</div>
+      </li>
+      <li>
+        <div class="num brand lg">4</div>
+        <div class="content"><strong>Xem sổ tay nhân sự (HR manual).</strong>Có chính sách, quy tắc, quy định chính thức không? Chi tiết đến đâu? Bao quát những gì? Bạn có thấy mình làm việc trong các tham số này không?</div>
+      </li>
+      <li>
+        <div class="num brand lg">5</div>
+        <div class="content"><strong>Đặt câu hỏi với người bạn gặp.</strong>Background của lãnh đạo? Họ được thăng từ trong hay tuyển từ ngoài? Tổ chức làm gì để giúp nhân viên mới khởi đầu? Thành công công việc được định nghĩa thế nào? Mô tả một quyết định không thành công và hệ quả với người ra quyết định.</div>
+      </li>
+    </ul>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-xl); margin-bottom: var(--gap-md);">Văn hóa ảnh hưởng đến 4 chức năng quản trị</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Chức năng</th>
+            <th>Văn hóa ảnh hưởng đến</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Planning</td><td>Mức rủi ro mà kế hoạch nên chứa; Kế hoạch nên do cá nhân hay nhóm phát triển; Mức quét môi trường mà ban quản trị sẽ tham gia</td></tr>
+          <tr><td>Organizing</td><td>Mức tự chủ thiết kế vào công việc của nhân viên; Nhiệm vụ nên do cá nhân hay nhóm làm; Mức tương tác giữa các trưởng phòng</td></tr>
+          <tr><td>Leading</td><td>Mức nhà quản trị quan tâm đến việc tăng sự hài lòng của nhân viên; Phong cách lãnh đạo nào phù hợp; Liệu mọi bất đồng có nên được loại bỏ</td></tr>
+          <tr><td>Controlling</td><td>Có nên áp đặt kiểm soát bên ngoài hay cho nhân viên kiểm soát hành động của chính họ; Tiêu chí nào nên được nhấn mạnh trong đánh giá hiệu suất</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout warning">
+      <span class="callout-label">⚠️ Các "giá trị không viết ra"</span>
+      <p class="callout-body">
+        Robbins liệt kê các câu <strong>không viết ra ở đâu</strong> nhưng phản ánh văn hóa thực:
+      </p>
+      <ul style="margin: 0; padding-left: 20px; font-size: 14px;">
+        <li><em>"Hãy trông có vẻ bận rộn, dù bạn không bận."</em></li>
+        <li><em>"Nếu bạn chấp nhận rủi ro và thất bại ở đây, bạn sẽ trả giá đắt."</em></li>
+        <li><em>"Trước khi quyết định, hãy báo cáo sếp để sếp không bao giờ bị bất ngờ."</em></li>
+        <li><em>"Chúng ta làm sản phẩm chỉ tốt như đối thủ ép chúng ta phải tốt."</em></li>
+        <li><em>"Cái làm chúng ta thành công trong quá khứ sẽ làm chúng ta thành công trong tương lai."</em></li>
+        <li><em>"Muốn lên đỉnh ở đây, bạn phải là người làm việc nhóm."</em></li>
+      </ul>
+      <p class="callout-body" style="margin-top: var(--gap-sm);">
+        <span class="hl-pink">Đây là dấu hiệu văn hóa thực — và nó hình thành quyết định của nhà quản trị mạnh hơn bất kỳ tuyên bố sứ mệnh nào.</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- WELLS FARGO -->
+  <section class="section" id="wells-fargo">
+    <span class="section-num">📍 Bài học thất bại</span>
+    <h2 class="section-title">Bài học từ <span class="underline">Wells&nbsp;Fargo</span></h2>
+
+    <div class="card">
+      <div class="card-header" style="background: var(--brand); color: var(--paper);">
+        <div class="card-num">CASE STUDY · 1990s-2016</div>
+        <div class="card-title">Khi văn hóa định hướng quá hẹp tạo ra phi đạo đức</div>
+      </div>
+      <div class="card-body">
+        <p>Wells&nbsp;Fargo là một trong các ngân hàng lớn nhất Mỹ. Nhưng văn hóa của họ — <strong>văn hóa định hướng bán hàng</strong> — đã dẫn đến hàng nghìn nhân viên thực hiện các thông lệ làm xấu hổ công ty và tốn <strong>hơn 1 tỉ USD tiền phạt</strong>.</p>
+
+        <p>Từ thập niên 1990, top management quyết định cần tăng lợi nhuận bằng cách tạo văn hóa định hướng bán hàng:</p>
+
+        <ul style="margin: 0; padding-left: 20px;">
+          <li>Các <em>"branch"</em> trở thành <em>"store"</em></li>
+          <li>Khách hàng phải được <em>"vắt"</em> càng nhiều càng tốt</li>
+          <li>Nhân viên bị áp lực bán chéo (cross-sell)</li>
+          <li>Mục tiêu là <strong>8 sản phẩm/khách</strong> trong ngành mà trung bình là 2-3</li>
+        </ul>
+
+        <h4 style="font-family: var(--font-display); font-weight: 700; margin-top: var(--gap-md); font-size: 1.15rem;">Hậu quả — các thực hành phi pháp:</h4>
+
+        <ul class="num-list" style="margin-top: var(--gap-sm);">
+          <li><div class="num">!</div><div class="content">Nhân viên mở <strong>hàng triệu tài khoản giả</strong> mang tên khách</div></li>
+          <li><div class="num">!</div><div class="content">Hàng nghìn khách mua xe với khoản vay từ Wells&nbsp;Fargo bị bắt mua bảo hiểm không cần thiết với phí <strong>trên 1.000 USD/năm</strong></div></li>
+          <li><div class="num">!</div><div class="content">Khách bị bắt trả phí gia hạn lock-in lãi suất thế chấp dù do ngân hàng làm chậm</div></li>
+        </ul>
+
+        <div class="quote bg-pink" style="margin-top: var(--gap-md);">
+          Chúng tôi liên tục được nói rằng <strong>sẽ phải làm việc cho McDonald's nếu không đạt chỉ tiêu</strong>.
+          <span class="quote-author">— Một trưởng chi nhánh Wells Fargo</span>
+        </div>
+
+        <div class="callout tip" style="margin-top: var(--gap-md);">
+          <span class="callout-label">💡 Bài học cốt lõi</span>
+          <p class="callout-body">
+            Khi văn hóa định hướng quá hẹp (chỉ vào bán hàng), nhân viên sẽ làm bất cứ thứ gì để đạt — kể cả phi đạo đức. Sau scandal, Wells&nbsp;Fargo phải <strong>đại tu hệ thống lương thưởng</strong> để đánh giá theo sự hài lòng của khách và mục tiêu nhóm thay vì mục tiêu sản phẩm. <span class="hl">Branch trở lại là branch, không phải store.</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OVERVIEW -->
+  <section class="section" id="overview">
+    <span class="section-num">📍 Trang 10</span>
+    <h2 class="section-title">Tổng <span class="underline">quan</span> và liên hệ Chương 1-2</h2>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-md); margin-bottom: var(--gap-md);">Sơ đồ tổng thể Chương 3</h3>
+
+    <div class="discretion">
+      <div class="discretion-side left">
+        <div class="ds-label">LỰC ÉP TỪ NGOÀI</div>
+        <div class="ds-name">Môi trường bên ngoài</div>
+        <p style="margin: 0; font-size: 13px;">General (6 thành phần) · Specific (5 nhóm)</p>
+      </div>
+      <div class="discretion-arrow">→ ← →</div>
+      <div class="discretion-side right">
+        <div class="ds-label">LỰC ÉP TỪ TRONG</div>
+        <div class="ds-name">Văn hóa tổ chức</div>
+        <p style="margin: 0; font-size: 13px;">6 chiều · Mạnh/yếu · 4 cơ chế truyền tải</p>
+      </div>
+    </div>
+
+    <div class="discretion-center">
+      <div class="dc-label">VÙNG TỰ QUYẾT CỦA NHÀ QUẢN TRỊ</div>
+      <div class="dc-name">4 chức năng POLC + 8 bước ra quyết định</div>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Liên hệ Chương 1-2-3</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Chương</th>
+            <th>Câu hỏi cốt lõi</th>
+            <th>Đóng góp</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Chương 1</td><td>Nhà quản trị là ai? Làm gì?</td><td>4 chức năng, 10 vai trò, 3 kỹ năng</td></tr>
+          <tr><td>Chương 2</td><td>Họ ra quyết định ra sao?</td><td>8 bước, 5 cách tiếp cận, 12 thiên kiến</td></tr>
+          <tr><td>Chương 3</td><td>Họ làm điều đó trong bối cảnh nào?</td><td>2 lực ép vào vùng tự quyết</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-label">💼 Hệ quả cho thực hành tư vấn</span>
+      <p class="callout-body">
+        Một dự án tư vấn quản trị tốt phải nhìn cả <strong>3 lớp</strong>:
+      </p>
+      <ul style="margin: 0; padding-left: 20px;">
+        <li><strong>Chất lượng nhà quản trị</strong> (Chương 1) — họ có đủ kỹ năng không?</li>
+        <li><strong>Chất lượng quyết định</strong> (Chương 2) — họ có đi đủ 8&nbsp;bước, có nhận diện thiên kiến không?</li>
+        <li><strong>Bối cảnh</strong> (Chương 3) — môi trường bên ngoài đẩy họ về đâu, văn hóa giới hạn họ thế nào?</li>
+      </ul>
+      <p class="callout-body" style="margin-top: var(--gap-sm);">
+        Phần lớn dự án tư vấn thất bại không phải vì khuyến nghị sai về Chương 1 hay 2, mà vì <span class="hl">bỏ qua Chương 3</span>. Khuyến nghị "hãy thay đổi cách lãnh đạo" rất khó áp dụng nếu văn hóa hiện tại đang trừng phạt người dám thay đổi.
+      </p>
+    </div>
+  </section>
+
+  <!-- CHEATSHEET -->
+  <section class="section" id="cheatsheet">
+    <span class="section-num">📍 Trang 11</span>
+    <h2 class="section-title">Bảng <span class="underline">tra&nbsp;cứu</span> nhanh (Cheatsheet)</h2>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-md); margin-bottom: var(--gap-md);">3 lớp câu hỏi khi đánh giá tổ chức</h3>
+
+    <div class="grid grid-3">
+      <div class="card">
+        <div class="card-header bg-yellow">
+          <div class="card-num">LỚP 1</div>
+          <div class="card-title">Quan điểm nào áp dụng?</div>
+        </div>
+        <div class="card-body">
+          <p style="font-size: 14px;">• Lãnh đạo tốt → kết quả tốt rõ rệt → <strong>Toàn năng</strong></p>
+          <p style="font-size: 14px;">• Phụ thuộc lớn vào ngành/thị trường → <strong>Biểu tượng</strong></p>
+          <p style="font-size: 14px;">• Thực tế: <span class="hl">kết hợp cả hai</span> — hỏi tỷ lệ ảnh hưởng</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-cyan">
+          <div class="card-num">LỚP 2</div>
+          <div class="card-title">Ô nào trong ma trận?</div>
+        </div>
+        <div class="card-body">
+          <p style="font-size: 14px;">• <strong>Simple + Stable</strong> → Bất ổn thấp nhất → ảnh hưởng lớn nhất</p>
+          <p style="font-size: 14px;">• <strong>Complex + Dynamic</strong> → Bất ổn cao nhất → ảnh hưởng ít nhất</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-lime">
+          <div class="card-num">LỚP 3</div>
+          <div class="card-title">Văn hóa thế nào?</div>
+        </div>
+        <div class="card-body">
+          <p style="font-size: 14px;">Cho điểm 1-10 trên 6 chiều: Adaptability · Attention · Outcome · People · Team · Integrity. <strong>Văn hóa có mạnh không?</strong></p>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Khi tư vấn về thay đổi văn hóa</h3>
+
+    <div class="callout warning">
+      <span class="callout-label">⚠️ Quy tắc</span>
+      <p class="callout-body">
+        Trước khi đề xuất thay đổi, kiểm tra <strong>4 cơ chế truyền tải hiện tại</strong>:
+      </p>
+      <ul style="margin: 0; padding-left: 20px; font-size: 14px;">
+        <li>Câu chuyện đang được kể trong tổ chức là gì?</li>
+        <li>Nghi lễ nào đang được lặp lại?</li>
+        <li>Biểu tượng vật chất nào đang được dùng?</li>
+        <li>Ngôn ngữ riêng nào đang được sử dụng?</li>
+      </ul>
+      <p class="callout-body" style="margin-top: var(--gap-sm);">
+        <span class="hl-pink">Để thay đổi văn hóa, bạn phải thay đổi cả 4 cơ chế này — không chỉ thay đổi một bài tuyên bố sứ mệnh.</span>
+      </p>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Phân biệt các cặp khái niệm</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 35%;">Cặp</th>
+            <th>Phân biệt</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Omnipotent vs. Symbolic view</td><td>Toàn năng = nhà quản trị quyết định kết quả; Biểu tượng = lực bên ngoài quyết định</td></tr>
+          <tr><td>General vs. Specific environment</td><td>General = mọi thứ bên ngoài (6 thành phần); Specific = liên quan trực tiếp (5 nhóm stakeholder)</td></tr>
+          <tr><td>Stable vs. Dynamic</td><td>Stable = thay đổi tối thiểu; Dynamic = thay đổi <em>không dự đoán được</em> (thay đổi dự đoán được không tính)</td></tr>
+          <tr><td>Simple vs. Complex</td><td>Simple = ít thành phần, ít cần kiến thức sâu; Complex = nhiều thành phần, cần kiến thức sâu</td></tr>
+          <tr><td>Strong vs. Weak culture</td><td>Strong = giá trị được nắm giữ mãnh liệt và chia sẻ rộng rãi; Weak = giá trị giới hạn ở vài người</td></tr>
+          <tr><td>Story vs. Ritual vs. Symbol vs. Language</td><td>Story = lời kể; Ritual = hành động lặp lại; Symbol = vật chất; Language = từ vựng</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-label">💼 3 câu hỏi vàng cho consultant</span>
+      <p class="callout-body">
+        Khi gặp khách hàng mới:<br>
+        <strong>1.</strong> <em>"Trong ma trận 2×2, công ty anh/chị đang ở ô nào? Vì sao?"</em><br>
+        <strong>2.</strong> <em>"Văn hóa công ty này có những nghi lễ nào, và chúng đang truyền thông điệp gì?"</em><br>
+        <strong>3.</strong> <em>"Có những giá trị 'không viết ra' nào ở đây mà tôi cần hiểu trước khi đề xuất gì?"</em>
+      </p>
+    </div>
+  </section>
+
+  <!-- REVIEW -->
+  <section class="section" id="review">
+    <span class="section-num">📍 Trang 12</span>
+    <h2 class="section-title">Lộ trình <span class="underline">ôn&nbsp;tập</span> và 2 nguyên tắc nhớ lâu</h2>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="card-header" style="background: var(--brand); color: var(--paper);">
+          <div class="card-num">NGUYÊN TẮC 1</div>
+          <div class="card-title">Active Recall · Chủ động gợi nhớ</div>
+        </div>
+        <div class="card-body">
+          <p>Việc chỉ đọc lại tài liệu thường tạo ra <strong>ảo tưởng về sự hiểu biết</strong>.</p>
+          <p>Cách hiệu quả: <span class="hl">gập tài liệu, viết ra giấy, nói thành tiếng</span>. Khi bí thì tra. Quá trình "moi từ trí nhớ" tạo ra trí nhớ bền.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-ink">
+          <div class="card-num">NGUYÊN TẮC 2</div>
+          <div class="card-title">Spaced Repetition · Lặp lại ngắt quãng</div>
+        </div>
+        <div class="card-body">
+          <p>Học <strong>7 lần × 10 phút cách quãng</strong> hiệu quả hơn nhiều so với <strong>1 lần 70 phút</strong>.</p>
+          <p>Não cần <span class="hl-cyan">"quên một chút rồi nhớ lại"</span> để tạo trí nhớ bền. Đừng nhồi.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Lộ trình 5 lần ôn tập</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Lần</th>
+            <th>Thời điểm</th>
+            <th>Thời gian</th>
+            <th>Hoạt động</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>L1</strong></td><td>Cuối ngày học (Ngày 0)</td><td>15&nbsp;phút</td><td>Lướt qua Cheatsheet. Nhắc lại: 2 quan điểm, ma trận 2×2, 6 thành phần general, 5 nhóm specific, 6 chiều văn hóa, 4 cơ chế truyền tải.</td></tr>
+          <tr><td><strong>L2</strong></td><td>Ngày 1</td><td>20&nbsp;phút</td><td><strong>Gập tài liệu</strong>. Vẽ sơ đồ "Vùng tự quyết bị ép từ 2 phía" và liệt kê các thành phần. Đối chiếu với tài liệu. Làm 10 flashcards.</td></tr>
+          <tr><td><strong>L3</strong></td><td>Ngày 3</td><td>30&nbsp;phút</td><td><strong>Áp khái niệm vào case thực tế.</strong> Phân tích 1 doanh nghiệp qua: ma trận bất ổn, 6 chiều văn hóa, 4 cơ chế truyền tải. Văn hóa mạnh hay yếu? Có "giá trị không viết ra" nào?</td></tr>
+          <tr><td><strong>L4</strong></td><td>Ngày 7</td><td>30&nbsp;phút</td><td><strong>Hệ thống hóa.</strong> Vẽ bằng tay sơ đồ tổng thể Chương 3 (3 lớp: môi trường ngoài → vùng tự quyết → văn hóa trong). Hoàn thành flashcards.</td></tr>
+          <tr><td><strong>L5</strong></td><td>Ngày 16</td><td>45&nbsp;phút</td><td><strong>Giảng cho người khác</strong> hoặc ghi âm. Đặc biệt giảng phần "Cách đọc văn hóa tổ chức" — kỹ năng dễ áp dụng nhất khi đi phỏng vấn hoặc tư vấn.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Ghi nhớ dài hạn</h3>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="card-header bg-lime">
+          <div class="card-num">L6</div>
+          <div class="card-title">Ngày 35 · 25&nbsp;phút</div>
+        </div>
+        <div class="card-body">
+          <p>Lướt cheatsheet + làm flashcards toàn bộ.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header bg-yellow">
+          <div class="card-num">L7</div>
+          <div class="card-title">Ngày 75 · 25&nbsp;phút</div>
+        </div>
+        <div class="card-body">
+          <p>Như Lần 6. Sau lần này, kiến thức đã chuyển sang vùng <span class="hl">trí nhớ dài hạn rất bền</span>.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-label">💡 Mẹo bonus cho Chương 3</span>
+      <p class="callout-body">
+        <strong>Phần "5 cách đọc văn hóa" dùng được ngay.</strong> Lần phỏng vấn xin việc tới (hoặc lần đến gặp khách hàng tư vấn mới), thử áp dụng. Bạn sẽ thấy mình thu thập được nhiều thông tin hơn dự kiến.<br><br>
+        <strong>Giữ một "culture journal" 2 tuần.</strong> Mỗi ngày ghi 1 quan sát: 1 câu chuyện, 1 nghi lễ, 1 biểu tượng, 1 cụm từ riêng. Sau 2 tuần, bạn có bức tranh sống động về văn hóa nội bộ.<br><br>
+        <strong>Khi tư vấn:</strong> dùng ma trận bất ổn 2×2 làm khung mở đầu. <em>"Em nhìn nhận công ty anh/chị đang ở ô [X]. Anh/chị có đồng ý không?"</em> Câu hỏi này thường mở ra cuộc thảo luận sâu về môi trường.
+      </p>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Chuẩn bị cho các chương sau</h3>
+
+    <div class="quote bg-cyan">
+      Bạn đã học xong <strong>3 chương nền tảng</strong>. Các chương 4-7 sẽ đi sâu vào từng yếu tố trong bối cảnh mà Chương 3 đã giới thiệu:
+    </div>
+
+    <ul class="num-list">
+      <li><div class="num">4</div><div class="content"><strong>Quản trị toàn cầu</strong>Mở rộng Global component của general environment</div></li>
+      <li><div class="num">5</div><div class="content"><strong>Quản trị đa dạng</strong>Mở rộng Demographic + Sociocultural component</div></li>
+      <li><div class="num">6</div><div class="content"><strong>Trách nhiệm xã hội và đạo đức</strong>Mở rộng Pressure groups + Sociocultural</div></li>
+      <li><div class="num">7</div><div class="content"><strong>Quản trị thay đổi và đổi mới phá vỡ</strong>Mở rộng cách phản ứng với môi trường động</div></li>
+    </ul>
+
+    <p style="margin-top: var(--gap-md); text-align: center; font-style: normal; font-family: var(--font-display); font-size: 1.1rem; font-weight: 600;">
+      Vì vậy, <span class="hl">Chương 3 là nền cho cả Phần 2</span>. Hiểu kỹ Chương 3, các chương sau sẽ dễ thở hơn nhiều.
+    </p>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>
+      <strong>CHƯƠNG&nbsp;03</strong> — Tóm tắt chuyên sâu sách<br>
+      <em>Management</em> · Stephen&nbsp;P.&nbsp;Robbins &amp; Mary&nbsp;A.&nbsp;Coulter · ấn bản 15&nbsp;(2021)
+    </p>
+    <p style="margin-top: var(--gap-md);">
+      Thiết kế Neo-Brutalism v3.4 — by
+      <a href="https://www.facebook.com/vuhai.fitness" target="_blank" rel="noopener noreferrer">Vũ&nbsp;Hải</a>
+      | Business&nbsp;Consultant
+    </p>
+  </footer>
+
+</div>
+
+</body>
+</html>

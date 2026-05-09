@@ -1,0 +1,2069 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chương 1 — Nhà Quản trị và Bạn ở Nơi Làm việc</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap&subset=vietnamese" rel="stylesheet">
+<style>
+/* ============================================
+   NEO-BRUTALISM v3.4 — REFINED TEMPERED NB
+   Design System for Vũ Hải
+   ============================================ */
+
+:root {
+  /* Brand & Ink */
+  --brand: #c73937;
+  --brand-dark: #a82d2c;
+  --ink: #1a1a1a;
+  --ink-soft: #2d2d2d;
+  --paper: #faf8f3;
+  --paper-warm: #f5f1e8;
+
+  /* Muted Pastel Accents */
+  --yellow: #F5E4B8;
+  --cyan: #C4DEDC;
+  --lime: #DDE4C5;
+  --pink: #F0DCDD;
+
+  /* Border & Shadow */
+  --border-w: 3px;
+  --border-w-thin: 2px;
+  --shadow-offset: 6px 6px 0;
+  --shadow-offset-sm: 4px 4px 0;
+  --shadow-offset-lg: 8px 8px 0;
+  --radius: 4px;
+  --radius-pill: 999px;
+
+  /* Spacing */
+  --gap-xs: 8px;
+  --gap-sm: 16px;
+  --gap-md: 24px;
+  --gap-lg: 40px;
+  --gap-xl: 64px;
+
+  /* Typography */
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+/* ============================================
+   GLOBAL RESET
+   ============================================ */
+* {
+  font-style: normal !important;
+  box-sizing: border-box;
+  font-optical-sizing: auto;
+}
+
+*::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.6;
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(26,26,26,0.08) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+/* Typography rules */
+h1, h2, h3, h4, h5, h6,
+.title, .heading, .hero-title, .section-title, .card-title {
+  text-wrap: balance;
+  font-family: var(--font-display);
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+p, li, .body-text {
+  text-wrap: pretty;
+}
+
+p {
+  margin: 0 0 1em 0;
+}
+
+strong, b {
+  font-weight: 700;
+}
+
+a {
+  color: var(--brand);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  font-weight: 600;
+}
+
+a:hover {
+  background: var(--yellow);
+  color: var(--ink);
+}
+
+a:focus-visible {
+  outline: 3px solid var(--brand);
+  outline-offset: 3px;
+}
+
+/* ============================================
+   LAYOUT
+   ============================================ */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--gap-md);
+}
+
+@media (min-width: 768px) {
+  .container { padding: var(--gap-lg); }
+}
+
+/* ============================================
+   HERO
+   ============================================ */
+.hero {
+  border: var(--border-w) solid var(--ink);
+  background: var(--paper);
+  box-shadow: var(--shadow-offset-lg) var(--ink);
+  padding: var(--gap-lg) var(--gap-md);
+  margin-bottom: var(--gap-xl);
+  position: relative;
+  border-radius: var(--radius);
+}
+
+@media (min-width: 768px) {
+  .hero { padding: var(--gap-xl) var(--gap-lg); }
+}
+
+.hero-badge {
+  display: inline-block;
+  background: var(--brand);
+  color: var(--paper);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 12px;
+  border: var(--border-w-thin) solid var(--ink);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: var(--gap-md);
+  transform: rotate(-1.5deg);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.hero-title {
+  font-size: clamp(2.5rem, 7vw, 5rem);
+  margin-bottom: var(--gap-md);
+  line-height: 1;
+}
+
+.hero-title .accent {
+  background: var(--yellow);
+  padding: 0 8px;
+  border: var(--border-w-thin) solid var(--ink);
+  display: inline-block;
+  transform: rotate(-1deg);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.hero-sub {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  color: var(--ink-soft);
+  max-width: 720px;
+  font-weight: 500;
+  text-wrap: balance;
+}
+
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-sm);
+  margin-top: var(--gap-md);
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+
+.hero-meta span {
+  background: var(--paper-warm);
+  border: var(--border-w-thin) solid var(--ink);
+  padding: 4px 10px;
+  font-weight: 600;
+}
+
+/* ============================================
+   STICKER (decorative)
+   ============================================ */
+.sticker {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  background: var(--cyan);
+  border: var(--border-w-thin) solid var(--ink);
+  padding: 6px 10px;
+  box-shadow: 3px 3px 0 var(--ink);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  z-index: 10;
+}
+
+.sticker-pink { background: var(--pink); }
+.sticker-yellow { background: var(--yellow); }
+.sticker-lime { background: var(--lime); }
+
+/* ============================================
+   SECTION
+   ============================================ */
+.section {
+  margin-bottom: var(--gap-xl);
+  position: relative;
+}
+
+.section-num {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--brand);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: var(--gap-xs);
+  display: block;
+}
+
+.section-title {
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  margin-bottom: var(--gap-md);
+  padding-bottom: var(--gap-sm);
+  border-bottom: var(--border-w) solid var(--ink);
+}
+
+.section-title .underline {
+  background: var(--lime);
+  padding: 0 6px;
+  border: var(--border-w-thin) solid var(--ink);
+  display: inline-block;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+/* ============================================
+   CARD
+   ============================================ */
+.card {
+  border: var(--border-w) solid var(--ink);
+  background: var(--paper);
+  box-shadow: var(--shadow-offset) var(--ink);
+  border-radius: var(--radius);
+  margin-bottom: var(--gap-md);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.card-header {
+  background: var(--brand);
+  color: var(--paper);
+  border-bottom: var(--border-w-thin) solid var(--ink);
+  padding: var(--gap-sm) var(--gap-md);
+}
+
+.card-header.bg-yellow { background: var(--yellow); color: var(--ink); }
+.card-header.bg-cyan { background: var(--cyan); color: var(--ink); }
+.card-header.bg-lime { background: var(--lime); color: var(--ink); }
+.card-header.bg-pink { background: var(--pink); color: var(--ink); }
+.card-header.bg-ink { background: var(--ink); color: var(--paper); }
+
+.card-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 4px;
+  opacity: 0.85;
+}
+
+.card-title {
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  font-weight: 700;
+}
+
+.card-body {
+  padding: var(--gap-md);
+}
+
+.card-body > *:last-child {
+  margin-bottom: 0;
+}
+
+.card-tilt-l {
+  transform: rotate(-1deg);
+}
+
+.card-tilt-r {
+  transform: rotate(1deg);
+}
+
+/* ============================================
+   GRID
+   ============================================ */
+.grid {
+  display: grid;
+  gap: var(--gap-md);
+}
+
+.grid-2 { grid-template-columns: 1fr; }
+.grid-3 { grid-template-columns: 1fr; }
+.grid-4 { grid-template-columns: 1fr; }
+
+@media (min-width: 640px) {
+  .grid-2 { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 768px) {
+  .grid-3 { grid-template-columns: repeat(3, 1fr); }
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 1024px) {
+  .grid-4 { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* ============================================
+   LIST WITH NUMBERED ITEMS
+   ============================================ */
+.num-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.num-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--gap-sm);
+  padding: var(--gap-sm) 0;
+  border-bottom: var(--border-w-thin) dashed var(--ink);
+  min-width: 0;
+}
+
+.num-list li:last-child {
+  border-bottom: none;
+}
+
+.num-list .num {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  border-radius: var(--radius);
+}
+
+.num-list .num.brand { background: var(--brand); }
+
+.num-list .content {
+  flex: 1;
+  min-width: 0;
+}
+
+.num-list .content strong {
+  display: block;
+  margin-bottom: 4px;
+  font-family: var(--font-display);
+  font-size: 1.1em;
+}
+
+/* ============================================
+   TABLE
+   ============================================ */
+.table-wrap {
+  border: var(--border-w) solid var(--ink);
+  background: var(--paper);
+  box-shadow: var(--shadow-offset) var(--ink);
+  border-radius: var(--radius);
+  overflow-x: auto;
+  margin-bottom: var(--gap-md);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-body);
+}
+
+table th {
+  background: var(--ink);
+  color: var(--paper);
+  text-align: left;
+  padding: var(--gap-sm);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: var(--border-w) solid var(--ink);
+}
+
+table td {
+  padding: var(--gap-sm);
+  border-bottom: var(--border-w-thin) solid var(--ink);
+  vertical-align: top;
+  font-size: 15px;
+}
+
+table tr:last-child td {
+  border-bottom: none;
+}
+
+table tr:nth-child(even) td {
+  background: var(--paper-warm);
+}
+
+table td:first-child {
+  font-weight: 600;
+  border-right: var(--border-w-thin) dashed var(--ink);
+}
+
+/* ============================================
+   QUOTE BOX
+   ============================================ */
+.quote {
+  background: var(--yellow);
+  border: var(--border-w) solid var(--ink);
+  box-shadow: var(--shadow-offset) var(--ink);
+  border-radius: var(--radius);
+  padding: var(--gap-md);
+  margin: var(--gap-md) 0;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 500;
+  position: relative;
+  text-wrap: balance;
+}
+
+.quote::before {
+  content: """;
+  position: absolute;
+  top: -20px;
+  left: var(--gap-sm);
+  font-size: 5rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--brand);
+  background: var(--paper);
+  border: var(--border-w-thin) solid var(--ink);
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  border-radius: var(--radius);
+}
+
+.quote-author {
+  display: block;
+  margin-top: var(--gap-sm);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-soft);
+}
+
+.quote.bg-cyan { background: var(--cyan); }
+.quote.bg-lime { background: var(--lime); }
+.quote.bg-pink { background: var(--pink); }
+
+/* ============================================
+   STAT BOX
+   ============================================ */
+.stat-grid {
+  display: grid;
+  gap: var(--gap-sm);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+  .stat-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 1024px) {
+  .stat-grid { grid-template-columns: repeat(5, 1fr); }
+}
+
+.stat {
+  background: var(--paper);
+  border: var(--border-w) solid var(--ink);
+  box-shadow: var(--shadow-offset-sm) var(--ink);
+  padding: var(--gap-sm);
+  text-align: center;
+  border-radius: var(--radius);
+}
+
+.stat-num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  color: var(--brand);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.stat-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink-soft);
+}
+
+/* ============================================
+   CALLOUT BOX
+   ============================================ */
+.callout {
+  border: var(--border-w) solid var(--ink);
+  background: var(--cyan);
+  box-shadow: var(--shadow-offset) var(--ink);
+  border-radius: var(--radius);
+  padding: var(--gap-md);
+  margin: var(--gap-md) 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+}
+
+.callout.tip { background: var(--lime); }
+.callout.warning { background: var(--pink); }
+.callout.example { background: var(--yellow); }
+
+.callout-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 4px 8px;
+  display: inline-block;
+  align-self: flex-start;
+  border-radius: var(--radius);
+}
+
+.callout-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+  margin: 0;
+}
+
+.callout-body {
+  margin: 0;
+  font-size: 15px;
+}
+
+.callout-body p:last-child { margin-bottom: 0; }
+
+/* ============================================
+   TOC NAV
+   ============================================ */
+.toc {
+  border: var(--border-w) solid var(--ink);
+  background: var(--paper);
+  box-shadow: var(--shadow-offset) var(--ink);
+  border-radius: var(--radius);
+  padding: var(--gap-md);
+  margin-bottom: var(--gap-xl);
+}
+
+.toc-title {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 6px 12px;
+  display: inline-block;
+  margin-bottom: var(--gap-md);
+}
+
+.toc-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: var(--gap-xs);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .toc-list { grid-template-columns: repeat(2, 1fr); }
+}
+
+.toc-list a {
+  display: block;
+  padding: 10px 14px;
+  background: var(--paper-warm);
+  border: var(--border-w-thin) solid var(--ink);
+  text-decoration: none;
+  color: var(--ink);
+  font-weight: 500;
+  font-size: 14px;
+  border-radius: var(--radius);
+  transition: transform 0.1s ease-out, box-shadow 0.1s ease-out;
+}
+
+.toc-list a:hover {
+  background: var(--yellow);
+  transform: translate(-2px, -2px);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.toc-list a .toc-num {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--brand);
+  margin-right: 8px;
+}
+
+/* ============================================
+   EMPHASIS HIGHLIGHT
+   ============================================ */
+.hl {
+  background: var(--yellow);
+  padding: 1px 5px;
+  border: var(--border-w-thin) solid var(--ink);
+  font-weight: 600;
+  border-radius: 2px;
+}
+
+.hl-cyan { background: var(--cyan); padding: 1px 5px; border: var(--border-w-thin) solid var(--ink); font-weight: 600; border-radius: 2px; }
+.hl-pink { background: var(--pink); padding: 1px 5px; border: var(--border-w-thin) solid var(--ink); font-weight: 600; border-radius: 2px; }
+.hl-lime { background: var(--lime); padding: 1px 5px; border: var(--border-w-thin) solid var(--ink); font-weight: 600; border-radius: 2px; }
+
+/* ============================================
+   DIAGRAM (POLC Cycle)
+   ============================================ */
+.polc-diagram {
+  display: grid;
+  gap: var(--gap-md);
+  grid-template-columns: 1fr;
+  margin: var(--gap-md) 0;
+}
+
+@media (min-width: 640px) {
+  .polc-diagram { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 1024px) {
+  .polc-diagram { grid-template-columns: repeat(4, 1fr); }
+}
+
+.polc-card {
+  background: var(--paper);
+  border: var(--border-w) solid var(--ink);
+  box-shadow: var(--shadow-offset) var(--ink);
+  border-radius: var(--radius);
+  padding: var(--gap-md);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+}
+
+.polc-card .letter {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 4rem;
+  line-height: 1;
+  color: var(--brand);
+  margin-bottom: var(--gap-xs);
+}
+
+.polc-card .name-en {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  letter-spacing: 0.1em;
+}
+
+.polc-card .name-vi {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.25rem;
+  margin-bottom: var(--gap-xs);
+}
+
+.polc-card .desc {
+  font-size: 14px;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+
+.polc-card:nth-child(1) { background: var(--yellow); }
+.polc-card:nth-child(2) { background: var(--cyan); }
+.polc-card:nth-child(3) { background: var(--lime); }
+.polc-card:nth-child(4) { background: var(--pink); }
+
+/* ============================================
+   PYRAMID (3 cấp quản trị)
+   ============================================ */
+.pyramid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-sm);
+  align-items: center;
+  margin: var(--gap-md) 0;
+}
+
+.pyramid-level {
+  border: var(--border-w) solid var(--ink);
+  background: var(--paper);
+  box-shadow: var(--shadow-offset) var(--ink);
+  border-radius: var(--radius);
+  padding: var(--gap-sm) var(--gap-md);
+  width: 100%;
+  max-width: 800px;
+  text-align: center;
+}
+
+.pyramid-level.top {
+  background: var(--brand);
+  color: var(--paper);
+  max-width: 400px;
+}
+
+.pyramid-level.mid {
+  background: var(--yellow);
+  max-width: 600px;
+}
+
+.pyramid-level.base {
+  background: var(--cyan);
+  max-width: 800px;
+}
+
+.pyramid-level .level-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 4px;
+}
+
+.pyramid-level .level-desc {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.pyramid-level.top .level-desc { opacity: 0.9; }
+
+/* ============================================
+   FOOTER
+   ============================================ */
+.footer {
+  margin-top: var(--gap-xl);
+  padding: var(--gap-lg) 0;
+  border-top: var(--border-w) solid var(--ink);
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+.footer strong {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================
+   PRINT
+   ============================================ */
+@media print {
+  body { background: white; background-image: none; }
+  .card, .hero, .toc, .table-wrap { box-shadow: none; }
+  .sticker { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- ============================================
+       HERO SECTION
+       ============================================ -->
+  <header class="hero">
+    <span class="sticker sticker-pink" style="top: -16px; right: 24px; transform: rotate(8deg);">DEEP&nbsp;SUMMARY</span>
+    <span class="sticker sticker-lime" style="bottom: -14px; left: 32px; transform: rotate(-5deg);">~9.700 từ</span>
+
+    <div class="hero-badge">CHƯƠNG&nbsp;01 · ROBBINS&nbsp;&amp;&nbsp;COULTER</div>
+    <h1 class="hero-title">
+      Nhà Quản&nbsp;trị<br>
+      và <span class="accent">Bạn</span> ở<br>
+      Nơi Làm&nbsp;việc
+    </h1>
+    <p class="hero-sub">
+      Tóm tắt chuyên sâu Chương 1 — Sách <em>Management</em> ấn bản 15&nbsp;(2021).
+      Bao gồm 6 mục tiêu học tập cốt lõi, mô-đun Lịch sử Quản trị, và lộ trình ôn tập 5 lần dành cho người làm tư vấn.
+    </p>
+    <div class="hero-meta">
+      <span>📖 16 trang nội bộ</span>
+      <span>⏱ 60-75 phút đọc</span>
+      <span>🎯 6 mục tiêu học tập</span>
+      <span>🇻🇳 Ngôn ngữ Việt</span>
+    </div>
+  </header>
+
+  <!-- ============================================
+       TABLE OF CONTENTS
+       ============================================ -->
+  <nav class="toc">
+    <span class="toc-title">📑 Mục lục</span>
+    <ul class="toc-list">
+      <li><a href="#how-to-use"><span class="toc-num">00</span>Hướng dẫn sử dụng</a></li>
+      <li><a href="#core"><span class="toc-num">01</span>Định nghĩa và sơ đồ</a></li>
+      <li><a href="#lo1"><span class="toc-num">LO1.1</span>Nhà quản trị là ai</a></li>
+      <li><a href="#lo2"><span class="toc-num">LO1.2</span>Vì sao họ quan trọng</a></li>
+      <li><a href="#lo3"><span class="toc-num">LO1.3</span>Họ làm gì (POLC)</a></li>
+      <li><a href="#lo4"><span class="toc-num">LO1.4</span>Sáu thách thức</a></li>
+      <li><a href="#lo5"><span class="toc-num">LO1.5</span>Vì sao học môn này</a></li>
+      <li><a href="#lo6"><span class="toc-num">LO1.6</span>Năm kỹ năng tuyển dụng</a></li>
+      <li><a href="#history"><span class="toc-num">02</span>Lịch sử Quản trị</a></li>
+      <li><a href="#cheatsheet"><span class="toc-num">03</span>Cheatsheet</a></li>
+      <li><a href="#review"><span class="toc-num">04</span>Lộ trình ôn tập</a></li>
+    </ul>
+  </nav>
+
+  <!-- ============================================
+       SECTION 0: HOW TO USE
+       ============================================ -->
+  <section class="section" id="how-to-use">
+    <span class="section-num">📍 Trang 1</span>
+    <h2 class="section-title">Hướng&nbsp;dẫn <span class="underline">sử&nbsp;dụng</span> tài&nbsp;liệu này</h2>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="card-header bg-yellow">
+          <div class="card-num">CÁCH ĐỌC</div>
+          <div class="card-title">Cách dùng hiệu quả nhất</div>
+        </div>
+        <div class="card-body">
+          <ul class="num-list">
+            <li>
+              <div class="num brand">1</div>
+              <div class="content">Dành 60-75&nbsp;phút đọc một lần từ đầu đến cuối, không làm việc khác.</div>
+            </li>
+            <li>
+              <div class="num brand">2</div>
+              <div class="content">Gặp từ tiếng Anh có giải thích, dừng 3&nbsp;giây để ghi nhớ ý nghĩa.</div>
+            </li>
+            <li>
+              <div class="num brand">3</div>
+              <div class="content">Sau mỗi chương, đóng tài liệu và tự trình bày lại nội dung.</div>
+            </li>
+            <li>
+              <div class="num brand">4</div>
+              <div class="content">Sau 24&nbsp;giờ, mở flashcards để tự kiểm tra kiến thức.</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-cyan">
+          <div class="card-num">PHÂN BỔ THỜI GIAN</div>
+          <div class="card-title">Hai lần đọc + ôn tập</div>
+        </div>
+        <div class="card-body">
+          <ul class="num-list">
+            <li>
+              <div class="num">L1</div>
+              <div class="content"><strong>60-75&nbsp;phút</strong>Đọc lướt nhanh, nắm tổng quát.</div>
+            </li>
+            <li>
+              <div class="num">L2</div>
+              <div class="content"><strong>90&nbsp;phút</strong>Đọc kỹ, dừng ở các đoạn in đậm.</div>
+            </li>
+            <li>
+              <div class="num">+</div>
+              <div class="content"><strong>5 lần ôn</strong>Theo lộ trình ở trang cuối: ngày 0, 1, 3, 7, 16.</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-label">💡 Quy ước</span>
+      <p class="callout-body">
+        Các từ chuyên môn được giữ nguyên tiếng Anh ở lần đầu xuất hiện và có dịch nghĩa bên cạnh. Sau đó cả hai sẽ dùng song song để bạn quen với mặt chữ. Ví dụ: <em>Manager (nhà&nbsp;quản&nbsp;trị)</em>, <em>Efficiency (hiệu&nbsp;suất)</em>. Trong công việc thực tế, bạn sẽ gặp đúng các từ tiếng Anh này trong báo cáo, sách vở và khi thảo luận với chuyên gia quốc tế.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================
+       SECTION 1: CORE DEFINITION
+       ============================================ -->
+  <section class="section" id="core">
+    <span class="section-num">📍 Trang 2</span>
+    <h2 class="section-title">Định&nbsp;nghĩa cốt&nbsp;lõi và <span class="underline">sơ&nbsp;đồ</span> kiến&nbsp;thức</h2>
+
+    <div class="quote bg-cyan">
+      <em>Management (quản&nbsp;trị)</em> là quá trình <strong>phối hợp và kiểm tra công việc của người khác</strong> để đảm bảo công việc đó được hoàn thành một cách <strong>hiệu suất</strong> và <strong>hiệu quả</strong>.
+      <span class="quote-author">— Định nghĩa được dùng xuyên suốt cuốn sách</span>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Ba từ khóa quan trọng</h3>
+
+    <div class="grid grid-3">
+      <div class="card card-tilt-l">
+        <div class="card-header bg-yellow">
+          <div class="card-num">KEYWORD 1</div>
+          <div class="card-title">Coordinating + Overseeing</div>
+        </div>
+        <div class="card-body">
+          <p><strong>Phối hợp + Giám sát.</strong> Người quản lý <span class="hl">không tự làm hết</span> mọi việc. Họ sắp xếp và theo dõi để người khác thực hiện.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-cyan">
+          <div class="card-num">KEYWORD 2</div>
+          <div class="card-title">Efficiently</div>
+        </div>
+        <div class="card-body">
+          <p><strong>Hiệu suất.</strong> Thực hiện công việc đúng phương pháp để không lãng phí nguồn lực — <span class="hl-cyan">"làm việc đúng cách".</span></p>
+        </div>
+      </div>
+
+      <div class="card card-tilt-r">
+        <div class="card-header bg-lime">
+          <div class="card-num">KEYWORD 3</div>
+          <div class="card-title">Effectively</div>
+        </div>
+        <div class="card-body">
+          <p><strong>Hiệu quả.</strong> Thực hiện đúng những việc cần thiết để đạt mục tiêu — <span class="hl-lime">"làm đúng việc".</span></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout warning">
+      <span class="callout-label">⚠️ Lưu ý quan trọng</span>
+      <p class="callout-body">
+        Một tổ chức tốt cần <strong>cả hai</strong> yếu tố. Nếu chỉ có hiệu suất mà không hiệu quả thì sẽ làm rất nhanh một việc không có ý nghĩa. Ngược lại, nếu hiệu quả mà không hiệu suất thì sẽ đạt được mục tiêu nhưng tốn quá nhiều tiền bạc và nhân công.
+      </p>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Sáu mục tiêu học tập (LO) của Chương&nbsp;1</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 90px;">Mục tiêu</th>
+            <th>Câu hỏi giải đáp</th>
+            <th>Khái niệm chính</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>LO1.1</td><td>Nhà quản trị là ai? Họ làm việc ở đâu?</td><td>Manager, Organization, 3&nbsp;cấp quản trị</td></tr>
+          <tr><td>LO1.2</td><td>Tại sao nhà quản trị lại quan trọng?</td><td>3&nbsp;lý do tổ chức cần nhà quản trị</td></tr>
+          <tr><td>LO1.3</td><td>Nhà quản trị làm những công việc gì?</td><td>4&nbsp;chức năng, 10&nbsp;vai trò Mintzberg, 3&nbsp;kỹ năng Katz</td></tr>
+          <tr><td>LO1.4</td><td>Yếu tố nào đang thay đổi công việc của họ?</td><td>6&nbsp;thách thức hiện nay</td></tr>
+          <tr><td>LO1.5</td><td>Tại sao bạn nên học môn Quản trị?</td><td>4&nbsp;lý do thực tế</td></tr>
+          <tr><td>LO1.6</td><td>Bạn sẽ phát triển những kỹ năng nào?</td><td>5&nbsp;kỹ năng tuyển dụng (ESM)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============================================
+       LO 1.1
+       ============================================ -->
+  <section class="section" id="lo1">
+    <span class="section-num">📍 Trang 3-4 · LO1.1</span>
+    <h2 class="section-title">Nhà <span class="underline">quản&nbsp;trị</span> là ai và làm&nbsp;việc ở&nbsp;đâu</h2>
+
+    <div class="callout example">
+      <span class="callout-label">🎯 Ví dụ mở chương</span>
+      <p class="callout-body">
+        Hãy tưởng tượng bạn đang tư vấn cho một công ty khởi nghiệp có 30&nbsp;nhân&nbsp;viên. Người sáng lập hỏi: <em>"Anh thấy công ty tôi có cần thêm quản lý không? Tôi rất ngại vì sợ việc thuê quản lý sẽ làm bộ máy chậm chạp và quan&nbsp;liêu"</em>. Câu hỏi cho thấy sự nhầm lẫn giữa <strong>manager (nhà&nbsp;quản&nbsp;trị)</strong> và <strong>bureaucracy (bộ máy quan&nbsp;liêu)</strong> — hai khái niệm hoàn toàn khác nhau.
+      </p>
+    </div>
+
+    <div class="quote">
+      <em>Manager (nhà&nbsp;quản&nbsp;trị)</em> là người thực hiện việc <strong>phối hợp và giám sát công việc của những người khác</strong> để hoàn thành mục tiêu của tổ chức.
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Ba điểm quan trọng từ định nghĩa</h3>
+
+    <div class="grid grid-3">
+      <div class="card">
+        <div class="card-header bg-pink">
+          <div class="card-num">ĐIỂM 1</div>
+          <div class="card-title">Không tập trung vào thành tích cá nhân</div>
+        </div>
+        <div class="card-body">
+          <p>Bạn có thể là nhân viên xuất sắc nhất phòng, nhưng khi trở thành trưởng phòng, thước đo thành công chuyển từ <span class="hl-pink">"tôi làm được bao nhiêu"</span> sang <span class="hl">"đội ngũ của tôi làm việc hiệu quả thế nào".</span> Đây là rào cản phổ biến của người mới được thăng chức.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-yellow">
+          <div class="card-num">ĐIỂM 2</div>
+          <div class="card-title">Vẫn có thể làm việc chuyên môn</div>
+        </div>
+        <div class="card-body">
+          <p>Một trưởng nhóm hồ sơ bảo hiểm vẫn có thể tự xử lý hồ sơ, bên cạnh việc điều hành nhân viên trong nhóm. <strong>Làm quản trị không có nghĩa là ngừng hoàn toàn các công việc thực tế.</strong></p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-lime">
+          <div class="card-num">ĐIỂM 3</div>
+          <div class="card-title">Ranh giới đang mờ dần</div>
+        </div>
+        <div class="card-body">
+          <p>Trong tổ chức hiện đại (làm việc linh hoạt, nhóm tự quản), ranh giới giữa quản trị và nhân viên đang mờ. <strong>Valve&nbsp;Corporation</strong> không có chức danh chính thức, nhưng vẫn phải có người đảm nhận vai trò phối hợp.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Ba cấp quản trị truyền thống — Mô hình kim&nbsp;tự&nbsp;tháp</h3>
+
+    <div class="pyramid">
+      <div class="pyramid-level top">
+        <div class="level-name">TOP MANAGERS · Cấp&nbsp;cao</div>
+        <div class="level-desc">Đưa ra quyết định cho toàn bộ tổ chức · Thiết lập chiến lược · CEO, COO, Chủ tịch</div>
+      </div>
+      <div class="pyramid-level mid">
+        <div class="level-name">MIDDLE MANAGERS · Cấp&nbsp;trung</div>
+        <div class="level-desc">Triển khai chiến lược thành hành động cụ thể · Quản lý khu vực, Quản lý cửa hàng, Quản lý bộ phận</div>
+      </div>
+      <div class="pyramid-level base">
+        <div class="level-name">FIRST-LINE MANAGERS · Cấp&nbsp;cơ&nbsp;sở</div>
+        <div class="level-desc">Quản lý trực tiếp nhân viên làm sản phẩm/dịch vụ · Giám sát viên, Quản lý ca, Trưởng phòng</div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-label">💼 Ví dụ ngành tư vấn</span>
+      <p class="callout-body">
+        Tại một công ty tư vấn quản trị có 200&nbsp;nhân&nbsp;viên, <strong>top managers</strong> là Đối tác điều hành (Managing&nbsp;Partner) và Đối tác (Partner). <strong>Middle managers</strong> là Quản lý cấp cao hoặc Giám đốc điều hành các mảng dịch vụ. <strong>First-line managers</strong> là Quản lý dự án — những người trực tiếp dẫn dắt nhóm tư vấn làm việc với khách hàng.
+      </p>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Tổ chức là gì?</h3>
+
+    <div class="quote bg-lime">
+      <em>Organization (tổ chức)</em> là <strong>một sự sắp xếp có mục đích của một nhóm người để cùng đạt được những mục tiêu cụ thể.</strong>
+    </div>
+
+    <p>Mọi tổ chức đều có 3 đặc điểm chung:</p>
+
+    <ul class="num-list">
+      <li>
+        <div class="num">1</div>
+        <div class="content"><strong>Mục đích rõ ràng</strong>Được thể hiện thông qua các mục tiêu cụ thể.</div>
+      </li>
+      <li>
+        <div class="num">2</div>
+        <div class="content"><strong>Con người</strong>Cần có con người để thực hiện công việc nhằm đạt mục tiêu.</div>
+      </li>
+      <li>
+        <div class="num">3</div>
+        <div class="content"><strong>Cấu trúc có chủ đích</strong>Có thể chặt chẽ như quân đội hoặc linh hoạt như Alphabet (công ty mẹ của Google).</div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ============================================
+       LO 1.2
+       ============================================ -->
+  <section class="section" id="lo2">
+    <span class="section-num">📍 Trang 4-5 · LO1.2</span>
+    <h2 class="section-title">Vì&nbsp;sao nhà&nbsp;quản&nbsp;trị <span class="underline">quan&nbsp;trọng</span></h2>
+
+    <p>Robbins và Coulter đưa ra <strong>3 lý do</strong> giải thích tại sao tổ chức cần có nhà quản trị, sắp xếp theo thứ tự quan trọng tăng dần:</p>
+
+    <div class="grid grid-3">
+      <div class="card">
+        <div class="card-header bg-cyan">
+          <div class="card-num">LÝ DO 1</div>
+          <div class="card-title">Cần trong giai đoạn không ổn định, phức tạp, hỗn loạn</div>
+        </div>
+        <div class="card-body">
+          <p>Môi trường <strong>VUCA</strong> (Volatile - Biến động, Uncertain - Bất định, Complex - Phức tạp, Ambiguous - Mơ hồ).</p>
+          <p><span class="hl-cyan">Khi mọi việc thuận lợi thì ai cũng có thể quản trị được.</span> Tuy nhiên khi gặp khó khăn, vai trò nhà quản trị trở nên cực kỳ quan trọng.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-yellow">
+          <div class="card-num">LÝ DO 2</div>
+          <div class="card-title">Đảm bảo công việc được hoàn thành</div>
+        </div>
+        <div class="card-body">
+          <p>Nhà quản trị xây dựng và phối hợp môi trường làm việc cùng hệ thống công việc.</p>
+          <p>Nếu công việc không hoàn thành, họ tìm nguyên nhân và đưa mọi thứ về đúng hướng. <strong>Nhân viên có thể đưa lý do, nhưng nhà quản trị thì không.</strong></p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-pink">
+          <div class="card-num">LÝ DO 3</div>
+          <div class="card-title">Giúp tổ chức hoạt động hiệu quả hơn</div>
+        </div>
+        <div class="card-body">
+          <p>Đây là lý do <strong>quan trọng nhất</strong>, đã được chứng minh bằng dữ liệu thực tế (xem khảo sát Gallup và Towers&nbsp;Watson bên dưới).</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="quote bg-pink">
+      Yếu tố quan trọng nhất quyết định năng suất và sự trung thành của nhân viên <strong>không phải là tiền lương, không phải phúc lợi, cũng không phải môi trường làm việc</strong> — mà là <strong>chất lượng mối quan hệ giữa nhân viên và người quản lý trực tiếp</strong> của họ.
+      <span class="quote-author">— Khảo sát Gallup trên hàng triệu nhân viên</span>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Số liệu Towers&nbsp;Watson — Tuyển dụng dựa trên năng lực thực sự</h3>
+
+    <div class="stat-grid">
+      <div class="stat">
+        <div class="stat-num">+48%</div>
+        <div class="stat-label">Lợi nhuận</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">+22%</div>
+        <div class="stat-label">Năng suất</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">+30%</div>
+        <div class="stat-label">Gắn bó nhân viên</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">+17%</div>
+        <div class="stat-label">Hài lòng khách hàng</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">-19%</div>
+        <div class="stat-label">Tỷ lệ nghỉ việc</div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-label">💼 Kết luận cho người tư vấn</span>
+      <p class="callout-body">
+        <strong>Mọi kế hoạch chiến lược đều phụ thuộc vào chất lượng của các nhà quản trị cấp&nbsp;trung và cấp&nbsp;cơ&nbsp;sở.</strong> Một chiến lược hay nhưng đội ngũ quản lý kém thì vẫn sẽ thất bại. Đây là lý do nhiều dự án "thay đổi" không thành công — nguyên nhân không phải do chiến lược sai, mà vì đội ngũ quản lý cấp trung không đủ năng lực để thực hiện.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================
+       LO 1.3 — POLC + ROLES + SKILLS
+       ============================================ -->
+  <section class="section" id="lo3">
+    <span class="section-num">📍 Trang 5-7 · LO1.3</span>
+    <h2 class="section-title">Nhà quản trị <span class="underline">làm gì</span> — Ba cách tiếp cận</h2>
+
+    <p>Đây là phần dài và quan trọng nhất của Chương 1. Sách giới thiệu <strong>3 cách trả lời</strong> cho câu hỏi "thực sự nhà quản trị làm gì?". Ba cách này không thay thế nhau mà <span class="hl">bổ sung cho nhau</span> để tạo nên cái nhìn toàn diện.</p>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.75rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Cách&nbsp;1 — Bốn chức năng quản trị (POLC)</h3>
+
+    <div class="callout">
+      <span class="callout-label">📚 Bối cảnh</span>
+      <p class="callout-body">
+        Đầu thế kỷ 20, <strong>Henri&nbsp;Fayol</strong> — doanh nhân Pháp — đề xuất 5 chức năng. Hiện nay, sách giáo khoa rút gọn còn <strong>4 chức năng kinh điển</strong>.
+      </p>
+    </div>
+
+    <div class="polc-diagram">
+      <div class="polc-card">
+        <div class="letter">P</div>
+        <div class="name-en">Planning</div>
+        <div class="name-vi">Hoạch định</div>
+        <div class="desc">Đặt mục tiêu, lập chiến lược, xây dựng kế hoạch. <em>Mục tiêu là gì? Chiến lược nào? Phối hợp ra sao?</em></div>
+      </div>
+      <div class="polc-card">
+        <div class="letter">O</div>
+        <div class="name-en">Organizing</div>
+        <div class="name-vi">Tổ chức</div>
+        <div class="desc">Sắp xếp và xây dựng cấu trúc. <em>Cần làm gì? Ai làm? Chia nhóm ra sao? Ai báo cáo cho ai?</em></div>
+      </div>
+      <div class="polc-card">
+        <div class="letter">L</div>
+        <div class="name-en">Leading</div>
+        <div class="name-vi">Lãnh đạo</div>
+        <div class="desc">Làm việc với và thông qua con người. Tạo động lực, giải quyết mâu thuẫn, gây ảnh hưởng, giao tiếp.</div>
+      </div>
+      <div class="polc-card">
+        <div class="letter">C</div>
+        <div class="name-en">Controlling</div>
+        <div class="name-vi">Kiểm soát</div>
+        <div class="desc">Theo dõi, so sánh, chỉnh sửa. Đo lường kết quả thực tế, so sánh với mục tiêu, sửa nếu sai lệch.</div>
+      </div>
+    </div>
+
+    <div class="quote bg-cyan">
+      Nếu bạn không có một đích đến cụ thể, thì đi đường nào cũng được. Nhưng nếu bạn đã có đích đến, bạn phải lập kế hoạch cho con đường tốt nhất để đạt được nó.
+      <span class="quote-author">— Robbins, về chức năng Planning</span>
+    </div>
+
+    <div class="callout warning">
+      <span class="callout-label">⚠️ Lưu ý quan trọng</span>
+      <p class="callout-body">
+        Bốn chức năng <strong>không nhất thiết theo đúng thứ tự</strong>. Nhà quản trị có thể thực hiện cùng lúc, đan xen, hoặc thay đổi thứ tự — nhưng họ <strong>luôn phải thực hiện cả bốn.</strong>
+      </p>
+    </div>
+
+    <div class="callout example">
+      <span class="callout-label">🏗️ Ví dụ minh họa — Kiến trúc sư trưởng</span>
+      <p class="callout-body">
+        Hãy tưởng tượng bạn đang xây dựng một tòa nhà. <strong>Hoạch định</strong> là vẽ bản thiết kế và lên lịch trình. <strong>Tổ chức</strong> là phân công nhóm móng, nhóm tường, nhóm điện nước. <strong>Lãnh đạo</strong> là có mặt tại công trường mỗi sáng để giải quyết tranh chấp. <strong>Kiểm soát</strong> là kiểm tra chất lượng, đối chiếu bản vẽ và sửa lại nếu sai. <span class="hl">Tòa nhà chỉ vững chắc nếu cả bốn việc đều được thực hiện tốt.</span>
+      </p>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.75rem; margin-top: var(--gap-xl); margin-bottom: var(--gap-md);">Cách&nbsp;2 — Mười vai trò của Mintzberg</h3>
+
+    <p><strong>Henry&nbsp;Mintzberg</strong>, nhà nghiên cứu nổi tiếng, đã quan sát công việc thực tế của nhà quản trị và kết luận: công việc của họ thể hiện rõ nhất qua <strong>10 vai trò</strong>, chia thành 3 nhóm.</p>
+
+    <div class="grid grid-3">
+      <div class="card">
+        <div class="card-header bg-yellow">
+          <div class="card-num">NHÓM 1</div>
+          <div class="card-title">Quan hệ con người<br><small style="font-family: var(--font-mono); font-size: 12px; opacity: 0.7;">Interpersonal roles</small></div>
+        </div>
+        <div class="card-body">
+          <ul class="num-list">
+            <li><div class="num">1</div><div class="content">Người đại&nbsp;diện</div></li>
+            <li><div class="num">2</div><div class="content">Người lãnh&nbsp;đạo</div></li>
+            <li><div class="num">3</div><div class="content">Người liên&nbsp;lạc</div></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-cyan">
+          <div class="card-num">NHÓM 2</div>
+          <div class="card-title">Thông tin<br><small style="font-family: var(--font-mono); font-size: 12px; opacity: 0.7;">Informational roles</small></div>
+        </div>
+        <div class="card-body">
+          <ul class="num-list">
+            <li><div class="num">4</div><div class="content">Người theo&nbsp;dõi</div></li>
+            <li><div class="num">5</div><div class="content">Người truyền&nbsp;tin</div></li>
+            <li><div class="num">6</div><div class="content">Người phát&nbsp;ngôn</div></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-lime">
+          <div class="card-num">NHÓM 3</div>
+          <div class="card-title">Quyết định<br><small style="font-family: var(--font-mono); font-size: 12px; opacity: 0.7;">Decisional roles</small></div>
+        </div>
+        <div class="card-body">
+          <ul class="num-list">
+            <li><div class="num">7</div><div class="content">Người khởi&nbsp;xướng</div></li>
+            <li><div class="num">8</div><div class="content">Người xử&nbsp;lý sự&nbsp;cố</div></li>
+            <li><div class="num">9</div><div class="content">Người phân&nbsp;bổ nguồn&nbsp;lực</div></li>
+            <li><div class="num">10</div><div class="content">Người đàm&nbsp;phán</div></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-label">📌 Lưu ý</span>
+      <p class="callout-body">
+        <strong>Tầm quan trọng của mỗi vai trò thay đổi theo cấp bậc quản lý.</strong> Ở cấp&nbsp;cao, các vai trò người truyền tin, đại diện, đàm phán, liên lạc, phát ngôn quan trọng hơn. Ở cấp&nbsp;cơ&nbsp;sở, vai trò lãnh đạo (theo định nghĩa Mintzberg) lại quan trọng hơn.
+      </p>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.75rem; margin-top: var(--gap-xl); margin-bottom: var(--gap-md);">Cách&nbsp;3 — Ba kỹ năng của Katz</h3>
+
+    <p><strong>Robert&nbsp;L.&nbsp;Katz</strong> đề xuất rằng mọi nhà quản trị đều cần <strong>3 kỹ năng then chốt</strong>:</p>
+
+    <div class="grid grid-3">
+      <div class="card">
+        <div class="card-header bg-pink">
+          <div class="card-num">SKILL 1</div>
+          <div class="card-title">Technical Skills<br>Kỹ năng kỹ&nbsp;thuật</div>
+        </div>
+        <div class="card-body">
+          <p>Kiến thức và kỹ thuật chuyên môn để thực hiện một công việc cụ thể.</p>
+          <p><strong>Ví dụ:</strong> Quản đốc nhà máy biết vận hành máy móc; trưởng phòng kế toán am hiểu chuẩn mực kế toán.</p>
+          <p><span class="hl-pink">Quan trọng nhất ở cấp cơ&nbsp;sở.</span></p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-yellow">
+          <div class="card-num">SKILL 2</div>
+          <div class="card-title">Interpersonal Skills<br>Kỹ năng nhân&nbsp;sự</div>
+        </div>
+        <div class="card-body">
+          <p>Khả năng làm việc tốt với người khác — cá nhân và đội nhóm.</p>
+          <p><span class="hl">Quan trọng như nhau ở mọi cấp bậc</span> vì tất cả nhà quản trị đều phải làm việc với con người.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-lime">
+          <div class="card-num">SKILL 3</div>
+          <div class="card-title">Conceptual Skills<br>Kỹ năng tư&nbsp;duy</div>
+        </div>
+        <div class="card-body">
+          <p>Khả năng suy nghĩ về tình huống trừu tượng và phức tạp; nhìn tổ chức như thể thống nhất; hiểu mối liên hệ giữa các bộ phận.</p>
+          <p><span class="hl-lime">Quan trọng nhất ở cấp cao.</span></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-label">💼 Liên hệ ngành tư vấn</span>
+      <p class="callout-body">
+        Trong nghề tư vấn quản trị, một <strong>junior consultant</strong> chủ yếu cần <em>kỹ năng kỹ thuật</em> (lập mô hình, phân tích dữ liệu). Khi lên <strong>manager</strong>, <em>kỹ năng nhân sự</em> trở thành yếu tố quyết định để làm việc với khách hàng và dẫn dắt đội ngũ. Khi trở thành <strong>partner</strong>, <em>kỹ năng tư duy</em> là yếu tố then chốt để nhận diện cơ hội thị trường và định hướng chiến lược. Đây là lý do nhiều người giỏi kỹ thuật nhưng không thể thăng tiến lên cấp cao — vì họ chưa phát triển kỹ năng tư duy toàn diện.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================
+       LO 1.4 — SIX CHALLENGES
+       ============================================ -->
+  <section class="section" id="lo4">
+    <span class="section-num">📍 Trang 7-9 · LO1.4</span>
+    <h2 class="section-title">Sáu <span class="underline">thách&nbsp;thức</span> đang thay đổi công việc nhà quản trị</h2>
+
+    <p>Thế giới ngày nay không còn giống thời Henri&nbsp;Fayol cách đây 100&nbsp;năm. Robbins và Coulter chỉ ra <strong>6&nbsp;yếu tố</strong> đang làm thay đổi công việc nhà quản trị hiện đại.</p>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="card-header bg-yellow">
+          <div class="card-num">THÁCH THỨC 1</div>
+          <div class="card-title">🤖 Công nghệ (Technology)</div>
+        </div>
+        <div class="card-body">
+          <p>Cloud computing, AI, robotics đang thay đổi cách thực hiện công việc. Nhà quản trị không chỉ am hiểu công nghệ, mà còn phải <strong>giúp nhân viên vượt qua nỗi lo sợ</strong>.</p>
+          <div class="quote bg-cyan" style="font-size: 0.95rem; margin-top: var(--gap-sm);">
+            Công việc của nhà quản trị là giúp người lao động vượt qua rào cản — làm cho họ cảm thấy thoải mái, biết cách sử dụng và hiểu được công nghệ giúp cải thiện cuộc sống của họ như thế nào.
+            <span class="quote-author">— Didier Bonnet, Leading Digital</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-cyan">
+          <div class="card-num">THÁCH THỨC 2</div>
+          <div class="card-title">⚡ Đổi mới phá&nbsp;vỡ (Disruptive&nbsp;Innovation)</div>
+        </div>
+        <div class="card-body">
+          <p>Các công ty nhỏ mới nổi dùng công nghệ đánh bại doanh nghiệp lớn lâu năm. Ví dụ:</p>
+          <ul style="margin: 0; padding-left: 20px;">
+            <li><strong>Uber/Lyft</strong> → các hãng taxi truyền thống</li>
+            <li><strong>Expedia/TripAdvisor</strong> → đại lý du lịch văn phòng</li>
+            <li><strong>Hulu/Sling</strong> → truyền hình cáp</li>
+            <li><strong>LegalZoom</strong> → công ty luật</li>
+          </ul>
+          <p style="margin-top: var(--gap-sm);"><span class="hl-cyan">Bạn đang là người tạo ra phá&nbsp;vỡ hoặc đang bị người khác phá&nbsp;vỡ.</span></p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-pink">
+          <div class="card-num">THÁCH THỨC 3</div>
+          <div class="card-title">📱 Truyền&nbsp;thông xã&nbsp;hội (Social&nbsp;Media)</div>
+        </div>
+        <div class="card-body">
+          <p>Truyền thông xã hội có hai mặt: kết nối khách hàng/xây thương hiệu, nhưng cũng có thể làm mất uy tín trong vài phút.</p>
+          <div class="quote" style="font-size: 0.95rem; margin-top: var(--gap-sm);">
+            Bạn mất 20 năm để xây dựng uy tín nhưng chỉ cần 5 phút để phá hủy nó.
+            <span class="quote-author">— Warren Buffett, Berkshire Hathaway</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-lime">
+          <div class="card-num">THÁCH THỨC 4</div>
+          <div class="card-title">⚖️ Đạo đức (Ethics)</div>
+        </div>
+        <div class="card-body">
+          <p>Báo kinh doanh thường xuyên đưa tin về hành vi không đúng đạo đức: ngân hàng tự lập tài khoản giả, cửa hàng xe cũ chỉnh đồng hồ, công ty dược tăng giá thuốc gấp 5 lần.</p>
+          <div class="quote bg-lime" style="font-size: 0.95rem; margin-top: var(--gap-sm);">
+            Sự thành công bền vững của một tổ chức phụ thuộc vào việc xây dựng lòng tin với khách hàng, đối tác, người cung cấp và nhân viên.
+            <span class="quote-author">— Robbins</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-yellow">
+          <div class="card-num">THÁCH THỨC 5</div>
+          <div class="card-title">🌐 Bất ổn chính trị (Political&nbsp;Uncertainty)</div>
+        </div>
+        <div class="card-body">
+          <p>10 năm qua chứng kiến nhiều thay đổi: luật thuế Mỹ, đàm phán lại NAFTA, áp thuế nhập khẩu, chính sách nhập cư, Brexit&nbsp;2016.</p>
+          <p><strong>Ví dụ Seattle&nbsp;2018:</strong> thuế 275&nbsp;USD/nhân&nbsp;viên với công ty doanh thu lớn. Amazon (45.000&nbsp;nhân&nbsp;viên) phải gánh thêm 12&nbsp;triệu&nbsp;USD. Một tháng sau, thành phố hủy bỏ thuế này do áp lực doanh nghiệp.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-cyan">
+          <div class="card-num">THÁCH THỨC 6</div>
+          <div class="card-title">🎯 Tập trung vào khách hàng (Customer&nbsp;Focus)</div>
+        </div>
+        <div class="card-body">
+          <p>Quan điểm "chăm sóc khách hàng là việc của marketing" đã <span class="hl-cyan">lỗi thời</span>. 77,2% lao động Mỹ làm trong dịch vụ.</p>
+          <div class="stat-grid" style="grid-template-columns: 1fr 1fr; margin-top: var(--gap-sm);">
+            <div class="stat">
+              <div class="stat-num">92%</div>
+              <div class="stat-label">Khách quay lại nếu xử lý ngay lần&nbsp;đầu</div>
+            </div>
+            <div class="stat">
+              <div class="stat-num">51%</div>
+              <div class="stat-label">Nếu không xử lý ngay lần&nbsp;đầu</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-label">📝 Bài tập tự kiểm tra (3&nbsp;phút)</span>
+      <p class="callout-body">
+        Trong 6 thách thức nêu trên, hãy chọn ra <strong>2 thách thức</strong> bạn thấy đang gây áp lực nhất với doanh nghiệp Việt Nam hiện nay. Tại sao? Một nhà tư vấn cần đưa ra lời khuyên gì cho khách hàng để xử lý 2 thách thức đó?
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================
+       LO 1.5 + LO 1.6
+       ============================================ -->
+  <section class="section" id="lo5">
+    <span class="section-num">📍 Trang 9-10 · LO1.5 + LO1.6</span>
+    <h2 class="section-title">Vì sao học môn này và <span class="underline">5 kỹ năng</span> tuyển dụng</h2>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-md); margin-bottom: var(--gap-md);">LO1.5 — Bốn lý do bạn nên học Quản trị</h3>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="card-header bg-pink">
+          <div class="card-num">LÝ DO 1</div>
+          <div class="card-title">Tính phổ quát của Quản trị</div>
+        </div>
+        <div class="card-body">
+          <p><em>Universality of Management</em> — Hoạt động quản trị cần thiết ở mọi loại hình, quy mô, cấp bậc, lĩnh vực và ở mọi nơi trên thế giới. Một giám sát ở Twitter và CEO Twitter đều thực hiện 4 chức năng quản trị.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-yellow">
+          <div class="card-num">LÝ DO 2</div>
+          <div class="card-title">Thực tế công việc</div>
+        </div>
+        <div class="card-body">
+          <p><em>The Reality of Work</em> — Sau khi tốt nghiệp, bạn <span class="hl">hoặc sẽ là người quản lý, hoặc sẽ là người bị quản lý</span>. Trong cả hai trường hợp, bạn đều cần hiểu về quản trị.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-cyan">
+          <div class="card-num">LÝ DO 3</div>
+          <div class="card-title">Lợi ích từ việc làm nhà quản trị</div>
+        </div>
+        <div class="card-body">
+          <p>Tạo môi trường giúp người khác phát huy năng lực, có cơ hội suy nghĩ sáng tạo, hỗ trợ phát triển người khác, làm việc với nhiều kiểu người, nhận sự công nhận và mức lương xứng đáng.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-lime">
+          <div class="card-num">LÝ DO 4</div>
+          <div class="card-title">Hiểu sâu hơn về cuộc sống nơi làm việc</div>
+        </div>
+        <div class="card-body">
+          <p>Ngay cả khi bạn không có ý định làm quản lý (làm kế toán, lập trình, marketing), bạn vẫn cần hiểu cách tổ chức vận hành và cách cấp trên suy nghĩ. Một ngày nào đó bạn có thể được thăng tiến lên vị trí quản lý.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-xl); margin-bottom: var(--gap-md);">LO1.6 — Năm kỹ năng tuyển dụng (ESM)</h3>
+
+    <p>Cuốn sách đưa ra <strong>Ma trận kỹ năng tuyển dụng (Employability&nbsp;Skills&nbsp;Matrix)</strong> — gồm 5 kỹ năng mà nhà tuyển dụng luôn tìm kiếm:</p>
+
+    <div class="grid grid-3">
+      <div class="card">
+        <div class="card-header bg-brand" style="background: var(--brand); color: var(--paper);">
+          <div class="card-num">SKILL 1</div>
+          <div class="card-title">Critical Thinking</div>
+        </div>
+        <div class="card-body">
+          <p>Tư duy phản biện — cách suy nghĩ có chủ đích và hướng tới mục tiêu để xác định, giải quyết vấn đề, đưa ra quyết định.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-yellow">
+          <div class="card-num">SKILL 2</div>
+          <div class="card-title">Communication</div>
+        </div>
+        <div class="card-body">
+          <p>Giao tiếp — sử dụng hiệu quả kỹ năng nói, viết, ngôn ngữ cơ thể; biết lắng nghe và sử dụng công nghệ.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-cyan">
+          <div class="card-num">SKILL 3</div>
+          <div class="card-title">Collaboration</div>
+        </div>
+        <div class="card-body">
+          <p>Cộng tác — khả năng làm việc cùng nhau, biết thương lượng về điểm khác biệt, tạo kết quả chung.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-lime">
+          <div class="card-num">SKILL 4</div>
+          <div class="card-title">Knowledge Application &amp; Analysis</div>
+        </div>
+        <div class="card-body">
+          <p>Áp dụng và phân tích kiến thức — học một khái niệm rồi vận dụng vào tình huống khác để đạt mức hiểu sâu hơn.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-pink">
+          <div class="card-num">SKILL 5</div>
+          <div class="card-title">Social Responsibility</div>
+        </div>
+        <div class="card-body">
+          <p>Trách nhiệm xã hội — bao gồm hành vi đúng đạo đức và thực hiện nghĩa vụ của doanh nghiệp đối với cộng đồng.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       HISTORY MODULE
+       ============================================ -->
+  <section class="section" id="history">
+    <span class="section-num">📍 Trang 10-13 · MÔ-ĐUN LỊCH SỬ</span>
+    <h2 class="section-title">Lịch&nbsp;sử Quản&nbsp;trị — <span class="underline">5 cách</span> tiếp&nbsp;cận lớn</h2>
+
+    <p>Đây là phần <strong>nền tảng</strong> giúp bạn tiếp cận toàn bộ cuốn sách dễ dàng hơn. Hiểu lịch sử quản trị giống như nắm rõ địa hình trước khi bắt đầu hành trình: bạn sẽ biết lý do các quy tắc tồn tại và những điểm cần lưu ý để tránh sai lầm.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Giai đoạn</th>
+            <th>Cách tiếp cận</th>
+            <th>Người đại diện</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>3000 TCN - 1776</td><td>Quản trị thời kỳ đầu</td><td>Kim tự tháp, Adam&nbsp;Smith</td></tr>
+          <tr><td>1911 - 1947</td><td>Cách tiếp cận cổ điển</td><td>Taylor, Gilbreth, Fayol, Weber</td></tr>
+          <tr><td>Cuối 1700s - 1950</td><td>Cách tiếp cận hành vi</td><td>Owen, Munsterberg, Follett, Mayo</td></tr>
+          <tr><td>1940 - 1950</td><td>Cách tiếp cận định lượng</td><td>Whiz&nbsp;Kids, Deming, Juran</td></tr>
+          <tr><td>1960 - hiện tại</td><td>Các cách tiếp cận đương đại</td><td>Lý thuyết hệ thống, tình huống, công nghệ</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Quản trị thời kỳ đầu (3000 TCN - 1776)</h3>
+
+    <p>Hoạt động quản trị đã được áp dụng từ hàng nghìn năm trước. <strong>Kim tự tháp Ai Cập</strong> và <strong>Vạn Lý Trường Thành</strong> không thể hoàn thành nếu thiếu người thực hiện hoạch định, tổ chức, lãnh đạo và kiểm soát.</p>
+
+    <div class="callout example">
+      <span class="callout-label">📚 Adam Smith — 1776</span>
+      <p class="callout-body">
+        Trong cuốn <em>The Wealth of Nations</em>, Smith đưa ra lý lẽ về lợi ích của <strong>division of labor / job specialization</strong> (phân công lao động / chuyên môn hóa). Ví dụ ngành sản xuất ghim: <span class="hl">10 người mỗi người phụ trách một công đoạn → 48.000 ghim/ngày. Mỗi người tự làm tất cả → 10 ghim/ngày đã là thành công.</span>
+      </p>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Cách tiếp cận cổ điển (1911 - 1947)</h3>
+
+    <p>Tập trung vào <strong>tính hợp lý</strong> và mục tiêu làm cho tổ chức cũng như người lao động đạt hiệu quả cao nhất. Bao gồm 2 lý thuyết chính:</p>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="card-header bg-brand" style="background: var(--brand); color: var(--paper);">
+          <div class="card-num">LÝ THUYẾT 1</div>
+          <div class="card-title">Scientific Management<br>Quản trị khoa học</div>
+        </div>
+        <div class="card-body">
+          <p><strong>Frederick&nbsp;W.&nbsp;Taylor</strong> — "cha đẻ" của thuyết. Sách <em>Principles of Scientific Management</em> (1911). Cho rằng nên dùng phương pháp khoa học để tìm ra <strong>"the&nbsp;one&nbsp;best&nbsp;way"</strong>.</p>
+
+          <p><strong>Thí nghiệm thỏi sắt:</strong> Năng suất tăng từ <strong>12,5 tấn/ngày → 47-48 tấn/ngày</strong> sau khi áp dụng quy trình khoa học.</p>
+
+          <div class="callout" style="margin-top: var(--gap-sm); background: var(--paper-warm);">
+            <span class="callout-label">Vợ chồng Gilbreth</span>
+            <p class="callout-body" style="font-size: 14px;">Tiếp nối Taylor, tập trung loại bỏ chuyển động dư thừa. Frank giảm số động tác xây tường ngoài từ 18 xuống còn 5. Phát minh microchronometer và 17 chuyển động cơ bản gọi là <strong>therbligs</strong> (Gilbreth viết ngược).</p>
+          </div>
+
+          <p style="margin-top: var(--gap-sm);"><strong>Áp dụng ngày nay:</strong> UPS vẫn dùng nghiên cứu Taylor để đào tạo tài xế (lộ trình tối ưu, cách đóng/mở cửa xe, tốc độ đi bộ).</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-ink">
+          <div class="card-num">LÝ THUYẾT 2</div>
+          <div class="card-title">General Administrative Theory<br>Hành chính tổng quát</div>
+        </div>
+        <div class="card-body">
+          <p><strong>Henri&nbsp;Fayol</strong> tập trung vào tất cả nhà quản trị, không chỉ công nhân. Đưa ra <strong>14 nguyên tắc quản trị</strong>:</p>
+
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px; font-size: 13px; margin: var(--gap-sm) 0;">
+            <div>1. Phân công lao động</div>
+            <div>8. Tập trung hóa</div>
+            <div>2. Quyền hạn</div>
+            <div>9. Chuỗi quyền hạn</div>
+            <div>3. Kỷ luật</div>
+            <div>10. Trật tự</div>
+            <div>4. Thống nhất chỉ huy</div>
+            <div>11. Công bằng</div>
+            <div>5. Thống nhất hướng dẫn</div>
+            <div>12. Ổn định nhân sự</div>
+            <div>6. Lợi ích chung trên lợi ích cá nhân</div>
+            <div>13. Sáng kiến</div>
+            <div>7. Thù lao công bằng</div>
+            <div>14. Tinh thần đồng đội</div>
+          </div>
+
+          <p><strong>Max&nbsp;Weber</strong> phát triển lý thuyết <em>bureaucracy (bộ máy quan liêu)</em> — không phải nghĩa tiêu cực, mà là <span class="hl">mô hình lý tưởng</span> để tổ chức công việc hiệu quả trong nhóm lớn.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-label">🔍 Phân biệt Taylor và Fayol</span>
+      <p class="callout-body">
+        <strong>Taylor</strong> — tập trung vào <em>người công nhân tại xưởng sản xuất</em>, tìm "cách tốt nhất" cho từng việc cụ thể. <strong>Fayol &amp; Weber</strong> — tập trung vào <em>toàn bộ hệ thống tổ chức và nhà quản trị</em>, xây dựng nguyên tắc và cấu trúc chung. Cả hai đều thuộc cách tiếp cận cổ điển, đề cao hiệu quả, hợp lý, dự đoán trước.
+      </p>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-xl); margin-bottom: var(--gap-md);">Cách tiếp cận hành vi (Cuối 1700s - 1950)</h3>
+
+    <div class="quote bg-pink">
+      Chúng ta không được quên yếu tố con người. Người lao động không phải là những chiếc máy.
+      <span class="quote-author">— Tinh thần của trường phái hành vi</span>
+    </div>
+
+    <p>Lĩnh vực nghiên cứu hành vi của con người tại nơi làm việc gọi là <em>Organizational&nbsp;Behavior&nbsp;(OB) — Hành&nbsp;vi&nbsp;tổ&nbsp;chức</em>. Có 4 nhân vật tiêu biểu giai đoạn đầu:</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Nhà nghiên cứu</th>
+            <th>Đóng góp chính</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Robert Owen</strong><br><small>Cuối 1700s</small></td><td>Quan tâm điều kiện làm việc khắc nghiệt. Đề xuất môi trường làm việc lý tưởng và cho rằng chi tiền cải thiện điều kiện cho người lao động là khoản đầu tư sáng suốt.</td></tr>
+          <tr><td><strong>Hugo Munsterberg</strong><br><small>Đầu 1900s</small></td><td>Đi đầu ngành tâm lý học công nghiệp. Đề xuất kiểm tra tâm lý để tuyển nhân sự, áp dụng lý thuyết học tập để đào tạo.</td></tr>
+          <tr><td><strong>Mary Parker Follett</strong><br><small>Đầu 1900s</small></td><td>Một trong những người đầu nhìn tổ chức dưới góc độ hành vi cá nhân và đội nhóm. Chú trọng con người hơn kỹ thuật đơn thuần.</td></tr>
+          <tr><td><strong>Chester Barnard</strong><br><small>Những năm 1930</small></td><td>Tin tổ chức là hệ thống xã hội cần sự hợp tác. Người đầu tiên coi tổ chức là <em>open&nbsp;system (hệ thống mở)</em>.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Nghiên cứu Hawthorne — Bước ngoặt của ngành quản trị</h3>
+
+    <p>Chuỗi nghiên cứu tại nhà máy <strong>Western&nbsp;Electric&nbsp;Hawthorne&nbsp;Works</strong> ở Cicero, Illinois, bắt đầu từ năm 1924. Ban đầu các kỹ sư muốn xem ánh sáng ảnh hưởng năng suất ra sao. Kết quả gây bất ngờ:</p>
+
+    <div class="grid grid-3">
+      <div class="card">
+        <div class="card-header bg-yellow">
+          <div class="card-num">PHÁT HIỆN 1</div>
+          <div class="card-title">Tăng sáng → tăng năng suất</div>
+        </div>
+        <div class="card-body">
+          <p>Khi tăng độ sáng ở nhóm thực nghiệm, năng suất tăng ở <strong>cả hai</strong> nhóm.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-cyan">
+          <div class="card-num">PHÁT HIỆN 2</div>
+          <div class="card-title">Giảm sáng → vẫn tăng</div>
+        </div>
+        <div class="card-body">
+          <p>Khi giảm độ sáng, năng suất <strong>vẫn tiếp tục tăng</strong> ở cả hai nhóm.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-pink">
+          <div class="card-num">PHÁT HIỆN 3</div>
+          <div class="card-title">Mờ ảo → mới giảm</div>
+        </div>
+        <div class="card-body">
+          <p>Năng suất chỉ giảm khi ánh sáng cắt giảm tới mức <strong>mờ ảo như ánh trăng</strong>.</p>
+        </div>
+      </div>
+    </div>
+
+    <p style="margin-top: var(--gap-md);">Năm 1927, giáo sư <strong>Elton&nbsp;Mayo</strong> từ Harvard tham gia. Mayo kết luận:</p>
+
+    <ul class="num-list">
+      <li><div class="num brand">1</div><div class="content">Hành vi và thái độ của con người có mối liên hệ mật thiết.</div></li>
+      <li><div class="num brand">2</div><div class="content">Các yếu tố nhóm có ảnh hưởng rất lớn đến hành vi mỗi cá nhân.</div></li>
+      <li><div class="num brand">3</div><div class="content">Tiêu chuẩn nhóm quyết định sản lượng làm việc của từng người.</div></li>
+      <li><div class="num brand">4</div><div class="content"><strong>Tiền bạc đóng vai trò ít quan trọng hơn tiêu chuẩn nhóm, thái độ nhóm và sự an toàn</strong> trong việc quyết định năng suất.</div></li>
+      <li><div class="num brand">5</div><div class="content">Chỉ riêng việc người lao động <em>biết mình đang được quan sát</em> đã làm thay đổi hành vi (hiệu ứng Hawthorne).</div></li>
+    </ul>
+
+    <div class="callout warning">
+      <span class="callout-label">💥 Ý nghĩa</span>
+      <p class="callout-body">
+        Nghiên cứu Hawthorne đã <strong>thay đổi hoàn toàn quan niệm</strong> về con người trong tổ chức. Nếu trước đây người ta tin "muốn nhân viên làm việc tốt thì chỉ cần tăng lương", thì sau nghiên cứu, họ nhận ra <span class="hl">con người phức tạp hơn nhiều và các yếu tố xã hội, đội nhóm mới là điều quyết định.</span>
+      </p>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-xl); margin-bottom: var(--gap-md);">Cách tiếp cận định lượng (1940s - 1950s)</h3>
+
+    <p><em>Quantitative approach</em> là việc áp dụng <strong>kỹ thuật toán học và thống kê</strong> để giúp ra quyết định chính xác hơn. Còn gọi là <em>management science</em>. Xuất phát từ phương pháp toán học giải quyết vấn đề quân sự trong Thế chiến&nbsp;II. Sau chiến tranh, nhóm <strong>Whiz&nbsp;Kids</strong> gia nhập Ford giữa thập niên 1940 và áp dụng mô hình thống kê để cải thiện ra quyết định.</p>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="card-header bg-cyan">
+          <div class="card-num">KỸ THUẬT</div>
+          <div class="card-title">Các công cụ định lượng</div>
+        </div>
+        <div class="card-body">
+          <ul style="margin: 0; padding-left: 20px;">
+            <li><em>Linear programming</em> — Quy hoạch tuyến tính (tối ưu phân bổ nguồn lực)</li>
+            <li><em>Critical-path scheduling</em> — Phân tích đường găng (lập lịch trình)</li>
+            <li><em>Economic order quantity</em> — Mô hình lượng đặt hàng kinh tế</li>
+            <li>Phương pháp thống kê, mô hình tối ưu, mô phỏng máy tính</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-lime">
+          <div class="card-num">TQM</div>
+          <div class="card-title">Total Quality Management</div>
+        </div>
+        <div class="card-body">
+          <p>Triết lý quản trị tập trung vào <strong>cải tiến không ngừng</strong> và đáp ứng tốt nhu cầu khách hàng. <strong>W.&nbsp;Edwards&nbsp;Deming</strong> và <strong>Joseph&nbsp;M.&nbsp;Juran</strong> đề xuất từ 1950s nhưng không được Mỹ quan tâm. Người Nhật đón nhận và vượt xa Mỹ về chất lượng — buộc các nhà quản trị phương Tây phải quay lại nghiên cứu.</p>
+          <p style="margin-top: var(--gap-sm);"><strong>6 đặc điểm TQM:</strong> Tập trung khách hàng · Cải tiến liên tục · Tập trung quy trình · Nâng chất lượng mọi hoạt động · Dùng thống kê đo lường · Trao quyền cho nhân viên.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-xl); margin-bottom: var(--gap-md);">Cách tiếp cận đương đại (1960 - hiện tại)</h3>
+
+    <p>Từ 1960, các nhà nghiên cứu bắt đầu chú ý đến <strong>yếu tố bên ngoài và môi trường xung quanh</strong>. Hai cách nhìn phổ biến: <strong>lý thuyết hệ thống</strong> và <strong>lý thuyết tình huống</strong>, cùng ảnh hưởng lớn từ công nghệ.</p>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="card-header bg-yellow">
+          <div class="card-num">LÝ THUYẾT 1</div>
+          <div class="card-title">Systems Theory · Lý thuyết Hệ thống</div>
+        </div>
+        <div class="card-body">
+          <p><em>System (hệ thống)</em> là tập hợp các bộ phận cùng hoạt động, phụ thuộc lẫn nhau, được sắp xếp tạo thành khối thống nhất.</p>
+          <ul style="margin: var(--gap-sm) 0; padding-left: 20px;">
+            <li><strong>Closed systems</strong> — không tương tác với bên ngoài</li>
+            <li><strong>Open systems</strong> — tương tác với bên ngoài (mọi tổ chức thực tế đều là hệ thống mở)</li>
+          </ul>
+          <div style="background: var(--paper-warm); border: var(--border-w-thin) solid var(--ink); padding: var(--gap-sm); margin-top: var(--gap-sm); font-family: var(--font-mono); font-size: 12px; text-align: center; border-radius: var(--radius);">
+            Môi&nbsp;trường&nbsp;→&nbsp;ĐẦU&nbsp;VÀO<br>
+            ↓<br>
+            Quá&nbsp;trình&nbsp;biến&nbsp;đổi<br>
+            ↓<br>
+            ĐẦU&nbsp;RA&nbsp;→&nbsp;Môi&nbsp;trường<br>
+            ↑_____Phản&nbsp;hồi_____↑
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-pink">
+          <div class="card-num">LÝ THUYẾT 2</div>
+          <div class="card-title">Contingency Approach · Lý thuyết Tình huống</div>
+        </div>
+        <div class="card-body">
+          <p>Mỗi tổ chức là khác nhau, đối mặt tình huống khác nhau, nên cần phương pháp quản trị khác nhau. Logic <span class="hl-pink">"nếu... thì..."</span>.</p>
+          <p><strong>4 yếu tố thay đổi theo tình huống:</strong></p>
+          <ol style="margin: 0; padding-left: 20px;">
+            <li>Quy mô tổ chức (50.000 vs. 50 nhân&nbsp;viên)</li>
+            <li>Tính lặp lại của công nghệ nhiệm vụ</li>
+            <li>Sự bất ổn của môi trường</li>
+            <li>Sự khác biệt cá nhân</li>
+          </ol>
+          <p style="margin-top: var(--gap-sm);"><strong>Giá trị lớn nhất:</strong> không có quy tắc chung cho mọi nhà quản trị.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       CHEATSHEET
+       ============================================ -->
+  <section class="section" id="cheatsheet">
+    <span class="section-num">📍 Trang 14-15</span>
+    <h2 class="section-title">Bảng <span class="underline">tra&nbsp;cứu</span> nhanh (Cheatsheet)</h2>
+
+    <div class="callout tip">
+      <span class="callout-label">🎯 3 lớp kiến thức tổng hợp</span>
+      <p class="callout-body">
+        Để hệ thống lại toàn bộ Chương 1 và phần Lịch sử, hãy quan sát 3 lớp:<br>
+        <strong>Lớp 1:</strong> Định nghĩa cốt lõi (lý do quản trị tồn tại) ·
+        <strong>Lớp 2:</strong> Các câu hỏi cơ bản (nội dung Chương 1) ·
+        <strong>Lớp 3:</strong> Lịch sử tư tưởng (5 cách tiếp cận)
+      </p>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Cách mô tả công việc nhà quản trị — 4 bước</h3>
+
+    <ul class="num-list">
+      <li>
+        <div class="num brand">1</div>
+        <div class="content"><strong>Bắt đầu bằng định nghĩa</strong>"Nhà quản trị phối hợp và giám sát công việc của người khác để công việc hoàn thành <em>hiệu suất</em> (đúng cách) và <em>hiệu quả</em> (đúng việc)."</div>
+      </li>
+      <li>
+        <div class="num brand">2</div>
+        <div class="content"><strong>Liệt kê 4 chức năng (POLC)</strong>Planning · Organizing · Leading · Controlling</div>
+      </li>
+      <li>
+        <div class="num brand">3</div>
+        <div class="content"><strong>Bổ sung 10 vai trò Mintzberg</strong>3 nhóm: Quan hệ con người · Thông tin · Quyết định</div>
+      </li>
+      <li>
+        <div class="num brand">4</div>
+        <div class="content"><strong>Xác định kỹ năng theo cấp bậc</strong>Cơ sở: kỹ thuật · Trung: nhân sự · Cao: tư duy</div>
+      </li>
+    </ul>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Ma trận kỹ năng theo cấp bậc</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Cấp bậc</th>
+            <th>Quan trọng nhất</th>
+            <th>Quan trọng thứ hai</th>
+            <th>Cần đủ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Cơ sở</td><td>Kỹ năng kỹ thuật</td><td>Kỹ năng nhân sự</td><td>Tư duy (cơ bản)</td></tr>
+          <tr><td>Trung</td><td>Kỹ năng nhân sự</td><td>Tư duy &amp; Kỹ thuật</td><td>—</td></tr>
+          <tr><td>Cao</td><td>Kỹ năng tư duy</td><td>Kỹ năng nhân sự</td><td>Kỹ thuật (đủ hiểu)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Đánh giá tổ chức có quản trị tốt — 4 câu hỏi POLC</h3>
+
+    <div class="grid grid-4">
+      <div class="card">
+        <div class="card-header bg-yellow">
+          <div class="card-num">P</div>
+          <div class="card-title">Hoạch định</div>
+        </div>
+        <div class="card-body">
+          <p>Họ có mục tiêu rõ ràng và kế hoạch hành động cụ thể không?</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header bg-cyan">
+          <div class="card-num">O</div>
+          <div class="card-title">Tổ chức</div>
+        </div>
+        <div class="card-body">
+          <p>Cấu trúc tổ chức đang hỗ trợ hay cản trở việc thực hiện kế hoạch?</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header bg-lime">
+          <div class="card-num">L</div>
+          <div class="card-title">Lãnh đạo</div>
+        </div>
+        <div class="card-body">
+          <p>Người lãnh đạo có truyền cảm hứng và giải quyết tốt mâu thuẫn không?</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header bg-pink">
+          <div class="card-num">C</div>
+          <div class="card-title">Kiểm soát</div>
+        </div>
+        <div class="card-body">
+          <p>Có hệ thống đo lường kết quả và sửa lỗi kịp thời không?</p>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Phân biệt các khái niệm dễ nhầm lẫn</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 40%;">Khái niệm</th>
+            <th>Điểm khác biệt</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Hiệu suất vs. Hiệu quả</td><td><strong>Hiệu suất</strong> = "làm đúng cách" (phương tiện); <strong>Hiệu quả</strong> = "làm đúng việc" (kết quả)</td></tr>
+          <tr><td>Manager vs. Leader</td><td>Manager là người phối hợp công việc; Leading là <em>một trong bốn chức năng</em>. Mọi nhà quản trị đều cần kỹ năng lãnh đạo.</td></tr>
+          <tr><td>Scientific Management vs. General Administrative</td><td>Taylor tập trung vào <em>công nhân trực tiếp</em>; Fayol &amp; Weber tập trung vào <em>toàn bộ tổ chức</em>.</td></tr>
+          <tr><td>Closed system vs. Open system</td><td>Closed: không tương tác với môi trường; Open: có tương tác (mọi tổ chức thực tế đều là open).</td></tr>
+          <tr><td>Function vs. Role vs. Skill</td><td>3 góc nhìn khác nhau cùng trả lời cho câu hỏi: nhà quản trị làm gì.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============================================
+       REVIEW SCHEDULE
+       ============================================ -->
+  <section class="section" id="review">
+    <span class="section-num">📍 Trang 16</span>
+    <h2 class="section-title">Lộ trình <span class="underline">ôn&nbsp;tập</span> và 2 nguyên tắc nhớ lâu</h2>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="card-header bg-brand" style="background: var(--brand); color: var(--paper);">
+          <div class="card-num">NGUYÊN TẮC 1</div>
+          <div class="card-title">Active Recall · Chủ động gợi nhớ</div>
+        </div>
+        <div class="card-body">
+          <p>Việc chỉ đọc lại tài liệu thường tạo ra <strong>ảo tưởng về sự hiểu biết</strong>. Bạn thấy quen thuộc và nghĩ rằng mình đã nhớ, nhưng thực tế thì không.</p>
+          <p>Bài kiểm tra yêu cầu bạn phải <span class="hl">tự trình bày lại kiến thức</span>. Hãy đóng tài liệu, tự giải thích, tự viết hoặc tự vẽ sơ đồ. Khi gặp khó mới mở tài liệu xem.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-ink">
+          <div class="card-num">NGUYÊN TẮC 2</div>
+          <div class="card-title">Spaced Repetition · Lặp lại ngắt quãng</div>
+        </div>
+        <div class="card-body">
+          <p>Việc học <strong>7 lần × 10 phút cách nhau</strong> hiệu quả hơn nhiều so với <strong>1 lần 70 phút</strong>.</p>
+          <p>Não bộ cần khoảng nghỉ để "quên một chút" rồi mới nhớ lại — khi đó các liên kết thần kinh sẽ bền chặt hơn. <span class="hl-cyan">Đừng cố nhồi nhét trong thời gian ngắn.</span></p>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Lộ trình 5 lần ôn tập</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Lần</th>
+            <th>Thời điểm</th>
+            <th>Thời gian</th>
+            <th>Hoạt động</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>L1</strong></td><td>Cuối ngày học (Ngày 0)</td><td>15&nbsp;phút</td><td>Xem nhanh Bảng tra cứu nhanh. Tự nhắc lại định nghĩa, POLC, 5 cách tiếp cận lịch sử.</td></tr>
+          <tr><td><strong>L2</strong></td><td>Ngày 1 (sau 24&nbsp;giờ)</td><td>20&nbsp;phút</td><td><strong>Đóng tài liệu.</strong> Tự trả lời "Chương 1 nói về điều gì?". Đối chiếu để xem quên chỗ nào. Làm 10 flashcards.</td></tr>
+          <tr><td><strong>L3</strong></td><td>Ngày 3</td><td>30&nbsp;phút</td><td><strong>Áp dụng thực tế.</strong> Chọn một công ty cụ thể. Xác định 3 cấp quản trị, thách thức họ gặp, phương pháp họ dùng.</td></tr>
+          <tr><td><strong>L4</strong></td><td>Ngày 7</td><td>30&nbsp;phút</td><td><strong>Hệ thống hóa.</strong> Vẽ "Bản đồ Chương 1" với 3 lớp kiến thức. Giảng lại như cho bạn. Hoàn thành toàn bộ flashcards.</td></tr>
+          <tr><td><strong>L5</strong></td><td>Ngày 16</td><td>45&nbsp;phút</td><td><strong>Giảng giải.</strong> Giải thích bằng ngôn ngữ đơn giản và ví dụ thực tế. Ôn các flashcards thường quên.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Ghi nhớ dài hạn</h3>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="card-header bg-lime">
+          <div class="card-num">L6</div>
+          <div class="card-title">Ngày 35 · 25&nbsp;phút</div>
+        </div>
+        <div class="card-body">
+          <p>Xem lại bảng tra cứu nhanh và làm toàn bộ flashcards. Ghi lại bằng tay những chỗ vẫn quên.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header bg-yellow">
+          <div class="card-num">L7</div>
+          <div class="card-title">Ngày 75 · 25&nbsp;phút</div>
+        </div>
+        <div class="card-body">
+          <p>Thực hiện giống Lần 6. Sau lần này, kiến thức được chuyển vào vùng <span class="hl">trí nhớ dài hạn</span>.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-label">💡 Mẹo bổ sung</span>
+      <p class="callout-body">
+        <strong>Ít thời gian:</strong> Ưu tiên flashcards và bảng tra cứu nhanh — chủ động nhớ lại luôn hiệu quả hơn đọc đi đọc lại.<br>
+        <strong>Chuẩn bị thi:</strong> Ôn ngược từ lộ trình về định nghĩa cơ bản. Não bộ tự động bổ sung phần kiến thức còn thiếu.<br>
+        <strong>Đang làm tư vấn:</strong> Dùng các câu hỏi trong bảng tra cứu nhanh để đặt câu hỏi tìm hiểu vấn đề của khách hàng.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================
+       FOOTER
+       ============================================ -->
+  <footer class="footer">
+    <p>
+      <strong>CHƯƠNG&nbsp;01</strong> — Tóm tắt chuyên sâu sách<br>
+      <em>Management</em> · Stephen&nbsp;P.&nbsp;Robbins &amp; Mary&nbsp;A.&nbsp;Coulter · ấn bản 15&nbsp;(2021)
+    </p>
+    <p style="margin-top: var(--gap-sm);">
+      Thiết kế Neo-Brutalism v3.4 · Refined Tempered NB
+    </p>
+  </footer>
+
+</div>
+
+</body>
+</html>

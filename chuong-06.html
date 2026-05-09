@@ -1,0 +1,2078 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chương 6 — Quản trị Trách nhiệm Xã hội và Đạo đức</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap&subset=vietnamese" rel="stylesheet">
+<style>
+:root {
+  --brand: #c73937;
+  --brand-dark: #a82d2c;
+  --ink: #1a1a1a;
+  --ink-soft: #2d2d2d;
+  --paper: #faf8f3;
+  --paper-warm: #f5f1e8;
+  --yellow: #F5E4B8;
+  --cyan: #C4DEDC;
+  --lime: #DDE4C5;
+  --pink: #F0DCDD;
+  --border-w: 3px;
+  --border-w-thin: 2px;
+  --shadow-offset: 6px 6px 0;
+  --shadow-offset-sm: 4px 4px 0;
+  --shadow-offset-lg: 8px 8px 0;
+  --radius: 4px;
+  --gap-xs: 8px;
+  --gap-sm: 16px;
+  --gap-md: 24px;
+  --gap-lg: 40px;
+  --gap-xl: 64px;
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+* { font-style: normal !important; box-sizing: border-box; font-optical-sizing: auto; }
+*::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.6;
+  font-size: 16px;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  background-image: radial-gradient(circle at 1px 1px, rgba(26,26,26,0.08) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+h1, h2, h3, h4, h5, h6, .title, .heading, .hero-title, .section-title, .card-title {
+  text-wrap: balance;
+  font-family: var(--font-display);
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+p, li, .body-text { text-wrap: pretty; }
+p { margin: 0 0 1em 0; }
+strong, b { font-weight: 700; }
+
+a {
+  color: var(--brand);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  font-weight: 600;
+}
+a:hover { background: var(--yellow); color: var(--ink); }
+a:focus-visible { outline: 3px solid var(--brand); outline-offset: 3px; }
+
+.container { max-width: 1200px; margin: 0 auto; padding: var(--gap-md); }
+@media (min-width: 768px) { .container { padding: var(--gap-lg); } }
+
+/* HERO */
+.hero {
+  border: var(--border-w) solid var(--ink);
+  background: var(--paper);
+  box-shadow: var(--shadow-offset-lg) var(--ink);
+  padding: var(--gap-lg) var(--gap-md);
+  margin-bottom: var(--gap-xl);
+  position: relative;
+  border-radius: var(--radius);
+}
+@media (min-width: 768px) { .hero { padding: var(--gap-xl) var(--gap-lg); } }
+
+.hero-badge {
+  display: inline-block;
+  background: var(--brand);
+  color: var(--paper);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 12px;
+  border: var(--border-w-thin) solid var(--ink);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: var(--gap-md);
+  transform: rotate(-1.5deg);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.hero-title {
+  font-size: clamp(2.25rem, 6vw, 4.5rem);
+  margin-bottom: var(--gap-md);
+  line-height: 1;
+}
+
+.hero-title .accent {
+  background: var(--cyan);
+  padding: 0 8px;
+  border: var(--border-w-thin) solid var(--ink);
+  display: inline-block;
+  transform: rotate(-1deg);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.hero-title .accent-2 {
+  background: var(--yellow);
+  padding: 0 8px;
+  border: var(--border-w-thin) solid var(--ink);
+  display: inline-block;
+  transform: rotate(1deg);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.hero-sub {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  color: var(--ink-soft);
+  max-width: 720px;
+  font-weight: 500;
+  text-wrap: balance;
+}
+
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-sm);
+  margin-top: var(--gap-md);
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+.hero-meta span {
+  background: var(--paper-warm);
+  border: var(--border-w-thin) solid var(--ink);
+  padding: 4px 10px;
+  font-weight: 600;
+}
+
+/* STICKER */
+.sticker {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  background: var(--cyan);
+  border: var(--border-w-thin) solid var(--ink);
+  padding: 6px 10px;
+  box-shadow: 3px 3px 0 var(--ink);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  z-index: 10;
+}
+.sticker-pink { background: var(--pink); }
+.sticker-yellow { background: var(--yellow); }
+.sticker-lime { background: var(--lime); }
+
+/* SECTION */
+.section { margin-bottom: var(--gap-xl); position: relative; }
+.section-num {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--brand);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: var(--gap-xs);
+  display: block;
+}
+.section-title {
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  margin-bottom: var(--gap-md);
+  padding-bottom: var(--gap-sm);
+  border-bottom: var(--border-w) solid var(--ink);
+}
+.section-title .underline {
+  background: var(--lime);
+  padding: 0 6px;
+  border: var(--border-w-thin) solid var(--ink);
+  display: inline-block;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+/* CARD */
+.card {
+  border: var(--border-w) solid var(--ink);
+  background: var(--paper);
+  box-shadow: var(--shadow-offset) var(--ink);
+  border-radius: var(--radius);
+  margin-bottom: var(--gap-md);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.card-header {
+  background: var(--brand);
+  color: var(--paper);
+  border-bottom: var(--border-w-thin) solid var(--ink);
+  padding: var(--gap-sm) var(--gap-md);
+}
+.card-header.bg-yellow { background: var(--yellow); color: var(--ink); }
+.card-header.bg-cyan { background: var(--cyan); color: var(--ink); }
+.card-header.bg-lime { background: var(--lime); color: var(--ink); }
+.card-header.bg-pink { background: var(--pink); color: var(--ink); }
+.card-header.bg-ink { background: var(--ink); color: var(--paper); }
+
+.card-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 4px;
+  opacity: 0.85;
+}
+.card-title {
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  font-weight: 700;
+}
+.card-body { padding: var(--gap-md); }
+.card-body > *:last-child { margin-bottom: 0; }
+.card-tilt-l { transform: rotate(-1deg); }
+.card-tilt-r { transform: rotate(1deg); }
+
+/* GRID */
+.grid { display: grid; gap: var(--gap-md); }
+.grid-2 { grid-template-columns: 1fr; }
+.grid-3 { grid-template-columns: 1fr; }
+.grid-4 { grid-template-columns: 1fr; }
+
+@media (min-width: 640px) { .grid-2 { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 768px) {
+  .grid-3 { grid-template-columns: repeat(3, 1fr); }
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 1024px) { .grid-4 { grid-template-columns: repeat(4, 1fr); } }
+
+/* NUMBERED LIST */
+.num-list { list-style: none; padding: 0; margin: 0; }
+.num-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--gap-sm);
+  padding: var(--gap-sm) 0;
+  border-bottom: var(--border-w-thin) dashed var(--ink);
+  min-width: 0;
+}
+.num-list li:last-child { border-bottom: none; }
+.num-list .num {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  border-radius: var(--radius);
+}
+.num-list .num.brand { background: var(--brand); }
+.num-list .num.lg { width: 44px; height: 44px; font-size: 16px; }
+.num-list .content { flex: 1; min-width: 0; }
+.num-list .content strong {
+  display: block;
+  margin-bottom: 4px;
+  font-family: var(--font-display);
+  font-size: 1.1em;
+}
+
+/* TABLE */
+.table-wrap {
+  border: var(--border-w) solid var(--ink);
+  background: var(--paper);
+  box-shadow: var(--shadow-offset) var(--ink);
+  border-radius: var(--radius);
+  overflow-x: auto;
+  margin-bottom: var(--gap-md);
+}
+table { width: 100%; border-collapse: collapse; font-family: var(--font-body); }
+table th {
+  background: var(--ink);
+  color: var(--paper);
+  text-align: left;
+  padding: var(--gap-sm);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: var(--border-w) solid var(--ink);
+}
+table td {
+  padding: var(--gap-sm);
+  border-bottom: var(--border-w-thin) solid var(--ink);
+  vertical-align: top;
+  font-size: 15px;
+}
+table tr:last-child td { border-bottom: none; }
+table tr:nth-child(even) td { background: var(--paper-warm); }
+table td:first-child {
+  font-weight: 600;
+  border-right: var(--border-w-thin) dashed var(--ink);
+}
+
+/* QUOTE */
+.quote {
+  background: var(--yellow);
+  border: var(--border-w) solid var(--ink);
+  box-shadow: var(--shadow-offset) var(--ink);
+  border-radius: var(--radius);
+  padding: var(--gap-md);
+  margin: var(--gap-md) 0;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 500;
+  position: relative;
+  text-wrap: balance;
+}
+.quote::before {
+  content: """;
+  position: absolute;
+  top: -20px;
+  left: var(--gap-sm);
+  font-size: 5rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--brand);
+  background: var(--paper);
+  border: var(--border-w-thin) solid var(--ink);
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  border-radius: var(--radius);
+}
+.quote-author {
+  display: block;
+  margin-top: var(--gap-sm);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-soft);
+}
+.quote.bg-cyan { background: var(--cyan); }
+.quote.bg-lime { background: var(--lime); }
+.quote.bg-pink { background: var(--pink); }
+
+/* STAT */
+.stat-grid { display: grid; gap: var(--gap-sm); grid-template-columns: 1fr; }
+@media (min-width: 640px) { .stat-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .stat-grid { grid-template-columns: repeat(4, 1fr); } }
+.stat {
+  background: var(--paper);
+  border: var(--border-w) solid var(--ink);
+  box-shadow: var(--shadow-offset-sm) var(--ink);
+  padding: var(--gap-sm);
+  text-align: center;
+  border-radius: var(--radius);
+}
+.stat-num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  color: var(--brand);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.stat-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink-soft);
+}
+
+/* CALLOUT */
+.callout {
+  border: var(--border-w) solid var(--ink);
+  background: var(--cyan);
+  box-shadow: var(--shadow-offset) var(--ink);
+  border-radius: var(--radius);
+  padding: var(--gap-md);
+  margin: var(--gap-md) 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+}
+.callout.tip { background: var(--lime); }
+.callout.warning { background: var(--pink); }
+.callout.example { background: var(--yellow); }
+.callout-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 4px 8px;
+  display: inline-block;
+  align-self: flex-start;
+  border-radius: var(--radius);
+}
+.callout-body { margin: 0; font-size: 15px; }
+.callout-body p:last-child { margin-bottom: 0; }
+
+/* TOC */
+.toc {
+  border: var(--border-w) solid var(--ink);
+  background: var(--paper);
+  box-shadow: var(--shadow-offset) var(--ink);
+  border-radius: var(--radius);
+  padding: var(--gap-md);
+  margin-bottom: var(--gap-xl);
+}
+.toc-title {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 6px 12px;
+  display: inline-block;
+  margin-bottom: var(--gap-md);
+}
+.toc-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: var(--gap-xs);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 768px) { .toc-list { grid-template-columns: repeat(2, 1fr); } }
+.toc-list a {
+  display: block;
+  padding: 10px 14px;
+  background: var(--paper-warm);
+  border: var(--border-w-thin) solid var(--ink);
+  text-decoration: none;
+  color: var(--ink);
+  font-weight: 500;
+  font-size: 14px;
+  border-radius: var(--radius);
+  transition: transform 0.1s ease-out, box-shadow 0.1s ease-out;
+}
+.toc-list a:hover {
+  background: var(--yellow);
+  transform: translate(-2px, -2px);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+.toc-list a .toc-num {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--brand);
+  margin-right: 8px;
+}
+
+/* HIGHLIGHT */
+.hl { background: var(--yellow); padding: 1px 5px; border: var(--border-w-thin) solid var(--ink); font-weight: 600; border-radius: 2px; }
+.hl-cyan { background: var(--cyan); padding: 1px 5px; border: var(--border-w-thin) solid var(--ink); font-weight: 600; border-radius: 2px; }
+.hl-pink { background: var(--pink); padding: 1px 5px; border: var(--border-w-thin) solid var(--ink); font-weight: 600; border-radius: 2px; }
+.hl-lime { background: var(--lime); padding: 1px 5px; border: var(--border-w-thin) solid var(--ink); font-weight: 600; border-radius: 2px; }
+
+/* CITIZEN LADDER (3 mức trách nhiệm) */
+.citizen-ladder {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: var(--gap-sm);
+  margin: var(--gap-md) 0;
+}
+.cl-step {
+  border: var(--border-w) solid var(--ink);
+  box-shadow: var(--shadow-offset) var(--ink);
+  border-radius: var(--radius);
+  padding: var(--gap-md);
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: var(--gap-md);
+  align-items: start;
+  min-width: 0;
+}
+.cl-step .cl-icon {
+  font-size: 3rem;
+  line-height: 1;
+  text-align: center;
+}
+.cl-step .cl-content { min-width: 0; }
+.cl-step .cl-level {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+}
+.cl-step .cl-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.25rem;
+  margin-bottom: var(--gap-xs);
+}
+.cl-step .cl-desc { font-size: 14px; line-height: 1.5; margin: 0; }
+.cl-step:nth-child(1) { background: var(--paper-warm); }
+.cl-step:nth-child(2) { background: var(--cyan); }
+.cl-step:nth-child(3) { background: var(--lime); }
+
+/* GREEN GRADIENT (4 sắc thái xanh) */
+.green-shades {
+  display: grid;
+  gap: var(--gap-md);
+  grid-template-columns: 1fr;
+  margin: var(--gap-md) 0;
+}
+@media (min-width: 768px) { .green-shades { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .green-shades { grid-template-columns: repeat(4, 1fr); } }
+
+.green-card {
+  border: var(--border-w) solid var(--ink);
+  box-shadow: var(--shadow-offset) var(--ink);
+  border-radius: var(--radius);
+  padding: var(--gap-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+  min-width: 0;
+}
+.green-card .gc-num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 3rem;
+  line-height: 1;
+  color: var(--brand);
+}
+.green-card .gc-shade {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 4px 8px;
+  align-self: flex-start;
+  border-radius: var(--radius);
+  letter-spacing: 0.05em;
+}
+.green-card .gc-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+}
+.green-card .gc-desc { font-size: 13px; line-height: 1.5; }
+.green-card:nth-child(1) { background: var(--paper-warm); }
+.green-card:nth-child(2) { background: var(--lime); }
+.green-card:nth-child(3) { background: var(--cyan); }
+.green-card:nth-child(4) { background: #8FBC8F; color: var(--ink); }
+.green-card:nth-child(4) .gc-num { color: var(--brand-dark); }
+
+/* TEST CARDS (5 bài kiểm tra đạo đức) */
+.test-grid {
+  display: grid;
+  gap: var(--gap-md);
+  grid-template-columns: 1fr;
+  margin: var(--gap-md) 0;
+}
+@media (min-width: 640px) { .test-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .test-grid { grid-template-columns: repeat(3, 1fr); } }
+
+.test-card {
+  border: var(--border-w) solid var(--ink);
+  box-shadow: var(--shadow-offset-sm) var(--ink);
+  border-radius: var(--radius);
+  padding: var(--gap-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+}
+.test-card .tc-icon { font-size: 2rem; line-height: 1; margin-bottom: 4px; }
+.test-card .tc-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+.test-card .tc-q {
+  font-style: normal;
+  background: var(--paper);
+  border: var(--border-w-thin) solid var(--ink);
+  padding: 8px 12px;
+  border-radius: var(--radius);
+  font-size: 13px;
+  margin-top: var(--gap-xs);
+}
+.test-card:nth-child(5n+1) { background: var(--yellow); }
+.test-card:nth-child(5n+2) { background: var(--cyan); }
+.test-card:nth-child(5n+3) { background: var(--lime); }
+.test-card:nth-child(5n+4) { background: var(--pink); }
+.test-card:nth-child(5n+5) { background: var(--paper-warm); }
+
+/* KOHLBERG PYRAMID (3 cấp 6 giai đoạn) */
+.kohlberg {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-sm);
+  margin: var(--gap-md) 0;
+}
+.kohlberg-level {
+  border: var(--border-w) solid var(--ink);
+  box-shadow: var(--shadow-offset) var(--ink);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.kohlberg-level .kl-header {
+  padding: var(--gap-sm) var(--gap-md);
+  border-bottom: var(--border-w-thin) solid var(--ink);
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+  font-family: var(--font-display);
+  font-weight: 700;
+}
+.kohlberg-level .kl-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 4px 8px;
+  border-radius: var(--radius);
+  letter-spacing: 0.05em;
+}
+.kohlberg-level .kl-name { font-size: 1.15rem; }
+.kohlberg-level .kl-stage {
+  padding: var(--gap-sm) var(--gap-md);
+  border-bottom: var(--border-w-thin) dashed var(--ink);
+  font-size: 14px;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--gap-sm);
+}
+.kohlberg-level .kl-stage:last-child { border-bottom: none; }
+.kohlberg-level .kl-stage-num {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  background: var(--brand);
+  color: var(--paper);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  border-radius: var(--radius);
+}
+.kohlberg-level:nth-child(1) { background: var(--lime); }
+.kohlberg-level:nth-child(2) { background: var(--cyan); }
+.kohlberg-level:nth-child(3) { background: var(--pink); }
+
+/* INTENSITY GRID (6 yếu tố cường độ) */
+.intensity-grid {
+  display: grid;
+  gap: var(--gap-md);
+  grid-template-columns: 1fr;
+  margin: var(--gap-md) 0;
+}
+@media (min-width: 640px) { .intensity-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .intensity-grid { grid-template-columns: repeat(3, 1fr); } }
+
+.int-card {
+  background: var(--paper);
+  border: var(--border-w) solid var(--ink);
+  box-shadow: var(--shadow-offset-sm) var(--ink);
+  border-radius: var(--radius);
+  padding: var(--gap-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+}
+.int-card .int-num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 2.5rem;
+  line-height: 1;
+  color: var(--brand);
+}
+.int-card .int-name-en {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--ink-soft);
+  letter-spacing: 0.05em;
+}
+.int-card .int-name-vi {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+.int-card .int-q {
+  font-size: 13px;
+  line-height: 1.5;
+  font-weight: 500;
+}
+.int-card .int-ex {
+  font-size: 12px;
+  background: var(--paper);
+  border: var(--border-w-thin) solid var(--ink);
+  padding: 6px 10px;
+  border-radius: var(--radius);
+  margin-top: var(--gap-xs);
+}
+.int-card:nth-child(6n+1) { background: var(--yellow); }
+.int-card:nth-child(6n+2) { background: var(--cyan); }
+.int-card:nth-child(6n+3) { background: var(--lime); }
+.int-card:nth-child(6n+4) { background: var(--pink); }
+.int-card:nth-child(6n+5) { background: var(--paper-warm); }
+.int-card:nth-child(6n+6) { background: var(--yellow); }
+
+/* ENCOURAGE GRID (6 cách khuyến khích) */
+.enc-grid {
+  display: grid;
+  gap: var(--gap-md);
+  grid-template-columns: 1fr;
+  margin: var(--gap-md) 0;
+}
+@media (min-width: 768px) { .enc-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .enc-grid { grid-template-columns: repeat(3, 1fr); } }
+
+.enc-card {
+  border: var(--border-w) solid var(--ink);
+  box-shadow: var(--shadow-offset) var(--ink);
+  border-radius: var(--radius);
+  padding: var(--gap-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+}
+.enc-card .ec-step {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 2.5rem;
+  line-height: 1;
+  color: var(--brand);
+}
+.enc-card .ec-en {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink-soft);
+}
+.enc-card .ec-vi {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+}
+.enc-card .ec-desc { font-size: 13px; line-height: 1.5; }
+.enc-card:nth-child(1) { background: var(--brand); color: var(--paper); }
+.enc-card:nth-child(1) .ec-step { color: var(--yellow); }
+.enc-card:nth-child(1) .ec-en { color: var(--paper); opacity: 0.85; }
+.enc-card:nth-child(2) { background: var(--cyan); }
+.enc-card:nth-child(3) { background: var(--lime); }
+.enc-card:nth-child(4) { background: var(--yellow); }
+.enc-card:nth-child(5) { background: var(--pink); }
+.enc-card:nth-child(6) { background: var(--paper-warm); }
+
+/* STAT BIG */
+.stat-big {
+  background: var(--paper);
+  border: var(--border-w) solid var(--ink);
+  box-shadow: var(--shadow-offset) var(--ink);
+  border-radius: var(--radius);
+  padding: var(--gap-md);
+  display: flex;
+  align-items: center;
+  gap: var(--gap-md);
+  margin: var(--gap-sm) 0;
+}
+.stat-big .sb-num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  color: var(--brand);
+  line-height: 1;
+  flex-shrink: 0;
+}
+.stat-big .sb-label {
+  font-size: 14px;
+  line-height: 1.5;
+  font-weight: 500;
+}
+.stat-big.bg-yellow { background: var(--yellow); }
+.stat-big.bg-cyan { background: var(--cyan); }
+.stat-big.bg-lime { background: var(--lime); }
+.stat-big.bg-pink { background: var(--pink); }
+
+/* FOOTER */
+.footer {
+  margin-top: var(--gap-xl);
+  padding: var(--gap-lg) 0;
+  border-top: var(--border-w) solid var(--ink);
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+.footer strong { color: var(--ink); font-weight: 700; }
+.footer a {
+  color: var(--brand);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  font-weight: 600;
+}
+.footer a:hover { background: var(--yellow); color: var(--ink); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media print {
+  body { background: white; background-image: none; }
+  .card, .hero, .toc, .table-wrap { box-shadow: none; }
+  .sticker { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- HERO -->
+  <header class="hero">
+    <span class="sticker sticker-pink" style="top: -16px; right: 24px; transform: rotate(8deg);">DEEP&nbsp;SUMMARY</span>
+    <span class="sticker sticker-lime" style="bottom: -14px; left: 32px; transform: rotate(-5deg);">~8.600 từ</span>
+
+    <div class="hero-badge">CHƯƠNG&nbsp;06 · ROBBINS&nbsp;&amp;&nbsp;COULTER</div>
+    <h1 class="hero-title">
+      Trách&nbsp;nhiệm <span class="accent">xã&nbsp;hội</span><br>
+      và <span class="accent-2">đạo&nbsp;đức</span>
+    </h1>
+    <p class="hero-sub">
+      Tóm tắt chuyên sâu Chương 6 — Sách <em>Management</em> ấn bản 15&nbsp;(2021).
+      Khi doanh nghiệp là người công dân: 3 mức trách nhiệm, 4 sắc thái xanh, 5 yếu tố đạo đức, 6 cách khuyến khích, 4 vấn đề hiện tại.
+    </p>
+    <div class="hero-meta">
+      <span>📖 13 trang nội bộ</span>
+      <span>⏱ 60-70 phút đọc</span>
+      <span>🎯 5 mục tiêu học tập</span>
+      <span>🇻🇳 Ngôn ngữ Việt</span>
+    </div>
+  </header>
+
+  <!-- TOC -->
+  <nav class="toc">
+    <span class="toc-title">📑 Mục lục</span>
+    <ul class="toc-list">
+      <li><a href="#how-to-use"><span class="toc-num">00</span>Hướng dẫn sử dụng</a></li>
+      <li><a href="#core"><span class="toc-num">01</span>Định nghĩa và bản đồ</a></li>
+      <li><a href="#lo1"><span class="toc-num">LO6.1</span>Trách nhiệm xã hội là gì?</a></li>
+      <li><a href="#lo2"><span class="toc-num">LO6.2</span>Quản trị xanh</a></li>
+      <li><a href="#lo3"><span class="toc-num">LO6.3</span>5 yếu tố ảnh hưởng đạo đức</a></li>
+      <li><a href="#lo4"><span class="toc-num">LO6.4</span>6 cách khuyến khích</a></li>
+      <li><a href="#lo5"><span class="toc-num">LO6.5</span>4 vấn đề hiện tại</a></li>
+      <li><a href="#cases"><span class="toc-num">02</span>Bài học Siemens &amp; Enron</a></li>
+      <li><a href="#overview"><span class="toc-num">03</span>Tổng quan và liên hệ</a></li>
+      <li><a href="#cheatsheet"><span class="toc-num">04</span>Cheatsheet</a></li>
+      <li><a href="#review"><span class="toc-num">05</span>Lộ trình ôn tập</a></li>
+    </ul>
+  </nav>
+
+  <!-- HOW TO USE -->
+  <section class="section" id="how-to-use">
+    <span class="section-num">📍 Trang 1</span>
+    <h2 class="section-title">Hướng&nbsp;dẫn <span class="underline">sử&nbsp;dụng</span> tài&nbsp;liệu này</h2>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="card-header bg-yellow">
+          <div class="card-num">CÁCH ĐỌC</div>
+          <div class="card-title">Cách dùng hiệu quả nhất</div>
+        </div>
+        <div class="card-body">
+          <ul class="num-list">
+            <li><div class="num brand">1</div><div class="content">Đọc trọn vẹn trong 60-70&nbsp;phút.</div></li>
+            <li><div class="num brand">2</div><div class="content">Đến phần <strong>"5 bài kiểm tra ra quyết định đạo đức"</strong> (Trang 5) và <strong>"6 yếu tố cường độ vấn đề"</strong> (Trang 7), dừng lại lâu hơn — đây là công cụ áp dụng được ngay.</div></li>
+            <li><div class="num brand">3</div><div class="content">Bài học Siemens (Trang 8) — liên hệ với một sự cố đạo đức bạn từng nghe ở doanh nghiệp Việt.</div></li>
+            <li><div class="num brand">4</div><div class="content">Cuối mỗi phần lớn, gập tài liệu lại và tự kể.</div></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-cyan">
+          <div class="card-num">LIÊN HỆ CHƯƠNG 1-5</div>
+          <div class="card-title">Bộ công cụ đầy đủ về quản trị</div>
+        </div>
+        <div class="card-body">
+          <ul style="margin: 0; padding-left: 20px; font-size: 14px;">
+            <li><strong>Chương 3:</strong> Pressure groups là một thành phần của specific environment</li>
+            <li><strong>Chương 5:</strong> Phân biệt đối xử là vấn đề đạo đức — Chương 6 mở rộng khung đạo đức tổng quát</li>
+            <li><strong>Cả 6 chương</strong> tạo thành <span class="hl">bộ công cụ đầy đủ</span> về bối cảnh quản trị: nội tại (1-2-3), bên ngoài (4-5), và đạo đức/xã hội (6)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout warning">
+      <span class="callout-label">⚠️ Lưu ý đặc biệt cho người đọc Việt Nam</span>
+      <p class="callout-body">
+        Phần FCPA <em>(Foreign Corrupt Practices Act)</em> là luật Mỹ. Tại Việt&nbsp;Nam, có <strong>Luật Phòng chống tham nhũng</strong> và các quy định riêng. <span class="hl-pink">Nguyên lý chung về đạo đức và trách nhiệm xã hội thì áp dụng được ở mọi nơi.</span>
+      </p>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-label">💡 Quy ước</span>
+      <p class="callout-body">
+        Các thuật ngữ chuyên ngành được giữ nguyên tiếng Anh kèm dịch nghĩa ở lần xuất hiện đầu. Ví dụ: <em>Whistle-blowing (tố cáo nội bộ)</em>, <em>Code of ethics (bộ quy tắc đạo đức)</em>, <em>Stakeholder (các bên liên quan)</em>.
+      </p>
+    </div>
+  </section>
+
+  <!-- CORE -->
+  <section class="section" id="core">
+    <span class="section-num">📍 Trang 2</span>
+    <h2 class="section-title">Định&nbsp;nghĩa cốt&nbsp;lõi và <span class="underline">bản&nbsp;đồ</span> kiến&nbsp;thức</h2>
+
+    <div class="quote bg-cyan">
+      Trách nhiệm của doanh nghiệp với xã hội là gì? Khi nào hành vi của nhà quản trị là đạo đức? <strong>Doanh nghiệp có thể làm gì để khuyến khích hành vi đạo đức?</strong>
+      <span class="quote-author">— Câu hỏi trung tâm Chương 6</span>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Phép ẩn dụ: Người công dân</h3>
+
+    <p>Hãy hình dung doanh nghiệp như một <strong>người công dân</strong>. Người công dân có <strong>3 mức trách nhiệm</strong>:</p>
+
+    <div class="citizen-ladder">
+      <div class="cl-step">
+        <div class="cl-icon">📜</div>
+        <div class="cl-content">
+          <div class="cl-level">MỨC TỐI THIỂU</div>
+          <div class="cl-name">Tuân thủ luật pháp</div>
+          <p class="cl-desc"><em>Social obligation</em> — đóng thuế, không trộm cắp. Làm những gì luật yêu cầu.</p>
+        </div>
+      </div>
+
+      <div class="cl-step">
+        <div class="cl-icon">🗳️</div>
+        <div class="cl-content">
+          <div class="cl-level">MỨC TRUNG BÌNH</div>
+          <div class="cl-name">Đáp ứng kỳ vọng xã hội</div>
+          <p class="cl-desc"><em>Social responsiveness</em> — đi bầu cử, tham gia cộng đồng khi có yêu cầu. Phản ứng với chuẩn mực xã hội.</p>
+        </div>
+      </div>
+
+      <div class="cl-step">
+        <div class="cl-icon">🤝</div>
+        <div class="cl-content">
+          <div class="cl-level">MỨC CAO NHẤT</div>
+          <div class="cl-name">Chủ động làm điều tốt</div>
+          <p class="cl-desc"><em>Social responsibility</em> — tình nguyện, từ thiện, gương mẫu đạo đức. Người công dân tốt không chỉ tránh làm điều sai, mà còn <strong>chủ động làm điều đúng</strong>.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout warning">
+      <span class="callout-label">🎯 Cốt lõi</span>
+      <p class="callout-body">
+        Cùng nguyên lý áp dụng cho doanh nghiệp. Doanh nghiệp tốt không chỉ làm theo luật, mà còn <strong>chủ động đóng góp cho xã hội</strong>.
+      </p>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Năm mục tiêu học tập (LO) của Chương&nbsp;6</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 90px;">Mục tiêu</th>
+            <th>Câu hỏi giải đáp</th>
+            <th>Khái niệm chính</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>LO6.1</td><td>Trách nhiệm xã hội là gì?</td><td>Classical view vs. Socioeconomic view; 3 mức: Obligation, Responsiveness, Responsibility</td></tr>
+          <tr><td>LO6.2</td><td>Quản trị xanh là gì?</td><td>4 sắc thái xanh: Legal, Market, Stakeholder, Activist</td></tr>
+          <tr><td>LO6.3</td><td>Yếu tố nào dẫn đến đạo đức/phi đạo đức?</td><td>5 yếu tố: Stage of moral development, Individual, Structural, Culture, Issue intensity</td></tr>
+          <tr><td>LO6.4</td><td>Nhà quản trị khuyến khích đạo đức ra sao?</td><td>6 cách: Tuyển chọn, Code, Lãnh đạo, Mục tiêu, Đào tạo, Kiểm toán</td></tr>
+          <tr><td>LO6.5</td><td>Vấn đề hiện tại là gì?</td><td>4 vấn đề: Whistle-blowers, Khởi nghiệp xã hội, Truyền thông xã hội, Từ thiện</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- LO 6.1 -->
+  <section class="section" id="lo1">
+    <span class="section-num">📍 Trang 3 · LO6.1</span>
+    <h2 class="section-title">Trách <span class="underline">nhiệm</span> xã hội là gì?</h2>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-bottom: var(--gap-md);">Hai quan điểm đối lập</h3>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="card-header bg-pink">
+          <div class="card-num">QUAN ĐIỂM CỔ ĐIỂN</div>
+          <div class="card-title">Classical View · Milton Friedman</div>
+        </div>
+        <div class="card-body">
+          <p>Đại diện nổi tiếng nhất: <strong>Milton&nbsp;Friedman</strong> — nhà kinh tế đoạt giải Nobel.</p>
+          <div class="quote bg-pink" style="margin: var(--gap-sm) 0;">
+            Trách nhiệm xã hội duy nhất của ban quản trị là <strong>tối đa hóa lợi nhuận</strong>.
+          </div>
+          <p><strong>Lập luận:</strong></p>
+          <ul style="margin: 0; padding-left: 20px; font-size: 14px;">
+            <li>Nhà quản trị là <strong>nhân viên</strong>, không sở hữu doanh nghiệp</li>
+            <li>Trách nhiệm với <strong>cổ đông</strong> — quan tâm duy nhất là lợi nhuận</li>
+            <li>Khi tự ý dùng nguồn lực cho "lợi ích xã hội" → làm suy yếu cơ chế thị trường</li>
+            <li>Tự bổ nhiệm thành <em>"người làm chính sách không qua bầu cử"</em></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-cyan">
+          <div class="card-num">QUAN ĐIỂM KINH TẾ-XÃ HỘI</div>
+          <div class="card-title">Socioeconomic View</div>
+        </div>
+        <div class="card-body">
+          <p>Trách nhiệm xã hội <strong>vượt ra khỏi việc kiếm lợi nhuận</strong>, bao gồm cả bảo vệ và cải thiện phúc lợi xã hội.</p>
+          <div class="quote bg-cyan" style="margin: var(--gap-sm) 0;">
+            Tối đa hóa lợi nhuận là <strong>ưu tiên thứ hai</strong> của công ty, không phải thứ nhất. Thứ nhất là <strong>đảm bảo sự sống còn</strong>.
+          </div>
+          <p><strong>Lập luận:</strong></p>
+          <ul style="margin: 0; padding-left: 20px; font-size: 14px;">
+            <li>Doanh nghiệp được <strong>nhà nước cấp phép</strong> — có trách nhiệm với xã hội rộng hơn</li>
+            <li><span class="hl-cyan">Khung thời gian dài hạn</span> — phải chấp nhận một số nghĩa vụ xã hội để tồn tại lâu</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Phân biệt 3 mức trách nhiệm</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Mức</th>
+            <th>Định nghĩa</th>
+            <th>Cách hiểu</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Social obligation<br><em>(Nghĩa vụ xã hội)</em></td><td>Đáp ứng trách nhiệm kinh tế và pháp lý, không hơn</td><td><strong>Mức tối thiểu</strong> — làm những gì luật yêu cầu</td></tr>
+          <tr><td>Social responsiveness<br><em>(Đáp ứng xã hội)</em></td><td>Khả năng của doanh nghiệp thích nghi với điều kiện xã hội đang thay đổi</td><td><strong>Trung bình</strong> — phản ứng với chuẩn mực xã hội</td></tr>
+          <tr><td>Social responsibility<br><em>(Trách nhiệm xã hội)</em></td><td>Nghĩa vụ vượt khỏi luật và kinh tế, theo đuổi mục tiêu dài hạn tốt cho xã hội</td><td><strong>Cao nhất</strong> — chủ động làm điều đúng</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout example">
+      <span class="callout-label">📌 Ví dụ Starbucks</span>
+      <p class="callout-body">
+        Tháng 7/2018, Starbucks tuyên bố ngừng dùng <strong>ống hút nhựa dùng một lần</strong> vào năm 2020. Đây là phản ứng với mối quan tâm của công chúng. Cùng lúc đó, SeaWorld, McDonald's, Alaska&nbsp;Airlines cũng cấm hoặc hạn chế ống hút nhựa.<br><br>
+        <strong>Đây là social responsiveness</strong> — phản ứng với chuẩn mực xã hội đang thay đổi.<br>
+        <strong>Nếu Starbucks làm điều này 10 năm trước</strong>, có thể được coi là social responsibility — <span class="hl">chủ động dẫn dắt thay vì theo đám đông</span>.
+      </p>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Trách nhiệm xã hội có làm giảm hiệu quả kinh tế không? <span style="color: var(--brand);">KHÔNG.</span></h3>
+
+    <div class="stat-big bg-lime">
+      <div class="sb-num">71,7%</div>
+      <div class="sb-label">nghiên cứu cho kết quả <strong>tích cực</strong> (trách nhiệm xã hội liên kết với hiệu quả tài chính). Tổng kết toàn diện <strong>53 nghiên cứu trên hơn 16.000 công ty</strong>. Chỉ 3,1% kết quả tiêu cực.</div>
+    </div>
+
+    <div class="stat-big bg-yellow">
+      <div class="sb-num">~50%</div>
+      <div class="sb-label">nhà đầu tư có khung thời gian từ <strong>5 năm trở lên</strong> cân nhắc các yếu tố môi trường, xã hội và quản trị (ESG) khi ra quyết định (Khảo sát Merrill&nbsp;Lynch).</div>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-label">💼 Áp dụng tư vấn — gọi vốn quốc tế</span>
+      <p class="callout-body">
+        Khi tư vấn cho doanh nghiệp Việt muốn gọi vốn từ quỹ quốc tế hoặc IPO, <strong>báo cáo ESG ngày càng quan trọng</strong>. Quỹ đầu tư lớn (BlackRock, Vanguard) bắt buộc xem ESG. <span class="hl">Đây không phải xu hướng nhất thời mà là tiêu chuẩn mới.</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- LO 6.2 -->
+  <section class="section" id="lo2">
+    <span class="section-num">📍 Trang 4 · LO6.2</span>
+    <h2 class="section-title">Quản trị <span class="underline">xanh</span> và tính bền vững</h2>
+
+    <div class="quote bg-lime">
+      <em>Green management</em> là việc nhà quản trị <strong>xét đến tác động của tổ chức lên môi trường tự nhiên</strong>.
+      <span class="quote-author">— Định nghĩa</span>
+    </div>
+
+    <p><strong>Lịch sử:</strong> Đến cuối thập niên 1960, ít người (và tổ chức) chú ý đến hệ quả môi trường. Tham chiếu duy nhất tới bảo vệ môi trường là dòng chữ phổ biến <em>"Please Don't Litter"</em> (Xin đừng xả rác). Một loạt thảm họa môi trường đã đem tinh thần môi trường mới đến xã hội và tổ chức.</p>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Bốn cách doanh nghiệp "đi xanh" (Shades of Green)</h3>
+
+    <div class="green-shades">
+      <div class="green-card">
+        <div class="gc-num">1</div>
+        <div class="gc-shade">LIGHT GREEN</div>
+        <div class="gc-name">Legal · Pháp lý</div>
+        <p class="gc-desc">Chỉ làm những gì <strong>luật yêu cầu</strong>. Tuân thủ luật, quy định, không bị thách thức pháp lý.</p>
+        <p class="gc-desc" style="font-style: normal; font-weight: 600; margin-top: var(--gap-xs);">↔ Social obligation</p>
+      </div>
+
+      <div class="green-card">
+        <div class="gc-num">2</div>
+        <div class="gc-shade">MARKET</div>
+        <div class="gc-name">Thị trường</div>
+        <p class="gc-desc">Phản ứng với <strong>sở thích môi trường của khách hàng</strong>. Khách yêu cầu sản phẩm thân thiện môi trường — cung cấp.</p>
+        <p class="gc-desc" style="font-weight: 600; margin-top: var(--gap-xs);">↔ Social responsiveness</p>
+      </div>
+
+      <div class="green-card">
+        <div class="gc-num">3</div>
+        <div class="gc-shade">STAKEHOLDER</div>
+        <div class="gc-name">Các bên liên quan</div>
+        <p class="gc-desc">Đáp ứng yêu cầu môi trường của <strong>nhiều stakeholder</strong> (nhân viên, nhà cung cấp, cộng đồng).</p>
+        <p class="gc-desc" style="font-weight: 600; margin-top: var(--gap-xs);">↔ Social responsiveness</p>
+      </div>
+
+      <div class="green-card">
+        <div class="gc-num">4</div>
+        <div class="gc-shade">DARK GREEN</div>
+        <div class="gc-name">Activist · Hoạt động viên</div>
+        <p class="gc-desc"><strong>Chủ động</strong> tìm cách bảo vệ tài nguyên thiên nhiên. Mức nhạy cảm môi trường cao nhất.</p>
+        <p class="gc-desc" style="font-weight: 600; margin-top: var(--gap-xs);">↔ Social responsibility</p>
+      </div>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Ví dụ minh họa</h3>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="card-header bg-yellow">
+          <div class="card-num">CÔNG NGHỆ XANH</div>
+          <div class="card-title">Nike, UPS, SC&nbsp;Johnson</div>
+        </div>
+        <div class="card-body">
+          <ul style="margin: 0; padding-left: 20px; font-size: 14px;">
+            <li><strong>Nike:</strong> Ra mắt app <em>"Making"</em> cho phép kỹ sư thấy tác động môi trường của lựa chọn vật liệu</li>
+            <li><strong>UPS:</strong> Lộ trình giao hàng có nhiều cú rẽ phải hơn rẽ trái → tiết kiệm nhiên liệu</li>
+            <li><strong>SC&nbsp;Johnson:</strong> Saran&nbsp;Wrap thân thiện môi trường (không có PVC). Dù không giữ mùi tốt bằng, <span class="hl">không quay lại công thức cũ</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-cyan">
+          <div class="card-num">DARK GREEN</div>
+          <div class="card-title">L'Oreal &amp; Climeworks</div>
+        </div>
+        <div class="card-body">
+          <p style="font-size: 14px;"><strong>L'Oreal:</strong> Cam kết bền vững toàn diện. Đặt yêu cầu nghiêm ngặt với <strong>hàng nghìn nhà cung cấp toàn cầu</strong> về dấu chân carbon, sử dụng nước, đa dạng sinh học.</p>
+          <p style="font-size: 14px;"><strong>Climeworks (Thụy Sĩ):</strong> Xây nhà máy địa nhiệt ở Iceland có thể <strong>bắt CO₂ trực tiếp từ không khí</strong>. Hệ thống đầu tiên đạt <span class="hl-cyan">phát thải carbon âm</span> bằng cách chuyển khí thải thành đá.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">3 cách đánh giá hành động xanh</h3>
+
+    <ul class="num-list">
+      <li>
+        <div class="num brand">1</div>
+        <div class="content"><strong>Báo cáo Global Reporting Initiative (GRI)</strong>Hơn 7.500 công ty toàn cầu tự nguyện báo cáo. <span class="hl">Hơn 90% các công ty lớn nhất thế giới báo cáo theo chuẩn GRI.</span></div>
+      </li>
+      <li>
+        <div class="num brand">2</div>
+        <div class="content"><strong>Tiêu chuẩn ISO 14000</strong>Tiêu chuẩn quản lý môi trường. Đạt được ở <strong>hơn 155 quốc gia</strong>.</div>
+      </li>
+      <li>
+        <div class="num brand">3</div>
+        <div class="content"><strong>Danh sách Global 100</strong>100 tập đoàn bền vững nhất thế giới. Năm 2018: 59 công ty châu Âu, 22 Bắc Mỹ. <em>Top 3:</em> Dassault&nbsp;Systèmes (Pháp), Nestlé (Phần Lan), Valeo (Pháp).</div>
+      </li>
+    </ul>
+
+    <div class="stat-big bg-cyan">
+      <div class="sb-num">67%</div>
+      <div class="sb-label">trong <strong>250 công ty lớn nhất thế giới</strong> đã đặt mục tiêu cụ thể giảm phát thải carbon. Alcoa cam kết giảm <strong>50% đến 2025</strong>. Google cam kết <strong>gấp 3 mua năng lượng tái tạo đến 2025</strong>.</div>
+    </div>
+  </section>
+
+  <!-- LO 6.3 -->
+  <section class="section" id="lo3">
+    <span class="section-num">📍 Trang 5-7 · LO6.3</span>
+    <h2 class="section-title">Yếu tố dẫn đến hành vi <span class="underline">đạo&nbsp;đức</span></h2>
+
+    <div class="quote bg-yellow">
+      <em>Ethics</em> là các <strong>nguyên tắc đạo đức</strong> xác định hành vi đúng và sai.
+      <span class="quote-author">— Định nghĩa</span>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">5 bài kiểm tra ra quyết định đạo đức</h3>
+
+    <p>Robbins giới thiệu 5 bài kiểm tra đơn giản nhưng <strong>hiệu quả</strong> khi đối mặt với tình huống đạo đức:</p>
+
+    <div class="test-grid">
+      <div class="test-card">
+        <div class="tc-icon">⚖️</div>
+        <div class="tc-name">Golden Rule</div>
+        <p style="font-size: 13px; margin: 0; font-weight: 600;">Quy tắc vàng</p>
+        <div class="tc-q">Tôi có muốn người khác làm điều này với tôi không?</div>
+      </div>
+
+      <div class="test-card">
+        <div class="tc-icon">🌍</div>
+        <div class="tc-name">What-If-Everybody</div>
+        <p style="font-size: 13px; margin: 0; font-weight: 600;">Nếu mọi người đều làm</p>
+        <div class="tc-q">Tôi có muốn mọi người đều làm điều này không? Tôi có muốn sống trong thế giới như vậy không?</div>
+      </div>
+
+      <div class="test-card">
+        <div class="tc-icon">👨‍👩‍👧</div>
+        <div class="tc-name">Family Test</div>
+        <p style="font-size: 13px; margin: 0; font-weight: 600;">Bài kiểm tra gia đình</p>
+        <div class="tc-q">Bố mẹ/vợ chồng/người yêu/con cái sẽ cảm thấy thế nào nếu họ biết tôi làm điều này?</div>
+      </div>
+
+      <div class="test-card">
+        <div class="tc-icon">💭</div>
+        <div class="tc-name">Conscience Test</div>
+        <p style="font-size: 13px; margin: 0; font-weight: 600;">Bài kiểm tra lương tâm</p>
+        <div class="tc-q">Hành động này có đi ngược lại lương tâm tôi không? Tôi sẽ thấy có lỗi sau đó không?</div>
+      </div>
+
+      <div class="test-card">
+        <div class="tc-icon">📰</div>
+        <div class="tc-name">Front Page Test</div>
+        <p style="font-size: 13px; margin: 0; font-weight: 600;">Trang nhất / Mạng xã hội</p>
+        <div class="tc-q">Tôi sẽ cảm thấy thế nào nếu hành động này bị đăng trang nhất báo quê tôi hoặc phủ kín mạng xã hội?</div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-label">💼 Áp dụng tư vấn</span>
+      <p class="callout-body">
+        5 bài kiểm tra này dùng làm <strong>công cụ tự kiểm cá nhân</strong> trước khi làm điều khả nghi. Cũng dùng làm <strong>công cụ huấn luyện</strong> cho nhân viên — đơn giản, dễ nhớ, áp dụng được ngay.
+      </p>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-xl); margin-bottom: var(--gap-md);">5 yếu tố quyết định hành vi đạo đức/phi đạo đức</h3>
+
+    <div class="callout">
+      <span class="callout-label">🎯 Quan sát quan trọng</span>
+      <p class="callout-body">
+        Người <strong>thiếu cảm giác đạo đức mạnh</strong> ít có khả năng làm điều sai nếu <strong>bị ràng buộc</strong> bởi quy tắc, chính sách. Ngược lại, <span class="hl-pink">người rất đạo đức có thể bị tha hóa</span> bởi cấu trúc tổ chức và văn hóa cho phép hoặc khuyến khích hành vi phi đạo đức.
+      </p>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.4rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Yếu tố 1: Stage of Moral Development (Kohlberg)</h3>
+
+    <p>Theo <strong>Kohlberg</strong>, có <strong>3 cấp với 6 giai đoạn</strong>:</p>
+
+    <div class="kohlberg">
+      <div class="kohlberg-level">
+        <div class="kl-header">
+          <span class="kl-tag">CẤP 3</span>
+          <span class="kl-name">Principled · Có nguyên tắc</span>
+        </div>
+        <div class="kl-stage">
+          <span class="kl-stage-num">6</span>
+          <span>Tuân theo nguyên tắc đạo đức tự chọn dù vi phạm luật</span>
+        </div>
+        <div class="kl-stage">
+          <span class="kl-stage-num">5</span>
+          <span>Coi trọng quyền của người khác, duy trì giá trị tuyệt đối bất kể ý kiến đa số</span>
+        </div>
+      </div>
+
+      <div class="kohlberg-level">
+        <div class="kl-header">
+          <span class="kl-tag">CẤP 2</span>
+          <span class="kl-name">Conventional · Quy ước</span>
+        </div>
+        <div class="kl-stage">
+          <span class="kl-stage-num">4</span>
+          <span>Duy trì trật tự thông thường bằng cách hoàn thành nghĩa vụ đã đồng ý</span>
+        </div>
+        <div class="kl-stage">
+          <span class="kl-stage-num">3</span>
+          <span>Sống theo kỳ vọng của những người gần gũi</span>
+        </div>
+      </div>
+
+      <div class="kohlberg-level">
+        <div class="kl-header">
+          <span class="kl-tag">CẤP 1</span>
+          <span class="kl-name">Preconventional · Trước quy ước</span>
+        </div>
+        <div class="kl-stage">
+          <span class="kl-stage-num">2</span>
+          <span>Tuân thủ quy tắc chỉ khi điều đó vì lợi ích trước mắt</span>
+        </div>
+        <div class="kl-stage">
+          <span class="kl-stage-num">1</span>
+          <span>Bám vào quy tắc để tránh phạt thân thể</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-label">📌 4 kết luận từ nghiên cứu</span>
+      <p class="callout-body">
+        <strong>1.</strong> Người ta đi qua 6 giai đoạn theo thứ tự, không nhảy bước.<br>
+        <strong>2.</strong> Không có gì đảm bảo phát triển đạo đức tiếp tục — có thể dừng ở bất kỳ giai đoạn nào.<br>
+        <strong>3.</strong> <span class="hl-lime">Đa số người trưởng thành ở giai đoạn 4</span> — chỉ tuân thủ quy tắc và luật lệ xã hội.<br>
+        <strong>4.</strong> Giai đoạn càng cao, càng có xu hướng hành vi đạo đức. <strong>Giai đoạn 5</strong> sẽ thách thức các thông lệ tổ chức mà họ tin là sai.
+      </p>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.4rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Yếu tố 2: Individual Characteristics — 2 biến tính cách</h3>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="card-header bg-cyan">
+          <div class="card-num">BIẾN 1</div>
+          <div class="card-title">Ego Strength · Sức mạnh cái tôi</div>
+        </div>
+        <div class="card-body">
+          <p>Đo <strong>sức mạnh niềm tin của một người</strong>.</p>
+          <p>Người có ego strength cao <span class="hl-cyan">kháng cự được xung động hành động phi đạo đức</span>, hành động theo niềm tin. Họ thể hiện <strong>nhất quán hơn giữa phán đoán đạo đức và hành động đạo đức</strong>.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-yellow">
+          <div class="card-num">BIẾN 2</div>
+          <div class="card-title">Locus of Control · Quỹ tích kiểm soát</div>
+        </div>
+        <div class="card-body">
+          <p style="font-size: 14px;"><strong>Internal:</strong> Tin mình kiểm soát số phận → nhận trách nhiệm về hệ quả → dựa vào tiêu chuẩn nội tại → <span class="hl">nhất quán</span>.</p>
+          <p style="font-size: 14px;"><strong>External:</strong> Tin số phận do may rủi quyết định → ít nhận trách nhiệm → dựa vào lực lượng bên ngoài → ít nhất quán.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.4rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Yếu tố 3: Structural Variables (Biến số cấu trúc)</h3>
+
+    <div class="card">
+      <div class="card-header bg-ink">
+        <div class="card-num">CẤU TRÚC ẢNH HƯỞNG ĐẠO ĐỨC</div>
+        <div class="card-title">Hành vi cấp trên = yếu tố MẠNH NHẤT</div>
+      </div>
+      <div class="card-body">
+        <ul style="margin: 0; padding-left: 20px; font-size: 14px;">
+          <li><strong>Cấu trúc giảm sự mơ hồ và liên tục nhắc nhở</strong> về đạo đức → khuyến khích đạo đức</li>
+          <li><strong>Quy tắc và quy định chính thức</strong> giảm mơ hồ. Mô tả công việc và bộ quy tắc đạo đức là ví dụ</li>
+          <li><span class="hl">Hành vi của cấp trên là yếu tố ảnh hưởng MẠNH NHẤT.</span> Mọi người nhìn cấp trên làm gì để dùng làm benchmark</li>
+          <li><strong>Hệ thống đánh giá hiệu suất:</strong> Nếu chỉ đánh giá kết quả → áp lực làm "bất cứ điều gì cần thiết". Nên đánh giá <em>cả phương tiện lẫn kết quả</em></li>
+          <li><strong>Phân bổ phần thưởng:</strong> Càng phụ thuộc vào kết quả cụ thể → càng dễ thỏa hiệp tiêu chuẩn đạo đức</li>
+          <li><strong>Áp lực thời gian, cạnh tranh, chi phí</strong> càng cao → càng có khả năng thỏa hiệp</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.4rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Yếu tố 4: Organizational Culture</h3>
+
+    <p><strong>Văn hóa khuyến khích đạo đức cao</strong> là văn hóa cao về <em>adaptability, people orientation, integrity</em>. Văn hóa <strong>mạnh</strong> ảnh hưởng nhiều hơn văn hóa yếu. Trong văn hóa yếu, người ta dựa vào chuẩn mực tiểu văn hóa.</p>
+
+    <div class="callout warning">
+      <span class="callout-label">⚠️ Số liệu báo động</span>
+      <p class="callout-body">
+        Khoảng <strong>20% nhân viên</strong> cho biết công ty có văn hóa đạo đức mạnh — và <span class="hl-pink">gấp đôi số đó tin rằng văn hóa đạo đức công ty yếu hoặc đang yếu đi</span>.
+      </p>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.4rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Yếu tố 5: Issue Intensity — 6 đặc điểm cường độ</h3>
+
+    <div class="callout example">
+      <span class="callout-label">📌 Ví dụ minh họa</span>
+      <p class="callout-body">
+        Sinh viên không bao giờ định <strong>đột nhập văn phòng giáo viên để trộm bài thi</strong> — nhưng không nghĩ ngợi gì khi <strong>hỏi bạn đã học môn đó kỳ trước về câu hỏi trong bài thi</strong>. Đây là khác biệt về <span class="hl">cường độ vấn đề</span>.
+      </p>
+    </div>
+
+    <div class="intensity-grid">
+      <div class="int-card">
+        <div class="int-num">1</div>
+        <div class="int-name-en">Greatness of Harm</div>
+        <div class="int-name-vi">Mức độ tổn hại</div>
+        <p class="int-q">Có bao nhiêu người sẽ bị hại?</p>
+        <div class="int-ex"><em>Ví dụ:</em> Hành động làm 1.000 người mất việc tệ hơn ảnh hưởng 10 người.</div>
+      </div>
+
+      <div class="int-card">
+        <div class="int-num">2</div>
+        <div class="int-name-en">Consensus of Wrong</div>
+        <div class="int-name-vi">Đồng thuận hành động sai</div>
+        <p class="int-q">Có bao nhiêu đồng thuận rằng hành động này là sai?</p>
+        <div class="int-ex"><em>Ví dụ:</em> Đồng thuận hối lộ quan thuế ở Texas là sai cao hơn ở Mexico.</div>
+      </div>
+
+      <div class="int-card">
+        <div class="int-num">3</div>
+        <div class="int-name-en">Probability of Harm</div>
+        <div class="int-name-vi">Khả năng gây hại</div>
+        <p class="int-q">Khả năng hành động thực sự xảy ra và gây hại?</p>
+        <div class="int-ex"><em>Ví dụ:</em> Bán súng cho tên cướp khả năng gây hại cao hơn bán cho công dân tuân thủ pháp luật.</div>
+      </div>
+
+      <div class="int-card">
+        <div class="int-num">4</div>
+        <div class="int-name-en">Immediacy of Consequences</div>
+        <div class="int-name-vi">Hệ quả tức thời</div>
+        <p class="int-q">Bao lâu giữa hành động và hệ quả?</p>
+        <div class="int-ex"><em>Ví dụ:</em> Cắt phúc lợi hưu trí của người đang nghỉ hưu có hệ quả tức thời hơn cắt của người dưới 45 tuổi.</div>
+      </div>
+
+      <div class="int-card">
+        <div class="int-num">5</div>
+        <div class="int-name-en">Proximity to Victims</div>
+        <div class="int-name-vi">Gần nạn nhân</div>
+        <p class="int-q">Bạn cảm thấy gần (xã hội, tâm lý, vật lý) nạn nhân đến đâu?</p>
+        <div class="int-ex"><em>Ví dụ:</em> Sa thải ở đơn vị mình gần gũi hơn sa thải ở thành phố xa.</div>
+      </div>
+
+      <div class="int-card">
+        <div class="int-num">6</div>
+        <div class="int-name-en">Concentration of Effect</div>
+        <div class="int-name-vi">Tác động tập trung</div>
+        <p class="int-q">Tác động tập trung lên người liên quan thế nào?</p>
+        <div class="int-ex"><em>Ví dụ:</em> Từ chối 10 người với khiếu nại 10.000&nbsp;USD có tác động tập trung hơn từ chối 10.000 người khiếu nại 10&nbsp;USD.</div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-label">📌 Quy tắc tổng quát</span>
+      <p class="callout-body">
+        Càng nhiều người bị hại, càng đồng thuận đó là sai, càng có khả năng xảy ra, hệ quả càng nhanh, càng gần nạn nhân, tác động càng tập trung → <strong>cường độ vấn đề càng lớn</strong> → nhà quản trị càng có xu hướng <span class="hl-lime">hành xử có đạo đức</span>.
+      </p>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.4rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Đạo đức trong bối cảnh quốc tế</h3>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="card-header bg-pink">
+          <div class="card-num">LUẬT MỸ</div>
+          <div class="card-title">FCPA · Foreign Corrupt Practices Act</div>
+        </div>
+        <div class="card-body">
+          <ul style="margin: 0; padding-left: 20px; font-size: 14px;">
+            <li>Cấm thanh toán cho quan chức chính phủ nước ngoài để giành/duy trì kinh doanh</li>
+            <li><strong>Không cấm</strong> các khoản nhỏ cho công chức làm hành chính khi đó là phần được chấp nhận của kinh doanh ở nước đó</li>
+            <li><strong>2017:</strong> Bộ Tư pháp Mỹ đưa ra <strong>13 hành động thực thi FCPA</strong>, thu <strong>1,13&nbsp;tỷ&nbsp;USD tiền phạt</strong></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-cyan">
+          <div class="card-num">UN GLOBAL COMPACT</div>
+          <div class="card-title">10 nguyên tắc · 4 lĩnh vực</div>
+        </div>
+        <div class="card-body">
+          <ul style="margin: 0; padding-left: 20px; font-size: 14px;">
+            <li><strong>Human Rights</strong> (2 nguyên tắc)</li>
+            <li><strong>Labor Standards</strong> (4 nguyên tắc) — không lao động cưỡng bức, lao động trẻ em, phân biệt đối xử</li>
+            <li><strong>Environment</strong> (3 nguyên tắc)</li>
+            <li><strong>Anti-Corruption</strong> (1 nguyên tắc) — chống tham nhũng, tống tiền, hối lộ</li>
+          </ul>
+          <p style="margin-top: var(--gap-sm); font-size: 13px;">Hơn <strong>9.700 người tham gia từ trên 160 quốc gia</strong> đã cam kết — sáng kiến công dân doanh nghiệp tự nguyện <span class="hl-cyan">lớn nhất thế giới</span>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LO 6.4 -->
+  <section class="section" id="lo4">
+    <span class="section-num">📍 Trang 8-9 · LO6.4</span>
+    <h2 class="section-title">Sáu cách <span class="underline">khuyến&nbsp;khích</span> hành vi đạo đức</h2>
+
+    <div class="callout warning">
+      <span class="callout-label">⚠️ Bài học cảnh báo từ Enron</span>
+      <p class="callout-body">
+        <strong>Enron</strong> — thường được gọi là "hình ảnh tiêu biểu" của sai phạm doanh nghiệp — đã liệt kê các giá trị <strong>trong báo cáo thường niên cuối cùng</strong> mà hầu hết coi là đạo đức: <em>giao tiếp, tôn trọng, chính trực, xuất sắc</em>. Nhưng <span class="hl-pink">cách top management hành xử không phản ánh các giá trị đó chút nào</span>.<br><br>
+        Không có gì đảm bảo chương trình đạo đức được thiết kế tốt sẽ dẫn đến kết quả mong muốn.
+      </p>
+    </div>
+
+    <div class="enc-grid">
+      <div class="enc-card">
+        <div class="ec-step">1</div>
+        <div class="ec-en">Employee Selection</div>
+        <div class="ec-vi">Tuyển chọn nhân viên</div>
+        <p class="ec-desc">Bài kiểm tra <strong>integrity trước tuyển dụng</strong>. Hỏi cách ứng viên xử lý tình huống đạo đức ở công việc trước. Predictor tốt nhất của hành vi tương lai là <span class="hl">hành vi quá khứ</span>.</p>
+      </div>
+
+      <div class="enc-card">
+        <div class="ec-step">2</div>
+        <div class="ec-en">Code of Ethics</div>
+        <div class="ec-vi">Bộ quy tắc đạo đức</div>
+        <p class="ec-desc"><strong>90% các tập đoàn Mỹ</strong> có. Top 5 giá trị cốt lõi: <em>chính trực, tinh thần đồng đội, tôn trọng, đổi mới, tập trung khách hàng</em>. Một mình không đủ — phụ thuộc cách lãnh đạo hỗ trợ.</p>
+      </div>
+
+      <div class="enc-card">
+        <div class="ec-step">3</div>
+        <div class="ec-en">Leadership at the Top</div>
+        <div class="ec-vi">Lãnh đạo từ trên</div>
+        <p class="ec-desc"><strong>Những gì họ LÀM quan trọng hơn nhiều những gì họ NÓI.</strong> <em>Texas&nbsp;Instruments</em> buộc CEO Brian&nbsp;Crutcher từ chức sau chưa đến 2&nbsp;tháng vì hành vi không nhất quán với đạo đức.</p>
+      </div>
+
+      <div class="enc-card">
+        <div class="ec-step">4</div>
+        <div class="ec-en">Job Goals</div>
+        <div class="ec-vi">Mục tiêu công việc</div>
+        <p class="ec-desc">Mục tiêu cụ thể và thực tế. <strong>Mục tiêu không thực tế</strong> có thể tạo vấn đề đạo đức — dưới áp lực, nhân viên đạo đức cảm thấy không có lựa chọn nào ngoài làm bất cứ điều gì cần thiết.</p>
+      </div>
+
+      <div class="enc-card">
+        <div class="ec-step">5</div>
+        <div class="ec-en">Ethics Training</div>
+        <div class="ec-vi">Đào tạo đạo đức</div>
+        <p class="ec-desc"><strong>Walt&nbsp;Disney</strong> — số 3 trong danh sách công ty có danh tiếng tốt nhất thế giới của Forbes. Bộ <em>"Standards of Business Conduct"</em> dài <strong>43 trang</strong>.</p>
+      </div>
+
+      <div class="enc-card">
+        <div class="ec-step">6</div>
+        <div class="ec-en">Independent Audits</div>
+        <div class="ec-vi">Kiểm toán xã hội độc lập</div>
+        <p class="ec-desc"><strong>Nỗi sợ bị phát hiện</strong> là rào cản quan trọng đối với phi đạo đức. Kiểm toán viên nên chịu trách nhiệm với <span class="hl">hội đồng quản trị</span> và trình kết quả trực tiếp.</p>
+      </div>
+    </div>
+
+    <div class="callout warning">
+      <span class="callout-label">⚠️ Sự thật cảnh báo về Code of Ethics</span>
+      <p class="callout-body">
+        Khảo sát nhân viên doanh nghiệp Mỹ cho thấy <strong>41% đã quan sát vi phạm đạo đức hoặc pháp lý</strong> trong 12&nbsp;tháng trước, và <span class="hl-pink">37% trong số đó không báo cáo</span>.<br><br>
+        Hiệu quả của bộ quy tắc <strong>phụ thuộc nhiều vào việc lãnh đạo có hỗ trợ chúng không và cách xử lý người vi phạm</strong>.
+      </p>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.4rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Khi nào đào tạo đạo đức có hiệu quả?</h3>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="card-header bg-lime">
+          <div class="card-num">CÓ HIỆU QUẢ KHI</div>
+          <div class="card-title">Kết hợp 4 yếu tố</div>
+        </div>
+        <div class="card-body">
+          <ul style="margin: 0; padding-left: 20px; font-size: 14px;">
+            <li>Kết hợp với <strong>Bộ quy tắc đạo đức</strong></li>
+            <li><strong>Mẫu hình</strong> từ top management</li>
+            <li><strong>Chính sách trách nhiệm</strong></li>
+            <li><strong>Kiểm toán đạo đức định kỳ</strong></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-pink">
+          <div class="card-num">KHÔNG HIỆU QUẢ KHI</div>
+          <div class="card-title">4 lỗi phổ biến</div>
+        </div>
+        <div class="card-body">
+          <ul style="margin: 0; padding-left: 20px; font-size: 14px;">
+            <li>Dựa vào tình huống và câu chuyện <strong>trừu tượng</strong></li>
+            <li>Dùng <strong>trắc nghiệm</strong> thay vì cân nhắc và phán đoán</li>
+            <li><strong>Tổ chức rời rạc</strong></li>
+            <li><strong>Mâu thuẫn với hệ thống thưởng</strong> nhấn mạnh kết quả với chi phí phương tiện</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LO 6.5 -->
+  <section class="section" id="lo5">
+    <span class="section-num">📍 Trang 10 · LO6.5</span>
+    <h2 class="section-title">Bốn vấn đề <span class="underline">hiện&nbsp;tại</span></h2>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.4rem; margin-bottom: var(--gap-md);">Vấn đề 1: Bảo vệ Whistle-Blowers</h3>
+
+    <p><em>Whistle-blowing</em> là <strong>hành động của cá nhân trong tổ chức tiết lộ thông tin để báo cáo và sửa tham nhũng</strong>.</p>
+
+    <div class="stat-big bg-pink">
+      <div class="sb-num">53%</div>
+      <div class="sb-label">nhân viên Mỹ tố cáo sai trái nội bộ <strong>phải chịu trả thù</strong> tại nơi làm việc.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header bg-cyan">
+        <div class="card-num">OSHA · 5 YẾU TỐ THEN CHỐT</div>
+        <div class="card-title">Chương trình chống trả thù</div>
+      </div>
+      <div class="card-body">
+        <ul class="num-list">
+          <li><div class="num brand">1</div><div class="content"><strong>Management commitment</strong>Cam kết giải quyết lo ngại về vi phạm pháp luật và ngăn trả thù.</div></li>
+          <li><div class="num brand">2</div><div class="content"><strong>Compliance concern response system</strong>Thủ tục báo cáo bí mật, đánh giá công bằng, phản hồi kịp thời.</div></li>
+          <li><div class="num brand">3</div><div class="content"><strong>Anti-retaliation response system</strong>Kênh báo cáo trả thù <strong>độc lập</strong>, bỏ qua nhà quản trị bị nghi trả thù.</div></li>
+          <li><div class="num brand">4</div><div class="content"><strong>Anti-retaliation training</strong>Đào tạo cho tất cả gồm cả ban quản trị về luật, quyền, thủ tục.</div></li>
+          <li><div class="num brand">5</div><div class="content"><strong>Program oversight</strong>Giám sát chặt chẽ qua quy trình theo dõi và kiểm toán độc lập.</div></li>
+        </ul>
+        <div class="callout warning" style="margin-top: var(--gap-md);">
+          <span class="callout-label">⚖️ Sarbanes-Oxley Act</span>
+          <p class="callout-body">
+            Nhà quản trị trả thù nhân viên báo cáo vi phạm phải đối mặt án phạt nghiêm: <strong>10 năm tù</strong>.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.4rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Vấn đề 2: Khởi nghiệp xã hội</h3>
+
+    <p><em>Social entrepreneurship</em> là <strong>hoạt động khởi nghiệp với mục đích xã hội nhúng vào</strong>.</p>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="card-header bg-yellow">
+          <div class="card-num">MINH HỌA 1</div>
+          <div class="card-title">TOMS Shoes &amp; Microfinance</div>
+        </div>
+        <div class="card-body">
+          <p style="font-size: 14px;"><strong>TOMS Shoes (Mỹ):</strong> Mô hình <em>one-for-one</em> — mỗi đôi giày bán ra, tặng một đôi cho người cần.</p>
+          <p style="font-size: 14px;"><strong>Microfinance Bangladesh:</strong> Cung cấp các khoản vay nhỏ cho phụ nữ để bắt đầu kinh doanh nhỏ. <span class="hl">Yếu tố lớn giảm nghèo nông thôn</span>.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-cyan">
+          <div class="card-num">MINH HỌA 2</div>
+          <div class="card-title">PATH (Seattle)</div>
+        </div>
+        <div class="card-body">
+          <p style="font-size: 14px;">Dùng công nghệ chi phí thấp để cung cấp giải pháp y tế cần thiết. Đã phát triển:</p>
+          <ul style="margin: 0; padding-left: 20px; font-size: 14px;">
+            <li>Bộ dụng cụ <strong>sinh sản sạch</strong></li>
+            <li>Bộ kit thử nghiệm phòng lab <strong>cỡ thẻ tín dụng</strong></li>
+            <li>Ống tiêm vắc-xin <strong>dùng một lần</strong></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.4rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Vấn đề 3: Truyền thông xã hội</h3>
+
+    <div class="quote bg-cyan">
+      Có khả năng cao là <strong>ai đó, ở đâu đó, đang dùng truyền thông xã hội nói về tổ chức của bạn ngay bây giờ</strong>. Vì sao quản trị không dùng truyền thông xã hội để chủ động kể câu chuyện của mình?
+      <span class="quote-author">— 2 chuyên gia PR</span>
+    </div>
+
+    <p>Nghiên cứu trên <strong>20 công ty hàng không vũ trụ và quốc phòng toàn cầu</strong>: tất cả 20 công ty đều xuất bản ít nhất 4 trong các sáng kiến (môi trường, cộng đồng, đa dạng, quan hệ nhân viên, quyền con người). Kết luận: <span class="hl-cyan">truyền thông xã hội có thể nâng cao danh tiếng công ty</span>.</p>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.4rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Vấn đề 4: Từ thiện doanh nghiệp</h3>
+
+    <p>Top 10 Fortune&nbsp;500 về từ thiện gồm: <strong>Walmart, Google, ExxonMobil</strong>.</p>
+
+    <div class="card">
+      <div class="card-header bg-lime">
+        <div class="card-num">GOOGLE FOUNDATION</div>
+        <div class="card-title">100 triệu USD/năm trong tài trợ</div>
+      </div>
+      <div class="card-body">
+        <p>Gần đây tặng:</p>
+        <ul style="margin: 0; padding-left: 20px; font-size: 14px;">
+          <li><strong>2,4 triệu USD</strong> cho tổ chức cung cấp tiền mặt trực tiếp cho người nghèo</li>
+          <li><strong>750.000 USD</strong> giúp trường khiếm thị tạo app điều hướng</li>
+          <li><strong>1 triệu USD</strong> cho nhóm vận động cải cách tư pháp hình sự</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="stat-big bg-yellow">
+      <div class="sb-num">55%</div>
+      <div class="sb-label">người tiêu dùng online <strong>sẵn sàng trả thêm</strong> cho sản phẩm và dịch vụ từ công ty cam kết tác động xã hội và môi trường tích cực (Nielsen).</div>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-label">💡 Win-win</span>
+      <p class="callout-body">
+        Doanh nghiệp <strong>đáp ứng yêu cầu khách hàng + tăng lợi nhuận dài hạn</strong> qua quan hệ công chúng tích cực. Có bằng chứng từ thiện <strong>tốt cho tinh thần nhân viên</strong> — là nguồn tự hào và tăng khả năng thu hút nhân sự đủ tiêu chuẩn.
+      </p>
+    </div>
+  </section>
+
+  <!-- CASES -->
+  <section class="section" id="cases">
+    <span class="section-num">📍 Bài học</span>
+    <h2 class="section-title">Hai <span class="underline">case&nbsp;study</span>: Siemens &amp; Enron</h2>
+
+    <div class="card">
+      <div class="card-header" style="background: var(--brand); color: var(--paper);">
+        <div class="card-num">CASE 1 · SIEMENS 2002-2006</div>
+        <div class="card-title">Khi văn hóa tổ chức tạo ra ổ tham nhũng</div>
+      </div>
+      <div class="card-body">
+        <p><strong>Vụ scandal:</strong> Giữa 2002-2006, kế toán cấp cao ở Siemens (gã khổng lồ kỹ thuật Đức) giám sát <strong>ngân sách hối lộ hàng năm 40-50 triệu USD</strong>. Nhà quản trị và đội bán hàng dùng quỹ đen để hối lộ quan chức tham nhũng toàn cầu. Hàng trăm nhân viên tham gia tạo hợp đồng tư vấn giả, hóa đơn giả, công ty vỏ bọc.</p>
+
+        <h4 style="font-family: var(--font-display); font-weight: 700; margin-top: var(--gap-md); font-size: 1.15rem;">Hậu quả:</h4>
+        <ul style="margin: 0; padding-left: 20px; font-size: 14px;">
+          <li>Danh tiếng bị tổn hại nghiêm trọng</li>
+          <li>Trả hơn <strong>2,6 tỷ USD</strong> tiền phạt và phí ở Đức và Mỹ</li>
+        </ul>
+
+        <h4 style="font-family: var(--font-display); font-weight: 700; margin-top: var(--gap-md); font-size: 1.15rem;">Phản ứng được hoan nghênh rộng rãi:</h4>
+        <ul class="num-list" style="margin-top: var(--gap-sm);">
+          <li><div class="num">!</div><div class="content">Cải tổ ban quản trị cấp cao — CEO và chủ tịch ra đi</div></li>
+          <li><div class="num">!</div><div class="content">Đội điều hành mới ủy quyền <strong>4 cuộc điều tra ngoài</strong>, thuê luật sư New&nbsp;York lớn</div></li>
+          <li><div class="num">!</div><div class="content">Chi hơn <strong>1 tỷ USD</strong> cho điều tra và cải cách</div></li>
+          <li><div class="num">!</div><div class="content">Thuê <strong>hơn 500 cán bộ tuân thủ toàn thời gian</strong> (so với 86 trước đây)</div></li>
+          <li><div class="num">!</div><div class="content">Lập đường dây nóng tuân thủ</div></li>
+          <li><div class="num">!</div><div class="content">Trong 2 năm đầu, <strong>hơn 200.000 nhân viên được đào tạo</strong> về chống tham nhũng</div></li>
+          <li><div class="num">!</div><div class="content">Rút khỏi các nước nổi tiếng tham nhũng</div></li>
+          <li><div class="num">!</div><div class="content">Khởi xướng <strong>hơn 900 hành động kỷ luật</strong> nội bộ</div></li>
+        </ul>
+
+        <div class="callout warning" style="margin-top: var(--gap-md);">
+          <span class="callout-label">🔍 Phát hiện về nguyên nhân</span>
+          <p class="callout-body">
+            <strong>1.</strong> Chiến lược tăng trưởng quá mạnh ép nhà quản trị "làm bất cứ điều gì cần thiết"<br>
+            <strong>2.</strong> Cấu trúc tổ chức cho phép các bộ phận tự điều hành<br>
+            <strong>3.</strong> Kiểm soát kế toán kém<br>
+            <strong>4.</strong> <span class="hl-pink">Văn hóa doanh nghiệp không chỉ dung túng mà còn ngầm khuyến khích hối lộ</span>
+          </p>
+        </div>
+
+        <div class="quote bg-lime" style="margin-top: var(--gap-md);">
+          Văn hóa doanh nghiệp + cấu trúc tổ chức + áp lực mục tiêu → <strong>ngay cả công ty lâu đời và uy tín cũng có thể trở thành ổ tham nhũng</strong>.
+          <span class="quote-author">— Bài học cốt lõi từ Siemens</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header bg-ink">
+        <div class="card-num">CASE 2 · ENRON</div>
+        <div class="card-title">Giá trị viết trên giấy không bằng hành động</div>
+      </div>
+      <div class="card-body">
+        <p>Enron đã liệt kê các giá trị <strong>trong báo cáo thường niên cuối cùng</strong> mà hầu hết coi là đạo đức:</p>
+
+        <div class="quote bg-yellow">
+          Giao tiếp · Tôn trọng · Chính trực · Xuất sắc
+          <span class="quote-author">— Giá trị Enron tuyên bố</span>
+        </div>
+
+        <p>Nhưng <strong>cách top management hành xử không phản ánh các giá trị đó chút nào</strong>.</p>
+
+        <div class="callout tip">
+          <span class="callout-label">💡 Bài học</span>
+          <p class="callout-body">
+            <span class="hl">Giá trị viết trên giấy không có giá trị nếu top management không hành xử đúng.</span> Đây là lý do <strong>"Lãnh đạo từ trên" (Sáng kiến 3)</strong> là yếu tố quyết định trong 6 cách khuyến khích đạo đức.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OVERVIEW -->
+  <section class="section" id="overview">
+    <span class="section-num">📍 Trang 11</span>
+    <h2 class="section-title">Tổng <span class="underline">quan</span> và liên hệ Chương 1-5</h2>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-bottom: var(--gap-md);">Sơ đồ tổng thể Chương 6</h3>
+
+    <div class="card">
+      <div class="card-header bg-ink">
+        <div class="card-num">4 LỚP CỦA CHƯƠNG 6</div>
+        <div class="card-title">Trách nhiệm xã hội → 5 yếu tố đạo đức → 6 cách khuyến khích → 4 vấn đề hiện tại</div>
+      </div>
+      <div class="card-body" style="font-family: var(--font-mono); font-size: 13px; line-height: 1.7;">
+        <p style="margin: 0 0 var(--gap-sm);"><strong>TRÁCH NHIỆM XÃ HỘI VÀ ĐẠO ĐỨC</strong><br>
+        Classical view vs. Socioeconomic view</p>
+
+        <p style="margin: 0 0 var(--gap-sm); padding-left: 20px;">↓<br>
+        <strong>3 MỨC TRÁCH NHIỆM:</strong><br>
+        Social obligation · Social responsiveness · Social responsibility</p>
+
+        <p style="margin: 0 0 var(--gap-sm); padding-left: 20px;">↓ ↓<br>
+        <strong>QUẢN TRỊ XANH</strong> · <strong>ĐẠO ĐỨC CÁ NHÂN</strong><br>
+        Light green → Dark green &nbsp;&nbsp;&nbsp;&nbsp; 5 yếu tố ảnh hưởng</p>
+
+        <p style="margin: 0 0 var(--gap-sm); padding-left: 20px;">↓<br>
+        <strong>6 CÁCH KHUYẾN KHÍCH ĐẠO ĐỨC:</strong><br>
+        Tuyển chọn · Code · Lãnh đạo · Mục tiêu · Đào tạo · Kiểm toán</p>
+
+        <p style="margin: 0; padding-left: 20px;">↓<br>
+        <strong>4 VẤN ĐỀ HIỆN TẠI:</strong><br>
+        Whistle-blowers · Khởi nghiệp xã hội · Truyền thông xã hội · Từ thiện</p>
+      </div>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Liên hệ với các chương trước</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Chương</th>
+            <th>Đóng góp</th>
+            <th>Liên hệ với Chương 6</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Chương 1</td><td>4 chức năng POLC</td><td>Đạo đức là một dimension xuyên suốt cả 4 chức năng</td></tr>
+          <tr><td>Chương 2</td><td>12 thiên kiến ra quyết định</td><td>Yếu tố "Individual characteristics" mở rộng các thiên kiến này</td></tr>
+          <tr><td>Chương 3</td><td>Văn hóa tổ chức + Pressure groups</td><td>Pressure groups là một phần của bối cảnh xã hội; văn hóa ảnh hưởng đạo đức</td></tr>
+          <tr><td>Chương 4</td><td>Quản trị toàn cầu + Hofstede</td><td>Đạo đức có khác biệt giữa văn hóa quốc gia; FCPA, UN Global Compact</td></tr>
+          <tr><td>Chương 5</td><td>Quản trị đa dạng</td><td>Phân biệt đối xử là vi phạm đạo đức; cả hai chương đều đề cập trách nhiệm đạo đức</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-label">💼 Hệ quả cho thực hành tư vấn</span>
+      <p class="callout-body">
+        Một dự án tư vấn về đạo đức và CSR cần đi qua <strong>5 câu hỏi cốt lõi</strong>:
+      </p>
+      <ol style="margin: 0; padding-left: 20px; font-size: 14px;">
+        <li><strong>Mức nào</strong> (obligation / responsiveness / responsibility)?</li>
+        <li><strong>Cách "đi xanh" hiện tại</strong> là gì? Phù hợp với năng lực và chiến lược không?</li>
+        <li><strong>Áp lực đạo đức</strong> đang đến từ đâu (cấu trúc, văn hóa, mục tiêu không thực tế)?</li>
+        <li><strong>6 cách khuyến khích đạo đức</strong> đã triển khai chưa? Cái nào là điểm yếu?</li>
+        <li><strong>Có rủi ro pháp lý hoặc danh tiếng tiềm ẩn</strong> nào (như Siemens, Wells&nbsp;Fargo)?</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- CHEATSHEET -->
+  <section class="section" id="cheatsheet">
+    <span class="section-num">📍 Trang 12</span>
+    <h2 class="section-title">Bảng <span class="underline">tra&nbsp;cứu</span> nhanh (Cheatsheet)</h2>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.4rem; margin-bottom: var(--gap-md);">5 bài kiểm tra đạo đức cá nhân</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 30%;">Bài kiểm tra</th>
+            <th>Câu hỏi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Golden Rule</td><td>Tôi muốn người khác làm vậy với tôi không?</td></tr>
+          <tr><td>What-If-Everybody</td><td>Nếu mọi người đều làm điều này, thế giới ra sao?</td></tr>
+          <tr><td>Family</td><td>Nếu gia đình biết, họ nghĩ thế nào?</td></tr>
+          <tr><td>Conscience</td><td>Lương tâm có cắn rứt không?</td></tr>
+          <tr><td>Front Page</td><td>Nếu đăng trang nhất, tôi cảm thấy thế nào?</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.4rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">6 yếu tố cường độ vấn đề đạo đức</h3>
+
+    <p>Hỏi: cường độ càng lớn nếu...</p>
+
+    <ul class="num-list">
+      <li><div class="num brand">1</div><div class="content">Bao nhiêu người bị hại? <span class="hl">càng nhiều → cường độ cao</span></div></li>
+      <li><div class="num brand">2</div><div class="content">Đồng thuận rằng đây là sai? <span class="hl">càng đồng thuận → cao</span></div></li>
+      <li><div class="num brand">3</div><div class="content">Khả năng xảy ra? <span class="hl">càng cao → cường độ cao</span></div></li>
+      <li><div class="num brand">4</div><div class="content">Hệ quả tức thời? <span class="hl">càng nhanh → cao</span></div></li>
+      <li><div class="num brand">5</div><div class="content">Gần nạn nhân? <span class="hl">càng gần → cao</span></div></li>
+      <li><div class="num brand">6</div><div class="content">Tác động tập trung? <span class="hl">càng tập trung → cao</span></div></li>
+    </ul>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.4rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Thứ tự ưu tiên khi tư vấn cải thiện</h3>
+
+    <div class="card">
+      <div class="card-header" style="background: var(--brand); color: var(--paper);">
+        <div class="card-num">QUY TRÌNH 6 BƯỚC</div>
+        <div class="card-title">Áp dụng được cho mọi khách hàng</div>
+      </div>
+      <div class="card-body">
+        <ul class="num-list">
+          <li><div class="num brand">1</div><div class="content"><strong>Đảm bảo cam kết của top management.</strong>Không có thì không làm gì khác — như Enron.</div></li>
+          <li><div class="num brand">2</div><div class="content"><strong>Đánh giá hiện trạng</strong> (5 yếu tố ảnh hưởng đạo đức)</div></li>
+          <li><div class="num brand">3</div><div class="content"><strong>Sửa cấu trúc và mục tiêu trước.</strong>Đừng đào tạo đạo đức nếu cấu trúc khuyến khích cắt góc.</div></li>
+          <li><div class="num brand">4</div><div class="content"><strong>Xây bộ quy tắc đạo đức + đào tạo + kiểm toán</strong></div></li>
+          <li><div class="num brand">5</div><div class="content"><strong>Mở kênh whistle-blowing có bảo vệ</strong></div></li>
+          <li><div class="num brand">6</div><div class="content"><strong>Cân nhắc social entrepreneurship + corporate philanthropy</strong></div></li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.4rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Phân biệt cặp khái niệm dễ nhầm</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 40%;">Cặp</th>
+            <th>Phân biệt</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Classical view vs. Socioeconomic view</td><td>Cổ điển = chỉ tối đa hóa lợi nhuận; Kinh tế-xã hội = vượt qua lợi nhuận để bảo vệ phúc lợi xã hội</td></tr>
+          <tr><td>Social obligation vs. responsiveness vs. responsibility</td><td>Nghĩa vụ = tối thiểu pháp lý; Đáp ứng = phản ứng chuẩn xã hội; Trách nhiệm = chủ động làm điều đúng</td></tr>
+          <tr><td>Light green vs. Dark green</td><td>Light = chỉ làm theo luật; Dark = activist, chủ động bảo vệ</td></tr>
+          <tr><td>Ego strength vs. Locus of control</td><td>Ego strength = sức mạnh niềm tin; Locus of control = tin mình kiểm soát số phận hay không</td></tr>
+          <tr><td>Internal vs. External locus</td><td>Internal = tin mình kiểm soát, nhận trách nhiệm; External = tin số phận, ít trách nhiệm</td></tr>
+          <tr><td>Code of ethics vs. Ethics training</td><td>Code = tuyên bố chính thức; Training = chương trình đào tạo</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-label">💼 3 câu hỏi vàng cho consultant</span>
+      <p class="callout-body">
+        <strong>1.</strong> <em>"Trong các khoản chi về CSR, bao nhiêu phần là social obligation, bao nhiêu là social responsibility?"</em> (Phân biệt làm vì luật vs. làm vì giá trị)<br>
+        <strong>2.</strong> <em>"Khi áp lực mục tiêu cao, đâu là nơi đầu tiên nhân viên cắt góc?"</em> (Câu này lộ ra văn hóa thực)<br>
+        <strong>3.</strong> <em>"Có ai bị trừng phạt vì hành vi phi đạo đức trong 12&nbsp;tháng qua không?"</em> (Câu này kiểm tra cam kết của top management)
+      </p>
+    </div>
+
+    <div class="callout warning">
+      <span class="callout-label">⚠️ Cảnh báo cho Việt Nam</span>
+      <p class="callout-body">
+        <strong>FCPA</strong> là luật Mỹ — không áp dụng trực tiếp với doanh nghiệp Việt, nhưng nếu doanh nghiệp Việt làm việc với khách hàng/đối tác Mỹ, họ có thể yêu cầu tuân thủ.<br><br>
+        Việt&nbsp;Nam có <strong>Luật Phòng chống tham nhũng</strong> — cần biết khi tư vấn.<br><br>
+        <span class="hl-pink">"Quà tặng truyền thống" trong văn hóa kinh doanh Việt có thể bị coi là hối lộ theo chuẩn quốc tế. Đây là vùng xám lớn cần xử lý cẩn thận.</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- REVIEW -->
+  <section class="section" id="review">
+    <span class="section-num">📍 Trang 13</span>
+    <h2 class="section-title">Lộ trình <span class="underline">ôn&nbsp;tập</span> và 2 nguyên tắc nhớ lâu</h2>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="card-header" style="background: var(--brand); color: var(--paper);">
+          <div class="card-num">NGUYÊN TẮC 1</div>
+          <div class="card-title">Active Recall · Chủ động gợi nhớ</div>
+        </div>
+        <div class="card-body">
+          <p>Đọc lại <strong>không phải ôn tập</strong>. Phải kéo từ não ra.</p>
+          <p>Cách hiệu quả: <span class="hl">gập tài liệu, viết ra giấy, nói thành tiếng</span>. Khi bí thì tra. Quá trình "moi từ trí nhớ" tạo ra trí nhớ bền.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-ink">
+          <div class="card-num">NGUYÊN TẮC 2</div>
+          <div class="card-title">Spaced Repetition · Lặp lại ngắt quãng</div>
+        </div>
+        <div class="card-body">
+          <p>Khoảng cách thời gian quan trọng hơn thời lượng.</p>
+          <p>Học <strong>7 lần × 10 phút cách quãng</strong> hiệu quả hơn nhiều so với <strong>1 lần 70 phút</strong>. Đừng nhồi.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.4rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Lộ trình 5 lần ôn tập</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Lần</th>
+            <th>Thời điểm</th>
+            <th>Thời gian</th>
+            <th>Hoạt động</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>L1</strong></td><td>Cuối ngày học (Ngày 0)</td><td>15&nbsp;phút</td><td>Lướt qua Cheatsheet. Nhắc lại: 3&nbsp;mức trách nhiệm, 4&nbsp;cách đi xanh, 5&nbsp;yếu tố đạo đức, 6&nbsp;cách khuyến khích, 4&nbsp;vấn đề hiện tại.</td></tr>
+          <tr><td><strong>L2</strong></td><td>Ngày 1</td><td>20&nbsp;phút</td><td><strong>Gập tài liệu</strong>. Vẽ sơ đồ tổng thể Chương 6. Viết 5&nbsp;bài kiểm tra đạo đức và 6&nbsp;yếu tố cường độ vấn đề. Làm 10&nbsp;flashcards.</td></tr>
+          <tr><td><strong>L3</strong></td><td>Ngày 3</td><td>30&nbsp;phút</td><td><strong>Áp khái niệm vào case thực tế.</strong> Chọn 1 doanh nghiệp Việt bạn quen. Phân tích: ở mức nào? Đi xanh thế nào? Có dấu hiệu áp lực đạo đức gì?</td></tr>
+          <tr><td><strong>L4</strong></td><td>Ngày 7</td><td>30&nbsp;phút</td><td><strong>Hệ thống hóa.</strong> Vẽ bằng tay sơ đồ tổng thể. Đặc biệt nhớ <span class="hl">5 yếu tố ảnh hưởng đạo đức và 6 yếu tố cường độ</span>. Hoàn thành flashcards.</td></tr>
+          <tr><td><strong>L5</strong></td><td>Ngày 16</td><td>45&nbsp;phút</td><td><strong>Giảng cho người khác</strong> hoặc ghi âm. Đặc biệt giảng <em>"Bài học Siemens"</em> và <em>"Wells&nbsp;Fargo"</em> — minh họa cách văn hóa và cấu trúc tổ chức tạo ra phi đạo đức.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.4rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Ghi nhớ dài hạn</h3>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="card-header bg-lime">
+          <div class="card-num">L6</div>
+          <div class="card-title">Ngày 35 · 25&nbsp;phút</div>
+        </div>
+        <div class="card-body">
+          <p>Lướt cheatsheet + làm flashcards toàn bộ.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header bg-yellow">
+          <div class="card-num">L7</div>
+          <div class="card-title">Ngày 75 · 25&nbsp;phút</div>
+        </div>
+        <div class="card-body">
+          <p>Như Lần 6. Sau lần này, kiến thức đã chuyển sang vùng <span class="hl">trí nhớ dài hạn rất bền</span>.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-label">💡 Mẹo bonus cho Chương 6</span>
+      <p class="callout-body">
+        <strong>5 bài kiểm tra ra quyết định đạo đức (Trang 5) là phần áp dụng được ngay nhất.</strong> Lần tới khi đối mặt tình huống khả nghi (thậm chí cá nhân), thử áp dụng. Đặc biệt <strong>bài "Front&nbsp;Page&nbsp;Test"</strong> rất mạnh — <em>nếu bạn không muốn bị đăng trang nhất, đừng làm</em>.<br><br>
+        <strong>Giữ một "ethics audit checklist"</strong> — sao chép Cheatsheet trang 12 thành biểu mẫu phỏng vấn 30&nbsp;phút.<br><br>
+        <strong>Ghi nhớ 2 case ví dụ làm "neo":</strong>
+      </p>
+      <ul style="margin: 0; padding-left: 20px; font-size: 14px;">
+        <li><strong>Siemens (2002-2006):</strong> minh họa cách văn hóa + cấu trúc tổ chức + áp lực mục tiêu tạo ổ tham nhũng. Sửa được nhưng tốn 1&nbsp;tỷ&nbsp;USD.</li>
+        <li><strong>Enron:</strong> minh họa rằng <em>giá trị viết trên giấy không có giá trị nếu top management không hành xử đúng</em>.</li>
+      </ul>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.4rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Kết nối với các chương sau</h3>
+
+    <div class="quote bg-cyan">
+      Chương 6 là <strong>chương thứ 3 trong nhóm 4 chương về môi trường mở rộng</strong>. 5 yếu tố ảnh hưởng đạo đức và 6 yếu tố cường độ vấn đề sẽ được nhắc lại ở:
+    </div>
+
+    <ul class="num-list">
+      <li><div class="num">7</div><div class="content"><strong>Chương 7 (thay đổi và đổi mới)</strong>Các vấn đề đạo đức trong việc triển khai thay đổi</div></li>
+      <li><div class="num">12</div><div class="content"><strong>Chương 12 (HR)</strong>Tuyển dụng và đánh giá đạo đức</div></li>
+      <li><div class="num">17</div><div class="content"><strong>Chương 17 (lãnh đạo)</strong>Lãnh đạo đạo đức (ethical leadership)</div></li>
+    </ul>
+
+    <p style="margin-top: var(--gap-md); text-align: center; font-family: var(--font-display); font-size: 1.1rem; font-weight: 600;">
+      Hiểu kỹ Chương 6 sẽ giúp <span class="hl">3 chương trên dễ thở hơn</span>.
+    </p>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>
+      <strong>CHƯƠNG&nbsp;06</strong> — Tóm tắt chuyên sâu sách<br>
+      <em>Management</em> · Stephen&nbsp;P.&nbsp;Robbins &amp; Mary&nbsp;A.&nbsp;Coulter · ấn bản 15&nbsp;(2021)
+    </p>
+    <p style="margin-top: var(--gap-md);">
+      Thiết kế Neo-Brutalism v3.4 — by
+      <a href="https://www.facebook.com/vuhai.fitness" target="_blank" rel="noopener noreferrer">Vũ&nbsp;Hải</a>
+      | Business&nbsp;Consultant
+    </p>
+  </footer>
+
+</div>
+
+</body>
+</html>

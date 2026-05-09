@@ -1,0 +1,2299 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chương 10 — Khởi nghiệp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap&subset=vietnamese" rel="stylesheet">
+<style>
+  /* ==========================================================
+     NEO-BRUTALISM v3.4 — DESIGN TOKENS
+     ========================================================== */
+  :root {
+    --brand: #c73937;
+    --brand-dark: #a82a28;
+    --paper: #FAF8F5;
+    --paper-pure: #FFFFFF;
+    --ink: #1A1A1A;
+    --ink-soft: #2D2D2D;
+    --ink-muted: #6B6B6B;
+    --yellow: #F5E4B8;
+    --cyan: #C4DEDC;
+    --lime: #DDE4C5;
+    --pink: #F0DCDD;
+    --border-thick: 3px solid var(--ink);
+    --border-medium: 2px solid var(--ink);
+    --shadow-hard: 6px 6px 0 var(--ink);
+    --shadow-hard-sm: 4px 4px 0 var(--ink);
+    --shadow-hard-lg: 8px 8px 0 var(--ink);
+    --shadow-brand: 6px 6px 0 var(--brand);
+    --shadow-yellow: 6px 6px 0 var(--yellow);
+    --shadow-lime: 6px 6px 0 var(--lime);
+    --font-display: 'Space Grotesk', system-ui, sans-serif;
+    --font-body: 'Inter', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --gap-xs: 8px;
+    --gap-sm: 12px;
+    --gap-md: 20px;
+    --gap-lg: 32px;
+    --gap-xl: 48px;
+    --gap-2xl: 80px;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-style: normal !important;
+    font-optical-sizing: auto;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+  }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6,
+  .title, .heading,
+  .hero-title, .section-title,
+  .card-title {
+    text-wrap: balance;
+    font-family: var(--font-display);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  p, li, .body-text {
+    text-wrap: pretty;
+  }
+
+  /* Background pattern: dotted asterisks (khác Ch7/8/9) */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 30%, var(--ink) 1.5px, transparent 1.5px),
+      radial-gradient(circle at 80% 70%, var(--ink) 1.5px, transparent 1.5px);
+    background-size: 60px 60px, 80px 80px;
+    background-position: 0 0, 30px 30px;
+    opacity: 0.04;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--gap-md);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ==========================================================
+     STICKY NAV
+     ========================================================== */
+  .topnav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--paper);
+    border-bottom: var(--border-thick);
+    padding: var(--gap-sm) 0;
+  }
+
+  .topnav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--gap-md);
+  }
+
+  .nav-logo {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--ink);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .nav-logo .ch-num {
+    background: var(--brand);
+    color: var(--paper-pure);
+    padding: 4px 8px;
+    border: var(--border-medium);
+    box-shadow: 3px 3px 0 var(--ink);
+    font-family: var(--font-mono);
+    font-size: 14px;
+    transform: rotate(-2deg);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: var(--gap-sm);
+    list-style: none;
+    flex-wrap: wrap;
+  }
+
+  .nav-links a {
+    color: var(--ink);
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 500;
+    padding: 6px 10px;
+    border: var(--border-medium);
+    background: var(--paper-pure);
+    transition: all 0.15s;
+  }
+
+  .nav-links a:hover {
+    background: var(--yellow);
+    transform: translate(-2px, -2px);
+    box-shadow: 3px 3px 0 var(--ink);
+  }
+
+  /* ==========================================================
+     HERO
+     ========================================================== */
+  .hero {
+    padding: var(--gap-2xl) 0 var(--gap-xl);
+  }
+
+  .hero-meta {
+    display: inline-block;
+    background: var(--yellow);
+    border: var(--border-thick);
+    padding: 6px 14px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: var(--gap-md);
+    transform: rotate(-1.5deg);
+    box-shadow: var(--shadow-hard-sm);
+  }
+
+  .hero-end-mark {
+    display: inline-block;
+    background: var(--ink);
+    color: var(--paper);
+    border: var(--border-thick);
+    padding: 6px 14px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 700;
+    margin-left: 8px;
+    margin-bottom: var(--gap-md);
+    transform: rotate(2deg);
+    box-shadow: var(--shadow-hard-sm);
+  }
+
+  .hero-title {
+    font-size: clamp(36px, 6vw, 72px);
+    font-weight: 700;
+    margin-bottom: var(--gap-md);
+  }
+
+  .hero-title .accent {
+    background: var(--brand);
+    color: var(--paper-pure);
+    padding: 0 12px;
+    display: inline-block;
+    transform: rotate(-1deg);
+    box-shadow: var(--shadow-hard-sm);
+  }
+
+  .hero-sub {
+    font-size: clamp(17px, 2vw, 22px);
+    color: var(--ink-soft);
+    max-width: 760px;
+    margin-bottom: var(--gap-lg);
+    text-wrap: balance;
+  }
+
+  .hero-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--gap-md);
+    margin-top: var(--gap-xl);
+  }
+
+  .hero-info-card {
+    background: var(--paper-pure);
+    border: var(--border-thick);
+    padding: var(--gap-md);
+    box-shadow: var(--shadow-hard);
+    transition: all 0.15s;
+  }
+
+  .hero-info-card:nth-child(1) { background: var(--lime); }
+  .hero-info-card:nth-child(2) { background: var(--cyan); transform: rotate(0.5deg); }
+  .hero-info-card:nth-child(3) { background: var(--pink); transform: rotate(-0.8deg); }
+
+  .hero-info-card:hover {
+    transform: translate(-3px, -3px) rotate(0deg);
+    box-shadow: 9px 9px 0 var(--ink);
+  }
+
+  .hero-info-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ink-muted);
+    margin-bottom: 6px;
+  }
+
+  .hero-info-value {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  /* Elon Musk opening */
+  .opening-story {
+    background: var(--ink);
+    color: var(--paper);
+    border: var(--border-thick);
+    padding: var(--gap-lg);
+    box-shadow: var(--shadow-brand);
+    margin-top: var(--gap-xl);
+    transform: rotate(-0.3deg);
+  }
+
+  .opening-label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--lime);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: var(--gap-sm);
+  }
+
+  .opening-title {
+    font-family: var(--font-display);
+    font-size: clamp(22px, 3vw, 32px);
+    font-weight: 700;
+    margin-bottom: var(--gap-sm);
+    color: var(--paper);
+  }
+
+  .opening-text {
+    font-size: 15px;
+    line-height: 1.65;
+    color: #C8C8C8;
+    margin-bottom: var(--gap-md);
+  }
+
+  .musk-ventures {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+    margin: var(--gap-md) 0;
+  }
+
+  .musk-venture {
+    background: rgba(245,228,184,0.1);
+    border: 2px solid var(--yellow);
+    padding: 10px;
+  }
+
+  .musk-venture .name {
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--paper);
+    margin-bottom: 4px;
+  }
+
+  .musk-venture .what {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--lime);
+  }
+
+  /* ==========================================================
+     SECTION
+     ========================================================== */
+  .section {
+    padding: var(--gap-2xl) 0;
+  }
+
+  .section-tag {
+    display: inline-block;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 5px 12px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    margin-bottom: var(--gap-sm);
+  }
+
+  .section-title {
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 700;
+    margin-bottom: var(--gap-md);
+  }
+
+  .section-sub {
+    font-size: 18px;
+    color: var(--ink-soft);
+    max-width: 760px;
+    margin-bottom: var(--gap-xl);
+    text-wrap: balance;
+  }
+
+  /* ==========================================================
+     ENTREPRENEUR VS SMALL-BUSINESS
+     ========================================================== */
+  .vs-wrapper {
+    background: var(--paper-pure);
+    border: var(--border-thick);
+    box-shadow: var(--shadow-hard-lg);
+    padding: var(--gap-lg);
+  }
+
+  .vs-title {
+    text-align: center;
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: var(--gap-md);
+  }
+
+  .vs-grid {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: var(--gap-md);
+    align-items: stretch;
+  }
+
+  @media (max-width: 768px) {
+    .vs-grid { grid-template-columns: 1fr; }
+  }
+
+  .vs-side {
+    border: var(--border-thick);
+    padding: var(--gap-md);
+    box-shadow: var(--shadow-hard-sm);
+  }
+
+  .vs-side.entrepreneur { background: var(--brand); color: var(--paper-pure); }
+  .vs-side.small-biz { background: var(--cyan); }
+
+  .vs-side .head-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    opacity: 0.85;
+  }
+
+  .vs-side .head-name {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    line-height: 1.2;
+  }
+
+  .vs-side ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .vs-side li {
+    padding: 8px 0;
+    border-bottom: 1px dashed currentColor;
+    font-size: 14px;
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    line-height: 1.5;
+  }
+
+  .vs-side li:last-child { border-bottom: none; }
+
+  .vs-side li::before {
+    content: "→";
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .vs-divider {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 700;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 8px 12px;
+    transform: rotate(-3deg);
+    box-shadow: 3px 3px 0 var(--brand);
+    text-align: center;
+    align-self: center;
+  }
+
+  @media (max-width: 768px) {
+    .vs-divider { display: none; }
+  }
+
+  .example-box {
+    background: var(--yellow);
+    border: var(--border-thick);
+    box-shadow: var(--shadow-hard);
+    padding: var(--gap-md);
+    margin-top: var(--gap-md);
+  }
+
+  .example-box .label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--brand-dark);
+    margin-bottom: 6px;
+  }
+
+  .example-box .ex-text {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .example-box .ex-text strong {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 1px 6px;
+  }
+
+  /* 3 reasons why entrepreneurship matters */
+  .reasons-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: var(--gap-md);
+    margin-top: var(--gap-xl);
+  }
+
+  .reason-card {
+    border: var(--border-thick);
+    padding: var(--gap-md);
+    box-shadow: var(--shadow-hard);
+    transition: all 0.15s;
+  }
+
+  .reason-card:nth-child(1) { background: var(--lime); }
+  .reason-card:nth-child(2) { background: var(--yellow); }
+  .reason-card:nth-child(3) { background: var(--pink); }
+
+  .reason-card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: var(--shadow-hard-lg);
+  }
+
+  .reason-num {
+    font-family: var(--font-mono);
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .reason-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .reason-desc {
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+  }
+
+  .reason-stat {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 2px dashed var(--ink);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--brand-dark);
+    font-weight: 700;
+  }
+
+  /* ==========================================================
+     7 DRUCKER SOURCES
+     ========================================================== */
+  .drucker-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--gap-md);
+  }
+
+  .drucker-card {
+    background: var(--paper-pure);
+    border: var(--border-thick);
+    box-shadow: var(--shadow-hard);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .drucker-card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: var(--shadow-hard-lg);
+  }
+
+  .drucker-card .header {
+    background: var(--brand);
+    color: var(--paper-pure);
+    padding: 12px 16px;
+    border-bottom: var(--border-medium);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .drucker-card:nth-child(2) .header { background: var(--ink); }
+  .drucker-card:nth-child(4) .header { background: var(--ink); }
+  .drucker-card:nth-child(6) .header { background: var(--ink); }
+
+  .drucker-card .src-num {
+    background: var(--paper-pure);
+    color: var(--ink);
+    padding: 3px 8px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .drucker-card .src-name {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .drucker-card .body {
+    padding: var(--gap-md);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .drucker-card .question {
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+    flex: 1;
+    margin-bottom: var(--gap-sm);
+  }
+
+  .drucker-card .ex {
+    background: var(--yellow);
+    border: 2px solid var(--ink);
+    padding: 8px 10px;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .drucker-card .ex strong {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--brand-dark);
+    display: block;
+    margin-bottom: 3px;
+    text-transform: uppercase;
+  }
+
+  /* ==========================================================
+     JACK MA STORY
+     ========================================================== */
+  .jackma-card {
+    background: var(--ink);
+    color: var(--paper);
+    border: var(--border-thick);
+    box-shadow: var(--shadow-yellow);
+    padding: var(--gap-lg);
+    margin: var(--gap-xl) 0;
+  }
+
+  .jackma-label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--yellow);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: var(--gap-sm);
+  }
+
+  .jackma-title {
+    font-family: var(--font-display);
+    font-size: clamp(22px, 3vw, 30px);
+    font-weight: 700;
+    margin-bottom: var(--gap-md);
+    color: var(--paper);
+  }
+
+  .jackma-text {
+    font-size: 15px;
+    line-height: 1.65;
+    color: #C8C8C8;
+  }
+
+  .jackma-text strong {
+    color: var(--yellow);
+  }
+
+  .jackma-stat {
+    background: var(--brand);
+    color: var(--paper-pure);
+    border: 3px solid var(--paper);
+    padding: var(--gap-md);
+    margin-top: var(--gap-md);
+    display: flex;
+    align-items: center;
+    gap: var(--gap-md);
+  }
+
+  .jackma-stat .big {
+    font-family: var(--font-display);
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .jackma-stat .text {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  /* ==========================================================
+     BUSINESS PLAN 6 PARTS
+     ========================================================== */
+  .bp-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--gap-sm);
+  }
+
+  .bp-item {
+    background: var(--paper-pure);
+    border: var(--border-thick);
+    box-shadow: var(--shadow-hard-sm);
+    padding: 14px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .bp-item .num {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    background: var(--brand);
+    color: var(--paper-pure);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    border: var(--border-medium);
+    transform: rotate(-2deg);
+  }
+
+  .bp-item:nth-child(2) .num { transform: rotate(2deg); background: var(--ink); }
+  .bp-item:nth-child(4) .num { transform: rotate(2deg); background: var(--ink); }
+  .bp-item:nth-child(6) .num { transform: rotate(2deg); background: var(--ink); }
+
+  .bp-item .content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .bp-item .name {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    line-height: 1.2;
+  }
+
+  .bp-item .desc {
+    font-size: 12px;
+    color: var(--ink-muted);
+    line-height: 1.5;
+  }
+
+  /* ==========================================================
+     6 LEGAL FORMS TABLE
+     ========================================================== */
+  .legal-table {
+    background: var(--paper-pure);
+    border: var(--border-thick);
+    box-shadow: var(--shadow-hard);
+    overflow: hidden;
+  }
+
+  .legal-row {
+    display: grid;
+    grid-template-columns: 60px 2fr 1.5fr 1.5fr 1fr;
+    border-bottom: 2px solid var(--ink);
+    font-size: 13px;
+  }
+
+  .legal-row.head {
+    background: var(--ink);
+    color: var(--paper);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 11px;
+    text-transform: uppercase;
+  }
+
+  .legal-row:last-child { border-bottom: none; }
+
+  .legal-row > div {
+    padding: 12px 10px;
+    line-height: 1.4;
+  }
+
+  .legal-row > div:not(:last-child) {
+    border-right: 2px solid var(--ink);
+  }
+
+  .legal-row .num {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    background: var(--yellow);
+    text-align: center;
+    font-size: 14px;
+  }
+
+  .legal-row.head .num { background: var(--ink); }
+
+  .legal-row .form-name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 14px;
+  }
+
+  .legal-row.head .form-name { font-family: var(--font-mono); font-size: 11px; }
+
+  .legal-row .liability-bad {
+    color: var(--brand-dark);
+    font-weight: 600;
+  }
+
+  .legal-row .liability-good {
+    color: #1a6b1a;
+    font-weight: 600;
+  }
+
+  .legal-row .tax-double {
+    color: var(--brand-dark);
+    font-weight: 600;
+  }
+
+  .legal-row .tax-pass {
+    color: #1a6b1a;
+    font-weight: 600;
+  }
+
+  .legal-row.recommended {
+    background: var(--lime);
+    position: relative;
+  }
+
+  .legal-row.recommended::after {
+    content: "★ KHUYẾN NGHỊ";
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%) rotate(-3deg);
+    background: var(--ink);
+    color: var(--lime);
+    padding: 3px 8px;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+
+  @media (max-width: 768px) {
+    .legal-row {
+      grid-template-columns: 50px 1fr;
+      gap: 0;
+    }
+    .legal-row > div:not(.num):not(.form-name) {
+      grid-column: 2;
+      border-top: 1px solid var(--ink-muted);
+      border-right: none !important;
+    }
+    .legal-row .form-name { border-right: none !important; }
+    .legal-row.head { display: none; }
+    .legal-row.recommended::after {
+      position: static;
+      transform: none;
+      display: inline-block;
+      margin-top: 8px;
+    }
+  }
+
+  /* Legal advice callout */
+  .legal-advice {
+    background: var(--yellow);
+    border: 3px dashed var(--brand);
+    padding: var(--gap-md);
+    margin-top: var(--gap-md);
+    display: flex;
+    gap: var(--gap-md);
+    align-items: center;
+  }
+
+  @media (max-width: 640px) {
+    .legal-advice { flex-direction: column; text-align: center; }
+  }
+
+  .legal-advice .icon {
+    font-size: 40px;
+    flex-shrink: 0;
+  }
+
+  .legal-advice .text {
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .legal-advice strong { color: var(--brand-dark); }
+
+  /* ==========================================================
+     PROACTIVE PERSONALITY (5 traits)
+     ========================================================== */
+  .proactive-card {
+    background: var(--paper-pure);
+    border: var(--border-thick);
+    box-shadow: var(--shadow-hard-lg);
+    padding: var(--gap-lg);
+  }
+
+  .proactive-head {
+    text-align: center;
+    margin-bottom: var(--gap-lg);
+  }
+
+  .proactive-head .label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--brand-dark);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .proactive-head .h {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 700;
+  }
+
+  .traits-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--gap-sm);
+  }
+
+  .trait-item {
+    background: var(--lime);
+    border: var(--border-medium);
+    box-shadow: var(--shadow-hard-sm);
+    padding: 12px 14px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .trait-item:nth-child(2) { background: var(--cyan); }
+  .trait-item:nth-child(3) { background: var(--yellow); }
+  .trait-item:nth-child(4) { background: var(--pink); }
+  .trait-item:nth-child(5) { background: var(--paper); }
+
+  .trait-item .num {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    background: var(--brand);
+    color: var(--paper-pure);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 700;
+    border: 2px solid var(--ink);
+  }
+
+  .trait-item .text {
+    flex: 1;
+    font-size: 13px;
+    line-height: 1.5;
+    font-weight: 500;
+  }
+
+  /* ==========================================================
+     3 STAGES OF LEADERSHIP
+     ========================================================== */
+  .stages-flow {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr;
+    gap: var(--gap-sm);
+    align-items: stretch;
+  }
+
+  @media (max-width: 768px) {
+    .stages-flow {
+      grid-template-columns: 1fr;
+      gap: var(--gap-md);
+    }
+  }
+
+  .stage-card {
+    background: var(--paper-pure);
+    border: var(--border-thick);
+    box-shadow: var(--shadow-hard);
+    padding: var(--gap-md);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .stage-card.start { background: var(--lime); transform: rotate(-0.5deg); }
+  .stage-card.transition { background: var(--brand); color: var(--paper-pure); }
+  .stage-card.scaling { background: var(--cyan); transform: rotate(0.5deg); }
+
+  .stage-num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    opacity: 0.7;
+  }
+
+  .stage-name {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .stage-style {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    background: rgba(0,0,0,0.1);
+    padding: 4px 8px;
+    border: 1px solid currentColor;
+    margin-bottom: var(--gap-sm);
+    align-self: flex-start;
+  }
+
+  .stage-card.transition .stage-style {
+    background: rgba(255,255,255,0.2);
+  }
+
+  .stage-desc {
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
+  .stage-arrow {
+    align-self: center;
+    font-family: var(--font-mono);
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--brand);
+  }
+
+  @media (max-width: 768px) {
+    .stage-arrow {
+      align-self: center;
+      transform: rotate(90deg);
+    }
+  }
+
+  .transition-warning {
+    background: var(--ink);
+    color: var(--paper);
+    border: var(--border-thick);
+    padding: var(--gap-md);
+    box-shadow: var(--shadow-brand);
+    margin-top: var(--gap-md);
+  }
+
+  .transition-warning .label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--brand);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .transition-warning .text {
+    font-size: 15px;
+    line-height: 1.55;
+  }
+
+  .transition-warning strong { color: var(--yellow); }
+
+  /* Vera Wang story */
+  .vera-card {
+    background: var(--pink);
+    border: var(--border-thick);
+    box-shadow: var(--shadow-hard);
+    padding: var(--gap-lg);
+    margin-top: var(--gap-xl);
+  }
+
+  .vera-label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--brand-dark);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: var(--gap-sm);
+  }
+
+  .vera-title {
+    font-family: var(--font-display);
+    font-size: clamp(22px, 3vw, 28px);
+    font-weight: 700;
+    margin-bottom: var(--gap-md);
+  }
+
+  .vera-careers {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--gap-sm);
+    margin: var(--gap-md) 0;
+  }
+
+  @media (max-width: 640px) {
+    .vera-careers { grid-template-columns: 1fr; }
+  }
+
+  .vera-career {
+    background: var(--paper-pure);
+    border: var(--border-medium);
+    padding: 12px;
+  }
+
+  .vera-career.fail {
+    background: var(--paper);
+  }
+
+  .vera-career.win {
+    background: var(--lime);
+    border-width: 3px;
+  }
+
+  .vera-career .stage-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .vera-career.fail .stage-label { color: var(--brand); }
+  .vera-career.win .stage-label { color: #1a6b1a; }
+
+  .vera-career .what {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .vera-career .desc {
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+  }
+
+  .vera-quote {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 14px 18px;
+    border-left: 6px solid var(--brand);
+    font-family: var(--font-display);
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+
+  .vera-quote .author {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--lime);
+    margin-top: 6px;
+  }
+
+  /* ==========================================================
+     CONTROLLING - 6 FAILURE REASONS + 5 EXIT
+     ========================================================== */
+  .failure-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--gap-sm);
+  }
+
+  .failure-item {
+    background: var(--paper-pure);
+    border: var(--border-thick);
+    box-shadow: var(--shadow-hard-sm);
+    padding: 14px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .failure-item .num {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    background: var(--brand);
+    color: var(--paper-pure);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    border: var(--border-medium);
+  }
+
+  .failure-item .reason {
+    font-size: 13px;
+    line-height: 1.45;
+    font-weight: 500;
+  }
+
+  /* 5 Exit Options */
+  .exit-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--gap-md);
+    margin-top: var(--gap-md);
+  }
+
+  .exit-card {
+    background: var(--paper-pure);
+    border: var(--border-thick);
+    box-shadow: var(--shadow-hard);
+    padding: var(--gap-md);
+    text-align: center;
+    transition: all 0.15s;
+  }
+
+  .exit-card:nth-child(1) { background: var(--yellow); }
+  .exit-card:nth-child(2) { background: var(--cyan); transform: rotate(-0.5deg); }
+  .exit-card:nth-child(3) { background: var(--lime); }
+  .exit-card:nth-child(4) { background: var(--pink); transform: rotate(0.5deg); }
+  .exit-card:nth-child(5) { background: var(--paper); }
+
+  .exit-card:hover {
+    transform: translate(-3px, -3px) rotate(0deg);
+    box-shadow: var(--shadow-hard-lg);
+  }
+
+  .exit-icon {
+    font-size: 36px;
+    margin-bottom: 8px;
+  }
+
+  .exit-num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--brand-dark);
+    margin-bottom: 4px;
+  }
+
+  .exit-name {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .exit-desc {
+    font-size: 12px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+
+  /* Emotional warning for valuation */
+  .emotional-warning {
+    background: var(--brand);
+    color: var(--paper-pure);
+    border: var(--border-thick);
+    box-shadow: var(--shadow-yellow);
+    padding: var(--gap-lg);
+    margin-top: var(--gap-xl);
+    transform: rotate(-0.3deg);
+  }
+
+  .emotional-warning .label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--yellow);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: var(--gap-sm);
+  }
+
+  .emotional-warning .h {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: var(--gap-sm);
+    color: var(--paper-pure);
+  }
+
+  .emotional-warning .text {
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--paper-pure);
+  }
+
+  /* ==========================================================
+     KEY TAKEAWAYS
+     ========================================================== */
+  .takeaway-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--gap-md);
+  }
+
+  .takeaway-card {
+    background: var(--paper-pure);
+    border: var(--border-thick);
+    padding: var(--gap-md);
+    box-shadow: var(--shadow-hard);
+    position: relative;
+  }
+
+  .takeaway-card:nth-child(1) { background: var(--yellow); transform: rotate(-0.5deg); }
+  .takeaway-card:nth-child(2) { background: var(--cyan); }
+  .takeaway-card:nth-child(3) { background: var(--lime); transform: rotate(0.5deg); }
+  .takeaway-card:nth-child(4) { background: var(--pink); }
+  .takeaway-card:nth-child(5) { background: var(--paper-pure); transform: rotate(-0.3deg); }
+
+  .takeaway-num {
+    position: absolute;
+    top: -16px;
+    left: 16px;
+    background: var(--brand);
+    color: var(--paper-pure);
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    border: var(--border-thick);
+    box-shadow: var(--shadow-hard-sm);
+    transform: rotate(-3deg);
+  }
+
+  .takeaway-card .takeaway-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 12px 0 8px;
+  }
+
+  .takeaway-card p {
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+  }
+
+  /* ==========================================================
+     PART 3 RECAP (cuối Phần 3)
+     ========================================================== */
+  .part3-recap {
+    background: var(--ink);
+    color: var(--paper);
+    border: var(--border-thick);
+    box-shadow: 8px 8px 0 var(--brand);
+    padding: var(--gap-lg);
+    margin-top: var(--gap-xl);
+  }
+
+  .part3-label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--lime);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: var(--gap-sm);
+  }
+
+  .part3-title {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: var(--gap-md);
+    color: var(--paper);
+  }
+
+  .part3-chapters {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--gap-sm);
+  }
+
+  @media (max-width: 768px) {
+    .part3-chapters { grid-template-columns: 1fr; }
+  }
+
+  .part3-chapter {
+    background: rgba(255,255,255,0.08);
+    border: 2px solid var(--lime);
+    padding: 14px;
+  }
+
+  .part3-chapter .ch {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--lime);
+    margin-bottom: 4px;
+  }
+
+  .part3-chapter .name {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: var(--paper);
+  }
+
+  .part3-chapter .what {
+    font-size: 12px;
+    line-height: 1.5;
+    color: #C8C8C8;
+  }
+
+  /* ==========================================================
+     STUDY PLAN
+     ========================================================== */
+  .study-table {
+    background: var(--paper-pure);
+    border: var(--border-thick);
+    box-shadow: var(--shadow-hard);
+    overflow: hidden;
+  }
+
+  .study-row {
+    display: grid;
+    grid-template-columns: 80px 1fr 100px;
+    border-bottom: 2px solid var(--ink);
+  }
+
+  .study-row.head {
+    background: var(--ink);
+    color: var(--paper);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+  }
+
+  .study-row:last-child { border-bottom: none; }
+
+  .study-row > div {
+    padding: 12px 14px;
+    font-size: 14px;
+  }
+
+  .study-row > div:not(:last-child) {
+    border-right: 2px solid var(--ink);
+  }
+
+  .study-row .session {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    background: var(--yellow);
+  }
+
+  .study-row.head .session { background: var(--ink); }
+
+  /* ==========================================================
+     FOOTER
+     ========================================================== */
+  .footer {
+    background: var(--ink);
+    color: var(--paper);
+    padding: var(--gap-xl) 0;
+    border-top: var(--border-thick);
+    margin-top: var(--gap-2xl);
+  }
+
+  .footer-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--gap-lg);
+  }
+
+  @media (max-width: 768px) {
+    .footer-content { grid-template-columns: 1fr; }
+  }
+
+  .footer-title {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .footer-text {
+    font-size: 14px;
+    color: #B0B0B0;
+    margin-bottom: 8px;
+  }
+
+  .footer-meta {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--yellow);
+  }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    .hero { padding: var(--gap-xl) 0; }
+    .nav-links { display: none; }
+    .study-row { grid-template-columns: 60px 1fr 80px; }
+    .study-row > div { padding: 10px 8px; font-size: 12px; }
+  }
+
+  a:focus-visible, button:focus-visible {
+    outline: 3px solid var(--brand);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- ==========================================================
+     STICKY NAV
+     ========================================================== -->
+<nav class="topnav">
+  <div class="container">
+    <div class="topnav-inner">
+      <a href="#top" class="nav-logo">
+        <span class="ch-num">CH.10</span>
+        <span>Khởi nghiệp</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#why">Bối cảnh</a></li>
+        <li><a href="#opportunities">7&nbsp;nguồn Drucker</a></li>
+        <li><a href="#bizplan">Business Plan</a></li>
+        <li><a href="#legal">6&nbsp;hình thức</a></li>
+        <li><a href="#leading">Lãnh đạo</a></li>
+        <li><a href="#exit">Kiểm soát + Exit</a></li>
+        <li><a href="#takeaways">Tổng kết</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- ==========================================================
+     HERO
+     ========================================================== -->
+<section class="hero" id="top">
+  <div class="container">
+    <span class="hero-meta">CHƯƠNG&nbsp;10 — TÓM TẮT CHUYÊN SÂU</span>
+    <span class="hero-end-mark">★ KẾT PHẦN&nbsp;3</span>
+    <h1 class="hero-title">
+      Khởi nghiệp<br>
+      <span class="accent">Entrepreneurial Ventures</span>
+    </h1>
+    <p class="hero-sub">
+      Khác các chương trước phân tích quản trị trong tổ chức đã có, <strong>Chương&nbsp;10 nói về việc tạo ra tổ chức</strong>. Entrepreneur đối mặt 4&nbsp;chức năng POLC cùng lúc — với quy mô nhỏ, không có cơ cấu sẵn, và rủi ro cá nhân cao.
+    </p>
+
+    <div class="hero-info">
+      <div class="hero-info-card">
+        <div class="hero-info-label">Nguồn</div>
+        <div class="hero-info-value">Robbins & Coulter — Management, ấn bản 15 (2021)</div>
+      </div>
+      <div class="hero-info-card">
+        <div class="hero-info-label">Thời gian đọc</div>
+        <div class="hero-info-value">60-70&nbsp;phút</div>
+      </div>
+      <div class="hero-info-card">
+        <div class="hero-info-label">Mục tiêu học tập</div>
+        <div class="hero-info-value">5&nbsp;LO theo dòng đời startup</div>
+      </div>
+    </div>
+
+    <!-- Elon Musk opening story -->
+    <div class="opening-story">
+      <div class="opening-label">★ CÂU CHUYỆN MỞ ĐẦU CHƯƠNG</div>
+      <h2 class="opening-title">Elon Musk — "Serial Entrepreneur" mẫu mực</h2>
+      <p class="opening-text">
+        Một entrepreneur thành công có thể tạo ra <strong>nhiều startup</strong> trong sự nghiệp. Mỗi startup là câu chuyện riêng nhưng cùng tinh thần <em>tạo cái mới</em>.
+      </p>
+      <div class="musk-ventures">
+        <div class="musk-venture">
+          <div class="name">Zip2</div>
+          <div class="what">Bán $340M (1999)</div>
+        </div>
+        <div class="musk-venture">
+          <div class="name">PayPal</div>
+          <div class="what">eBay mua $1,5B (2002)</div>
+        </div>
+        <div class="musk-venture">
+          <div class="name">Tesla</div>
+          <div class="what">Xe điện</div>
+        </div>
+        <div class="musk-venture">
+          <div class="name">SpaceX</div>
+          <div class="what">Vận chuyển không gian</div>
+        </div>
+        <div class="musk-venture">
+          <div class="name">Solar City</div>
+          <div class="what">Năng lượng mặt trời</div>
+        </div>
+        <div class="musk-venture">
+          <div class="name">Neuralink</div>
+          <div class="what">Giao diện não-máy tính</div>
+        </div>
+        <div class="musk-venture">
+          <div class="name">Boring Company</div>
+          <div class="what">Xây hầm</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================
+     LO 10.1 — CONTEXT + ENTREPRENEUR VS SMALL BIZ
+     ========================================================== -->
+<section class="section" id="why">
+  <div class="container">
+    <span class="section-tag">LO 10.1</span>
+    <h2 class="section-title">Entrepreneur vs Small-Business Owner</h2>
+    <p class="section-sub">
+      Phân biệt <strong>quan trọng nhất chương</strong>. Tư vấn cho 2 nhóm này rất khác nhau. Câu hỏi đầu tiên với khách: <em>"Anh/chị muốn thay đổi thế giới hay kiếm sống?"</em>
+    </p>
+
+    <div class="vs-wrapper">
+      <div class="vs-title">★ Hai tư duy khác nhau hoàn toàn</div>
+      <div class="vs-grid">
+        <div class="vs-side entrepreneur">
+          <div class="head-label">NHÓM 01</div>
+          <div class="head-name">Entrepreneur — Người khởi nghiệp</div>
+          <ul>
+            <li>Muốn <strong>thay đổi thế giới</strong></li>
+            <li>Nghĩ lớn, có ý tưởng đổi mới</li>
+            <li>Đam mê <em>vượt ra ngoài lợi nhuận</em></li>
+            <li>Thấy <strong>cơ hội</strong> nơi người khác thấy rủi ro</li>
+          </ul>
+        </div>
+        <div class="vs-divider">VS</div>
+        <div class="vs-side small-biz">
+          <div class="head-label">NHÓM 02</div>
+          <div class="head-name">Small-Business Owner — Chủ DN nhỏ</div>
+          <ul>
+            <li>Muốn <strong>kiếm sống</strong></li>
+            <li>Làm điều người khác đã làm</li>
+            <li>Động lực chính là tạo thu nhập</li>
+            <li>Thấy <strong>rủi ro</strong></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="example-box">
+        <div class="label">VÍ DỤ MINH HỌA CỤ THỂ</div>
+        <div class="ex-text">
+          <strong>Chủ doanh nghiệp nhỏ</strong> mở cửa hàng cho thuê xe đạp.
+          <strong>Entrepreneur</strong> phát triển app cho phép chia sẻ một bộ xe đạp chung, đầu tư đội xe, thương lượng cộng đồng về chỗ đặt giá xe, quảng bá app + dịch vụ thuê (mô hình bike-sharing kiểu Uber cho xe đạp).
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 22px; margin: var(--gap-2xl) 0 var(--gap-md);">
+      3 lý do khởi nghiệp quan trọng
+    </h3>
+
+    <div class="reasons-3">
+      <div class="reason-card">
+        <div class="reason-num">01</div>
+        <div class="reason-title">Innovation — Đổi mới</div>
+        <div class="reason-desc">
+          Đa số đổi mới cách mạng nhất thời hiện đại — máy bay, ô tô, điện thoại, thực phẩm đông lạnh, điều hòa — đến từ <strong>khối óc của entrepreneur</strong>.
+        </div>
+        <div class="reason-stat">→ Entrepreneur là "agents of change"</div>
+      </div>
+      <div class="reason-card">
+        <div class="reason-num">02</div>
+        <div class="reason-title">Economic Growth</div>
+        <div class="reason-desc">
+          Khởi nghiệp giữ thị trường <em>cạnh tranh</em>. Đặc biệt quan trọng cho nước đang phát triển: tăng trưởng nhanh đã đưa hàng chục triệu người Ấn Độ vào tầng lớp trung lưu.
+        </div>
+        <div class="reason-stat">→ Bhavarlal Jain: từ xe đẩy → Jain Irrigation Systems hàng nghìn nhân viên</div>
+      </div>
+      <div class="reason-card">
+        <div class="reason-num">03</div>
+        <div class="reason-title">Job Creation</div>
+        <div class="reason-desc">
+          Nguồn việc làm mới lớn nhất <strong>không phải tập đoàn lớn</strong> — mà là doanh nghiệp nhỏ. Doanh nghiệp nhỏ thuê <strong>47,5%</strong> lực lượng lao động tư nhân Mỹ.
+        </div>
+        <div class="reason-stat">→ 2017: tạo 1,9 / 2,1 triệu việc làm mới (~91%)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================
+     LO 10.2 — 7 DRUCKER SOURCES
+     ========================================================== -->
+<section class="section" id="opportunities" style="background: var(--paper-pure); border-top: var(--border-thick); border-bottom: var(--border-thick);">
+  <div class="container">
+    <span class="section-tag">LO 10.2 — PHẦN 1</span>
+    <h2 class="section-title">7 nguồn cơ hội của Peter Drucker</h2>
+    <p class="section-sub">
+      Khung kinh điển nhất về tìm cơ hội khởi nghiệp. <strong>86%</strong> entrepreneur mới bắt đầu kinh doanh để phản ứng với cơ hội — không phải vì cần thiết.
+    </p>
+
+    <div class="drucker-grid">
+      <div class="drucker-card">
+        <div class="header">
+          <div class="src-num">01</div>
+          <div class="src-name">The Unexpected — Điều bất ngờ</div>
+        </div>
+        <div class="body">
+          <div class="question">Khi tình huống và sự kiện không được dự đoán — thành công bất ngờ hoặc thất bại bất ngờ — cơ hội xuất hiện.</div>
+          <div class="ex">
+            <strong>VÍ DỤ</strong>
+            Buffalo Wild Wings 5/2018: Tòa tối cao bỏ lệnh cấm cá cược thể thao → cơ hội dụ millennial trở lại.
+          </div>
+        </div>
+      </div>
+
+      <div class="drucker-card">
+        <div class="header">
+          <div class="src-num">02</div>
+          <div class="src-name">The Incongruous — Điều mâu thuẫn</div>
+        </div>
+        <div class="body">
+          <div class="question">Khi điều gì đó <em>"nên là"</em> theo cách này nhưng <em>thực sự</em> theo cách khác. Trí tuệ thông thường không còn đúng.</div>
+          <div class="ex">
+            <strong>VÍ DỤ</strong>
+            Southwest Airlines + Herb Kelleher: bỏ qua khách giải trí muốn đi giữa thành phố nhỏ → vé thấp, không tiện nghi cầu kỳ.
+          </div>
+        </div>
+      </div>
+
+      <div class="drucker-card">
+        <div class="header">
+          <div class="src-num">03</div>
+          <div class="src-name">The Process Need — Nhu cầu quy trình</div>
+        </div>
+        <div class="body">
+          <div class="question">Trong khi chờ đột phá lớn, cơ hội xuất hiện trong các bước nhỏ trên quá trình đó.</div>
+          <div class="ex">
+            <strong>VÍ DỤ</strong>
+            Chưa có thuốc chữa ung thư, nhưng nhiều startup biotech thành công từ kiến thức điều trị tiềm năng.
+          </div>
+        </div>
+      </div>
+
+      <div class="drucker-card">
+        <div class="header">
+          <div class="src-num">04</div>
+          <div class="src-name">Industry & Market Structures</div>
+        </div>
+        <div class="body">
+          <div class="question">Khi thay đổi công nghệ thay đổi cấu trúc ngành/thị trường, công ty hiện tại có thể trở nên lỗi thời nếu không nhạy bén.</div>
+          <div class="ex">
+            <strong>VÍ DỤ</strong>
+            eBay phát đạt như trung gian online giữa người mua và người bán. Hơn 175 triệu user hoạt động.
+          </div>
+        </div>
+      </div>
+
+      <div class="drucker-card">
+        <div class="header">
+          <div class="src-num">05</div>
+          <div class="src-name">Demographics — Nhân khẩu học</div>
+        </div>
+        <div class="body">
+          <div class="question">Đặc tính dân số thay đổi → ảnh hưởng loại + số lượng sản phẩm + sức mua.</div>
+          <div class="ex">
+            <strong>VÍ DỤ</strong>
+            WebMD: thành công vì <em>đoán trước nhu cầu của dân số già</em>. Công ty dược cũng quảng cáo nhiều trên đó.
+          </div>
+        </div>
+      </div>
+
+      <div class="drucker-card">
+        <div class="header">
+          <div class="src-num">06</div>
+          <div class="src-name">Changes in Perception</div>
+        </div>
+        <div class="body">
+          <div class="question">Sự thật không đổi nhưng <em>ý nghĩa</em> đổi. Đi vào psychographic profile — điều người ta coi trọng, tin, quan tâm.</div>
+          <div class="ex">
+            <strong>VÍ DỤ</strong>
+            Airbnb thay đổi nhận thức "cho thuê nhà ngắn hạn cho người lạ là ý tưởng tồi" → doanh thu hàng tỷ USD.
+          </div>
+        </div>
+      </div>
+
+      <div class="drucker-card">
+        <div class="header">
+          <div class="src-num">07</div>
+          <div class="src-name">New Knowledge — Kiến thức mới</div>
+        </div>
+        <div class="body">
+          <div class="question">Không chỉ có kiến thức mới — entrepreneur phải <strong>làm gì đó với kiến thức</strong> và <strong>bảo vệ thông tin</strong> khỏi đối thủ.</div>
+          <div class="ex">
+            <strong>VÍ DỤ</strong>
+            Intel: theo dõi nghiên cứu học thuật + đầu tư mạnh R&D → liên tục phát triển vi xử lý mạnh hơn.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Jack Ma story -->
+    <div class="jackma-card">
+      <div class="jackma-label">★ CÂU CHUYỆN CỐT LÕI</div>
+      <h3 class="jackma-title">Jack Ma + Alibaba — Cá nhân thấy cơ hội, không phải tổ chức</h3>
+      <p class="jackma-text">
+        Năm 1998, Jack Ma là <strong>giáo viên tiếng Anh</strong> ở Trung Quốc. Đến Seattle thăm — lần đầu thấy máy tính kết nối web. Ông tìm "Chinese beer" trên search engine — <strong>không có gì từ Trung Quốc</strong>. Insight: doanh nghiệp Trung Quốc đang <em>vô hình trên web</em>. Ông tạo Alibaba — site thương mại điện tử nay có doanh thu hơn <strong>40 tỷ USD/năm</strong>.
+      </p>
+      <p class="jackma-text" style="margin-top: 12px;">
+        Bài học: <strong>Tổ chức không thấy cơ hội; cá nhân thấy.</strong> Và phải hành động <em>nhanh</em>, đặc biệt trong môi trường động, trước khi cơ hội biến mất hoặc bị người khác khai thác.
+      </p>
+
+      <div class="jackma-stat">
+        <div class="big">+125%</div>
+        <div class="text">
+          Entrepreneur tăng cơ hội thành công lên <strong>125%</strong> khi có kinh nghiệm làm việc trong cùng ngành mà họ khởi nghiệp. Entrepreneur có lần thất bại trước tăng cơ hội thành công ở venture tiếp theo lên <strong>20%</strong>.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================
+     BUSINESS PLAN 6 PARTS
+     ========================================================== -->
+<section class="section" id="bizplan">
+  <div class="container">
+    <span class="section-tag">LO 10.2 — PHẦN 2</span>
+    <h2 class="section-title">Business Plan — 6 phần chính</h2>
+    <p class="section-sub">
+      Business plan là <strong>tài liệu viết tóm tắt cơ hội kinh doanh</strong> + định nghĩa cách nắm bắt và khai thác cơ hội đó.
+    </p>
+
+    <div class="bp-grid">
+      <div class="bp-item">
+        <div class="num">1</div>
+        <div class="content">
+          <div class="name">Executive Summary</div>
+          <div class="desc">Tóm tắt điểm chính: sứ mệnh, mục tiêu, lịch sử, người chính, sản phẩm, đối thủ, lợi thế cạnh tranh, chiến lược, tài chính</div>
+        </div>
+      </div>
+      <div class="bp-item">
+        <div class="num">2</div>
+        <div class="content">
+          <div class="name">Analysis of Opportunity</div>
+          <div class="desc">Đo thị trường, xu hướng ngành, xác định + đánh giá đối thủ</div>
+        </div>
+      </div>
+      <div class="bp-item">
+        <div class="num">3</div>
+        <div class="content">
+          <div class="name">Analysis of the Context</div>
+          <div class="desc">Mô tả thay đổi và xu hướng rộng: kinh tế, chính trị-pháp lý, công nghệ, toàn cầu</div>
+        </div>
+      </div>
+      <div class="bp-item">
+        <div class="num">4</div>
+        <div class="content">
+          <div class="name">Description of the Business</div>
+          <div class="desc">Sứ mệnh, văn hóa, kế hoạch marketing + sản phẩm + vận hành + nhân sự, lịch trình</div>
+        </div>
+      </div>
+      <div class="bp-item">
+        <div class="num">5</div>
+        <div class="content">
+          <div class="name">Financial Data & Projections</div>
+          <div class="desc">Bao quát ít nhất 3&nbsp;năm: dự báo thu nhập, dòng tiền, bảng cân đối, điểm hòa vốn</div>
+        </div>
+      </div>
+      <div class="bp-item">
+        <div class="num">6</div>
+        <div class="content">
+          <div class="name">Supporting Documentation</div>
+          <div class="desc">Biểu đồ, đồ thị, bảng, hình ảnh + thông tin về người tham gia chính</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================
+     LO 10.3 — 6 LEGAL FORMS
+     ========================================================== -->
+<section class="section" id="legal" style="background: var(--paper-pure); border-top: var(--border-thick); border-bottom: var(--border-thick);">
+  <div class="container">
+    <span class="section-tag">LO 10.3</span>
+    <h2 class="section-title">6 hình thức pháp lý của doanh nghiệp</h2>
+    <p class="section-sub">
+      Quyết định đầu tiên entrepreneur phải làm. <strong>2 yếu tố chính ảnh hưởng:</strong> Taxes (thuế) và Legal liability (trách nhiệm pháp lý).
+    </p>
+
+    <div class="legal-table">
+      <div class="legal-row head">
+        <div class="num">#</div>
+        <div class="form-name">Hình thức</div>
+        <div>Số chủ</div>
+        <div>Trách nhiệm</div>
+        <div>Thuế</div>
+      </div>
+      <div class="legal-row">
+        <div class="num">01</div>
+        <div class="form-name">Sole Proprietorship<br><span style="font-family:var(--font-mono);font-size:11px;color:var(--ink-muted);font-weight:500">DN tư nhân</span></div>
+        <div>1 chủ</div>
+        <div class="liability-bad">⚠ Không giới hạn cá nhân</div>
+        <div class="tax-pass">Pass-through</div>
+      </div>
+      <div class="legal-row">
+        <div class="num">02</div>
+        <div class="form-name">General Partnership<br><span style="font-family:var(--font-mono);font-size:11px;color:var(--ink-muted);font-weight:500">Hợp tác chung</span></div>
+        <div>2+ chủ</div>
+        <div class="liability-bad">⚠ Không giới hạn cá nhân</div>
+        <div class="tax-pass">Pass-through</div>
+      </div>
+      <div class="legal-row">
+        <div class="num">03</div>
+        <div class="form-name">LLP<br><span style="font-family:var(--font-mono);font-size:11px;color:var(--ink-muted);font-weight:500">Hợp tác TNHH</span></div>
+        <div>2+ chủ</div>
+        <div class="liability-good">✓ Hữu hạn (trừ 1 GP)</div>
+        <div class="tax-pass">Pass-through</div>
+      </div>
+      <div class="legal-row">
+        <div class="num">04</div>
+        <div class="form-name">C Corporation<br><span style="font-family:var(--font-mono);font-size:11px;color:var(--ink-muted);font-weight:500">Tập đoàn C</span></div>
+        <div>Không giới hạn</div>
+        <div class="liability-good">✓ Hữu hạn</div>
+        <div class="tax-double">⚠ Thuế kép</div>
+      </div>
+      <div class="legal-row">
+        <div class="num">05</div>
+        <div class="form-name">S Corporation<br><span style="font-family:var(--font-mono);font-size:11px;color:var(--ink-muted);font-weight:500">Tập đoàn S</span></div>
+        <div>Tới 75 cổ đông</div>
+        <div class="liability-good">✓ Hữu hạn</div>
+        <div class="tax-pass">Pass-through</div>
+      </div>
+      <div class="legal-row recommended">
+        <div class="num">06</div>
+        <div class="form-name">LLC<br><span style="font-family:var(--font-mono);font-size:11px;color:var(--ink-muted);font-weight:500">Công ty TNHH</span></div>
+        <div>Members không giới hạn</div>
+        <div class="liability-good">✓ Hữu hạn</div>
+        <div class="tax-pass">Pass-through</div>
+      </div>
+    </div>
+
+    <div class="legal-advice">
+      <div class="icon">⚖️</div>
+      <div class="text">
+        <strong>Khi tư vấn cho khách thành lập doanh nghiệp:</strong> luôn khuyên có cố vấn pháp lý + thuế chuyên môn. Nói chung, doanh nghiệp nhỏ ban đầu thường chọn <strong>LLC</strong> (linh hoạt + bảo vệ + không thuế kép). Doanh nghiệp gọi vốn lớn từ VC thường buộc phải chuyển sang <strong>C Corporation</strong> (vì VC muốn cấu trúc cổ phiếu phức tạp).
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================
+     LO 10.4 — LEADING (Proactive + 3 Stages + Vera Wang)
+     ========================================================== -->
+<section class="section" id="leading">
+  <div class="container">
+    <span class="section-tag">LO 10.4</span>
+    <h2 class="section-title">Lãnh đạo qua các giai đoạn của venture</h2>
+    <p class="section-sub">
+      <strong>Insight quan trọng:</strong> Động lực tạo doanh nghiệp + ý tưởng tốt <em>không tự động dịch thành lãnh đạo hiệu quả</em>. Đặc điểm + kỹ năng để dẫn dắt startup hiếm khi giống cái cần để vận hành tổ chức lớn đã thiết lập.
+    </p>
+
+    <!-- Proactive Personality -->
+    <div class="proactive-card">
+      <div class="proactive-head">
+        <div class="label">★ MỘT TRONG CÁC YẾU TỐ DỰ ĐOÁN MẠNH NHẤT Ý ĐỊNH KHỞI NGHIỆP</div>
+        <div class="h">Proactive Personality — 5 đặc điểm</div>
+      </div>
+
+      <div class="traits-list">
+        <div class="trait-item">
+          <div class="num">1</div>
+          <div class="text">Không chỉ thấy cơ hội — họ <strong>chủ động hành động</strong></div>
+        </div>
+        <div class="trait-item">
+          <div class="num">2</div>
+          <div class="text">Thấy trở ngại như <strong>thử thách cá nhân để vượt qua</strong></div>
+        </div>
+        <div class="trait-item">
+          <div class="num">3</div>
+          <div class="text">Tin mạnh mẽ rằng họ là <strong>chủ số phận của chính mình</strong></div>
+        </div>
+        <div class="trait-item">
+          <div class="num">4</div>
+          <div class="text">Thể hiện <strong>kiên trì</strong> cho đến khi đạt mục tiêu</div>
+        </div>
+        <div class="trait-item">
+          <div class="num">5</div>
+          <div class="text"><strong>Đón nhận và thúc đẩy</strong> thay đổi</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3 Stages flow -->
+    <h3 style="font-family: var(--font-display); font-size: 22px; margin: var(--gap-2xl) 0 var(--gap-md);">
+      ★ 3 giai đoạn lãnh đạo của venture mới
+    </h3>
+
+    <div class="stages-flow">
+      <div class="stage-card start">
+        <div class="stage-num">GIAI ĐOẠN 01</div>
+        <div class="stage-name">Start-up</div>
+        <div class="stage-style">HANDS-ON · INFORMAL</div>
+        <div class="stage-desc">Entrepreneur là <strong>trái tim và linh hồn</strong>. Không có chính sách/quy trình. Tầm nhìn ở trong đầu entrepreneur. Biết mọi điều, ra hầu hết quyết định.</div>
+      </div>
+
+      <div class="stage-arrow">→</div>
+
+      <div class="stage-card transition">
+        <div class="stage-num">GIAI ĐOẠN 02</div>
+        <div class="stage-name">Transition</div>
+        <div class="stage-style">PHẢI HỌC DELEGATE</div>
+        <div class="stage-desc">Chuyển từ <em>informal start-up</em> sang doanh nghiệp có kỷ luật. Việc chuyên môn hóa, chính sách chuẩn được giới thiệu.</div>
+      </div>
+
+      <div class="stage-arrow">→</div>
+
+      <div class="stage-card scaling">
+        <div class="stage-num">GIAI ĐOẠN 03</div>
+        <div class="stage-name">Scaling</div>
+        <div class="stage-style">TỔNG QUÁT HÓA</div>
+        <div class="stage-desc">Phần lớn <em>"uniqueness"</em> của khởi nghiệp đã biến mất. Khái niệm quản trị trở thành tổng quát hóa. Tương tự lãnh đạo trong các tổ chức lớn.</div>
+      </div>
+    </div>
+
+    <div class="transition-warning">
+      <div class="label">⚠ ĐÂY LÀ ĐIỂM ĐA SỐ KHỦNG HOẢNG XẢY RA</div>
+      <div class="text">
+        Giai đoạn <strong>Transition</strong> là khó nhất với entrepreneur. Phải <em>buông bỏ và cho phép người khác ra quyết định</em>. Đặc biệt với proactive personality, vì phải <em>từ bỏ kiểm soát</em>. Lý do tâm lý: <strong>"Cuối cùng, làm sao có ai biết kinh doanh này tốt như tôi?"</strong>
+      </div>
+    </div>
+
+    <!-- Vera Wang story -->
+    <div class="vera-card">
+      <div class="vera-label">★ BÀI HỌC TỪ THẤT BẠI</div>
+      <h3 class="vera-title">Vera Wang — "Lần thứ ba là duyên"</h3>
+      <p style="font-size: 15px; line-height: 1.65; color: var(--ink-soft); margin-bottom: var(--gap-md);">
+        Vera Wang nay là một trong những nhà thiết kế thời trang hàng đầu thế giới. Nhưng trước thành công, cô có 2 sự nghiệp thất vọng:
+      </p>
+
+      <div class="vera-careers">
+        <div class="vera-career fail">
+          <div class="stage-label">SỰ NGHIỆP 01 · BỎ</div>
+          <div class="what">Trượt băng</div>
+          <div class="desc">Thần đồng trượt băng. Đứng vị trí ở Giải US 1968. Cuối tuổi teen: chấp nhận khả năng đã đạt đỉnh, có người trẻ hơn sẽ giỏi hơn → cô bỏ.</div>
+        </div>
+        <div class="vera-career fail">
+          <div class="stage-label">SỰ NGHIỆP 02 · BỎ</div>
+          <div class="what">Tạp chí Vogue</div>
+          <div class="desc">15&nbsp;năm ở Vogue, lên biên tập viên thời trang cao cấp. Khi bị bỏ qua chức tổng biên tập → cô bỏ.</div>
+        </div>
+        <div class="vera-career win">
+          <div class="stage-label">★ SỰ NGHIỆP 03 · THÀNH CÔNG</div>
+          <div class="what">Thời trang cưới</div>
+          <div class="desc">1989 đính hôn — thất vọng với áo cưới có sẵn. Cô tự thiết kế. Năm sau mở cửa hàng cưới ở NYC. Hôm nay: head designer brand riêng.</div>
+        </div>
+      </div>
+
+      <div class="vera-quote">
+        "Đừng sợ thất bại. Tôi nghĩ không thử còn tệ hơn thất bại."
+        <div class="author">— Vera Wang</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================
+     LO 10.5 — CONTROLLING + EXIT
+     ========================================================== -->
+<section class="section" id="exit" style="background: var(--paper-pure); border-top: var(--border-thick); border-bottom: var(--border-thick);">
+  <div class="container">
+    <span class="section-tag">LO 10.5</span>
+    <h2 class="section-title">Kiểm soát và Rút lui</h2>
+    <p class="section-sub">
+      Kiểm soát quan trọng cho startup <strong>hơn doanh nghiệp lớn</strong>. Một khách thanh toán chậm, mất nhân viên chính, hoặc đứt chuỗi cung có thể đưa doanh nghiệp non trẻ vào tình trạng cấp cứu hoặc đóng cửa.
+    </p>
+
+    <h3 style="font-family: var(--font-display); font-size: 22px; margin-bottom: var(--gap-md);">
+      6 nguyên nhân phổ biến của thất bại doanh nghiệp nhỏ
+    </h3>
+
+    <div class="failure-grid">
+      <div class="failure-item">
+        <div class="num">1</div>
+        <div class="reason">Inadequate cash reserves<br><span style="color:var(--ink-muted);font-size:12px">Dự trữ tiền mặt không đủ</span></div>
+      </div>
+      <div class="failure-item">
+        <div class="num">2</div>
+        <div class="reason">New competitors<br><span style="color:var(--ink-muted);font-size:12px">Đối thủ mới</span></div>
+      </div>
+      <div class="failure-item">
+        <div class="num">3</div>
+        <div class="reason">Loss of major customer<br><span style="color:var(--ink-muted);font-size:12px">Mất khách lớn</span></div>
+      </div>
+      <div class="failure-item">
+        <div class="num">4</div>
+        <div class="reason">Expanding too rapidly<br><span style="color:var(--ink-muted);font-size:12px">Mở rộng quá nhanh</span></div>
+      </div>
+      <div class="failure-item">
+        <div class="num">5</div>
+        <div class="reason">Poor hiring<br><span style="color:var(--ink-muted);font-size:12px">Tuyển dụng kém</span></div>
+      </div>
+      <div class="failure-item">
+        <div class="num">6</div>
+        <div class="reason">Unwillingness to delegate<br><span style="color:var(--ink-muted);font-size:12px">Không sẵn sàng giao quyền</span></div>
+      </div>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 22px; margin: var(--gap-2xl) 0 var(--gap-md);">
+      ★ 5 lựa chọn rút lui khỏi venture
+    </h3>
+
+    <div class="exit-grid">
+      <div class="exit-card">
+        <div class="exit-icon">🤝</div>
+        <div class="exit-num">LỰA CHỌN 01</div>
+        <div class="exit-name">Merger / Acquisition</div>
+        <div class="exit-desc">Bán quyền kiểm soát cho công ty mua. Thường giá cao nhưng phức tạp pháp lý + thuế.</div>
+      </div>
+      <div class="exit-card">
+        <div class="exit-icon">👨‍👩‍👧</div>
+        <div class="exit-num">LỰA CHỌN 02</div>
+        <div class="exit-name">Friendly Buyer</div>
+        <div class="exit-desc">Bán cho thành viên gia đình, bạn, người quen.</div>
+      </div>
+      <div class="exit-card">
+        <div class="exit-icon">📈</div>
+        <div class="exit-num">LỰA CHỌN 03</div>
+        <div class="exit-name">IPO</div>
+        <div class="exit-desc">Phát hành công khai. Nếu kinh doanh đã lớn và chứng minh thành công, IPO cho phép bán cổ phiếu cho công chúng.</div>
+      </div>
+      <div class="exit-card">
+        <div class="exit-icon">🐮</div>
+        <div class="exit-num">LỰA CHỌN 04</div>
+        <div class="exit-name">Cash Cow</div>
+        <div class="exit-desc">"Vắt sữa" — dùng lợi nhuận để rút lương + thưởng lớn càng lâu càng tốt.</div>
+      </div>
+      <div class="exit-card">
+        <div class="exit-icon">🔚</div>
+        <div class="exit-num">LỰA CHỌN 05</div>
+        <div class="exit-name">Liquidation</div>
+        <div class="exit-desc">Thanh lý — bán tài sản và đóng cửa kinh doanh.</div>
+      </div>
+    </div>
+
+    <!-- Emotional warning for valuation -->
+    <div class="emotional-warning">
+      <div class="label">⚠ CẢNH BÁO CẢM XÚC QUAN TRỌNG</div>
+      <h3 class="h">Khi định giá doanh nghiệp khi bán</h3>
+      <p class="text">
+        Entrepreneur thường <strong>xem doanh nghiệp như "đứa con của mình"</strong> — đã hy sinh nhiều. Tính giá trị dựa trên <em>tiêu chuẩn khách quan như cash flow hoặc bội số lợi nhuận</em> có thể cảm thấy bị định giá thấp. Khi tư vấn entrepreneur về exit, <strong>chuẩn bị họ về mặt cảm xúc trước khi nói số</strong>. Hỏi: <em>"Anh/chị có đứa con tinh thần này — nhưng nếu là người mua xa lạ, sẽ trả bao nhiêu?"</em>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================
+     KEY TAKEAWAYS
+     ========================================================== -->
+<section class="section" id="takeaways">
+  <div class="container">
+    <span class="section-tag">TỔNG KẾT</span>
+    <h2 class="section-title">5 ý quan trọng nhất cho nghề tư vấn</h2>
+    <p class="section-sub">
+      Chương 10 cung cấp 5 khung dùng được ngay khi tư vấn cho doanh nhân khởi nghiệp.
+    </p>
+
+    <div class="takeaway-grid" style="margin-top: var(--gap-xl);">
+      <div class="takeaway-card">
+        <div class="takeaway-num">01</div>
+        <div class="takeaway-title">Entrepreneur vs Small-Business Owner</div>
+        <p>Câu hỏi đầu tiên với khách: <em>"Anh/chị muốn thay đổi thế giới hay kiếm sống?"</em> Tư vấn cho 2 nhóm này rất khác nhau.</p>
+      </div>
+      <div class="takeaway-card">
+        <div class="takeaway-num">02</div>
+        <div class="takeaway-title">7 nguồn cơ hội Drucker</div>
+        <p>Khung dùng khi giúp khách <strong>tìm ý tưởng khởi nghiệp</strong>. Có thể dùng cho innovation workshop với khách doanh nghiệp lớn.</p>
+      </div>
+      <div class="takeaway-card">
+        <div class="takeaway-num">03</div>
+        <div class="takeaway-title">6 hình thức pháp lý</div>
+        <p>LLC cho nhỏ-vừa, C Corp cho VC. <strong>Luôn khuyên có cố vấn pháp lý + thuế</strong> — hậu quả lựa chọn sai có thể tốn kém.</p>
+      </div>
+      <div class="takeaway-card">
+        <div class="takeaway-num">04</div>
+        <div class="takeaway-title">3 giai đoạn lãnh đạo</div>
+        <p>Khi tư vấn entrepreneur trong khủng hoảng, <strong>xác định giai đoạn nào</strong>. Đa số khủng hoảng ở Transition — không chịu delegate.</p>
+      </div>
+      <div class="takeaway-card">
+        <div class="takeaway-num">05</div>
+        <div class="takeaway-title">5 lựa chọn rút lui</div>
+        <p>Khi entrepreneur muốn exit, <strong>chuẩn bị cảm xúc trước khi nói số</strong>. Thường họ định giá quá cao vì cảm xúc đầu tư.</p>
+      </div>
+    </div>
+
+    <!-- Part 3 Recap -->
+    <div class="part3-recap">
+      <div class="part3-label">★ KẾT THÚC PHẦN&nbsp;3 — PLANNING</div>
+      <h3 class="part3-title">Câu chuyện hoàn chỉnh về hoạch định trong tổ chức</h3>
+      <div class="part3-chapters">
+        <div class="part3-chapter">
+          <div class="ch">CHƯƠNG 08</div>
+          <div class="name">Nền tảng Hoạch định</div>
+          <div class="what">Mục tiêu, MBO, các loại kế hoạch — chức năng đầu tiên trong POLC</div>
+        </div>
+        <div class="part3-chapter">
+          <div class="ch">CHƯƠNG 09</div>
+          <div class="name">Quản trị Chiến lược</div>
+          <div class="what">SWOT, BCG Matrix, Five Forces, Porter — 5 công cụ kinh điển</div>
+        </div>
+        <div class="part3-chapter">
+          <div class="ch">CHƯƠNG 10</div>
+          <div class="name">Khởi nghiệp</div>
+          <div class="what">Tạo tổ chức từ con số 0. 4 chức năng POLC cùng lúc với rủi ro cá nhân cao</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================
+     STUDY PLAN
+     ========================================================== -->
+<section class="section" style="background: var(--paper-pure); border-top: var(--border-thick);">
+  <div class="container">
+    <span class="section-tag">LỘ TRÌNH ÔN TẬP</span>
+    <h2 class="section-title">7 lần ôn theo Ebbinghaus</h2>
+    <p class="section-sub">
+      Sau Chương 10, dành 1&nbsp;buổi <em>ôn lại tổng quan Phần&nbsp;3</em> — 3 chương này tạo thành câu chuyện hoàn chỉnh về hoạch định.
+    </p>
+
+    <div class="study-table">
+      <div class="study-row head">
+        <div class="session">LẦN</div>
+        <div>Việc làm</div>
+        <div>Thời lượng</div>
+      </div>
+      <div class="study-row">
+        <div class="session">1</div>
+        <div>Cuối ngày học (Ngày&nbsp;0): Lướt cheatsheet, không đọc lại nội dung</div>
+        <div>15&nbsp;phút</div>
+      </div>
+      <div class="study-row">
+        <div class="session">2</div>
+        <div>Ngày&nbsp;1: Tự kể không nhìn tài liệu — flashcards lần đầu</div>
+        <div>20&nbsp;phút</div>
+      </div>
+      <div class="study-row">
+        <div class="session">3</div>
+        <div>Ngày&nbsp;3: Áp khung vào startup VN (VinFast, Tiki, Sky Mavis)</div>
+        <div>30&nbsp;phút</div>
+      </div>
+      <div class="study-row">
+        <div class="session">4</div>
+        <div>Ngày&nbsp;7: Vẽ lại sơ đồ tổng thể từ trí nhớ</div>
+        <div>30&nbsp;phút</div>
+      </div>
+      <div class="study-row">
+        <div class="session">5</div>
+        <div>Ngày&nbsp;16: Giảng cho người khác hoặc tự ghi âm 10&nbsp;phút</div>
+        <div>45&nbsp;phút</div>
+      </div>
+      <div class="study-row">
+        <div class="session">6</div>
+        <div>Ngày&nbsp;35: Củng cố trí nhớ trung hạn</div>
+        <div>20&nbsp;phút</div>
+      </div>
+      <div class="study-row">
+        <div class="session">7</div>
+        <div>Ngày&nbsp;75: Chuyển sang trí nhớ rất bền (6+&nbsp;tháng)</div>
+        <div>15&nbsp;phút</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================
+     FOOTER
+     ========================================================== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <div>
+        <div class="footer-title">Chương 10 — Khởi nghiệp</div>
+        <div class="footer-text">Chương kết Phần&nbsp;3 (Planning). Khác các chương trước — đây là về việc <em>tạo ra tổ chức</em>, không phải quản trị tổ chức đã có.</div>
+        <div class="footer-text">Sách: <em>Management</em> — Stephen P. Robbins & Mary A. Coulter, ấn bản 15 (Pearson, 2021).</div>
+      </div>
+      <div>
+        <div class="footer-meta">★ TÀI LIỆU CỦA</div>
+        <div class="footer-text" style="color: var(--paper); font-weight: 700; font-size: 16px; margin-top: 4px;">Vũ Hải</div>
+        <div class="footer-meta" style="margin-top: 12px;">Business Consultant</div>
+        <div class="footer-text">Fitness · Franchise · Leadership</div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

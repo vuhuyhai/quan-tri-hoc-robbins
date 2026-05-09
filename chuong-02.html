@@ -1,0 +1,2059 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chương 2 — Ra Quyết định</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap&subset=vietnamese" rel="stylesheet">
+<style>
+/* ============================================
+   NEO-BRUTALISM v3.4 — REFINED TEMPERED NB
+   Design System for Vũ Hải
+   ============================================ */
+
+:root {
+  /* Brand & Ink */
+  --brand: #c73937;
+  --brand-dark: #a82d2c;
+  --ink: #1a1a1a;
+  --ink-soft: #2d2d2d;
+  --paper: #faf8f3;
+  --paper-warm: #f5f1e8;
+
+  /* Muted Pastel Accents */
+  --yellow: #F5E4B8;
+  --cyan: #C4DEDC;
+  --lime: #DDE4C5;
+  --pink: #F0DCDD;
+
+  /* Border & Shadow */
+  --border-w: 3px;
+  --border-w-thin: 2px;
+  --shadow-offset: 6px 6px 0;
+  --shadow-offset-sm: 4px 4px 0;
+  --shadow-offset-lg: 8px 8px 0;
+  --radius: 4px;
+  --radius-pill: 999px;
+
+  /* Spacing */
+  --gap-xs: 8px;
+  --gap-sm: 16px;
+  --gap-md: 24px;
+  --gap-lg: 40px;
+  --gap-xl: 64px;
+
+  /* Typography */
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+/* ============================================
+   GLOBAL RESET
+   ============================================ */
+* {
+  font-style: normal !important;
+  box-sizing: border-box;
+  font-optical-sizing: auto;
+}
+
+*::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.6;
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(26,26,26,0.08) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+/* Typography rules */
+h1, h2, h3, h4, h5, h6,
+.title, .heading, .hero-title, .section-title, .card-title {
+  text-wrap: balance;
+  font-family: var(--font-display);
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+p, li, .body-text {
+  text-wrap: pretty;
+}
+
+p {
+  margin: 0 0 1em 0;
+}
+
+strong, b {
+  font-weight: 700;
+}
+
+a {
+  color: var(--brand);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  font-weight: 600;
+}
+
+a:hover {
+  background: var(--yellow);
+  color: var(--ink);
+}
+
+a:focus-visible {
+  outline: 3px solid var(--brand);
+  outline-offset: 3px;
+}
+
+/* ============================================
+   LAYOUT
+   ============================================ */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--gap-md);
+}
+
+@media (min-width: 768px) {
+  .container { padding: var(--gap-lg); }
+}
+
+/* ============================================
+   HERO
+   ============================================ */
+.hero {
+  border: var(--border-w) solid var(--ink);
+  background: var(--paper);
+  box-shadow: var(--shadow-offset-lg) var(--ink);
+  padding: var(--gap-lg) var(--gap-md);
+  margin-bottom: var(--gap-xl);
+  position: relative;
+  border-radius: var(--radius);
+}
+
+@media (min-width: 768px) {
+  .hero { padding: var(--gap-xl) var(--gap-lg); }
+}
+
+.hero-badge {
+  display: inline-block;
+  background: var(--brand);
+  color: var(--paper);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 12px;
+  border: var(--border-w-thin) solid var(--ink);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: var(--gap-md);
+  transform: rotate(-1.5deg);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.hero-title {
+  font-size: clamp(2.5rem, 7vw, 5rem);
+  margin-bottom: var(--gap-md);
+  line-height: 1;
+}
+
+.hero-title .accent {
+  background: var(--yellow);
+  padding: 0 8px;
+  border: var(--border-w-thin) solid var(--ink);
+  display: inline-block;
+  transform: rotate(-1deg);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.hero-sub {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  color: var(--ink-soft);
+  max-width: 720px;
+  font-weight: 500;
+  text-wrap: balance;
+}
+
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-sm);
+  margin-top: var(--gap-md);
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+
+.hero-meta span {
+  background: var(--paper-warm);
+  border: var(--border-w-thin) solid var(--ink);
+  padding: 4px 10px;
+  font-weight: 600;
+}
+
+/* ============================================
+   STICKER (decorative)
+   ============================================ */
+.sticker {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  background: var(--cyan);
+  border: var(--border-w-thin) solid var(--ink);
+  padding: 6px 10px;
+  box-shadow: 3px 3px 0 var(--ink);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  z-index: 10;
+}
+
+.sticker-pink { background: var(--pink); }
+.sticker-yellow { background: var(--yellow); }
+.sticker-lime { background: var(--lime); }
+
+/* ============================================
+   SECTION
+   ============================================ */
+.section {
+  margin-bottom: var(--gap-xl);
+  position: relative;
+}
+
+.section-num {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--brand);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: var(--gap-xs);
+  display: block;
+}
+
+.section-title {
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  margin-bottom: var(--gap-md);
+  padding-bottom: var(--gap-sm);
+  border-bottom: var(--border-w) solid var(--ink);
+}
+
+.section-title .underline {
+  background: var(--lime);
+  padding: 0 6px;
+  border: var(--border-w-thin) solid var(--ink);
+  display: inline-block;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+/* ============================================
+   CARD
+   ============================================ */
+.card {
+  border: var(--border-w) solid var(--ink);
+  background: var(--paper);
+  box-shadow: var(--shadow-offset) var(--ink);
+  border-radius: var(--radius);
+  margin-bottom: var(--gap-md);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.card-header {
+  background: var(--brand);
+  color: var(--paper);
+  border-bottom: var(--border-w-thin) solid var(--ink);
+  padding: var(--gap-sm) var(--gap-md);
+}
+
+.card-header.bg-yellow { background: var(--yellow); color: var(--ink); }
+.card-header.bg-cyan { background: var(--cyan); color: var(--ink); }
+.card-header.bg-lime { background: var(--lime); color: var(--ink); }
+.card-header.bg-pink { background: var(--pink); color: var(--ink); }
+.card-header.bg-ink { background: var(--ink); color: var(--paper); }
+
+.card-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 4px;
+  opacity: 0.85;
+}
+
+.card-title {
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  font-weight: 700;
+}
+
+.card-body {
+  padding: var(--gap-md);
+}
+
+.card-body > *:last-child {
+  margin-bottom: 0;
+}
+
+.card-tilt-l {
+  transform: rotate(-1deg);
+}
+
+.card-tilt-r {
+  transform: rotate(1deg);
+}
+
+/* ============================================
+   GRID
+   ============================================ */
+.grid {
+  display: grid;
+  gap: var(--gap-md);
+}
+
+.grid-2 { grid-template-columns: 1fr; }
+.grid-3 { grid-template-columns: 1fr; }
+.grid-4 { grid-template-columns: 1fr; }
+
+@media (min-width: 640px) {
+  .grid-2 { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 768px) {
+  .grid-3 { grid-template-columns: repeat(3, 1fr); }
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 1024px) {
+  .grid-4 { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* ============================================
+   LIST WITH NUMBERED ITEMS
+   ============================================ */
+.num-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.num-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--gap-sm);
+  padding: var(--gap-sm) 0;
+  border-bottom: var(--border-w-thin) dashed var(--ink);
+  min-width: 0;
+}
+
+.num-list li:last-child {
+  border-bottom: none;
+}
+
+.num-list .num {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  border-radius: var(--radius);
+}
+
+.num-list .num.brand { background: var(--brand); }
+.num-list .num.lg { width: 44px; height: 44px; font-size: 16px; }
+
+.num-list .content {
+  flex: 1;
+  min-width: 0;
+}
+
+.num-list .content strong {
+  display: block;
+  margin-bottom: 4px;
+  font-family: var(--font-display);
+  font-size: 1.1em;
+}
+
+/* ============================================
+   TABLE
+   ============================================ */
+.table-wrap {
+  border: var(--border-w) solid var(--ink);
+  background: var(--paper);
+  box-shadow: var(--shadow-offset) var(--ink);
+  border-radius: var(--radius);
+  overflow-x: auto;
+  margin-bottom: var(--gap-md);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-body);
+}
+
+table th {
+  background: var(--ink);
+  color: var(--paper);
+  text-align: left;
+  padding: var(--gap-sm);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: var(--border-w) solid var(--ink);
+}
+
+table td {
+  padding: var(--gap-sm);
+  border-bottom: var(--border-w-thin) solid var(--ink);
+  vertical-align: top;
+  font-size: 15px;
+}
+
+table tr:last-child td {
+  border-bottom: none;
+}
+
+table tr:nth-child(even) td {
+  background: var(--paper-warm);
+}
+
+table td:first-child {
+  font-weight: 600;
+  border-right: var(--border-w-thin) dashed var(--ink);
+}
+
+/* ============================================
+   QUOTE BOX
+   ============================================ */
+.quote {
+  background: var(--yellow);
+  border: var(--border-w) solid var(--ink);
+  box-shadow: var(--shadow-offset) var(--ink);
+  border-radius: var(--radius);
+  padding: var(--gap-md);
+  margin: var(--gap-md) 0;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 500;
+  position: relative;
+  text-wrap: balance;
+}
+
+.quote::before {
+  content: """;
+  position: absolute;
+  top: -20px;
+  left: var(--gap-sm);
+  font-size: 5rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--brand);
+  background: var(--paper);
+  border: var(--border-w-thin) solid var(--ink);
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  border-radius: var(--radius);
+}
+
+.quote-author {
+  display: block;
+  margin-top: var(--gap-sm);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-soft);
+}
+
+.quote.bg-cyan { background: var(--cyan); }
+.quote.bg-lime { background: var(--lime); }
+.quote.bg-pink { background: var(--pink); }
+
+/* ============================================
+   STAT BOX
+   ============================================ */
+.stat-grid {
+  display: grid;
+  gap: var(--gap-sm);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+  .stat-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 1024px) {
+  .stat-grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+.stat {
+  background: var(--paper);
+  border: var(--border-w) solid var(--ink);
+  box-shadow: var(--shadow-offset-sm) var(--ink);
+  padding: var(--gap-sm);
+  text-align: center;
+  border-radius: var(--radius);
+}
+
+.stat-num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  color: var(--brand);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.stat-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink-soft);
+}
+
+/* ============================================
+   CALLOUT BOX
+   ============================================ */
+.callout {
+  border: var(--border-w) solid var(--ink);
+  background: var(--cyan);
+  box-shadow: var(--shadow-offset) var(--ink);
+  border-radius: var(--radius);
+  padding: var(--gap-md);
+  margin: var(--gap-md) 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+}
+
+.callout.tip { background: var(--lime); }
+.callout.warning { background: var(--pink); }
+.callout.example { background: var(--yellow); }
+
+.callout-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 4px 8px;
+  display: inline-block;
+  align-self: flex-start;
+  border-radius: var(--radius);
+}
+
+.callout-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+  margin: 0;
+}
+
+.callout-body {
+  margin: 0;
+  font-size: 15px;
+}
+
+.callout-body p:last-child { margin-bottom: 0; }
+
+/* ============================================
+   TOC NAV
+   ============================================ */
+.toc {
+  border: var(--border-w) solid var(--ink);
+  background: var(--paper);
+  box-shadow: var(--shadow-offset) var(--ink);
+  border-radius: var(--radius);
+  padding: var(--gap-md);
+  margin-bottom: var(--gap-xl);
+}
+
+.toc-title {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 6px 12px;
+  display: inline-block;
+  margin-bottom: var(--gap-md);
+}
+
+.toc-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: var(--gap-xs);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .toc-list { grid-template-columns: repeat(2, 1fr); }
+}
+
+.toc-list a {
+  display: block;
+  padding: 10px 14px;
+  background: var(--paper-warm);
+  border: var(--border-w-thin) solid var(--ink);
+  text-decoration: none;
+  color: var(--ink);
+  font-weight: 500;
+  font-size: 14px;
+  border-radius: var(--radius);
+  transition: transform 0.1s ease-out, box-shadow 0.1s ease-out;
+}
+
+.toc-list a:hover {
+  background: var(--yellow);
+  transform: translate(-2px, -2px);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.toc-list a .toc-num {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--brand);
+  margin-right: 8px;
+}
+
+/* ============================================
+   EMPHASIS HIGHLIGHT
+   ============================================ */
+.hl {
+  background: var(--yellow);
+  padding: 1px 5px;
+  border: var(--border-w-thin) solid var(--ink);
+  font-weight: 600;
+  border-radius: 2px;
+}
+
+.hl-cyan { background: var(--cyan); padding: 1px 5px; border: var(--border-w-thin) solid var(--ink); font-weight: 600; border-radius: 2px; }
+.hl-pink { background: var(--pink); padding: 1px 5px; border: var(--border-w-thin) solid var(--ink); font-weight: 600; border-radius: 2px; }
+.hl-lime { background: var(--lime); padding: 1px 5px; border: var(--border-w-thin) solid var(--ink); font-weight: 600; border-radius: 2px; }
+
+/* ============================================
+   8-STEP FLOW DIAGRAM
+   ============================================ */
+.steps-flow {
+  display: grid;
+  gap: var(--gap-md);
+  grid-template-columns: 1fr;
+  margin: var(--gap-md) 0;
+}
+
+@media (min-width: 768px) {
+  .steps-flow { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 1024px) {
+  .steps-flow { grid-template-columns: repeat(4, 1fr); }
+}
+
+.step-box {
+  background: var(--paper);
+  border: var(--border-w) solid var(--ink);
+  box-shadow: var(--shadow-offset) var(--ink);
+  border-radius: var(--radius);
+  padding: var(--gap-md);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+}
+
+.step-box .step-num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 3rem;
+  line-height: 1;
+  color: var(--brand);
+}
+
+.step-box .step-en {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  letter-spacing: 0.08em;
+}
+
+.step-box .step-vi {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.step-box:nth-child(8n+1) { background: var(--yellow); }
+.step-box:nth-child(8n+2) { background: var(--cyan); }
+.step-box:nth-child(8n+3) { background: var(--lime); }
+.step-box:nth-child(8n+4) { background: var(--pink); }
+.step-box:nth-child(8n+5) { background: var(--paper-warm); }
+.step-box:nth-child(8n+6) { background: var(--cyan); }
+.step-box:nth-child(8n+7) { background: var(--yellow); }
+.step-box:nth-child(8n+8) { background: var(--brand); color: var(--paper); }
+.step-box:nth-child(8n+8) .step-num { color: var(--yellow); }
+.step-box:nth-child(8n+8) .step-en { color: var(--paper); opacity: 0.9; }
+
+/* ============================================
+   2x2 MATRIX
+   ============================================ */
+.matrix {
+  display: grid;
+  grid-template-columns: 100px 1fr 1fr;
+  gap: 4px;
+  margin: var(--gap-md) 0;
+}
+
+.matrix .m-empty { background: transparent; }
+
+.matrix .m-cell {
+  background: var(--paper);
+  border: var(--border-w) solid var(--ink);
+  padding: var(--gap-md);
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+  min-height: 140px;
+}
+
+.matrix .m-label {
+  background: var(--ink);
+  color: var(--paper);
+  padding: var(--gap-sm);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-align: center;
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.matrix .m-cell .m-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: var(--brand);
+}
+
+.matrix .m-cell .m-desc {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.matrix .m-cell.directive { background: var(--yellow); }
+.matrix .m-cell.analytic { background: var(--cyan); }
+.matrix .m-cell.conceptual { background: var(--lime); }
+.matrix .m-cell.behavioral { background: var(--pink); }
+
+@media (max-width: 640px) {
+  .matrix { grid-template-columns: 1fr; }
+  .matrix .m-empty { display: none; }
+  .matrix .m-label { min-height: 0; padding: var(--gap-sm); }
+}
+
+/* ============================================
+   BIAS GRID (12 thiên kiến)
+   ============================================ */
+.bias-grid {
+  display: grid;
+  gap: var(--gap-md);
+  grid-template-columns: 1fr;
+  margin: var(--gap-md) 0;
+}
+
+@media (min-width: 640px) {
+  .bias-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 1024px) {
+  .bias-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+.bias-card {
+  background: var(--paper);
+  border: var(--border-w) solid var(--ink);
+  box-shadow: var(--shadow-offset-sm) var(--ink);
+  border-radius: var(--radius);
+  padding: var(--gap-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+  min-width: 0;
+}
+
+.bias-card .bias-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 4px 8px;
+  align-self: flex-start;
+  border-radius: var(--radius);
+  letter-spacing: 0.05em;
+}
+
+.bias-card .bias-title-en {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--brand);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.bias-card .bias-title-vi {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+  line-height: 1.2;
+}
+
+.bias-card .bias-desc {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+
+.bias-card:nth-child(12n+1) { background: var(--yellow); }
+.bias-card:nth-child(12n+2) { background: var(--cyan); }
+.bias-card:nth-child(12n+3) { background: var(--lime); }
+.bias-card:nth-child(12n+4) { background: var(--pink); }
+.bias-card:nth-child(12n+5) { background: var(--paper-warm); }
+.bias-card:nth-child(12n+6) { background: var(--yellow); }
+.bias-card:nth-child(12n+7) { background: var(--cyan); }
+.bias-card:nth-child(12n+8) { background: var(--lime); }
+.bias-card:nth-child(12n+9) { background: var(--pink); }
+.bias-card:nth-child(12n+10) { background: var(--paper-warm); }
+.bias-card:nth-child(12n+11) { background: var(--yellow); }
+.bias-card:nth-child(12n+12) { background: var(--cyan); }
+
+/* ============================================
+   TIER DIAGRAM (3 tầng tổng quan)
+   ============================================ */
+.tier-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-md);
+  margin: var(--gap-md) 0;
+}
+
+.tier {
+  border: var(--border-w) solid var(--ink);
+  box-shadow: var(--shadow-offset) var(--ink);
+  border-radius: var(--radius);
+  padding: var(--gap-md);
+}
+
+.tier.t1 { background: var(--yellow); }
+.tier.t2 { background: var(--cyan); }
+.tier.t3 { background: var(--lime); }
+
+.tier .tier-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 4px 10px;
+  display: inline-block;
+  border-radius: var(--radius);
+  margin-bottom: var(--gap-sm);
+}
+
+.tier .tier-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.4rem;
+  margin-bottom: var(--gap-xs);
+}
+
+.tier .tier-desc {
+  font-size: 15px;
+  margin: 0;
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+.footer {
+  margin-top: var(--gap-xl);
+  padding: var(--gap-lg) 0;
+  border-top: var(--border-w) solid var(--ink);
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+.footer strong {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.footer a {
+  color: var(--brand);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  font-weight: 600;
+}
+
+.footer a:hover {
+  background: var(--yellow);
+  color: var(--ink);
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================
+   PRINT
+   ============================================ */
+@media print {
+  body { background: white; background-image: none; }
+  .card, .hero, .toc, .table-wrap { box-shadow: none; }
+  .sticker { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- ============================================
+       HERO SECTION
+       ============================================ -->
+  <header class="hero">
+    <span class="sticker sticker-pink" style="top: -16px; right: 24px; transform: rotate(8deg);">DEEP&nbsp;SUMMARY</span>
+    <span class="sticker sticker-lime" style="bottom: -14px; left: 32px; transform: rotate(-5deg);">~8.000 từ</span>
+
+    <div class="hero-badge">CHƯƠNG&nbsp;02 · ROBBINS&nbsp;&amp;&nbsp;COULTER</div>
+    <h1 class="hero-title">
+      Ra<br>
+      <span class="accent">Quyết&nbsp;định</span>
+    </h1>
+    <p class="hero-sub">
+      Tóm tắt chuyên sâu Chương 2 — Sách <em>Management</em> ấn bản 15&nbsp;(2021).
+      Trái&nbsp;tim của công việc quản trị: 8 bước quy trình, 5 cách tiếp cận, 12 thiên kiến, và bộ công cụ AI/Big&nbsp;Data hiện đại.
+    </p>
+    <div class="hero-meta">
+      <span>📖 15 trang nội bộ</span>
+      <span>⏱ 60-70 phút đọc</span>
+      <span>🎯 5 mục tiêu học tập</span>
+      <span>🇻🇳 Ngôn ngữ Việt</span>
+    </div>
+  </header>
+
+  <!-- ============================================
+       TABLE OF CONTENTS
+       ============================================ -->
+  <nav class="toc">
+    <span class="toc-title">📑 Mục lục</span>
+    <ul class="toc-list">
+      <li><a href="#how-to-use"><span class="toc-num">00</span>Hướng dẫn sử dụng</a></li>
+      <li><a href="#core"><span class="toc-num">01</span>Định nghĩa và bản đồ</a></li>
+      <li><a href="#lo1"><span class="toc-num">LO2.1</span>Tám bước ra quyết định</a></li>
+      <li><a href="#lo2"><span class="toc-num">LO2.2</span>Năm cách tiếp cận</a></li>
+      <li><a href="#lo3"><span class="toc-num">LO2.3</span>Loại quyết định &amp; Phong cách</a></li>
+      <li><a href="#lo4"><span class="toc-num">LO2.4</span>12 thiên kiến</a></li>
+      <li><a href="#lo5"><span class="toc-num">LO2.5</span>Công cụ tiên tiến (AI, Big Data)</a></li>
+      <li><a href="#overview"><span class="toc-num">02</span>Tổng quan 3 tầng</a></li>
+      <li><a href="#cheatsheet"><span class="toc-num">03</span>Cheatsheet</a></li>
+      <li><a href="#review"><span class="toc-num">04</span>Lộ trình ôn tập</a></li>
+    </ul>
+  </nav>
+
+  <!-- ============================================
+       SECTION 0: HOW TO USE
+       ============================================ -->
+  <section class="section" id="how-to-use">
+    <span class="section-num">📍 Trang 1</span>
+    <h2 class="section-title">Hướng&nbsp;dẫn <span class="underline">sử&nbsp;dụng</span> tài&nbsp;liệu này</h2>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="card-header bg-yellow">
+          <div class="card-num">CÁCH ĐỌC</div>
+          <div class="card-title">Cách dùng hiệu quả nhất</div>
+        </div>
+        <div class="card-body">
+          <ul class="num-list">
+            <li>
+              <div class="num brand">1</div>
+              <div class="content">Đọc trọn vẹn trong 60-70&nbsp;phút, không làm việc khác.</div>
+            </li>
+            <li>
+              <div class="num brand">2</div>
+              <div class="content">Đến phần <strong>12&nbsp;thiên&nbsp;kiến</strong> (Trang 6-7), dừng lại lâu hơn — đây là phần áp dụng được ngay.</div>
+            </li>
+            <li>
+              <div class="num brand">3</div>
+              <div class="content">Đến phần <strong>Big&nbsp;Data và AI</strong> (Trang 8), liên hệ với khách hàng tư vấn của bạn.</div>
+            </li>
+            <li>
+              <div class="num brand">4</div>
+              <div class="content">Cuối mỗi phần lớn, gập tài liệu lại và tự kể.</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-cyan">
+          <div class="card-num">LIÊN HỆ CHƯƠNG 1</div>
+          <div class="card-title">Vì sao Chương 2 là trái tim quản trị</div>
+        </div>
+        <div class="card-body">
+          <p>Chương 1 nói nhà quản trị làm 4&nbsp;chức năng <strong>POLC</strong>. Chương 2 cho thấy cả 4&nbsp;chức năng đều bao gồm việc <strong>ra quyết định</strong>.</p>
+          <ul style="margin: 0; padding-left: 20px; font-size: 14px;">
+            <li><strong>Planning</strong> — quyết định mục tiêu nào theo đuổi</li>
+            <li><strong>Organizing</strong> — quyết định ai làm gì</li>
+            <li><strong>Leading</strong> — quyết định cách động viên ai</li>
+            <li><strong>Controlling</strong> — quyết định làm gì khi thấy lệch chuẩn</li>
+          </ul>
+          <p style="margin-top: var(--gap-sm);">Vì vậy Robbins gọi nhà quản trị là <em>decision&nbsp;makers</em> (người ra quyết định).</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-label">💡 Quy ước</span>
+      <p class="callout-body">
+        Các thuật ngữ chuyên ngành được giữ nguyên tiếng Anh kèm dịch nghĩa ở lần xuất hiện đầu. Ví dụ: <em>Bounded&nbsp;rationality (tính hợp lý có giới hạn)</em>, <em>Heuristics (lối tắt tư duy)</em>. Trong công việc thực tế, bạn sẽ gặp đúng các thuật ngữ tiếng Anh này trong báo cáo và sách giáo khoa quốc tế.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================
+       SECTION 1: CORE DEFINITION
+       ============================================ -->
+  <section class="section" id="core">
+    <span class="section-num">📍 Trang 2</span>
+    <h2 class="section-title">Định&nbsp;nghĩa cốt&nbsp;lõi và <span class="underline">bản&nbsp;đồ</span> kiến&nbsp;thức</h2>
+
+    <div class="quote bg-cyan">
+      <em>Decision (quyết&nbsp;định)</em> là <strong>việc lựa chọn giữa các phương án</strong>. Nhưng quan trọng hơn: ra quyết định được hiểu tốt nhất như một <strong>quy trình</strong>, không chỉ là một lựa chọn.
+      <span class="quote-author">— Robbins &amp; Coulter</span>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Phép ẩn dụ: Con tàu trên đại dương</h3>
+
+    <div class="grid grid-2">
+      <div class="card card-tilt-l">
+        <div class="card-header bg-yellow">
+          <div class="card-num">ẨN DỤ</div>
+          <div class="card-title">Bản đồ + Cách lái + Sương mù + Radar</div>
+        </div>
+        <div class="card-body">
+          <ul style="margin: 0; padding-left: 20px;">
+            <li><strong>8&nbsp;bước</strong> = bản đồ hải trình</li>
+            <li><strong>5&nbsp;cách tiếp cận</strong> = 5&nbsp;cách lái tàu</li>
+            <li><strong>12&nbsp;thiên kiến</strong> = 12&nbsp;loại sương mù che mắt thuyền trưởng</li>
+            <li><strong>AI/Big&nbsp;Data</strong> = radar và GPS hiện đại</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-pink">
+          <div class="card-num">CỐT LÕI</div>
+          <div class="card-title">Vì sao AI không thay thế được nhà quản trị</div>
+        </div>
+        <div class="card-body">
+          <p>Ngay cả với GPS tốt nhất, vẫn cần phán đoán của thuyền trưởng. <span class="hl-pink">AI không thay thế nhà quản trị, chỉ hỗ trợ.</span></p>
+          <p>Nhà quản trị giỏi là người <strong>kết hợp tất cả công cụ trên thành một quyết định cuối cùng</strong>.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Năm mục tiêu học tập (LO) của Chương&nbsp;2</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 90px;">Mục tiêu</th>
+            <th>Câu hỏi giải đáp</th>
+            <th>Khái niệm chính</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>LO2.1</td><td>Quy trình ra quyết định gồm những bước nào?</td><td>8&nbsp;bước từ xác định vấn đề đến đánh giá hiệu quả</td></tr>
+          <tr><td>LO2.2</td><td>Có những cách tiếp cận nào?</td><td>5&nbsp;cách: Rationality, Bounded, Intuition, EBMgt, Crowdsourcing</td></tr>
+          <tr><td>LO2.3</td><td>Loại quyết định và phong cách ra quyết định?</td><td>2&nbsp;loại (Programmed/Nonprogrammed); 4&nbsp;phong cách</td></tr>
+          <tr><td>LO2.4</td><td>Thiên kiến ảnh hưởng thế nào?</td><td>12&nbsp;thiên kiến phổ biến và cách giảm thiểu</td></tr>
+          <tr><td>LO2.5</td><td>Công cụ tiên tiến để cải thiện?</td><td>Design Thinking, Big Data, AI, ML, DL, Analytics</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============================================
+       LO 2.1 - 8 STEPS
+       ============================================ -->
+  <section class="section" id="lo1">
+    <span class="section-num">📍 Trang 3-4 · LO2.1</span>
+    <h2 class="section-title">Tám <span class="underline">bước</span> trong quy trình ra quyết định</h2>
+
+    <div class="callout example">
+      <span class="callout-label">🎯 Case study Amanda</span>
+      <p class="callout-body">
+        Robbins minh họa 8&nbsp;bước qua một ví dụ rất đời thường: <strong>Amanda là sales&nbsp;manager, đội của cô cần laptop mới</strong>. Hãy đi qua 8&nbsp;bước qua case này.
+      </p>
+    </div>
+
+    <div class="steps-flow">
+      <div class="step-box">
+        <div class="step-num">1</div>
+        <div class="step-en">Identify a Problem</div>
+        <div class="step-vi">Xác định vấn đề</div>
+        <p style="font-size: 14px; margin: 0;">Vấn đề = khoảng cách giữa <strong>tình trạng hiện tại</strong> và <strong>tình trạng mong muốn</strong>. Đừng nhầm vấn đề với triệu chứng.</p>
+      </div>
+      <div class="step-box">
+        <div class="step-num">2</div>
+        <div class="step-en">Identify Decision Criteria</div>
+        <div class="step-vi">Xác định tiêu chí</div>
+        <p style="font-size: 14px; margin: 0;">Amanda chọn 5&nbsp;tiêu chí: bộ nhớ, màn hình, pin, bảo hành, trọng lượng.</p>
+      </div>
+      <div class="step-box">
+        <div class="step-num">3</div>
+        <div class="step-en">Allocate Weights</div>
+        <div class="step-vi">Phân bổ trọng số</div>
+        <p style="font-size: 14px; margin: 0;">Cho điểm 1-10. Bộ&nbsp;nhớ = 10, pin = 8, trọng&nbsp;lượng = 6, bảo&nbsp;hành = 4, màn&nbsp;hình = 3.</p>
+      </div>
+      <div class="step-box">
+        <div class="step-num">4</div>
+        <div class="step-en">Develop Alternatives</div>
+        <div class="step-vi">Phát triển phương án</div>
+        <p style="font-size: 14px; margin: 0;">Liệt kê thôi, <strong>chưa đánh giá</strong>. Amanda liệt kê 7&nbsp;mẫu laptop.</p>
+      </div>
+      <div class="step-box">
+        <div class="step-num">5</div>
+        <div class="step-en">Analyze Alternatives</div>
+        <div class="step-vi">Phân tích phương án</div>
+        <p style="font-size: 14px; margin: 0;">Đánh giá theo từng tiêu chí, nhân với trọng số. Surface&nbsp;Book: 249, MacBook&nbsp;Pro: 232.</p>
+      </div>
+      <div class="step-box">
+        <div class="step-num">6</div>
+        <div class="step-en">Select an Alternative</div>
+        <div class="step-vi">Chọn phương án</div>
+        <p style="font-size: 14px; margin: 0;">Chọn phương án có tổng điểm cao nhất. Amanda chọn <strong>Microsoft Surface&nbsp;Book</strong>.</p>
+      </div>
+      <div class="step-box">
+        <div class="step-num">7</div>
+        <div class="step-en">Implement</div>
+        <div class="step-vi">Triển khai</div>
+        <p style="font-size: 14px; margin: 0;">Truyền đạt và <strong>có được sự cam kết</strong>. Người triển khai cần được tham gia trong các bước trước.</p>
+      </div>
+      <div class="step-box">
+        <div class="step-num">8</div>
+        <div class="step-en">Evaluate Effectiveness</div>
+        <div class="step-vi">Đánh giá hiệu quả</div>
+        <p style="font-size: 14px; margin: 0;">Vấn đề đã được giải quyết chưa? Nếu chưa, sai ở bước nào?</p>
+      </div>
+    </div>
+
+    <div class="quote bg-pink">
+      Doanh số giảm 5% có phải là vấn đề không? Hay đó chỉ là <strong>triệu chứng</strong> của vấn đề thực sự — chất lượng sản phẩm kém, giá quá cao, quảng cáo dở, hay thị hiếu khách hàng đang dịch chuyển?
+      <span class="quote-author">— Phân biệt Vấn đề vs. Triệu chứng</span>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Phân biệt: Problem vs. Symptom</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Vấn đề thực (Problem)</th>
+            <th>Triệu chứng (Symptom)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Là khoảng cách giữa hiện tại và mong muốn ở mức gốc rễ</td><td>Là biểu hiện bên ngoài của vấn đề thực</td></tr>
+          <tr><td>Giải quyết vấn đề thực sẽ làm triệu chứng biến mất</td><td>Chữa triệu chứng thì triệu chứng tạm hết, vấn đề vẫn còn</td></tr>
+          <tr><td>Ví dụ: chất lượng sản phẩm kém</td><td>Ví dụ: doanh số giảm 5%</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <span class="callout-label">🔍 Câu hỏi phân biệt</span>
+      <p class="callout-body">
+        <em>"Nếu tôi giải quyết được X, liệu có còn vấn đề khác xuất hiện không?"</em><br>
+        <strong>Không có gì khác</strong> — đó là vấn đề thực. <strong>Có</strong> — bạn vẫn đang ở mức triệu chứng.
+      </p>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-label">💼 Áp dụng ngành tư vấn</span>
+      <p class="callout-body">
+        Đây là sai lầm hàng đầu của consultant non-experience. Khách hàng nói <em>"doanh số đang giảm, anh giúp tôi tăng doanh số đi"</em>. Consultant non-experience lao vào tìm cách tăng doanh số. Consultant kinh nghiệm dừng lại hỏi: <em>"Doanh số giảm là triệu chứng. Vấn đề thực sự là gì?"</em> <span class="hl">Một câu hỏi này có thể tiết kiệm 3&nbsp;tháng làm sai hướng.</span>
+      </p>
+    </div>
+
+    <div class="callout warning">
+      <span class="callout-label">⚠️ Bước 7 — Phát hiện quan trọng</span>
+      <p class="callout-body">
+        Vì sao nhiều dự án tư vấn đưa ra khuyến nghị tốt nhưng không được triển khai? Vì nhân viên của khách hàng <strong>không tham gia vào quy trình</strong>. Họ thấy đây là "quyết định của bọn consultant" chứ không phải "quyết định của chúng tôi". Đây là lý do tư vấn hiện đại nhấn mạnh <em>co-creation</em> — cùng tạo ra giải pháp với khách hàng, không phải đến giao giải pháp đã đóng gói.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================
+       LO 2.2 - 5 APPROACHES
+       ============================================ -->
+  <section class="section" id="lo2">
+    <span class="section-num">📍 Trang 5-6 · LO2.2</span>
+    <h2 class="section-title">Năm <span class="underline">cách tiếp cận</span> ra quyết định</h2>
+
+    <p>Trong thực tế, nhà quản trị không luôn đi đủ 8&nbsp;bước. Họ dùng nhiều cách tiếp cận khác nhau tùy hoàn cảnh. Robbins giới thiệu <strong>5&nbsp;cách tiếp cận</strong>, không phải để bạn chọn một, mà để bạn hiểu <span class="hl">khi nào nên dùng cái nào.</span></p>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="card-header bg-yellow">
+          <div class="card-num">CÁCH 1</div>
+          <div class="card-title">Rationality · Tính hợp lý</div>
+        </div>
+        <div class="card-body">
+          <p><em>Rational decision making</em> mô tả các lựa chọn <strong>logic, nhất quán, và tối đa hóa giá trị</strong>.</p>
+          <p>Người ra quyết định lý tưởng: hoàn toàn khách quan, biết tất cả phương án và hệ quả, luôn chọn phương án tối đa hóa.</p>
+          <p><span class="hl-pink">Vấn đề: các giả định này không thực tế.</span> Trong đời thực, bạn không biết hết phương án và bạn không phải máy tính.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-cyan">
+          <div class="card-num">CÁCH 2</div>
+          <div class="card-title">Bounded Rationality · Hợp lý có giới hạn</div>
+        </div>
+        <div class="card-body">
+          <p><em>Bounded rationality</em>: nhà quản trị ra quyết định hợp lý nhưng <strong>bị giới hạn bởi khả năng xử lý thông tin</strong>.</p>
+          <p>Vì không thể phân tích hết, nhà quản trị <strong>satisfice</strong> thay vì <em>maximize</em>. Satisfice = chấp nhận giải pháp <span class="hl-cyan">"đủ tốt"</span>.</p>
+          <p>Đây là cách <strong>95% các quyết định kinh doanh thực sự</strong> được ra.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-lime">
+          <div class="card-num">CÁCH 3</div>
+          <div class="card-title">Intuition · Trực giác</div>
+        </div>
+        <div class="card-body">
+          <p><em>Intuitive decision making</em> — ra quyết định dựa trên <strong>kinh nghiệm, cảm xúc, và phán đoán tích lũy</strong>.</p>
+          <p>Khảo sát: <strong>gần một nửa CEO</strong> dùng trực giác thường xuyên hơn phân tích chính thức.</p>
+          <p><strong>5 dạng trực giác:</strong> Experience-based · Affect-initiated · Cognitive-based · Subconscious · Values/ethics-based.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-pink">
+          <div class="card-num">CÁCH 4</div>
+          <div class="card-title">Evidence-Based Management · EBMgt</div>
+        </div>
+        <div class="card-body">
+          <p>Sử dụng có hệ thống <strong>bằng chứng tốt nhất sẵn có</strong> để cải thiện thực hành quản trị. Logic vay mượn từ y học.</p>
+          <p><strong>4 yếu tố cốt lõi:</strong> Chuyên môn người ra quyết định · Bằng chứng bên ngoài · Stakeholders · Yếu tố tổ chức nội bộ.</p>
+          <p><span class="hl-pink">Sốc: 98% nhà quản trị thất bại trong việc áp dụng các thông lệ tốt nhất.</span></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="background: var(--brand); color: var(--paper); margin-top: var(--gap-md);">
+      <div class="card-body">
+        <div class="card-num" style="color: var(--paper); opacity: 0.85;">CÁCH 5</div>
+        <h3 style="font-family: var(--font-display); font-size: 1.4rem; color: var(--paper); margin-bottom: var(--gap-sm);">Crowdsourcing · Huy động nguồn lực đám đông</h3>
+        <p>Dựa vào <strong>mạng lưới người ngoài tổ chức</strong> để xin ý tưởng qua internet.</p>
+        <p><strong>Ví dụ Hershey:</strong> Cần cách giữ socola mát khi vận chuyển trong mùa hè. Thay vì tìm giải pháp nội bộ, Hershey tổ chức cuộc thi đổi mới — bất kỳ ai cũng có thể nộp ý tưởng. Người thắng nhận <strong>25.000&nbsp;USD vốn phát triển</strong> và cơ hội hợp tác.</p>
+      </div>
+    </div>
+
+    <div class="quote bg-cyan">
+      Người trải nghiệm cảm xúc mạnh khi ra quyết định <strong>đạt hiệu quả ra quyết định cao hơn</strong>, đặc biệt khi họ hiểu được cảm xúc của mình. Niềm tin cũ "nhà quản trị nên gạt cảm xúc khi ra quyết định" có thể không phải lời khuyên tốt nhất.
+      <span class="quote-author">— Phát hiện hiện đại về intuition</span>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-label">💼 Áp dụng ngành tư vấn — Bounded Rationality</span>
+      <p class="callout-body">
+        Khi tư vấn cho khách hàng, đừng ngạc nhiên khi họ chọn phương án thứ 3 trong danh sách 5 phương án bạn đề xuất, dù phương án 1 là tối ưu. <strong>Họ không phi lý — họ đang satisfice.</strong> Phương án 3 đủ tốt và phù hợp với năng lực triển khai hiện tại của họ.
+      </p>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Khi nào dùng cách nào</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Cách tiếp cận</th>
+            <th>Phù hợp khi</th>
+            <th>Hạn chế</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Rationality</td><td>Vấn đề rõ ràng, đủ thông tin, đủ thời gian</td><td>Hiếm có trong thực tế</td></tr>
+          <tr><td>Bounded Rationality</td><td>Phần lớn quyết định công việc hàng ngày</td><td>Có thể bỏ lỡ phương án tốt hơn</td></tr>
+          <tr><td>Intuition</td><td>Có nhiều kinh nghiệm, áp lực thời gian</td><td>Dễ bị thiên kiến đánh lừa</td></tr>
+          <tr><td>Evidence-Based</td><td>Quyết định lớn, có dữ liệu, có thời gian</td><td>Cần kỹ năng phân tích, tốn nguồn lực</td></tr>
+          <tr><td>Crowdsourcing</td><td>Cần ý tưởng mới lạ, vấn đề phức tạp</td><td>Khó kiểm soát chất lượng đầu vào</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============================================
+       LO 2.3 - DECISION TYPES + STYLES
+       ============================================ -->
+  <section class="section" id="lo3">
+    <span class="section-num">📍 Trang 7 · LO2.3</span>
+    <h2 class="section-title">Loại quyết định và <span class="underline">phong&nbsp;cách</span> ra quyết định</h2>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-md); margin-bottom: var(--gap-md);">Phần 1 — Hai loại quyết định</h3>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="card-header bg-yellow">
+          <div class="card-num">LOẠI 1</div>
+          <div class="card-title">Programmed Decisions cho Structured Problems</div>
+        </div>
+        <div class="card-body">
+          <p><strong>Structured problems</strong> = vấn đề thẳng thắn, quen thuộc, dễ định nghĩa. Ví dụ: khách trả hàng, nhà cung cấp giao trễ, sinh viên muốn rút môn.</p>
+          <p>Nhà quản trị dùng <em>Programmed decision</em> — quyết định lặp lại, xử lý bằng cách tiếp cận thường quy.</p>
+          <p><strong>3 dạng:</strong></p>
+          <ul style="margin: 0; padding-left: 20px;">
+            <li><strong>Procedure</strong> — chuỗi bước tuần tự</li>
+            <li><strong>Rule</strong> — quy tắc rõ ràng, không cần diễn giải</li>
+            <li><strong>Policy</strong> — hướng dẫn chung, cần diễn giải</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-pink">
+          <div class="card-num">LOẠI 2</div>
+          <div class="card-title">Nonprogrammed cho Unstructured Problems</div>
+        </div>
+        <div class="card-body">
+          <p><strong>Unstructured problems</strong> = vấn đề mới hoặc bất thường, thông tin mơ hồ.</p>
+          <p>Nhà quản trị dùng <em>Nonprogrammed decisions</em> — quyết định độc nhất, không lặp lại, đòi hỏi <strong>giải pháp may đo</strong>.</p>
+          <p><strong>Ví dụ:</strong> 2017, luật cải cách thuế Mỹ áp thuế "hồi hương" 10% lên thu nhập nước ngoài. <strong>General&nbsp;Electric</strong> giữ <strong>83&nbsp;tỉ USD</strong> tiền mặt ở nước ngoài. CFO của GE phải quyết định: <em>"Làm gì với núi tiền này khi có thể đưa về Mỹ?"</em> Vấn đề chưa từng có, không có procedure nào xử lý.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-md); margin-bottom: var(--gap-md);">Phân biệt Rule vs. Policy</h3>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="card-header bg-cyan">
+          <div class="card-num">RULE</div>
+          <div class="card-title">Quy tắc rõ ràng, không cần diễn giải</div>
+        </div>
+        <div class="card-body">
+          <p style="font-style: normal;"><em>"Không được dùng điện thoại cá nhân trong giờ họp"</em></p>
+          <p>Phát biểu rõ ràng cho biết cái gì có thể hoặc không thể làm.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header bg-lime">
+          <div class="card-num">POLICY</div>
+          <div class="card-title">Hướng dẫn cần diễn giải</div>
+        </div>
+        <div class="card-body">
+          <p style="font-style: normal;"><em>"Khách hàng luôn được đặt lên hàng đầu và luôn phải hài lòng"</em></p>
+          <p>Mang tính định hướng, từ <span class="hl-lime">"hài lòng"</span> cần được diễn giải tùy tình huống.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Bảng so sánh chi tiết</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Đặc điểm</th>
+            <th>Programmed</th>
+            <th>Nonprogrammed</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Loại vấn đề</td><td>Có cấu trúc</td><td>Không có cấu trúc</td></tr>
+          <tr><td>Cấp quản trị</td><td>Cấp thấp</td><td>Cấp cao</td></tr>
+          <tr><td>Tần suất</td><td>Lặp lại, thường quy</td><td>Mới, bất thường</td></tr>
+          <tr><td>Thông tin</td><td>Sẵn có</td><td>Mơ hồ hoặc không đầy đủ</td></tr>
+          <tr><td>Mục tiêu</td><td>Rõ ràng, cụ thể</td><td>Mơ hồ</td></tr>
+          <tr><td>Khung thời gian</td><td>Ngắn</td><td>Tương đối dài</td></tr>
+          <tr><td>Giải pháp dựa vào...</td><td>Procedure, rule, policy</td><td>Phán đoán và sáng tạo</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-label">🔗 Liên hệ với Chương 1</span>
+      <p class="callout-body">
+        Nhà quản trị cấp thấp chủ yếu dùng programmed decisions. Khi lên cao, vấn đề càng không có cấu trúc, càng cần nonprogrammed decisions. Đây là lý do <strong>kỹ năng phán đoán và sáng tạo trở nên ngày càng quan trọng khi bạn lên cao</strong> — phù hợp với quan sát của Katz về <em>conceptual&nbsp;skills</em> ở Chương 1.
+      </p>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-xl); margin-bottom: var(--gap-md);">Phần 2 — Ma trận 4 phong cách ra quyết định</h3>
+
+    <p>Nghiên cứu phát hiện mọi người ra quyết định khác nhau theo <strong>2 chiều</strong>: cách tư duy (Rational vs. Intuitive) và mức chấp nhận sự mơ hồ (High vs. Low). Khi vẽ ma trận 2×2:</p>
+
+    <div class="matrix">
+      <div class="m-empty"></div>
+      <div class="m-label">Way: Rational</div>
+      <div class="m-label">Way: Intuitive</div>
+
+      <div class="m-label">Tolerance:<br>HIGH</div>
+      <div class="m-cell analytic">
+        <div class="m-name">Analytic</div>
+        <div class="m-desc"><strong>Phân tích.</strong> Cẩn trọng. Có khả năng thích ứng với tình huống mới. Sinh viên kinh doanh và quản lý thường có điểm cao nhất ở phong cách này.</div>
+      </div>
+      <div class="m-cell conceptual">
+        <div class="m-name">Conceptual</div>
+        <div class="m-desc"><strong>Khái niệm.</strong> Tầm nhìn rộng. Cân nhắc nhiều phương án. Tập trung dài hạn. Giỏi tìm giải pháp sáng tạo.</div>
+      </div>
+
+      <div class="m-label">Tolerance:<br>LOW</div>
+      <div class="m-cell directive">
+        <div class="m-name">Directive</div>
+        <div class="m-desc"><strong>Chỉ huy.</strong> Hiệu quả và logic. Ra quyết định nhanh với thông tin tối thiểu. Tập trung ngắn hạn.</div>
+      </div>
+      <div class="m-cell behavioral">
+        <div class="m-name">Behavioral</div>
+        <div class="m-desc"><strong>Hành vi.</strong> Làm việc tốt với người khác. Quan tâm thành tích đồng nghiệp. Dựa vào họp hành. Tránh xung đột.</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <span class="callout-label">📌 Lưu ý</span>
+      <p class="callout-body">
+        Hầu hết nhà quản trị có đặc điểm rơi vào <strong>nhiều hơn một phong cách</strong>. Tốt nhất nên nghĩ về <em>phong cách chủ đạo</em> và <em>phong cách dự phòng</em> của mình. Người linh hoạt có thể chuyển đổi tùy tình huống.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================
+       LO 2.4 - 12 BIASES
+       ============================================ -->
+  <section class="section" id="lo4">
+    <span class="section-num">📍 Trang 8-10 · LO2.4</span>
+    <h2 class="section-title">Mười hai <span class="underline">thiên&nbsp;kiến</span> khi ra quyết định</h2>
+
+    <p>Đây là phần <strong>thực dụng nhất</strong> của chương này. Hãy đọc kỹ — bạn sẽ nhận ra mình mắc nhiều thiên kiến hơn mình tưởng.</p>
+
+    <div class="quote bg-pink">
+      <em>Heuristics (lối tắt tư duy)</em> là các phím tắt nhà quản trị dùng để đơn giản hóa hoặc tăng tốc việc ra quyết định. Heuristics có ích vì giúp xử lý thông tin phức tạp — nhưng cũng có thể dẫn đến <strong>lỗi và thiên kiến</strong>.
+    </div>
+
+    <div class="stat-grid" style="grid-template-columns: 1fr;">
+      <div class="stat" style="text-align: left; display: flex; align-items: center; gap: var(--gap-md);">
+        <div class="stat-num" style="font-size: 3rem;">60%</div>
+        <div class="stat-label" style="font-size: 14px; text-transform: none; letter-spacing: 0; color: var(--ink);">
+          nhà quản trị tin rằng các <strong>thiên kiến mà họ không biết tại thời điểm đó</strong> đã ảnh hưởng đến việc ra quyết định của họ tại nơi làm việc.
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Mười hai chiếc kính méo</h3>
+
+    <div class="bias-grid">
+      <div class="bias-card">
+        <span class="bias-num">01</span>
+        <div class="bias-title-en">Overconfidence</div>
+        <div class="bias-title-vi">Tự tin thái quá</div>
+        <p class="bias-desc">Nghĩ mình biết nhiều hơn thực tế. Khi tự tin 65-70% đúng, thực tế chỉ đúng <strong>50%</strong>.</p>
+      </div>
+      <div class="bias-card">
+        <span class="bias-num">02</span>
+        <div class="bias-title-en">Immediate Gratification</div>
+        <div class="bias-title-vi">Hài lòng ngay</div>
+        <p class="bias-desc">Muốn phần thưởng ngay, tránh chi phí ngay. Lý do khó ăn kiêng, khó tiết kiệm.</p>
+      </div>
+      <div class="bias-card">
+        <span class="bias-num">03</span>
+        <div class="bias-title-en">Anchoring Effect</div>
+        <div class="bias-title-vi">Hiệu ứng neo</div>
+        <p class="bias-desc">Dán cứng vào thông tin ban đầu. Ai đưa con số đầu tiên thường "neo" cuộc đàm phán.</p>
+      </div>
+      <div class="bias-card">
+        <span class="bias-num">04</span>
+        <div class="bias-title-en">Selective Perception</div>
+        <div class="bias-title-vi">Tri giác chọn lọc</div>
+        <p class="bias-desc">Tổ chức và diễn giải sự kiện chọn lọc theo bias có sẵn.</p>
+      </div>
+      <div class="bias-card">
+        <span class="bias-num">05</span>
+        <div class="bias-title-en">Confirmation</div>
+        <div class="bias-title-vi">Xác nhận</div>
+        <p class="bias-desc">Tìm thông tin xác nhận lựa chọn quá khứ, phớt lờ thông tin mâu thuẫn.</p>
+      </div>
+      <div class="bias-card">
+        <span class="bias-num">06</span>
+        <div class="bias-title-en">Framing</div>
+        <div class="bias-title-vi">Đóng khung</div>
+        <p class="bias-desc">Chọn và làm nổi bật một số khía cạnh, loại trừ khía cạnh khác.</p>
+      </div>
+      <div class="bias-card">
+        <span class="bias-num">07</span>
+        <div class="bias-title-en">Availability</div>
+        <div class="bias-title-vi">Sẵn có</div>
+        <p class="bias-desc">Nhớ các sự kiện gần đây và sống động nhất. Đánh giá năm thường tập trung hành vi gần đây.</p>
+      </div>
+      <div class="bias-card">
+        <span class="bias-num">08</span>
+        <div class="bias-title-en">Representation</div>
+        <div class="bias-title-vi">Đại diện</div>
+        <p class="bias-desc">Đánh giá khả năng dựa trên việc nó giống sự kiện khác đến đâu. Cái bẫy của <em>"best practice"</em>.</p>
+      </div>
+      <div class="bias-card">
+        <span class="bias-num">09</span>
+        <div class="bias-title-en">Randomness</div>
+        <div class="bias-title-vi">Ngẫu nhiên</div>
+        <p class="bias-desc">Cố tạo ý nghĩa từ các sự kiện ngẫu nhiên. Tìm pattern trong nhiễu.</p>
+      </div>
+      <div class="bias-card">
+        <span class="bias-num">10</span>
+        <div class="bias-title-en">Sunk Costs</div>
+        <div class="bias-title-vi">Chi phí chìm</div>
+        <p class="bias-desc">Quên rằng lựa chọn hiện tại không thể sửa quá khứ. <em>"Đã bỏ ra 6&nbsp;tháng rồi, bỏ thì uổng."</em></p>
+      </div>
+      <div class="bias-card">
+        <span class="bias-num">11</span>
+        <div class="bias-title-en">Self-Serving</div>
+        <div class="bias-title-vi">Tư lợi</div>
+        <p class="bias-desc">Nhận công cho thành công, đổ lỗi thất bại cho yếu tố bên ngoài.</p>
+      </div>
+      <div class="bias-card">
+        <span class="bias-num">12</span>
+        <div class="bias-title-en">Hindsight</div>
+        <div class="bias-title-vi">Hậu nghiệm</div>
+        <p class="bias-desc">Tin sai rằng mình "đã biết". <em>"Tôi đã biết COVID sẽ xảy ra mà"</em>. Không, bạn không biết.</p>
+      </div>
+    </div>
+
+    <div class="callout warning">
+      <span class="callout-label">⚠️ Sốc về Overconfidence</span>
+      <p class="callout-body">
+        Khi người được khảo sát nói họ <strong>tự tin 65-70%</strong> rằng mình đúng, thực tế họ đúng chỉ khoảng <strong>50%</strong>. Khi họ nói <strong>tự tin 100%</strong>, thực tế đúng chỉ <strong>70-85%</strong>.
+      </p>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-label">💼 Áp dụng — Anchoring trong đàm phán phí</span>
+      <p class="callout-body">
+        Khi đàm phán phí, ai đưa ra con số đầu tiên thường <strong>"neo"</strong> cuộc đàm phán quanh số đó. Đây là lý do bạn nên cẩn thận với câu hỏi <em>"Anh báo giá đi"</em> trong cuộc gặp đầu — nếu báo giá thấp, bạn đã neo mình ở vùng thấp.
+      </p>
+    </div>
+
+    <div class="callout warning">
+      <span class="callout-label">💰 Sai lầm chi phí chìm — Ví dụ</span>
+      <p class="callout-body">
+        Bạn đã đầu tư <strong>6&nbsp;tháng</strong> vào một dự án không khả thi. Bạn nên bỏ. Nhưng bạn nói: <em>"Đã bỏ ra 6&nbsp;tháng rồi, bỏ thì uổng quá."</em> → Sai lầm chi phí chìm. <span class="hl">6&nbsp;tháng đã mất, không thể lấy lại.</span> Câu hỏi đúng là: <em>"Từ ngày mai trở đi, đầu tư tiếp có khôn ngoan không?"</em>
+      </p>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-xl); margin-bottom: var(--gap-md);">Cách giảm thiểu thiên kiến</h3>
+
+    <ul class="num-list">
+      <li>
+        <div class="num brand">1</div>
+        <div class="content"><strong>Nhận thức về chúng và không dùng chúng.</strong>Đào tạo có thể giúp nhân viên nhận ra thiên kiến cụ thể và giảm ra quyết định thiên kiến trong dài hạn.</div>
+      </li>
+      <li>
+        <div class="num brand">2</div>
+        <div class="content"><strong>Chú ý đến "cách" bạn ra quyết định.</strong>Cố nhận diện heuristics bạn thường dùng và đánh giá phê bình tính phù hợp của chúng.</div>
+      </li>
+      <li>
+        <div class="num brand">3</div>
+        <div class="content"><strong>Nhờ người tin cậy giúp.</strong>Họ giúp nhận diện điểm yếu trong phong cách ra quyết định của bạn và cải thiện.</div>
+      </li>
+    </ul>
+
+    <div class="quote bg-lime">
+      Bạn không bỏ được kính, nhưng <strong>nhận ra mình đang đeo cặp nào</strong> sẽ giúp bạn điều chỉnh.
+      <span class="quote-author">— Phép ẩn dụ 12 chiếc kính méo</span>
+    </div>
+  </section>
+
+  <!-- ============================================
+       LO 2.5 - ADVANCED TOOLS
+       ============================================ -->
+  <section class="section" id="lo5">
+    <span class="section-num">📍 Trang 11-12 · LO2.5</span>
+    <h2 class="section-title">Cách tiếp cận <span class="underline">tiên&nbsp;tiến</span> để cải thiện ra quyết định</h2>
+
+    <p>Hai mươi năm qua đã chứng kiến thay đổi đột phá về khả năng tiếp cận thông tin của nhà quản trị. Động lực chính là <strong>công nghệ</strong>.</p>
+
+    <div class="card" style="background: var(--brand); color: var(--paper);">
+      <div class="card-body">
+        <div class="card-num" style="color: var(--paper); opacity: 0.85;">DESIGN THINKING</div>
+        <h3 style="font-family: var(--font-display); font-size: 1.5rem; color: var(--paper); margin-bottom: var(--gap-sm);">Tiếp cận vấn đề như nhà thiết kế</h3>
+        <p>Tư duy như nhà thiết kế nghĩa là cân nhắc xem một vật hoặc quy trình có thể được <strong>thiết kế lại</strong> ra sao — đôi khi đến mức <strong>làm lại hoàn toàn</strong>.</p>
+        <p><strong>Ví dụ Pepsi Spire:</strong> PepsiCo thiết kế máy phân phối nước giải khát công nghệ cao. Indra&nbsp;Nooyi (CEO PepsiCo): <em>"Các công ty khác tập trung vào thêm vài nút và kết hợp hương vị. Đội thiết kế của chúng tôi nói rằng chúng ta đang nói về một <strong>tương tác hoàn toàn khác</strong> giữa người tiêu dùng và máy."</em></p>
+        <p><strong>Cốt lõi:</strong> Mở góc nhìn của bạn, có hiểu biết bằng cách dùng kỹ năng quan sát và đặt câu hỏi, không chỉ dựa vào phân tích hợp lý.</p>
+      </div>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Big&nbsp;Data, AI, ML, DL, Analytics — 5 khái niệm liên quan</h3>
+
+    <div class="grid grid-3">
+      <div class="card">
+        <div class="card-header bg-yellow">
+          <div class="card-num">01</div>
+          <div class="card-title">Big Data · Dữ liệu lớn</div>
+        </div>
+        <div class="card-body">
+          <p>Các tập dữ liệu khổng lồ và phức tạp, chứa quá nhiều thông tin để phần mềm truyền thống xử lý.</p>
+          <p>Ví dụ: Cloud computing cho phép đặt cả phòng đầy ý kiến pháp lý lên mạng. Tìm các vụ liên quan trước đây mất vài ngày — <span class="hl">giờ làm trong vài giây</span>.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-cyan">
+          <div class="card-num">02</div>
+          <div class="card-title">AI · Trí tuệ nhân tạo</div>
+        </div>
+        <div class="card-body">
+          <p>Dùng sức mạnh máy tính để <strong>sao chép các chức năng lý luận của con người</strong>. Vượt xa xử lý "if-then" đơn giản.</p>
+          <p><strong>IBM Watson</strong> chẩn đoán ung thư <strong>chính xác gấp 4 lần bác sĩ</strong>, đưa lời khuyên pháp lý <strong>90% chính xác</strong> (so với 70% của luật sư).</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-lime">
+          <div class="card-num">03</div>
+          <div class="card-title">Machine Learning · Học máy</div>
+        </div>
+        <div class="card-body">
+          <p>Hệ thống có thể <strong>học từ dữ liệu, nhận diện mẫu hình, ra quyết định</strong> với rất ít hoặc không có sự hỗ trợ của con người.</p>
+          <p><strong>Microsoft:</strong> CFO Amy Hood phân tích dữ liệu lịch sử từ <strong>750.000 khách hàng</strong> để dự báo cơ hội bán hàng. Hệ thống dự đoán khách nào có nguy cơ bỏ đi.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-pink">
+          <div class="card-num">04</div>
+          <div class="card-title">Deep Learning · Học sâu</div>
+        </div>
+        <div class="card-body">
+          <p>Tập con của ML. Dùng thuật toán tạo ra cấp bậc các <strong>mạng nơ-ron nhân tạo mô phỏng não người</strong>.</p>
+          <p><strong>Ví dụ ung thư da:</strong> Hệ thống được "ăn" hơn 100.000&nbsp;ảnh, sau đó thi đấu với 58 bác sĩ. AI tìm <strong>95%</strong> trong 300 u ác tính, bác sĩ <strong>87%</strong>.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-yellow">
+          <div class="card-num">05</div>
+          <div class="card-title">Analytics · Phân tích dữ liệu</div>
+        </div>
+        <div class="card-body">
+          <p>Dùng toán học, thống kê, mô hình tiên đoán, ML để <strong>tìm các mẫu hình và kiến thức có ý nghĩa</strong>.</p>
+          <p><strong>Philadelphia Eagles</strong> (vô địch Super Bowl 2018) dùng analytics nhiều nhất NFL. Họ thường đi tiếp ở down 4 thay vì sút bóng — analytics phát hiện điều này dễ thắng hơn.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-ink">
+          <div class="card-num">QUAN HỆ</div>
+          <div class="card-title">5 khái niệm xếp như thế nào</div>
+        </div>
+        <div class="card-body">
+          <p style="font-family: var(--font-mono); font-size: 13px;">
+            <strong>Big&nbsp;Data</strong> = nguyên liệu thô<br>
+            ↓<br>
+            <strong>Analytics</strong> tìm mẫu hình<br>
+            ↓<br>
+            <strong>ML</strong> = một nhánh AI tự học<br>
+            ↓<br>
+            <strong>DL</strong> = tập con ML mô phỏng não<br>
+            ↓<br>
+            <strong>AI</strong> = mục tiêu lớn (sao chép lý luận con người)
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Hiện trạng và tương lai</h3>
+
+    <div class="stat-grid" style="grid-template-columns: repeat(3, 1fr);">
+      <div class="stat">
+        <div class="stat-num">24%</div>
+        <div class="stat-label">Doanh nghiệp đang triển khai AI</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">97%</div>
+        <div class="stat-label">Tập đoàn lớn triển khai AI</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">TOP&nbsp;3</div>
+        <div class="stat-label">ML &amp; DL là kỹ năng tìm nhiều nhất Monster.com</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <span class="callout-label">🔮 Ý nghĩa cho nhà quản trị</span>
+      <p class="callout-body">
+        Với xu hướng dùng công nghệ để truy cập và diễn giải thông tin, nhà quản trị sẽ <strong>ít phụ thuộc vào dữ liệu không nhất quán và không đầy đủ</strong>. Sẽ ít cần dựa vào trực giác hơn. Vì AI có thể học qua kinh nghiệm, các quyết định sẽ ngày càng phản ánh giá trị và mục tiêu của nhà quản trị. <span class="hl">Kết quả: các quyết định quản trị tiến gần hơn đến giả định của tính hợp lý.</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================
+       OVERVIEW - 3 TIERS
+       ============================================ -->
+  <section class="section" id="overview">
+    <span class="section-num">📍 Trang 13</span>
+    <h2 class="section-title">Tổng <span class="underline">quan</span> 3 tầng và liên hệ Chương 1</h2>
+
+    <p>Chương 2 có thể được nhìn theo <strong>3 tầng</strong>:</p>
+
+    <div class="tier-stack">
+      <div class="tier t1">
+        <span class="tier-label">Tầng 1 · Nền tảng</span>
+        <h3 class="tier-name">Quy trình lý tưởng — 8 bước</h3>
+        <p class="tier-desc">Cách "đẹp" để ra quyết định, dùng làm chuẩn so sánh. Là nền tảng cho mọi quyết định quản trị.</p>
+      </div>
+      <div class="tier t2">
+        <span class="tier-label">Tầng 2 · Thực tế</span>
+        <h3 class="tier-name">Cách thực sự ra quyết định</h3>
+        <p class="tier-desc">5 cách tiếp cận · 2 loại quyết định · 4 phong cách cá nhân · 12 thiên kiến. Đây là cách thật sự con người ra quyết định trong đời sống. Robbins muốn bạn hiểu cả khoảng cách giữa lý thuyết và thực tế.</p>
+      </div>
+      <div class="tier t3">
+        <span class="tier-label">Tầng 3 · Tương lai</span>
+        <h3 class="tier-name">Công cụ nâng cấp</h3>
+        <p class="tier-desc">Design Thinking, Big Data, AI, Machine Learning, Deep Learning, Analytics. Đây là các công cụ mới giúp đưa thực tế gần hơn với lý tưởng.</p>
+      </div>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Mỗi chức năng POLC đều bao gồm hàng loạt quyết định</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Chức năng</th>
+            <th>Quyết định điển hình</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Planning</td><td>Mục tiêu dài hạn của tổ chức là gì? Chiến lược nào tốt nhất? Mục tiêu cá nhân nên khó đến đâu?</td></tr>
+          <tr><td>Organizing</td><td>Tôi nên có bao nhiêu nhân viên báo cáo trực tiếp? Nên tập trung quyền lực đến đâu? Khi nào cần đổi cấu trúc?</td></tr>
+          <tr><td>Leading</td><td>Xử lý nhân viên thiếu động lực thế nào? Phong cách lãnh đạo nào hiệu quả nhất? Khi nào nên kích thích xung đột?</td></tr>
+          <tr><td>Controlling</td><td>Hoạt động nào cần kiểm soát? Khi nào sự lệch hiệu suất trở nên đáng kể? Hệ thống thông tin nào phù hợp?</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-label">💼 Hệ quả thực tế cho tư vấn</span>
+      <p class="callout-body">
+        Khi tư vấn cải thiện một tổ chức, <strong>đừng chỉ nhìn 4 chức năng</strong>. Hãy nhìn <span class="hl">chất lượng các quyết định trong từng chức năng</span>. Một tổ chức có 4 chức năng đầy đủ nhưng chất lượng quyết định kém vẫn sẽ hoạt động tệ.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================
+       CHEATSHEET
+       ============================================ -->
+  <section class="section" id="cheatsheet">
+    <span class="section-num">📍 Trang 14</span>
+    <h2 class="section-title">Bảng <span class="underline">tra&nbsp;cứu</span> nhanh (Cheatsheet)</h2>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-md); margin-bottom: var(--gap-md);">Checklist 8 bước trước quyết định lớn</h3>
+
+    <ul class="num-list">
+      <li>
+        <div class="num brand lg">1</div>
+        <div class="content"><strong>Vấn đề thực là gì?</strong>(Không phải triệu chứng?)</div>
+      </li>
+      <li>
+        <div class="num brand lg">2</div>
+        <div class="content"><strong>Tiêu chí nào quan trọng để giải quyết?</strong></div>
+      </li>
+      <li>
+        <div class="num brand lg">3</div>
+        <div class="content"><strong>Tiêu chí nào quan trọng nhất, ít quan trọng nhất?</strong>(Cho điểm 1-10)</div>
+      </li>
+      <li>
+        <div class="num brand lg">4</div>
+        <div class="content"><strong>Có những phương án nào?</strong>(Liệt kê ít nhất 5-7, kể cả phương án bất thường)</div>
+      </li>
+      <li>
+        <div class="num brand lg">5</div>
+        <div class="content"><strong>Mỗi phương án đạt điểm bao nhiêu?</strong>(Nhân với trọng số)</div>
+      </li>
+      <li>
+        <div class="num brand lg">6</div>
+        <div class="content"><strong>Phương án nào có tổng điểm cao nhất?</strong></div>
+      </li>
+      <li>
+        <div class="num brand lg">7</div>
+        <div class="content"><strong>Ai cần triển khai?</strong>Họ đã được tham gia trong các bước trên chưa?</div>
+      </li>
+      <li>
+        <div class="num brand lg">8</div>
+        <div class="content"><strong>Bao lâu nữa tôi sẽ quay lại đánh giá kết quả?</strong></div>
+      </li>
+    </ul>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Khi cần chọn cách tiếp cận</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Tình huống</th>
+            <th>Cách phù hợp</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Quyết định lớn, có dữ liệu, có thời gian</td><td>Evidence-Based Management</td></tr>
+          <tr><td>Quyết định hàng ngày, không quan trọng</td><td>Bounded Rationality (satisfice)</td></tr>
+          <tr><td>Có nhiều kinh nghiệm, áp lực thời gian</td><td>Intuition</td></tr>
+          <tr><td>Vấn đề mới lạ, nhiều giải pháp khả dĩ</td><td>Crowdsourcing + Design Thinking</td></tr>
+          <tr><td>Vấn đề có cấu trúc, đã gặp nhiều lần</td><td>Programmed (procedure/rule/policy)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Checklist 12 thiên kiến trước khi chốt quyết định lớn</h3>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="card-header bg-pink">
+          <div class="card-num">SELF-CHECK</div>
+          <div class="card-title">Hỏi mình 12 câu</div>
+        </div>
+        <div class="card-body">
+          <ol style="margin: 0; padding-left: 24px; font-size: 14px;">
+            <li>Tôi có quá tự tin không?</li>
+            <li>Tôi có chiều theo phần thưởng ngắn hạn?</li>
+            <li>Tôi có dán cứng vào con số đầu tiên?</li>
+            <li>Tôi có lọc thông tin theo bias có sẵn?</li>
+            <li>Tôi có chỉ tìm thông tin xác nhận điều đã muốn?</li>
+            <li>Tôi có đóng khung sự việc bất lợi?</li>
+            <li>Tôi có chỉ nhớ sự kiện gần đây/sống động?</li>
+            <li>Tôi có loại suy với tình huống không thật giống?</li>
+            <li>Tôi có tìm pattern trong nhiễu ngẫu nhiên?</li>
+            <li>Tôi có dán cứng vào chi phí đã chi?</li>
+            <li>Tôi có tự khen / đổ lỗi?</li>
+            <li>Tôi có tin sai rằng "tôi đã biết"?</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-cyan">
+          <div class="card-num">QUY TẮC</div>
+          <div class="card-title">Khi nào dừng lại</div>
+        </div>
+        <div class="card-body">
+          <p>Nếu trả lời <strong>"có"</strong> cho <span class="hl">3 câu trở lên</span>:</p>
+          <p style="font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; color: var(--brand);">→ DỪNG LẠI</p>
+          <p>Tham vấn người khác trước khi quyết. Đừng tin một mình mình lúc này.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Cặp khái niệm dễ nhầm</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 40%;">Cặp</th>
+            <th>Phân biệt</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Problem vs. Symptom</td><td>Vấn đề là khoảng cách hiện tại - mong muốn ở mức gốc; triệu chứng là biểu hiện bên ngoài</td></tr>
+          <tr><td>Rationality vs. Bounded Rationality</td><td>Hợp lý hoàn hảo (tối ưu hóa) vs. hợp lý có giới hạn (satisfice)</td></tr>
+          <tr><td>Programmed vs. Nonprogrammed</td><td>Lặp lại với procedure/rule/policy vs. độc nhất, cần phán đoán &amp; sáng tạo</td></tr>
+          <tr><td>Procedure vs. Rule vs. Policy</td><td>Procedure = chuỗi bước; Rule = quy tắc rõ ràng; Policy = hướng dẫn cần diễn giải</td></tr>
+          <tr><td>Big Data vs. AI vs. ML vs. DL vs. Analytics</td><td>Big Data = nguyên liệu; AI = mục tiêu; ML = nhánh AI tự học; DL = tập con ML mô phỏng não; Analytics = tìm mẫu hình</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-label">💼 3 câu hỏi vàng cho consultant</span>
+      <p class="callout-body">
+        Khi tư vấn, dùng 3 câu hỏi này thường xuyên:<br>
+        <strong>1.</strong> <em>"Đây là vấn đề thực hay triệu chứng?"</em> → áp dụng Bước 1.<br>
+        <strong>2.</strong> <em>"Quyết định này, anh/chị đang ở đâu trong 8&nbsp;bước?"</em> → giúp khách định vị.<br>
+        <strong>3.</strong> <em>"Có thiên kiến nào trong 12&nbsp;cái có thể đang ảnh hưởng đến quyết định này không?"</em> → dùng làm checklist trước khi chốt.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================
+       REVIEW SCHEDULE
+       ============================================ -->
+  <section class="section" id="review">
+    <span class="section-num">📍 Trang 15</span>
+    <h2 class="section-title">Lộ trình <span class="underline">ôn&nbsp;tập</span> và 2 nguyên tắc nhớ lâu</h2>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="card-header bg-brand" style="background: var(--brand); color: var(--paper);">
+          <div class="card-num">NGUYÊN TẮC 1</div>
+          <div class="card-title">Active Recall · Chủ động gợi nhớ</div>
+        </div>
+        <div class="card-body">
+          <p><strong>Nhận ra (recognize) khác xa nhớ (recall).</strong> Khi đọc lại bạn nhận ra "à, mình biết". Nhưng khi cần áp dụng, bạn không thể nhớ ra.</p>
+          <p>Cách khắc phục: <span class="hl">gập tài liệu, viết ra giấy, nói thành tiếng</span>.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-ink">
+          <div class="card-num">NGUYÊN TẮC 2</div>
+          <div class="card-title">Spaced Repetition · Lặp lại ngắt quãng</div>
+        </div>
+        <div class="card-body">
+          <p>Não cần "<span class="hl-cyan">quên một chút rồi nhớ lại</span>" để tạo trí nhớ bền.</p>
+          <p>Học <strong>7 lần × 10 phút cách quãng</strong> hiệu quả hơn nhiều so với <strong>1 lần 70 phút</strong>. Đừng nhồi.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Lộ trình 5 lần ôn tập</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Lần</th>
+            <th>Thời điểm</th>
+            <th>Thời gian</th>
+            <th>Hoạt động</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>L1</strong></td><td>Cuối ngày học (Ngày 0)</td><td>15&nbsp;phút</td><td>Lướt qua Cheatsheet. Nhắc lại 8&nbsp;bước, 5&nbsp;cách tiếp cận, 12&nbsp;thiên kiến (chỉ tên thôi).</td></tr>
+          <tr><td><strong>L2</strong></td><td>Ngày 1 (sau 24 giờ)</td><td>20&nbsp;phút</td><td><strong>Gập tài liệu</strong>, viết ra giấy: 8&nbsp;bước, 5&nbsp;cách, 4&nbsp;phong cách. Đối chiếu, đánh dấu chỗ quên. Làm 10&nbsp;flashcards.</td></tr>
+          <tr><td><strong>L3</strong></td><td>Ngày 3</td><td>30&nbsp;phút</td><td><strong>Áp khái niệm vào case thực tế.</strong> Phân tích một quyết định gần đây qua 8&nbsp;bước, kiểm tra thiên kiến.</td></tr>
+          <tr><td><strong>L4</strong></td><td>Ngày 7</td><td>30&nbsp;phút</td><td><strong>Hệ thống hóa.</strong> Vẽ sơ đồ Chương 2 với 3&nbsp;tầng. Hoàn thành toàn bộ flashcards.</td></tr>
+          <tr><td><strong>L5</strong></td><td>Ngày 16</td><td>45&nbsp;phút</td><td><strong>Giảng cho người khác</strong> hoặc ghi âm. Đặc biệt giảng phần 12&nbsp;thiên kiến — phần dễ áp dụng nhất.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Ghi nhớ dài hạn</h3>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="card-header bg-lime">
+          <div class="card-num">L6</div>
+          <div class="card-title">Ngày 35 · 25&nbsp;phút</div>
+        </div>
+        <div class="card-body">
+          <p>Lướt cheatsheet + làm flashcards toàn bộ. Ghi lại bằng tay những chỗ vẫn quên.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header bg-yellow">
+          <div class="card-num">L7</div>
+          <div class="card-title">Ngày 75 · 25&nbsp;phút</div>
+        </div>
+        <div class="card-body">
+          <p>Như Lần 6. Sau lần này, kiến thức đã chuyển sang vùng <span class="hl">trí nhớ dài hạn rất bền</span>.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-label">💡 Mẹo bonus cho Chương 2</span>
+      <p class="callout-body">
+        <strong>Phần 12 thiên kiến là phần áp dụng được nhất.</strong> Nếu chỉ có 15&nbsp;phút mỗi tuần — chỉ tập trung phần này.<br><br>
+        <strong>Decision journal trong 30 ngày.</strong> Mỗi quyết định công việc quan trọng, ghi: vấn đề, tiêu chí, phương án, lựa chọn cuối, kỳ vọng kết quả. Sau 30&nbsp;ngày, đọc lại và đánh giá. Đây là cách thực hành Bước 8 và phát hiện thiên kiến của chính mình.<br><br>
+        <strong>Khi đi tư vấn, dùng Cheatsheet làm khung phỏng vấn.</strong> Bạn sẽ phát hiện ra khách hàng thường bỏ qua nhiều bước trong 8 bước, và thường mắc 2-3 thiên kiến cùng lúc.
+      </p>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Kết nối với các chương sau</h3>
+
+    <div class="quote bg-cyan">
+      Mỗi khi gặp một mô hình hoặc khung quản trị mới (như SWOT, BCG matrix, Porter's 5 Forces), hãy hỏi: <strong>"Khung này hỗ trợ bước nào trong 8 bước ra quyết định?"</strong> Hầu hết chúng hỗ trợ Bước 2-5 (xác định tiêu chí, đánh giá phương án). Hiểu điều này giúp bạn không bị ngợp trước hàng trăm khung quản trị trong sách giáo khoa.
+      <span class="quote-author">— Chiến lược học các chương sau</span>
+    </div>
+  </section>
+
+  <!-- ============================================
+       FOOTER
+       ============================================ -->
+  <footer class="footer">
+    <p>
+      <strong>CHƯƠNG&nbsp;02</strong> — Tóm tắt chuyên sâu sách<br>
+      <em>Management</em> · Stephen&nbsp;P.&nbsp;Robbins &amp; Mary&nbsp;A.&nbsp;Coulter · ấn bản 15&nbsp;(2021)
+    </p>
+    <p style="margin-top: var(--gap-md);">
+      Thiết kế Neo-Brutalism v3.4 — by
+      <a href="https://www.facebook.com/vuhai.fitness" target="_blank" rel="noopener noreferrer">Vũ&nbsp;Hải</a>
+      | Business&nbsp;Consultant
+    </p>
+  </footer>
+
+</div>
+
+</body>
+</html>

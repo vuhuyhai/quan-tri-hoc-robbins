@@ -1,0 +1,1874 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chương 5 — Quản trị Đa dạng</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap&subset=vietnamese" rel="stylesheet">
+<style>
+:root {
+  --brand: #c73937;
+  --brand-dark: #a82d2c;
+  --ink: #1a1a1a;
+  --ink-soft: #2d2d2d;
+  --paper: #faf8f3;
+  --paper-warm: #f5f1e8;
+  --yellow: #F5E4B8;
+  --cyan: #C4DEDC;
+  --lime: #DDE4C5;
+  --pink: #F0DCDD;
+  --border-w: 3px;
+  --border-w-thin: 2px;
+  --shadow-offset: 6px 6px 0;
+  --shadow-offset-sm: 4px 4px 0;
+  --shadow-offset-lg: 8px 8px 0;
+  --radius: 4px;
+  --gap-xs: 8px;
+  --gap-sm: 16px;
+  --gap-md: 24px;
+  --gap-lg: 40px;
+  --gap-xl: 64px;
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+* { font-style: normal !important; box-sizing: border-box; font-optical-sizing: auto; }
+*::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.6;
+  font-size: 16px;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  background-image: radial-gradient(circle at 1px 1px, rgba(26,26,26,0.08) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+h1, h2, h3, h4, h5, h6, .title, .heading, .hero-title, .section-title, .card-title {
+  text-wrap: balance;
+  font-family: var(--font-display);
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+p, li, .body-text { text-wrap: pretty; }
+p { margin: 0 0 1em 0; }
+strong, b { font-weight: 700; }
+
+a {
+  color: var(--brand);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  font-weight: 600;
+}
+a:hover { background: var(--yellow); color: var(--ink); }
+a:focus-visible { outline: 3px solid var(--brand); outline-offset: 3px; }
+
+.container { max-width: 1200px; margin: 0 auto; padding: var(--gap-md); }
+@media (min-width: 768px) { .container { padding: var(--gap-lg); } }
+
+/* HERO */
+.hero {
+  border: var(--border-w) solid var(--ink);
+  background: var(--paper);
+  box-shadow: var(--shadow-offset-lg) var(--ink);
+  padding: var(--gap-lg) var(--gap-md);
+  margin-bottom: var(--gap-xl);
+  position: relative;
+  border-radius: var(--radius);
+}
+@media (min-width: 768px) { .hero { padding: var(--gap-xl) var(--gap-lg); } }
+
+.hero-badge {
+  display: inline-block;
+  background: var(--brand);
+  color: var(--paper);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 12px;
+  border: var(--border-w-thin) solid var(--ink);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: var(--gap-md);
+  transform: rotate(-1.5deg);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.hero-title {
+  font-size: clamp(2.25rem, 6vw, 4.5rem);
+  margin-bottom: var(--gap-md);
+  line-height: 1;
+}
+
+.hero-title .accent {
+  background: var(--cyan);
+  padding: 0 8px;
+  border: var(--border-w-thin) solid var(--ink);
+  display: inline-block;
+  transform: rotate(-1deg);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.hero-title .accent-2 {
+  background: var(--yellow);
+  padding: 0 8px;
+  border: var(--border-w-thin) solid var(--ink);
+  display: inline-block;
+  transform: rotate(1deg);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.hero-sub {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  color: var(--ink-soft);
+  max-width: 720px;
+  font-weight: 500;
+  text-wrap: balance;
+}
+
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-sm);
+  margin-top: var(--gap-md);
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+.hero-meta span {
+  background: var(--paper-warm);
+  border: var(--border-w-thin) solid var(--ink);
+  padding: 4px 10px;
+  font-weight: 600;
+}
+
+/* STICKER */
+.sticker {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  background: var(--cyan);
+  border: var(--border-w-thin) solid var(--ink);
+  padding: 6px 10px;
+  box-shadow: 3px 3px 0 var(--ink);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  z-index: 10;
+}
+.sticker-pink { background: var(--pink); }
+.sticker-yellow { background: var(--yellow); }
+.sticker-lime { background: var(--lime); }
+
+/* SECTION */
+.section { margin-bottom: var(--gap-xl); position: relative; }
+.section-num {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--brand);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: var(--gap-xs);
+  display: block;
+}
+.section-title {
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  margin-bottom: var(--gap-md);
+  padding-bottom: var(--gap-sm);
+  border-bottom: var(--border-w) solid var(--ink);
+}
+.section-title .underline {
+  background: var(--lime);
+  padding: 0 6px;
+  border: var(--border-w-thin) solid var(--ink);
+  display: inline-block;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+/* CARD */
+.card {
+  border: var(--border-w) solid var(--ink);
+  background: var(--paper);
+  box-shadow: var(--shadow-offset) var(--ink);
+  border-radius: var(--radius);
+  margin-bottom: var(--gap-md);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.card-header {
+  background: var(--brand);
+  color: var(--paper);
+  border-bottom: var(--border-w-thin) solid var(--ink);
+  padding: var(--gap-sm) var(--gap-md);
+}
+.card-header.bg-yellow { background: var(--yellow); color: var(--ink); }
+.card-header.bg-cyan { background: var(--cyan); color: var(--ink); }
+.card-header.bg-lime { background: var(--lime); color: var(--ink); }
+.card-header.bg-pink { background: var(--pink); color: var(--ink); }
+.card-header.bg-ink { background: var(--ink); color: var(--paper); }
+
+.card-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 4px;
+  opacity: 0.85;
+}
+.card-title {
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  font-weight: 700;
+}
+.card-body { padding: var(--gap-md); }
+.card-body > *:last-child { margin-bottom: 0; }
+.card-tilt-l { transform: rotate(-1deg); }
+.card-tilt-r { transform: rotate(1deg); }
+
+/* GRID */
+.grid { display: grid; gap: var(--gap-md); }
+.grid-2 { grid-template-columns: 1fr; }
+.grid-3 { grid-template-columns: 1fr; }
+.grid-4 { grid-template-columns: 1fr; }
+
+@media (min-width: 640px) { .grid-2 { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 768px) {
+  .grid-3 { grid-template-columns: repeat(3, 1fr); }
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 1024px) { .grid-4 { grid-template-columns: repeat(4, 1fr); } }
+
+/* NUMBERED LIST */
+.num-list { list-style: none; padding: 0; margin: 0; }
+.num-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--gap-sm);
+  padding: var(--gap-sm) 0;
+  border-bottom: var(--border-w-thin) dashed var(--ink);
+  min-width: 0;
+}
+.num-list li:last-child { border-bottom: none; }
+.num-list .num {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  border-radius: var(--radius);
+}
+.num-list .num.brand { background: var(--brand); }
+.num-list .num.lg { width: 44px; height: 44px; font-size: 16px; }
+.num-list .content { flex: 1; min-width: 0; }
+.num-list .content strong {
+  display: block;
+  margin-bottom: 4px;
+  font-family: var(--font-display);
+  font-size: 1.1em;
+}
+
+/* TABLE */
+.table-wrap {
+  border: var(--border-w) solid var(--ink);
+  background: var(--paper);
+  box-shadow: var(--shadow-offset) var(--ink);
+  border-radius: var(--radius);
+  overflow-x: auto;
+  margin-bottom: var(--gap-md);
+}
+table { width: 100%; border-collapse: collapse; font-family: var(--font-body); }
+table th {
+  background: var(--ink);
+  color: var(--paper);
+  text-align: left;
+  padding: var(--gap-sm);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: var(--border-w) solid var(--ink);
+}
+table td {
+  padding: var(--gap-sm);
+  border-bottom: var(--border-w-thin) solid var(--ink);
+  vertical-align: top;
+  font-size: 15px;
+}
+table tr:last-child td { border-bottom: none; }
+table tr:nth-child(even) td { background: var(--paper-warm); }
+table td:first-child {
+  font-weight: 600;
+  border-right: var(--border-w-thin) dashed var(--ink);
+}
+
+/* QUOTE */
+.quote {
+  background: var(--yellow);
+  border: var(--border-w) solid var(--ink);
+  box-shadow: var(--shadow-offset) var(--ink);
+  border-radius: var(--radius);
+  padding: var(--gap-md);
+  margin: var(--gap-md) 0;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 500;
+  position: relative;
+  text-wrap: balance;
+}
+.quote::before {
+  content: """;
+  position: absolute;
+  top: -20px;
+  left: var(--gap-sm);
+  font-size: 5rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--brand);
+  background: var(--paper);
+  border: var(--border-w-thin) solid var(--ink);
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  border-radius: var(--radius);
+}
+.quote-author {
+  display: block;
+  margin-top: var(--gap-sm);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-soft);
+}
+.quote.bg-cyan { background: var(--cyan); }
+.quote.bg-lime { background: var(--lime); }
+.quote.bg-pink { background: var(--pink); }
+
+/* STAT */
+.stat-grid { display: grid; gap: var(--gap-sm); grid-template-columns: 1fr; }
+@media (min-width: 640px) { .stat-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .stat-grid { grid-template-columns: repeat(4, 1fr); } }
+.stat {
+  background: var(--paper);
+  border: var(--border-w) solid var(--ink);
+  box-shadow: var(--shadow-offset-sm) var(--ink);
+  padding: var(--gap-sm);
+  text-align: center;
+  border-radius: var(--radius);
+}
+.stat-num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  color: var(--brand);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.stat-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink-soft);
+}
+
+/* CALLOUT */
+.callout {
+  border: var(--border-w) solid var(--ink);
+  background: var(--cyan);
+  box-shadow: var(--shadow-offset) var(--ink);
+  border-radius: var(--radius);
+  padding: var(--gap-md);
+  margin: var(--gap-md) 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+}
+.callout.tip { background: var(--lime); }
+.callout.warning { background: var(--pink); }
+.callout.example { background: var(--yellow); }
+.callout-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 4px 8px;
+  display: inline-block;
+  align-self: flex-start;
+  border-radius: var(--radius);
+}
+.callout-body { margin: 0; font-size: 15px; }
+.callout-body p:last-child { margin-bottom: 0; }
+
+/* TOC */
+.toc {
+  border: var(--border-w) solid var(--ink);
+  background: var(--paper);
+  box-shadow: var(--shadow-offset) var(--ink);
+  border-radius: var(--radius);
+  padding: var(--gap-md);
+  margin-bottom: var(--gap-xl);
+}
+.toc-title {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 6px 12px;
+  display: inline-block;
+  margin-bottom: var(--gap-md);
+}
+.toc-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: var(--gap-xs);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 768px) { .toc-list { grid-template-columns: repeat(2, 1fr); } }
+.toc-list a {
+  display: block;
+  padding: 10px 14px;
+  background: var(--paper-warm);
+  border: var(--border-w-thin) solid var(--ink);
+  text-decoration: none;
+  color: var(--ink);
+  font-weight: 500;
+  font-size: 14px;
+  border-radius: var(--radius);
+  transition: transform 0.1s ease-out, box-shadow 0.1s ease-out;
+}
+.toc-list a:hover {
+  background: var(--yellow);
+  transform: translate(-2px, -2px);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+.toc-list a .toc-num {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--brand);
+  margin-right: 8px;
+}
+
+/* HIGHLIGHT */
+.hl { background: var(--yellow); padding: 1px 5px; border: var(--border-w-thin) solid var(--ink); font-weight: 600; border-radius: 2px; }
+.hl-cyan { background: var(--cyan); padding: 1px 5px; border: var(--border-w-thin) solid var(--ink); font-weight: 600; border-radius: 2px; }
+.hl-pink { background: var(--pink); padding: 1px 5px; border: var(--border-w-thin) solid var(--ink); font-weight: 600; border-radius: 2px; }
+.hl-lime { background: var(--lime); padding: 1px 5px; border: var(--border-w-thin) solid var(--ink); font-weight: 600; border-radius: 2px; }
+
+/* DIVERSITY TYPES GRID (6 loại) */
+.div-types {
+  display: grid;
+  gap: var(--gap-md);
+  grid-template-columns: 1fr;
+  margin: var(--gap-md) 0;
+}
+@media (min-width: 640px) { .div-types { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .div-types { grid-template-columns: repeat(3, 1fr); } }
+
+.div-type {
+  border: var(--border-w) solid var(--ink);
+  box-shadow: var(--shadow-offset) var(--ink);
+  border-radius: var(--radius);
+  padding: var(--gap-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+  min-width: 0;
+}
+.div-type .dt-icon {
+  font-size: 2.5rem;
+  line-height: 1;
+  margin-bottom: var(--gap-xs);
+}
+.div-type .dt-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 4px 8px;
+  display: inline-block;
+  align-self: flex-start;
+  border-radius: var(--radius);
+}
+.div-type .dt-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+.div-type .dt-desc {
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.div-type:nth-child(1) { background: var(--yellow); }
+.div-type:nth-child(2) { background: var(--cyan); }
+.div-type:nth-child(3) { background: var(--lime); }
+.div-type:nth-child(4) { background: var(--pink); }
+.div-type:nth-child(5) { background: var(--paper-warm); }
+.div-type:nth-child(6) { background: var(--brand); color: var(--paper); }
+.div-type:nth-child(6) .dt-num { background: var(--paper); color: var(--ink); }
+
+/* BIAS CHAIN (Bias → Prejudice → Stereotyping → Discrimination) */
+.bias-chain {
+  display: grid;
+  gap: var(--gap-sm);
+  grid-template-columns: 1fr;
+  margin: var(--gap-md) 0;
+}
+@media (min-width: 768px) { .bias-chain { grid-template-columns: repeat(4, 1fr); align-items: stretch; } }
+
+.bias-link {
+  border: var(--border-w) solid var(--ink);
+  box-shadow: var(--shadow-offset-sm) var(--ink);
+  border-radius: var(--radius);
+  padding: var(--gap-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+  position: relative;
+}
+.bias-link .bl-num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 2.5rem;
+  line-height: 1;
+  color: var(--brand);
+}
+.bias-link .bl-en {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink-soft);
+}
+.bias-link .bl-vi {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+}
+.bias-link .bl-desc {
+  font-size: 13px;
+  line-height: 1.5;
+}
+.bias-link:nth-child(1) { background: var(--yellow); }
+.bias-link:nth-child(2) { background: var(--cyan); }
+.bias-link:nth-child(3) { background: var(--lime); }
+.bias-link:nth-child(4) { background: var(--pink); }
+
+/* DISCRIMINATION FORMS GRID (6 hình thức) */
+.disc-grid {
+  display: grid;
+  gap: var(--gap-md);
+  grid-template-columns: 1fr;
+  margin: var(--gap-md) 0;
+}
+@media (min-width: 640px) { .disc-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .disc-grid { grid-template-columns: repeat(3, 1fr); } }
+
+.disc-card {
+  background: var(--paper);
+  border: var(--border-w) solid var(--ink);
+  box-shadow: var(--shadow-offset-sm) var(--ink);
+  border-radius: var(--radius);
+  padding: var(--gap-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+  min-width: 0;
+}
+.disc-card .disc-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 4px 8px;
+  align-self: flex-start;
+  border-radius: var(--radius);
+  letter-spacing: 0.05em;
+}
+.disc-card .disc-title-en {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--brand);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.disc-card .disc-title-vi {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+.disc-card .disc-desc {
+  font-size: 13px;
+  line-height: 1.55;
+}
+.disc-card .disc-ex {
+  font-size: 12px;
+  background: var(--paper);
+  border: var(--border-w-thin) solid var(--ink);
+  padding: 6px 10px;
+  border-radius: var(--radius);
+  margin-top: var(--gap-xs);
+}
+.disc-card:nth-child(6n+1) { background: var(--yellow); }
+.disc-card:nth-child(6n+2) { background: var(--cyan); }
+.disc-card:nth-child(6n+3) { background: var(--lime); }
+.disc-card:nth-child(6n+4) { background: var(--pink); }
+.disc-card:nth-child(6n+5) { background: var(--paper-warm); }
+.disc-card:nth-child(6n+6) { background: var(--yellow); }
+
+/* INITIATIVE FLOW (4 sáng kiến) */
+.init-flow {
+  display: grid;
+  gap: var(--gap-md);
+  grid-template-columns: 1fr;
+  margin: var(--gap-md) 0;
+}
+@media (min-width: 768px) { .init-flow { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .init-flow { grid-template-columns: repeat(4, 1fr); } }
+
+.init-card {
+  border: var(--border-w) solid var(--ink);
+  box-shadow: var(--shadow-offset) var(--ink);
+  border-radius: var(--radius);
+  padding: var(--gap-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+}
+.init-card .ic-step {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 3rem;
+  line-height: 1;
+  color: var(--brand);
+}
+.init-card .ic-en {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  letter-spacing: 0.05em;
+}
+.init-card .ic-vi {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+}
+.init-card .ic-desc {
+  font-size: 13px;
+  line-height: 1.5;
+}
+.init-card:nth-child(1) { background: var(--brand); color: var(--paper); }
+.init-card:nth-child(1) .ic-step { color: var(--yellow); }
+.init-card:nth-child(1) .ic-en { color: var(--paper); opacity: 0.85; }
+.init-card:nth-child(2) { background: var(--cyan); }
+.init-card:nth-child(3) { background: var(--lime); }
+.init-card:nth-child(4) { background: var(--yellow); }
+
+/* STAT BIG (cho stats lớn) */
+.stat-big {
+  background: var(--paper);
+  border: var(--border-w) solid var(--ink);
+  box-shadow: var(--shadow-offset) var(--ink);
+  border-radius: var(--radius);
+  padding: var(--gap-md);
+  display: flex;
+  align-items: center;
+  gap: var(--gap-md);
+  margin: var(--gap-sm) 0;
+}
+.stat-big .sb-num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  color: var(--brand);
+  line-height: 1;
+  flex-shrink: 0;
+}
+.stat-big .sb-label {
+  font-size: 14px;
+  line-height: 1.5;
+  font-weight: 500;
+}
+.stat-big.bg-yellow { background: var(--yellow); }
+.stat-big.bg-cyan { background: var(--cyan); }
+.stat-big.bg-lime { background: var(--lime); }
+.stat-big.bg-pink { background: var(--pink); }
+
+/* FOOTER */
+.footer {
+  margin-top: var(--gap-xl);
+  padding: var(--gap-lg) 0;
+  border-top: var(--border-w) solid var(--ink);
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+.footer strong { color: var(--ink); font-weight: 700; }
+.footer a {
+  color: var(--brand);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  font-weight: 600;
+}
+.footer a:hover { background: var(--yellow); color: var(--ink); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media print {
+  body { background: white; background-image: none; }
+  .card, .hero, .toc, .table-wrap { box-shadow: none; }
+  .sticker { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- HERO -->
+  <header class="hero">
+    <span class="sticker sticker-pink" style="top: -16px; right: 24px; transform: rotate(8deg);">DEEP&nbsp;SUMMARY</span>
+    <span class="sticker sticker-lime" style="bottom: -14px; left: 32px; transform: rotate(-5deg);">~7.400 từ</span>
+
+    <div class="hero-badge">CHƯƠNG&nbsp;05 · ROBBINS&nbsp;&amp;&nbsp;COULTER</div>
+    <h1 class="hero-title">
+      Quản trị<br>
+      <span class="accent">Đa&nbsp;dạng</span>
+    </h1>
+    <p class="hero-sub">
+      Tóm tắt chuyên sâu Chương 5 — Sách <em>Management</em> ấn bản 15&nbsp;(2021).
+      Khi lực lượng lao động ngày càng đa dạng: 6&nbsp;loại đa dạng, 3 thách thức, 4 sáng kiến để biến đa dạng thành lợi thế.
+    </p>
+    <div class="hero-meta">
+      <span>📖 13 trang nội bộ</span>
+      <span>⏱ 60-70 phút đọc</span>
+      <span>🎯 5 mục tiêu học tập</span>
+      <span>🇻🇳 Ngôn ngữ Việt</span>
+    </div>
+  </header>
+
+  <!-- TOC -->
+  <nav class="toc">
+    <span class="toc-title">📑 Mục lục</span>
+    <ul class="toc-list">
+      <li><a href="#how-to-use"><span class="toc-num">00</span>Hướng dẫn sử dụng</a></li>
+      <li><a href="#core"><span class="toc-num">01</span>Định nghĩa và bản đồ</a></li>
+      <li><a href="#lo1"><span class="toc-num">LO5.1</span>Đa dạng 101 và lợi ích</a></li>
+      <li><a href="#lo2"><span class="toc-num">LO5.2</span>Nơi làm việc đang thay đổi</a></li>
+      <li><a href="#lo3"><span class="toc-num">LO5.3</span>6 loại đa dạng</a></li>
+      <li><a href="#lo4"><span class="toc-num">LO5.4</span>3 thách thức quản lý</a></li>
+      <li><a href="#lo5"><span class="toc-num">LO5.5</span>4 sáng kiến đa dạng</a></li>
+      <li><a href="#cases"><span class="toc-num">02</span>Bài học Denny's &amp; Salesforce</a></li>
+      <li><a href="#overview"><span class="toc-num">03</span>Tổng quan và liên hệ</a></li>
+      <li><a href="#cheatsheet"><span class="toc-num">04</span>Cheatsheet</a></li>
+      <li><a href="#review"><span class="toc-num">05</span>Lộ trình ôn tập</a></li>
+    </ul>
+  </nav>
+
+  <!-- HOW TO USE -->
+  <section class="section" id="how-to-use">
+    <span class="section-num">📍 Trang 1</span>
+    <h2 class="section-title">Hướng&nbsp;dẫn <span class="underline">sử&nbsp;dụng</span> tài&nbsp;liệu này</h2>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="card-header bg-yellow">
+          <div class="card-num">CÁCH ĐỌC</div>
+          <div class="card-title">Cách dùng hiệu quả nhất</div>
+        </div>
+        <div class="card-body">
+          <ul class="num-list">
+            <li><div class="num brand">1</div><div class="content">Đọc trọn vẹn trong 60-70&nbsp;phút.</div></li>
+            <li><div class="num brand">2</div><div class="content">Phần <strong>"6 hình thức phân biệt đối xử"</strong> (Trang 8) và <strong>"Glass Ceiling, Pay Inequities"</strong> (Trang 9) là phần dễ áp dụng nhất khi tư vấn.</div></li>
+            <li><div class="num brand">3</div><div class="content">Phần Bài học Denny's (Trang 10) — liên hệ với một sự cố văn hóa nội bộ bạn từng chứng kiến.</div></li>
+            <li><div class="num brand">4</div><div class="content">Cuối mỗi phần lớn, gập tài liệu lại và tự kể.</div></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-cyan">
+          <div class="card-num">LIÊN HỆ CHƯƠNG 1-4</div>
+          <div class="card-title">Vì sao Chương 5 đào sâu nhân khẩu</div>
+        </div>
+        <div class="card-body">
+          <ul style="margin: 0; padding-left: 20px; font-size: 14px;">
+            <li><strong>Chương 1</strong> — nhà quản trị làm gì</li>
+            <li><strong>Chương 2</strong> — họ ra quyết định ra sao</li>
+            <li><strong>Chương 3</strong> — bối cảnh chung</li>
+            <li><strong>Chương 4</strong> — bối cảnh toàn cầu</li>
+            <li><strong>Chương 5</strong> — bối cảnh <em>đa dạng nội bộ</em></li>
+          </ul>
+          <p style="margin-top: var(--gap-sm);">Khi lực lượng lao động ngày càng đa dạng (về tuổi, giới, chủng tộc, tôn giáo, năng lực, xu hướng tình dục), nhà quản trị phải có <span class="hl">cách quản lý mới</span>.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout warning">
+      <span class="callout-label">⚠️ Lưu ý đặc biệt cho người đọc Việt Nam</span>
+      <p class="callout-body">
+        Phần lớn dữ liệu, ví dụ, và luật trong chương này là từ Mỹ và một số nước phát triển. Ở Việt&nbsp;Nam, một số vấn đề (như LGBT, người khuyết tật, đa chủng tộc) có khung pháp lý và văn hóa khác. Khi đọc, hãy chú ý các <strong>nguyên lý phổ quát</strong> (lợi ích của đa dạng, thiên kiến cá nhân, mentoring) chứ <span class="hl-pink">đừng máy móc áp dụng số liệu Mỹ vào Việt Nam</span>.
+      </p>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-label">💡 Quy ước</span>
+      <p class="callout-body">
+        Các thuật ngữ chuyên ngành được giữ nguyên tiếng Anh kèm dịch nghĩa ở lần xuất hiện đầu. Ví dụ: <em>Glass ceiling (trần thủy tinh)</em>, <em>Mentoring (cố vấn)</em>, <em>Employee Resource Group - ERG (nhóm nguồn lực nhân viên)</em>.
+      </p>
+    </div>
+  </section>
+
+  <!-- CORE -->
+  <section class="section" id="core">
+    <span class="section-num">📍 Trang 2</span>
+    <h2 class="section-title">Định&nbsp;nghĩa cốt&nbsp;lõi và <span class="underline">bản&nbsp;đồ</span> kiến&nbsp;thức</h2>
+
+    <div class="quote bg-cyan">
+      Khi lực lượng lao động ngày càng đa dạng, nhà quản trị phải hiểu gì và làm gì để <strong>biến sự đa dạng thành lợi thế thay vì rào cản?</strong>
+      <span class="quote-author">— Câu hỏi trung tâm Chương 5</span>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Phép ẩn dụ: Dàn nhạc giao hưởng</h3>
+
+    <div class="grid grid-2">
+      <div class="card card-tilt-l">
+        <div class="card-header bg-yellow">
+          <div class="card-num">XƯA</div>
+          <div class="card-title">Dàn nhạc cùng nhạc cụ</div>
+        </div>
+        <div class="card-body">
+          <p>Dàn nhạc chỉ có nhạc cụ giống nhau (chủ yếu là vĩ cầm) — <strong>dễ điều phối nhưng âm thanh đơn điệu</strong>.</p>
+          <p>Mọi nhạc công chơi cùng cách. Không có sắc thái riêng.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-lime">
+          <div class="card-num">NAY</div>
+          <div class="card-title">Dàn nhạc đa nhạc cụ</div>
+        </div>
+        <div class="card-body">
+          <p>Vĩ cầm, cello, kèn, trống, sáo — mỗi nhạc cụ có <strong>âm sắc riêng, kỹ thuật chơi riêng, điều kiện riêng</strong>.</p>
+          <p><em>Kèn cần khoảng trống. Vĩ cầm sợ ẩm.</em></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout warning">
+      <span class="callout-label">🎯 Cốt lõi</span>
+      <p class="callout-body">
+        Nhạc trưởng giỏi không phải là người ép tất cả chơi giống nhau, mà là <strong>người hiểu sự khác biệt và biết phối hợp các âm sắc khác nhau thành bản hòa tấu</strong>. Đây chính là vai trò nhà quản trị trong môi trường đa dạng.
+      </p>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Năm mục tiêu học tập (LO) của Chương&nbsp;5</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 90px;">Mục tiêu</th>
+            <th>Câu hỏi giải đáp</th>
+            <th>Khái niệm chính</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>LO5.1</td><td>Đa dạng nơi làm việc là gì và vì sao quan trọng?</td><td>Workforce diversity, Surface vs Deep-level, 3 nhóm lợi ích</td></tr>
+          <tr><td>LO5.2</td><td>Lực lượng lao động đang thay đổi ra sao?</td><td>Xu hướng dân số Mỹ và toàn cầu, dân số già hóa</td></tr>
+          <tr><td>LO5.3</td><td>Có những loại đa dạng nào?</td><td>6 loại: Tuổi, Giới, Chủng tộc/Sắc tộc, Khuyết tật, Tôn giáo, LGBT</td></tr>
+          <tr><td>LO5.4</td><td>Nhà quản trị gặp thách thức gì?</td><td>3 thách thức + 6 hình thức phân biệt đối xử</td></tr>
+          <tr><td>LO5.5</td><td>Có những sáng kiến đa dạng nào?</td><td>4 sáng kiến: Top mgmt, Mentoring, Training, ERG</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- LO 5.1 -->
+  <section class="section" id="lo1">
+    <span class="section-num">📍 Trang 3 · LO5.1</span>
+    <h2 class="section-title">Đa <span class="underline">dạng</span> 101 — Định nghĩa và lợi ích</h2>
+
+    <div class="quote bg-yellow">
+      <em>Workforce diversity</em> là những cách mà con người trong tổ chức <strong>khác nhau VÀ giống nhau</strong>.
+      <span class="quote-author">— Định nghĩa của Robbins</span>
+    </div>
+
+    <p>Định nghĩa này không chỉ tập trung vào sự khác biệt mà còn cả sự tương đồng. Robbins muốn nhấn mạnh rằng nhà quản trị nên xem nhân viên có cả <strong>phẩm chất chung lẫn khác biệt riêng</strong>. Mục tiêu không phải là làm nổi bật sự khác biệt, mà là <span class="hl">tìm cách xây dựng quan hệ mạnh và thu hút toàn bộ lực lượng lao động</span>.</p>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Đa dạng bề mặt và đa dạng chiều sâu</h3>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="card-header bg-cyan">
+          <div class="card-num">SURFACE-LEVEL</div>
+          <div class="card-title">Đa dạng bề mặt</div>
+        </div>
+        <div class="card-body">
+          <p>Khác biệt <strong>dễ nhận thấy</strong> có thể kích hoạt khuôn mẫu, nhưng <span class="hl-cyan">không nhất thiết phản ánh cách người ta nghĩ hay cảm nhận</span>.</p>
+          <p style="margin: 0; font-size: 14px;"><strong>Ví dụ:</strong> Tuổi, chủng tộc, giới tính, sắc tộc.</p>
+          <p style="margin: var(--gap-xs) 0 0; font-size: 13px; color: var(--ink-soft);"><em>Dễ thấy ngay — nhưng dễ dẫn tới khuôn mẫu sai.</em></p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-lime">
+          <div class="card-num">DEEP-LEVEL</div>
+          <div class="card-title">Đa dạng chiều sâu</div>
+        </div>
+        <div class="card-body">
+          <p>Khác biệt về <strong>giá trị, tính cách, sở thích công việc</strong>.</p>
+          <p style="margin: 0; font-size: 14px;"><strong>Ví dụ:</strong> Quan điểm sống, cách giải quyết vấn đề, ưu tiên cá nhân.</p>
+          <p style="margin: var(--gap-xs) 0 0; font-size: 13px; color: var(--ink-soft);"><em>Phải mất thời gian mới thấy — nhưng <span class="hl-lime">quan trọng hơn cho công việc</span>.</em></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <span class="callout-label">📌 Phát hiện quan trọng</span>
+      <p class="callout-body">
+        Khi mọi người làm việc cùng nhau lâu hơn, <strong>đa dạng bề mặt trở nên ít quan trọng</strong>, và đa dạng chiều sâu trở nên quan trọng hơn. Nhân viên 50&nbsp;tuổi và 25&nbsp;tuổi có thể không khác nhau nhiều về cách suy nghĩ — nhưng nhìn từ ngoài, người ta dễ giả định họ khác nhau.
+      </p>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Tiến hóa khái niệm Workforce Diversity</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Thời kỳ</th>
+            <th>Trọng tâm</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1960-1970s</td><td>Tuân thủ luật pháp (Civil Rights Act, EEOC, affirmative action)</td></tr>
+          <tr><td>Đầu 1980s</td><td>Đồng hóa thiểu số và phụ nữ vào môi trường công ty — giúp họ "phù hợp"</td></tr>
+          <tr><td>Cuối 1980s</td><td>Mở rộng từ tuân thủ thành <strong>vấn đề sống còn của doanh nghiệp</strong> (sau ấn phẩm "Workforce 2000")</td></tr>
+          <tr><td>Cuối 1980s - Cuối 1990s</td><td>Tập trung vào nâng cao nhận thức về sự khác biệt</td></tr>
+          <tr><td>Thiên niên kỷ mới</td><td>Đa dạng và hòa nhập là <strong>vấn đề kinh doanh cốt lõi</strong> — cần thiết cho thành công, lợi nhuận, tăng trưởng</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">3 nhóm lợi ích của đa dạng</h3>
+
+    <div class="grid grid-3">
+      <div class="card">
+        <div class="card-header bg-yellow">
+          <div class="card-num">NHÓM 1</div>
+          <div class="card-title">People Management</div>
+        </div>
+        <div class="card-body">
+          <ul style="margin: 0; padding-left: 20px; font-size: 14px;">
+            <li>Sử dụng tốt hơn tài năng nhân viên</li>
+            <li>Tăng tính sáng tạo trong giải quyết vấn đề nhóm</li>
+            <li>Khả năng thu hút và giữ chân nhân viên đa dạng</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-cyan">
+          <div class="card-num">NHÓM 2</div>
+          <div class="card-title">Organizational Performance</div>
+        </div>
+        <div class="card-body">
+          <ul style="margin: 0; padding-left: 20px; font-size: 14px;">
+            <li>Giảm chi phí thôi việc, vắng mặt, kiện tụng</li>
+            <li>Tăng khả năng giải quyết vấn đề</li>
+            <li>Tăng linh hoạt hệ thống</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-lime">
+          <div class="card-num">NHÓM 3</div>
+          <div class="card-title">Strategic</div>
+        </div>
+        <div class="card-body">
+          <ul style="margin: 0; padding-left: 20px; font-size: 14px;">
+            <li>Hiểu thị trường, tiếp thị tốt hơn</li>
+            <li>Tăng doanh thu và thị phần</li>
+            <li>Lợi thế cạnh tranh nhờ đổi mới</li>
+            <li>Là điều <strong>đúng đắn về đạo đức</strong></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Bằng chứng tài chính</h3>
+
+    <div class="stat-big bg-pink">
+      <div class="sb-num">64&nbsp;tỷ&nbsp;USD</div>
+      <div class="sb-label">Các công ty Mỹ <strong>lãng phí mỗi năm</strong> do mất và thay thế nhân viên rời việc <em>"chỉ vì quản lý đa dạng thất bại"</em> (Korn&nbsp;Ferry).</div>
+    </div>
+
+    <div class="stat-big bg-lime">
+      <div class="sb-num">+33%</div>
+      <div class="sb-label">Công ty có đội ngũ điều hành đa dạng nhất về <strong>sắc tộc/văn hóa</strong> có khả năng vượt trội về lợi nhuận cao hơn.</div>
+    </div>
+
+    <div class="stat-big bg-yellow">
+      <div class="sb-num">+21%</div>
+      <div class="sb-label">Công ty trong nhóm 25% cao nhất về <strong>đa dạng giới ở đội điều hành</strong> có khả năng vượt qua mức trung bình ngành cao hơn.</div>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-label">💼 Áp dụng tư vấn — startup Việt gọi vốn</span>
+      <p class="callout-body">
+        Khi tư vấn cho doanh nghiệp Việt mở rộng quy mô hoặc IPO, <strong>đa dạng đội ngũ điều hành ngày càng trở thành chỉ số được nhà đầu tư quốc tế chú ý</strong>. Một startup Việt muốn gọi vốn từ quỹ Mỹ/Châu Âu sẽ được hỏi: <em>"Tỷ lệ phụ nữ trong ban điều hành?"</em> Đây không phải câu hỏi xã hội — <span class="hl">đây là câu hỏi rủi ro đầu tư</span>.
+      </p>
+    </div>
+  </section>
+
+  <!-- LO 5.2 -->
+  <section class="section" id="lo2">
+    <span class="section-num">📍 Trang 4 · LO5.2</span>
+    <h2 class="section-title">Nơi làm việc <span class="underline">đang thay&nbsp;đổi</span></h2>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-bottom: var(--gap-md);">Đặc điểm dân số Mỹ</h3>
+
+    <div class="callout">
+      <span class="callout-label">📊 Xu hướng tổng quát</span>
+      <p class="callout-body">
+        Từ <strong>2014</strong>, trẻ sơ sinh thuộc nhóm thiểu số chủng tộc và sắc tộc đã chiếm đa số.<br>
+        Đến <strong>2044</strong>, người da trắng không gốc Tây&nbsp;Ban&nbsp;Nha sẽ trở thành <strong>nhóm thiểu số</strong> ở Mỹ.<br>
+        Đến <strong>2060</strong>, người Tây&nbsp;Ban&nbsp;Nha (Hispanic) sẽ tăng từ 11% dân số lên trên <strong>28%</strong>.
+      </p>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Bảng dân số Mỹ thay đổi</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Nhóm</th>
+            <th>2018</th>
+            <th>2050</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Foreign-born (sinh ở nước ngoài)</td><td>14%</td><td>19%</td></tr>
+          <tr><td>White (không Hispanic)</td><td>72%</td><td>47%</td></tr>
+          <tr><td>Hispanic</td><td>12%</td><td>29%</td></tr>
+          <tr><td>Black (không Hispanic)</td><td>12%</td><td>13%</td></tr>
+          <tr><td>Asian (không Hispanic)</td><td>4%</td><td>9%</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Dân số già hóa và xu hướng toàn cầu</h3>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="card-header bg-pink">
+          <div class="card-num">DÂN SỐ MỸ</div>
+          <div class="card-title">Già hóa nhanh</div>
+        </div>
+        <div class="card-body">
+          <ul style="margin: 0; padding-left: 20px; font-size: 14px;">
+            <li>Đến 2050, <strong>1 trong 5</strong> người Mỹ từ 65&nbsp;tuổi trở lên</li>
+            <li>Nhóm 80+ tuổi sẽ là nhóm đông nhất, chiếm 8% dân số</li>
+            <li>Lực lượng lao động 2024: 47% phụ nữ; 23% người da đen, châu Á và các nhóm khác</li>
+            <li>Lao động 16-24 giảm 24%, 55+ tăng <strong>19,8%</strong></li>
+            <li><span class="hl">Gần 1 trong 7 lao động Mỹ sinh ở nước ngoài</span> (cao nhất từ thập niên 1920)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-cyan">
+          <div class="card-num">TOÀN CẦU</div>
+          <div class="card-title">Đỉnh dân số sắp tới</div>
+        </div>
+        <div class="card-body">
+          <ul style="margin: 0; padding-left: 20px; font-size: 14px;">
+            <li>2018: hơn <strong>7,6&nbsp;tỷ</strong> người</li>
+            <li>2030: dự báo <strong>8,6&nbsp;tỷ</strong></li>
+            <li>2050: <strong>9,8&nbsp;tỷ</strong> — sau đó dân số ổn định</li>
+            <li>Hiện tại: 8,5% người trên thế giới từ 65+</li>
+            <li>Dự báo 2050: gần <strong>17%</strong></li>
+            <li>Dân số 80+ dự báo <strong>tăng 233% đến 2040</strong></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-label">💼 Áp dụng cho Việt Nam</span>
+      <p class="callout-body">
+        Việt&nbsp;Nam đang ở giai đoạn <strong>"dân số vàng"</strong> nhưng <span class="hl">già hóa nhanh nhất khu vực</span>. Đến 2035, Việt&nbsp;Nam sẽ chuyển sang xã hội già. Doanh nghiệp Việt cần chuẩn bị từ bây giờ — thiết kế công việc phù hợp người trên 50, chính sách giữ chân nhân viên có kinh nghiệm.
+      </p>
+    </div>
+  </section>
+
+  <!-- LO 5.3 -->
+  <section class="section" id="lo3">
+    <span class="section-num">📍 Trang 5-6 · LO5.3</span>
+    <h2 class="section-title">Sáu loại <span class="underline">đa&nbsp;dạng</span> nơi làm việc</h2>
+
+    <p>Robbins giới thiệu <strong>6 loại đa dạng</strong> chính. Mỗi loại có thực tế riêng và thách thức riêng cho nhà quản trị.</p>
+
+    <div class="div-types">
+      <div class="div-type">
+        <div class="dt-icon">👴</div>
+        <div class="dt-num">LOẠI 1</div>
+        <div class="dt-name">Age · Tuổi</div>
+        <p class="dt-desc"><strong>Khuôn mẫu sai:</strong> Lao động lớn tuổi lờ đờ, hiệu suất thấp.</p>
+        <p class="dt-desc"><strong>Sự thật:</strong> Ổn định hơn, ít bỏ việc. <span class="hl">Gần như không có mối quan hệ giữa tuổi và hiệu suất công việc</span>. Barclays mở chương trình thực tập cho người 50+&nbsp;tuổi.</p>
+        <p class="dt-desc">Millennials sẽ chiếm <strong>~75% lực lượng lao động toàn cầu đến 2025</strong>.</p>
+      </div>
+
+      <div class="div-type">
+        <div class="dt-icon">⚖️</div>
+        <div class="dt-num">LOẠI 2</div>
+        <div class="dt-name">Gender · Giới tính</div>
+        <p class="dt-desc">1950: dưới 30% phụ nữ trong lao động. Hiện tại: <strong>47%</strong>.</p>
+        <p class="dt-desc"><strong>Nhưng:</strong> Đàn ông bắt đầu sự nghiệp ở mức cao hơn, leo thang xa và nhanh hơn. Phong trào <em>"me-too" (2017)</em> phơi bày quấy rối tình dục: Harvey&nbsp;Weinstein, Matt&nbsp;Lauer, Bill&nbsp;O'Reilly...</p>
+        <p class="dt-desc">Văn hóa "boy's club" Silicon Valley: Uber, Tesla, Tinder.</p>
+      </div>
+
+      <div class="div-type">
+        <div class="dt-icon">🌍</div>
+        <div class="dt-num">LOẠI 3</div>
+        <div class="dt-name">Race &amp; Ethnicity</div>
+        <p class="dt-desc"><strong>Race</strong> = đặc điểm thể chất (sinh học). <strong>Ethnicity</strong> = yếu tố xã hội-văn hóa.</p>
+        <p class="dt-desc"><span class="hl-pink">Sốc:</span> Hồ sơ với tên người da trắng nhận <strong>nhiều cuộc gọi phỏng vấn hơn 50%</strong> so với hồ sơ giống hệt nhưng tên người da đen.</p>
+        <p class="dt-desc">Ứng viên Mỹ gốc Phi không có tiền án nhận ít offer hơn ứng viên da trắng có tiền án.</p>
+      </div>
+
+      <div class="div-type">
+        <div class="dt-icon">♿</div>
+        <div class="dt-num">LOẠI 4</div>
+        <div class="dt-name">Disability · Khuyết tật</div>
+        <p class="dt-desc"><strong>~12,6% dân số Mỹ</strong> — nhóm thiểu số lớn nhất. Mốc 1990: <em>Americans with Disabilities Act (ADA)</em>.</p>
+        <p class="dt-desc"><strong>Sự thật vs. nỗi sợ:</strong> Tỷ lệ vắng mặt gần như bằng nhau. Hơn một nửa điều chỉnh nơi làm việc tốn dưới <strong>500&nbsp;USD</strong>.</p>
+        <p class="dt-desc"><strong>Lợi thế bất ngờ:</strong> Người tự kỷ ở JPMorgan, Microsoft, IBM, SAP đạt <strong>48%-140% công việc nhiều hơn</strong> đồng nghiệp thông thường.</p>
+      </div>
+
+      <div class="div-type">
+        <div class="dt-icon">🕊️</div>
+        <div class="dt-num">LOẠI 5</div>
+        <div class="dt-name">Religion · Tôn giáo</div>
+        <p class="dt-desc">Vấn đề lớn nhất hiện tại ở Mỹ: <strong>Hồi giáo</strong> sau ngày 11/9.</p>
+        <p class="dt-desc"><strong>~3 triệu người Hồi giáo ở Mỹ</strong>, dự báo gấp đôi đến 2030. Gần 4 trong 10 người Mỹ trưởng thành thừa nhận có cảm xúc tiêu cực với người Hồi giáo Mỹ.</p>
+        <p class="dt-desc"><strong>3 yêu cầu điều chỉnh phổ biến:</strong> giờ cầu nguyện thứ Sáu, linh hoạt trang phục, không gian cầu nguyện hàng ngày.</p>
+      </div>
+
+      <div class="div-type">
+        <div class="dt-icon">🏳️‍🌈</div>
+        <div class="dt-num">LOẠI 6</div>
+        <div class="dt-name">LGBT</div>
+        <p class="dt-desc">Lesbian, gay, bisexual, transgender — đa dạng xu hướng tình dục và bản dạng giới.</p>
+        <p class="dt-desc"><strong>Hơn 40%</strong> nhân viên gay/lesbian đã bị đối xử bất công. <strong>"Closeted" LGBT</strong> có khả năng nghỉ việc trong 3 năm cao hơn <strong>73%</strong>.</p>
+        <p class="dt-desc">BBC đặt mục tiêu nhân viên LGBT chiếm 8% lực lượng. 30 doanh nghiệp Nhật (Panasonic, Sony) phát triển tiêu chuẩn LGBT.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- LO 5.4 -->
+  <section class="section" id="lo4">
+    <span class="section-num">📍 Trang 7-8 · LO5.4</span>
+    <h2 class="section-title">Ba <span class="underline">thách&nbsp;thức</span> trong quản lý đa dạng</h2>
+
+    <p>Dù đa dạng mang lại lợi ích, nhà quản trị vẫn đối mặt với <strong>3 thách thức lớn</strong>: personal bias, glass ceiling, pay inequities.</p>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-md); margin-bottom: var(--gap-md);">Thách thức 1: Personal Bias — Chuỗi 4 khái niệm</h3>
+
+    <p>Mối quan hệ: <strong>Bias → Prejudice → Stereotyping → Discrimination</strong></p>
+
+    <div class="bias-chain">
+      <div class="bias-link">
+        <div class="bl-num">1</div>
+        <div class="bl-en">Bias</div>
+        <div class="bl-vi">Thiên kiến</div>
+        <p class="bl-desc">Xu hướng hoặc ưu tiên một góc nhìn hay tư tưởng cụ thể. Nhìn <strong>"một phía"</strong>.</p>
+      </div>
+      <div class="bias-link">
+        <div class="bl-num">2</div>
+        <div class="bl-en">Prejudice</div>
+        <div class="bl-vi">Định kiến</div>
+        <p class="bl-desc">Niềm tin, ý kiến, phán đoán <strong>định trước</strong> về một người hoặc nhóm người.</p>
+      </div>
+      <div class="bias-link">
+        <div class="bl-num">3</div>
+        <div class="bl-en">Stereotyping</div>
+        <div class="bl-vi">Khuôn mẫu</div>
+        <p class="bl-desc">Đánh giá một người dựa trên <strong>cảm nhận về nhóm</strong> mà người đó thuộc về.</p>
+      </div>
+      <div class="bias-link">
+        <div class="bl-num">4</div>
+        <div class="bl-en">Discrimination</div>
+        <div class="bl-vi">Phân biệt đối xử</div>
+        <p class="bl-desc">Khi người ta <strong>hành động</strong> theo thái độ định kiến với người là đối tượng của định kiến.</p>
+      </div>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-xl); margin-bottom: var(--gap-md);">Sáu hình thức phân biệt đối xử</h3>
+
+    <div class="disc-grid">
+      <div class="disc-card">
+        <span class="disc-num">01</span>
+        <div class="disc-title-en">Discriminatory Policies</div>
+        <div class="disc-title-vi">Chính sách phân biệt</div>
+        <p class="disc-desc">Hành động của tổ chức từ chối cơ hội bình đẳng để thực hiện hoặc không thưởng công bằng.</p>
+        <div class="disc-ex"><em>Ví dụ:</em> Lao động lớn tuổi bị nhắm tới khi sa thải vì lương cao và phúc lợi tốt.</div>
+      </div>
+
+      <div class="disc-card">
+        <span class="disc-num">02</span>
+        <div class="disc-title-en">Sexual Harassment</div>
+        <div class="disc-title-vi">Quấy rối tình dục</div>
+        <p class="disc-desc">Tiến đến tình dục không mong muốn và hành vi tạo môi trường thù địch hoặc xúc phạm.</p>
+        <div class="disc-ex"><em>Ví dụ:</em> Nhân viên bán hàng đi câu lạc bộ thoát y do công ty trả tiền và lan truyền tin đồn tình dục.</div>
+      </div>
+
+      <div class="disc-card">
+        <span class="disc-num">03</span>
+        <div class="disc-title-en">Intimidation</div>
+        <div class="disc-title-vi">Đe dọa</div>
+        <p class="disc-desc">Đe dọa công khai hoặc bắt nạt nhắm vào nhóm nhân viên cụ thể.</p>
+        <div class="disc-ex"><em>Ví dụ:</em> Nhân viên Mỹ gốc Phi tìm thấy thòng lọng treo trên bàn làm việc.</div>
+      </div>
+
+      <div class="disc-card">
+        <span class="disc-num">04</span>
+        <div class="disc-title-en">Mockery &amp; Insults</div>
+        <div class="disc-title-vi">Chế giễu và xúc phạm</div>
+        <p class="disc-desc">Đùa giỡn hoặc khuôn mẫu tiêu cực; đôi khi là kết quả của đùa giỡn quá mức.</p>
+        <div class="disc-ex"><em>Ví dụ:</em> Người Mỹ gốc Ả&nbsp;Rập bị hỏi liệu họ có phải là thành viên tổ chức khủng bố không.</div>
+      </div>
+
+      <div class="disc-card">
+        <span class="disc-num">05</span>
+        <div class="disc-title-en">Exclusion</div>
+        <div class="disc-title-vi">Loại trừ</div>
+        <p class="disc-desc">Loại trừ một số người khỏi cơ hội việc làm, sự kiện xã hội, thảo luận, hoặc cố vấn.</p>
+        <div class="disc-ex"><em>Ví dụ:</em> Nhiều phụ nữ trong tài chính được giao vai trò bên lề hoặc khối lượng công việc nhẹ không dẫn đến thăng chức.</div>
+      </div>
+
+      <div class="disc-card">
+        <span class="disc-num">06</span>
+        <div class="disc-title-en">Incivility</div>
+        <div class="disc-title-vi">Thiếu lịch sự</div>
+        <p class="disc-desc">Đối xử thiếu tôn trọng, gồm cả hành vi hung hăng, ngắt lời, bỏ qua ý kiến.</p>
+        <div class="disc-ex"><em>Ví dụ:</em> Thành viên nữ trong nhóm thường xuyên bị ngắt lời trong cuộc họp.</div>
+      </div>
+    </div>
+
+    <div class="callout warning">
+      <span class="callout-label">⚠️ Số liệu sốc về bias</span>
+      <p class="callout-body">
+        Hồ sơ với <strong>tên người da trắng</strong> nhận <strong>nhiều cuộc gọi phỏng vấn hơn 50%</strong> so với hồ sơ giống hệt nhưng tên người da đen.<br><br>
+        <strong>79% ứng viên với tên đàn ông</strong> được xem là đáng thuê, so với chỉ <strong>49% phụ nữ</strong> — <span class="hl-pink">dù hồ sơ giống hệt</span>.
+      </p>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-xl); margin-bottom: var(--gap-md);">Thách thức 2: Glass Ceiling — Trần thủy tinh</h3>
+
+    <div class="card">
+      <div class="card-header" style="background: var(--brand); color: var(--paper);">
+        <div class="card-num">RÀO CẢN VÔ HÌNH</div>
+        <div class="card-title">Giới hạn thăng tiến của phụ nữ và thiểu số</div>
+      </div>
+      <div class="card-body">
+        <p><em>Glass ceiling</em> là <strong>rào cản vô hình giới hạn mức độ mà phụ nữ hoặc thành viên nhóm thiểu số có thể thăng tiến trong tổ chức</strong>.</p>
+
+        <div class="quote bg-pink">
+          Có ít phụ nữ là CEO của các công ty Fortune&nbsp;500 hơn số đàn ông CEO <strong>tên James!</strong>
+          <span class="quote-author">— Sự thật gây ngạc nhiên</span>
+        </div>
+
+        <p><strong>Sự thật:</strong></p>
+        <ul style="margin: 0; padding-left: 20px;">
+          <li>Phụ nữ Mỹ đã <strong>lấy nhiều bằng đại học hơn đàn ông</strong> mỗi năm trong hơn 3 thập kỷ</li>
+          <li>Năm 2018, phụ nữ chỉ giữ <strong>4,8% vai trò CEO Fortune&nbsp;500</strong></li>
+        </ul>
+
+        <p style="margin-top: var(--gap-sm);"><strong>Nguyên nhân tiềm năng:</strong> Thất bại xây dựng mạng lưới, thiếu mentoring hiệu quả, khuôn mẫu giới, liên kết phẩm chất nam tính với hiệu quả lãnh đạo.</p>
+
+        <div class="stat-big bg-lime" style="margin-top: var(--gap-md);">
+          <div class="sb-num">+19%</div>
+          <div class="sb-label">Lợi nhuận trên vốn chủ sở hữu cao hơn ở công ty có <strong>50% phụ nữ ở vai trò vận hành cấp cao</strong> (Credit Suisse Research).</div>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-xl); margin-bottom: var(--gap-md);">Thách thức 3: Pay Inequities — Bất bình đẳng lương</h3>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="card-header bg-yellow">
+          <div class="card-num">SỐ LIỆU</div>
+          <div class="card-title">Khoảng cách thu hẹp dần</div>
+        </div>
+        <div class="card-body">
+          <ul style="margin: 0; padding-left: 20px; font-size: 14px;">
+            <li><strong>1963:</strong> US Equal Pay Act — bất bình đẳng lương trở thành bất hợp pháp</li>
+            <li><strong>1980:</strong> phụ nữ kiếm chỉ <strong>64%</strong> so với đàn ông</li>
+            <li><strong>2017:</strong> khoảng cách thu hẹp còn <strong>82%</strong></li>
+            <li><strong>Phụ nữ trẻ 25-34:</strong> năm 1980 kém 33&nbsp;cents, năm 2017 kém 11&nbsp;cents</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-cyan">
+          <div class="card-num">PHÂN TÍCH</div>
+          <div class="card-title">Nguyên nhân</div>
+        </div>
+        <div class="card-body">
+          <ul style="margin: 0; padding-left: 20px; font-size: 14px;">
+            <li><strong>54%</strong> khoảng cách do loại công việc khác nhau ở các ngành</li>
+            <li>Sau khi kiểm soát loại công việc, giáo dục, kinh nghiệm: vẫn <strong>33% chưa giải thích được</strong></li>
+            <li>Phụ nữ thích công việc có linh hoạt (làm từ xa, giờ linh hoạt) — thường đi kèm lương thấp hơn</li>
+            <li>Sau tất cả, vẫn còn khoảng cách <strong>3-5% có thể quy cho phân biệt đối xử</strong></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LO 5.5 -->
+  <section class="section" id="lo5">
+    <span class="section-num">📍 Trang 9-10 · LO5.5</span>
+    <h2 class="section-title">Bốn <span class="underline">sáng&nbsp;kiến</span> đa dạng nơi làm việc</h2>
+
+    <div class="quote bg-cyan">
+      Chúng tôi tận dụng các giá trị cốt lõi để gắn đa dạng và hòa nhập sâu đến mức <strong>nó không thể tách rời khỏi cách chúng tôi làm kinh doanh trên toàn cầu.</strong>
+      <span class="quote-author">— Marriott&nbsp;International, số 2 trong Top&nbsp;50 Companies for Diversity 2018</span>
+    </div>
+
+    <div class="init-flow">
+      <div class="init-card">
+        <div class="ic-step">1</div>
+        <div class="ic-en">Top Management</div>
+        <div class="ic-vi">Cam kết của lãnh đạo</div>
+        <p class="ic-desc"><strong>Yếu tố quan trọng nhất.</strong> Mọi thứ bắt đầu từ trên cùng. Nếu lãnh đạo không "all in", mục tiêu chỉ là lời nói suông.</p>
+      </div>
+
+      <div class="init-card">
+        <div class="ic-step">2</div>
+        <div class="ic-en">Mentoring</div>
+        <div class="ic-vi">Cố vấn</div>
+        <p class="ic-desc">Có 2 chức năng: <strong>Career</strong> (giao việc, bảo vệ, đề cử) + <strong>Social</strong> (tự tin, làm bạn). Có mentor → tăng khả năng được thăng chức.</p>
+      </div>
+
+      <div class="init-card">
+        <div class="ic-step">3</div>
+        <div class="ic-en">Diversity Training</div>
+        <div class="ic-vi">Đào tạo đa dạng</div>
+        <p class="ic-desc">Tổ chức Mỹ chi <strong>hàng tỷ USD/năm</strong>. Tập trung 3 yếu tố: kiến thức, thái độ, hành vi.</p>
+      </div>
+
+      <div class="init-card">
+        <div class="ic-step">4</div>
+        <div class="ic-en">ERG</div>
+        <div class="ic-vi">Nhóm nguồn lực nhân viên</div>
+        <p class="ic-desc">Nhóm tự nguyện do nhân viên dẫn đầu. <strong>~90% công ty Fortune&nbsp;500 có ERG</strong>. Bắt đầu từ Xerox 1960s.</p>
+      </div>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Sáng kiến 1: Top Management Commitment</h3>
+
+    <div class="card">
+      <div class="card-header bg-ink">
+        <div class="card-num">4 ĐIỀU NHÀ QUẢN TRỊ CẤP CAO CẦN ĐẢM BẢO</div>
+        <div class="card-title">Khi đa dạng được tích hợp đúng cách</div>
+      </div>
+      <div class="card-body">
+        <ul class="num-list">
+          <li><div class="num brand">1</div><div class="content"><strong>Đa dạng là một phần của mục đích, mục tiêu, chiến lược</strong> của tổ chức.</div></li>
+          <li><div class="num brand">2</div><div class="content"><strong>Tích hợp vào mọi mặt kinh doanh</strong> — lực lượng lao động, khách hàng, nhà cung cấp, sản phẩm, dịch vụ, cộng đồng.</div></li>
+          <li><div class="num brand">3</div><div class="content"><strong>Có chính sách và thủ tục</strong> để xử lý ngay khiếu nại và lo ngại.</div></li>
+          <li><div class="num brand">4</div><div class="content"><strong>Văn hóa đo lường và thưởng hiệu suất cá nhân theo thành tích đa dạng.</strong></div></li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Sáng kiến 2: Mentoring — 2 chức năng</h3>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="card-header bg-yellow">
+          <div class="card-num">CHỨC NĂNG 1</div>
+          <div class="card-title">Career Development · Phát triển sự nghiệp</div>
+        </div>
+        <div class="card-body">
+          <ul style="margin: 0; padding-left: 20px; font-size: 14px;">
+            <li>Vận động cho protégé nhận nhiệm vụ thử thách</li>
+            <li>Huấn luyện protégé phát triển kỹ năng</li>
+            <li>Tạo cơ hội tiếp xúc với người có ảnh hưởng</li>
+            <li>Tư vấn về chính trị nội bộ</li>
+            <li><strong>Bảo vệ protégé khỏi rủi ro tiềm tàng cho danh tiếng</strong></li>
+            <li>Bảo trợ bằng cách đề cử cho thăng tiến</li>
+            <li>Là <span class="hl">người để thử ý tưởng</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-pink">
+          <div class="card-num">CHỨC NĂNG 2</div>
+          <div class="card-title">Social Support · Hỗ trợ xã hội</div>
+        </div>
+        <div class="card-body">
+          <ul style="margin: 0; padding-left: 20px; font-size: 14px;">
+            <li>Tư vấn protégé để củng cố sự tự tin</li>
+            <li>Chia sẻ trải nghiệm cá nhân</li>
+            <li>Cung cấp tình bạn và sự chấp nhận</li>
+            <li>Đóng vai mẫu hình</li>
+          </ul>
+          <p style="margin-top: var(--gap-sm); font-size: 13px;"><strong>Đặc biệt cho đa dạng:</strong> Mentor là phụ nữ hoặc người thiểu số <span class="hl-pink">được trang bị tốt nhất để đưa lời khuyên</span> cho những người giống họ.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Sáng kiến 3: Diversity Training</h3>
+
+    <div class="callout warning">
+      <span class="callout-label">⚠️ Khi nào diversity training thất bại</span>
+      <p class="callout-body">
+        Nghiên cứu 40&nbsp;năm cho thấy training có tác động tích cực — nhưng <strong>niềm tin và hành vi có xu hướng quay lại như cũ theo thời gian</strong>.<br><br>
+        Diversity training có khả năng thất bại khi:
+      </p>
+      <ul style="margin: 0; padding-left: 20px; font-size: 14px;">
+        <li><strong>Bắt buộc</strong> thay vì tự nguyện</li>
+        <li><strong>Biện minh dựa trên cơ sở pháp lý</strong></li>
+        <li>Cung cấp <strong>chỉ cho nhà quản trị</strong> thay vì tất cả nhân viên</li>
+      </ul>
+      <p class="callout-body" style="margin-top: var(--gap-sm);">
+        <span class="hl-pink">Buồn: ~75% tổ chức có chương trình diversity training rơi vào ít nhất một trong các trường hợp này.</span>
+      </p>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Sáng kiến 4: Employee Resource Groups (ERG)</h3>
+
+    <div class="card">
+      <div class="card-header bg-lime">
+        <div class="card-num">AFFINITY GROUPS</div>
+        <div class="card-title">Nhóm tự nguyện do nhân viên dẫn đầu</div>
+      </div>
+      <div class="card-body">
+        <p><em>Employee Resource Group (ERG)</em> là <strong>nhóm nhỏ tự nguyện, do nhân viên dẫn đầu trong tổ chức, chia sẻ phẩm chất, sở thích, hoặc mục tiêu đặc trưng</strong>.</p>
+
+        <p><strong>Lịch sử:</strong> Bắt đầu từ thập niên 1960, <strong>Xerox Corporation</strong> ở Rochester, New York ra mắt <em>Black Caucus Group</em>.</p>
+
+        <div class="stat-big bg-yellow">
+          <div class="sb-num">~90%</div>
+          <div class="sb-label">công ty <strong>Fortune&nbsp;500 có ERG</strong>. Phổ biến nhất: ERG cho phụ nữ và người Mỹ gốc Phi.</div>
+        </div>
+
+        <div class="stat-big bg-cyan">
+          <div class="sb-num">85,6%</div>
+          <div class="sb-label">tỷ lệ <strong>giữ chân người da đen</strong> tại AT&amp;T. ERG người Mỹ gốc Phi tại AT&amp;T có hơn <strong>12.000 thành viên</strong>.</div>
+        </div>
+
+        <p style="margin-top: var(--gap-md);"><strong>Mục đích đa dạng của ERG:</strong></p>
+        <ul style="margin: 0; padding-left: 20px;">
+          <li>Là <strong>nơi thử ý tưởng</strong> cho lo ngại chung</li>
+          <li>Giúp thu hút và tuyển tài năng đa dạng</li>
+          <li>Tăng sự gắn kết của nhân viên</li>
+          <li>Chạy chương trình mentorship</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Câu hỏi cuối chương — Robbins đưa ra để suy ngẫm</h3>
+
+    <p>Robbins kết thúc chương bằng <strong>3 câu hỏi mở không có đáp án cụ thể</strong>:</p>
+
+    <ul class="num-list">
+      <li>
+        <div class="num">?</div>
+        <div class="content"><strong>Liệu chính trị bản sắc đã dẫn đến nỗi ám ảnh tôn vinh khác biệt?</strong>Có phải chúng ta đã quá tập trung vào khác biệt mà mất đi sự thống nhất quanh giá trị chung?</div>
+      </li>
+      <li>
+        <div class="num">?</div>
+        <div class="content"><strong>Liệu các thông lệ lâu đời có làm suy yếu đa dạng?</strong>Ví dụ: tuyển dụng qua giới thiệu — nếu tổ chức chủ yếu là đàn ông da trắng, giới thiệu cũng sẽ là đàn ông da trắng.</div>
+      </li>
+      <li>
+        <div class="num">?</div>
+        <div class="content"><strong>Liệu hỗ trợ đa dạng có mâu thuẫn với khen thưởng theo thành tích?</strong>Nếu quyết định tuyển dụng, phát triển, lương dựa trên thành tích, dùng đa dạng làm tiêu chí có mâu thuẫn không?</div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- CASES -->
+  <section class="section" id="cases">
+    <span class="section-num">📍 Bài học</span>
+    <h2 class="section-title">Hai <span class="underline">case&nbsp;study</span>: Denny's &amp; Salesforce</h2>
+
+    <div class="card">
+      <div class="card-header" style="background: var(--brand); color: var(--paper);">
+        <div class="card-num">CASE 1 · DENNY'S 1993</div>
+        <div class="card-title">Khi văn hóa thay đổi sau khủng hoảng</div>
+      </div>
+      <div class="card-body">
+        <p><strong>Sự cố châm ngòi (4/1993):</strong> 6 đặc vụ Mật vụ da đen được giao bảo vệ Bill&nbsp;Clinton vào nhà hàng Denny's ở Annapolis, Maryland. Họ chờ <strong>gần 1 tiếng</strong> cho bữa sáng. Trong khi họ bị bỏ qua, một nhóm đồng nghiệp da trắng ngồi bàn gần đó được tiếp đón nồng hậu, nhận đơn nhanh chóng, đã ăn xong cả phần thứ hai.</p>
+
+        <p>Các đặc vụ da đen công khai trải nghiệm trong vụ kiện. Phản ứng tàn phá danh tiếng Denny's. Đây là <span class="hl-pink">vụ kiện phân biệt đối xử thứ ba chống lại công ty trong một năm</span>.</p>
+
+        <h4 style="font-family: var(--font-display); font-weight: 700; margin-top: var(--gap-md); font-size: 1.15rem;">Văn hóa Denny's phải thay đổi:</h4>
+        <ul class="num-list" style="margin-top: var(--gap-sm);">
+          <li><div class="num">!</div><div class="content">Cải tổ lớn ban điều hành cấp cao</div></li>
+          <li><div class="num">!</div><div class="content">Trong 3 năm, <strong>số người thiểu số ở vị trí quản lý chính tăng từ 0 lên 11%</strong></div></li>
+          <li><div class="num">!</div><div class="content">Số người Mỹ gốc Phi nhượng quyền tăng <strong>từ 1 lên 65</strong></div></li>
+          <li><div class="num">!</div><div class="content">Lập đội ngũ giám sát chương trình đa dạng</div></li>
+          <li><div class="num">!</div><div class="content"><strong>Tất cả nhân viên phải tham dự hội thảo về nhạy cảm chủng tộc</strong></div></li>
+          <li><div class="num">!</div><div class="content">Đa dạng trở thành tiêu chí hiệu suất cho mọi quản lý nhà hàng và vùng</div></li>
+          <li><div class="num">!</div><div class="content">Kiểm tra ngẫu nhiên ở các nhà hàng để đảm bảo đối xử đúng</div></li>
+        </ul>
+
+        <div class="callout tip" style="margin-top: var(--gap-md);">
+          <span class="callout-label">💡 Kết quả</span>
+          <p class="callout-body">
+            Trong <strong>7 năm sau sự cố Annapolis</strong>, Denny's được xếp <span class="hl">trong số các công ty hàng đầu (nếu không phải hàng đầu) ở Mỹ cho người thiểu số</span>.<br><br>
+            <strong>Bài học:</strong> Văn hóa tổ chức có thể học và thay đổi, nhưng cần <em>khủng hoảng + cam kết lãnh đạo + hành động cụ thể</em>.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header bg-ink">
+        <div class="card-num">CASE 2 · SALESFORCE</div>
+        <div class="card-title">Pay gap len lỏi vào ngay cả công ty cam kết</div>
+      </div>
+      <div class="card-body">
+        <p>CEO <strong>Marc&nbsp;Benioff</strong> tự hào công ty là số 1 nơi làm việc tốt nhất, cam kết bình đẳng lương.</p>
+
+        <p>Khi trưởng nhân sự nói có vấn đề khoảng cách lương, Benioff <strong>không tin nhưng đồng ý kiểm toán</strong>.</p>
+
+        <div class="quote bg-yellow">
+          Kiểm toán phát hiện: do mua hơn chục công ty trong năm trước, <strong>bất bình đẳng đã len lỏi vào</strong>. Sửa ngay lập tức: hơn <strong>10% phụ nữ tại công ty được tăng lương</strong>.
+        </div>
+
+        <div class="callout tip">
+          <span class="callout-label">💡 Bài học của Benioff</span>
+          <p class="callout-body">
+            Dù cam kết mạnh mẽ về bình đẳng lương, đây là <strong>quá trình không bao giờ kết thúc</strong>. Salesforce giờ đánh giá vấn đề lương theo giới <span class="hl">định kỳ liên tục</span>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OVERVIEW -->
+  <section class="section" id="overview">
+    <span class="section-num">📍 Trang 11</span>
+    <h2 class="section-title">Tổng <span class="underline">quan</span> và liên hệ Chương 1-4</h2>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-bottom: var(--gap-md);">Sơ đồ tổng thể Chương 5</h3>
+
+    <div class="card">
+      <div class="card-header bg-ink">
+        <div class="card-num">3 LỚP CỦA CHƯƠNG 5</div>
+        <div class="card-title">Đa dạng → 6 loại → 3 thách thức + 4 sáng kiến → 3 nhóm lợi ích</div>
+      </div>
+      <div class="card-body" style="font-family: var(--font-mono); font-size: 13px; line-height: 1.7;">
+        <p style="margin: 0 0 var(--gap-sm);"><strong>ĐA DẠNG NƠI LÀM VIỆC</strong><br>
+        Surface-level diversity · Deep-level diversity</p>
+
+        <p style="margin: 0 0 var(--gap-sm); padding-left: 20px;">↓<br>
+        <strong>6 LOẠI ĐA DẠNG:</strong><br>
+        Tuổi · Giới · Chủng tộc/Sắc tộc · Khuyết tật · Tôn giáo · LGBT</p>
+
+        <p style="margin: 0 0 var(--gap-sm); padding-left: 20px;">↓ ↓<br>
+        <strong>3 THÁCH THỨC</strong> · <strong>4 SÁNG KIẾN</strong><br>
+        Personal bias · Top mgmt commitment<br>
+        Glass ceiling · Mentoring<br>
+        Pay inequities · Diversity training<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Employee Resource Groups</p>
+
+        <p style="margin: 0; padding-left: 20px;">↓<br>
+        <strong>3 NHÓM LỢI ÍCH:</strong><br>
+        People management · Organizational performance · Strategic</p>
+      </div>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Liên hệ với các chương trước</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Chương</th>
+            <th>Đóng góp</th>
+            <th>Liên hệ với Chương 5</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Chương 1</td><td>4 chức năng POLC</td><td>Khi đa dạng tăng, cả 4 chức năng phức tạp hơn</td></tr>
+          <tr><td>Chương 2</td><td>12 thiên kiến ra quyết định</td><td>Personal bias trong Chương 5 mở rộng các thiên kiến này sang chiều <strong>chủng tộc, giới tính, tuổi</strong></td></tr>
+          <tr><td>Chương 3</td><td>Văn hóa tổ chức (4 cơ chế truyền tải)</td><td>Chương 5 cho thấy cách văn hóa <strong>có thể loại trừ hoặc đón nhận</strong> đa dạng</td></tr>
+          <tr><td>Chương 4</td><td>5 chiều Hofstede, 9 chiều GLOBE</td><td>Đa dạng văn hóa quốc gia khác đa dạng nội bộ — nhưng có chung nguyên lý: hiểu khác biệt → quản lý hiệu quả hơn</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-label">💼 Hệ quả cho thực hành tư vấn</span>
+      <p class="callout-body">
+        Một dự án tư vấn về đa dạng cần đi qua <strong>5 câu hỏi cốt lõi</strong>:
+      </p>
+      <ol style="margin: 0; padding-left: 20px; font-size: 14px;">
+        <li><strong>Tổ chức đang đa dạng đến đâu?</strong> Đo cả surface-level và deep-level.</li>
+        <li><strong>Có mặt nào của đa dạng đang bị bỏ qua?</strong> Trong 6 loại, loại nào không được nói đến?</li>
+        <li><strong>3 thách thức (bias/glass ceiling/pay) đang biểu hiện ra sao?</strong> Có dữ liệu cụ thể không?</li>
+        <li><strong>4 sáng kiến đã được triển khai chưa?</strong> Đặc biệt: cam kết của lãnh đạo cấp cao có thật không?</li>
+        <li><strong>Có rủi ro pháp lý hoặc danh tiếng nào tiềm ẩn?</strong> Như Denny's chờ vụ kiện rồi mới hành động.</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- CHEATSHEET -->
+  <section class="section" id="cheatsheet">
+    <span class="section-num">📍 Trang 12</span>
+    <h2 class="section-title">Bảng <span class="underline">tra&nbsp;cứu</span> nhanh (Cheatsheet)</h2>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-md); margin-bottom: var(--gap-md);">5 câu hỏi đánh giá đa dạng</h3>
+
+    <ul class="num-list">
+      <li><div class="num brand lg">1</div><div class="content"><strong>Số liệu nhân khẩu hiện tại?</strong>% phụ nữ trong toàn công ty và trong ban điều hành? % người dân tộc thiểu số? % người 50+? % người khuyết tật?</div></li>
+      <li><div class="num brand lg">2</div><div class="content"><strong>Khoảng cách lương?</strong>Có pay gap giữa nam-nữ ở cùng vị trí không? Bao nhiêu %?</div></li>
+      <li><div class="num brand lg">3</div><div class="content"><strong>Glass ceiling?</strong>Có bao nhiêu phụ nữ/thiểu số trong 3 cấp lãnh đạo cao nhất? So với tỷ lệ chung?</div></li>
+      <li><div class="num brand lg">4</div><div class="content"><strong>Personal bias?</strong>Có chương trình unconscious bias training không? Có khảo sát môi trường làm việc không?</div></li>
+      <li><div class="num brand lg">5</div><div class="content"><strong>Văn hóa hòa nhập?</strong>Có ERG không? Có mentoring chính thức không?</div></li>
+    </ul>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Thứ tự ưu tiên khi tư vấn cải thiện</h3>
+
+    <div class="card">
+      <div class="card-header" style="background: var(--brand); color: var(--paper);">
+        <div class="card-num">QUY TRÌNH 6 BƯỚC</div>
+        <div class="card-title">Áp dụng được cho mọi khách hàng</div>
+      </div>
+      <div class="card-body">
+        <ul class="num-list">
+          <li><div class="num brand">1</div><div class="content"><strong>Đảm bảo cam kết của lãnh đạo cấp cao.</strong>Nếu không có, dừng lại — mọi thứ khác sẽ thất bại.</div></li>
+          <li><div class="num brand">2</div><div class="content"><strong>Đo lường cơ bản</strong> — thu thập số liệu hiện tại</div></li>
+          <li><div class="num brand">3</div><div class="content"><strong>Triển khai mentoring chính thức</strong></div></li>
+          <li><div class="num brand">4</div><div class="content"><strong>Diversity training (TỰ NGUYỆN, cho TẤT CẢ nhân viên</strong>, không phải chỉ vì pháp lý)</div></li>
+          <li><div class="num brand">5</div><div class="content"><strong>Lập ERG</strong> cho các nhóm cần được hỗ trợ</div></li>
+          <li><div class="num brand">6</div><div class="content"><strong>Đánh giá lại định kỳ</strong> (như Salesforce làm với pay gap)</div></li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Phân biệt cặp khái niệm dễ nhầm</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 40%;">Cặp</th>
+            <th>Phân biệt</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Surface-level vs. Deep-level diversity</td><td>Bề mặt = dễ thấy (tuổi, chủng tộc, giới); Chiều sâu = cần thời gian (giá trị, tính cách, sở thích)</td></tr>
+          <tr><td>Race vs. Ethnicity</td><td>Race = đặc điểm thể chất (sinh học); Ethnicity = yếu tố xã hội-văn hóa</td></tr>
+          <tr><td>Bias vs. Prejudice vs. Stereotyping vs. Discrimination</td><td>Bias = thiên kiến; Prejudice = định kiến; Stereotyping = khuôn mẫu; Discrimination = hành động phân biệt</td></tr>
+          <tr><td>Glass ceiling vs. Pay inequity</td><td>Glass ceiling = rào cản thăng tiến; Pay inequity = bất bình đẳng lương</td></tr>
+          <tr><td>Mentoring (Career) vs. Mentoring (Social)</td><td>Career = phát triển sự nghiệp (giao việc, bảo vệ); Social = hỗ trợ tinh thần (tư vấn, làm bạn)</td></tr>
+          <tr><td>ERG vs. Diversity training</td><td>ERG = nhóm tự nguyện do nhân viên dẫn dắt; Training = chương trình chính thức</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-label">💼 3 câu hỏi vàng cho consultant</span>
+      <p class="callout-body">
+        <strong>1.</strong> <em>"Trong 6 loại đa dạng, loại nào tổ chức anh/chị đang bỏ qua nhất?"</em><br>
+        <strong>2.</strong> <em>"Cam kết của CEO/chủ tịch về đa dạng được thể hiện qua bằng chứng cụ thể nào trong 12&nbsp;tháng qua?"</em><br>
+        <strong>3.</strong> <em>"Có sự cố nào liên quan đến đa dạng đã xảy ra mà ban điều hành chưa biết?"</em> (Câu này thường lộ ra rất nhiều thông tin)
+      </p>
+    </div>
+
+    <div class="callout warning">
+      <span class="callout-label">⚠️ Cẩn thận khi tư vấn cho doanh nghiệp Việt</span>
+      <p class="callout-body">
+        <strong>LGBT</strong> chưa có khung pháp lý rõ ở Việt&nbsp;Nam như Mỹ → cách tiếp cận khác.<br>
+        <strong>Người khuyết tật</strong> có luật riêng (Luật Người khuyết tật 2010) → cần biết.<br>
+        <strong>Đa chủng tộc</strong> không phải vấn đề chính ở Việt&nbsp;Nam, nhưng <span class="hl">đa vùng miền</span> (Bắc-Trung-Nam) có thể có vấn đề tương tự.<br>
+        <strong>Tôn giáo:</strong> ít vấn đề như Mỹ, nhưng có thể có khác biệt giữa người công giáo, Phật giáo, không tôn giáo.
+      </p>
+    </div>
+  </section>
+
+  <!-- REVIEW -->
+  <section class="section" id="review">
+    <span class="section-num">📍 Trang 13</span>
+    <h2 class="section-title">Lộ trình <span class="underline">ôn&nbsp;tập</span> và 2 nguyên tắc nhớ lâu</h2>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="card-header" style="background: var(--brand); color: var(--paper);">
+          <div class="card-num">NGUYÊN TẮC 1</div>
+          <div class="card-title">Active Recall · Chủ động gợi nhớ</div>
+        </div>
+        <div class="card-body">
+          <p>Đọc lại <strong>không phải ôn tập</strong>. Phải kéo từ não ra.</p>
+          <p>Cách hiệu quả: <span class="hl">gập tài liệu, viết ra giấy, nói thành tiếng</span>. Khi bí thì tra. Quá trình "moi từ trí nhớ" tạo ra trí nhớ bền.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-ink">
+          <div class="card-num">NGUYÊN TẮC 2</div>
+          <div class="card-title">Spaced Repetition · Lặp lại ngắt quãng</div>
+        </div>
+        <div class="card-body">
+          <p>Khoảng cách thời gian quan trọng hơn thời lượng.</p>
+          <p>Học <strong>7 lần × 10 phút cách quãng</strong> hiệu quả hơn nhiều so với <strong>1 lần 70 phút</strong>. Đừng nhồi.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Lộ trình 5 lần ôn tập</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Lần</th>
+            <th>Thời điểm</th>
+            <th>Thời gian</th>
+            <th>Hoạt động</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>L1</strong></td><td>Cuối ngày học (Ngày 0)</td><td>15&nbsp;phút</td><td>Lướt qua Cheatsheet. Nhắc lại: 6&nbsp;loại đa dạng, 3&nbsp;thách thức, 4&nbsp;sáng kiến, 3&nbsp;nhóm lợi ích.</td></tr>
+          <tr><td><strong>L2</strong></td><td>Ngày 1</td><td>20&nbsp;phút</td><td><strong>Gập tài liệu</strong>. Vẽ sơ đồ tổng thể Chương 5. Viết định nghĩa Bias - Prejudice - Stereotyping - Discrimination và mối quan hệ. Làm 10&nbsp;flashcards.</td></tr>
+          <tr><td><strong>L3</strong></td><td>Ngày 3</td><td>30&nbsp;phút</td><td><strong>Áp khái niệm vào case thực tế.</strong> Chọn 1 doanh nghiệp Việt bạn quen. Phân tích: 6&nbsp;loại đa dạng, 3&nbsp;thách thức, 4&nbsp;sáng kiến đã có chưa?</td></tr>
+          <tr><td><strong>L4</strong></td><td>Ngày 7</td><td>30&nbsp;phút</td><td><strong>Hệ thống hóa.</strong> Vẽ bằng tay sơ đồ tổng thể. Đặc biệt nhớ <span class="hl">6 hình thức phân biệt đối xử</span> và ví dụ tổ chức. Hoàn thành flashcards.</td></tr>
+          <tr><td><strong>L5</strong></td><td>Ngày 16</td><td>45&nbsp;phút</td><td><strong>Giảng cho người khác</strong> hoặc ghi âm. Đặc biệt giảng phần <em>"Bài học Denny's"</em> và <em>"Salesforce pay gap"</em> — minh họa sống động.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Ghi nhớ dài hạn</h3>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="card-header bg-lime">
+          <div class="card-num">L6</div>
+          <div class="card-title">Ngày 35 · 25&nbsp;phút</div>
+        </div>
+        <div class="card-body">
+          <p>Lướt cheatsheet + làm flashcards toàn bộ.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header bg-yellow">
+          <div class="card-num">L7</div>
+          <div class="card-title">Ngày 75 · 25&nbsp;phút</div>
+        </div>
+        <div class="card-body">
+          <p>Như Lần 6. Sau lần này, kiến thức đã chuyển sang vùng <span class="hl">trí nhớ dài hạn rất bền</span>.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-label">💡 Mẹo bonus cho Chương 5</span>
+      <p class="callout-body">
+        <strong>Phần 6 hình thức phân biệt đối xử (Trang 8) là phần áp dụng được ngay.</strong> Trong cuộc khảo sát môi trường làm việc tới đây, dùng nó làm checklist. Bạn sẽ phát hiện những vấn đề ẩn mà ai cũng biết nhưng chưa ai nói.<br><br>
+        <strong>Giữ một "diversity audit checklist"</strong> — sao chép Cheatsheet trang 12 thành biểu mẫu phỏng vấn 30&nbsp;phút. Áp dụng cho mỗi khách hàng tư vấn mới.<br><br>
+        <strong>Ghi nhớ 2 case ví dụ làm "neo":</strong>
+      </p>
+      <ul style="margin: 0; padding-left: 20px; font-size: 14px;">
+        <li><strong>Denny's (1993):</strong> minh họa văn hóa có thể thay đổi được sau khủng hoảng.</li>
+        <li><strong>Salesforce (Marc&nbsp;Benioff):</strong> minh họa pay gap len lỏi vào ngay cả công ty cam kết, cần kiểm toán định kỳ.</li>
+      </ul>
+    </div>
+
+    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: var(--gap-lg); margin-bottom: var(--gap-md);">Kết nối với các chương sau</h3>
+
+    <div class="quote bg-cyan">
+      Chương 5 là <strong>chương thứ 2 trong nhóm 4 chương về môi trường mở rộng</strong>. 6&nbsp;loại đa dạng và personal bias sẽ được nhắc lại ở:
+    </div>
+
+    <ul class="num-list">
+      <li><div class="num">6</div><div class="content"><strong>Chương 6 (đạo đức)</strong>Các vấn đề về phân biệt đối xử là vấn đề đạo đức</div></li>
+      <li><div class="num">12</div><div class="content"><strong>Chương 12 (quản trị nguồn nhân lực)</strong>Tuyển dụng, đào tạo, quản lý nhân viên đa dạng</div></li>
+      <li><div class="num">15</div><div class="content"><strong>Chương 15 (hành vi cá nhân)</strong>Khác biệt cá nhân trong tổ chức</div></li>
+    </ul>
+
+    <p style="margin-top: var(--gap-md); text-align: center; font-family: var(--font-display); font-size: 1.1rem; font-weight: 600;">
+      Hiểu kỹ Chương 5 sẽ giúp <span class="hl">3 chương trên dễ thở hơn</span>.
+    </p>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>
+      <strong>CHƯƠNG&nbsp;05</strong> — Tóm tắt chuyên sâu sách<br>
+      <em>Management</em> · Stephen&nbsp;P.&nbsp;Robbins &amp; Mary&nbsp;A.&nbsp;Coulter · ấn bản 15&nbsp;(2021)
+    </p>
+    <p style="margin-top: var(--gap-md);">
+      Thiết kế Neo-Brutalism v3.4 — by
+      <a href="https://www.facebook.com/vuhai.fitness" target="_blank" rel="noopener noreferrer">Vũ&nbsp;Hải</a>
+      | Business&nbsp;Consultant
+    </p>
+  </footer>
+
+</div>
+
+</body>
+</html>
