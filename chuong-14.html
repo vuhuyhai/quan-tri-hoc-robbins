@@ -1,0 +1,1469 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chương 14 — Quản trị Truyền thông</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap&subset=vietnamese" rel="stylesheet">
+<style>
+:root {
+  --brand: #c73937;
+  --brand-dark: #A52F2D;
+  --ink: #1A1A1A;
+  --paper: #FAF7F2;
+  --paper-dim: #F2EDE5;
+  --line: #1A1A1A;
+  --muted: #6B6B6B;
+  --acc-yellow: #F5E4B8;
+  --acc-cyan: #C4DEDC;
+  --acc-lime: #DDE4C5;
+  --acc-pink: #F0DCDD;
+
+  --font-display: "Space Grotesk", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --border: 3px solid var(--ink);
+  --border-thin: 2px solid var(--ink);
+  --radius: 4px;
+
+  --shadow-sm: 4px 4px 0 var(--ink);
+  --shadow-md: 6px 6px 0 var(--ink);
+  --shadow-lg: 8px 8px 0 var(--ink);
+  --shadow-brand: 6px 6px 0 var(--brand);
+
+  --motion-fast: 120ms cubic-bezier(0.25, 0, 0, 1);
+  --motion-base: 200ms cubic-bezier(0.25, 0, 0, 1);
+}
+
+* {
+  font-style: normal !important;
+  box-sizing: border-box;
+  font-optical-sizing: auto;
+  margin: 0;
+  padding: 0;
+}
+
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 17px;
+  line-height: 1.65;
+  min-height: 100vh;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(var(--ink) 1px, transparent 1px);
+  background-size: 24px 24px;
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-wrap: balance;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+p, li { text-wrap: pretty; }
+a { color: var(--ink); text-decoration: none; }
+::selection { background: var(--brand); color: var(--paper); }
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  position: relative;
+  z-index: 1;
+}
+
+/* === NAV === */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--paper);
+  border-bottom: var(--border);
+}
+.nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.nav-brand { display: flex; align-items: center; gap: 12px; }
+.nav-logo {
+  width: 40px;
+  height: 40px;
+  background: var(--brand);
+  border: var(--border);
+  border-radius: var(--radius);
+  display: grid;
+  place-items: center;
+  color: var(--paper);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18px;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+.nav-title {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.nav-links { display: flex; gap: 8px; list-style: none; }
+.nav-links a {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 8px 14px;
+  border: var(--border-thin);
+  border-radius: var(--radius);
+  background: var(--paper);
+  transition: all var(--motion-fast);
+}
+.nav-links a:hover {
+  background: var(--acc-cyan);
+  transform: translate(-2px, -2px);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+@media (max-width: 760px) { .nav-links { display: none; } }
+
+/* === HERO === */
+.hero {
+  padding: 80px 0 100px;
+  position: relative;
+}
+.hero-tag {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 8px 16px;
+  display: inline-block;
+  margin-bottom: 24px;
+}
+.hero h1 {
+  font-size: clamp(48px, 8vw, 96px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 0.98;
+  margin-bottom: 32px;
+}
+.hero h1 .em {
+  background: var(--brand);
+  color: var(--paper);
+  padding: 0 16px;
+  display: inline-block;
+  transform: rotate(-1.5deg);
+  margin: 0 4px;
+}
+.hero-sub {
+  font-size: 21px;
+  font-weight: 500;
+  color: var(--muted);
+  max-width: 720px;
+  margin-bottom: 40px;
+  text-wrap: balance;
+}
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.meta-pill {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 8px 14px;
+  border: var(--border-thin);
+  border-radius: var(--radius);
+  background: var(--paper);
+}
+.meta-pill.brand { background: var(--brand); color: var(--paper); border-color: var(--ink); }
+.meta-pill.yellow { background: var(--acc-yellow); }
+.meta-pill.cyan { background: var(--acc-cyan); }
+.meta-pill.lime { background: var(--acc-lime); }
+
+.hero-sticker {
+  position: absolute;
+  top: 70px;
+  right: 40px;
+  width: 150px;
+  height: 150px;
+  background: var(--acc-cyan);
+  border: var(--border);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 1.2;
+  transform: rotate(8deg);
+  box-shadow: var(--shadow-md);
+  padding: 12px;
+}
+@media (max-width: 900px) { .hero-sticker { display: none; } }
+
+/* === SECTION === */
+.section { padding: 80px 0; }
+.section-head { margin-bottom: 56px; }
+.section-num {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--brand);
+  margin-bottom: 12px;
+}
+.section h2 {
+  font-size: clamp(32px, 5vw, 52px);
+  letter-spacing: -0.02em;
+  margin-bottom: 16px;
+}
+.section-sub {
+  font-size: 18px;
+  color: var(--muted);
+  max-width: 760px;
+  text-wrap: balance;
+}
+
+/* === STATS === */
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-bottom: 60px;
+}
+.stat-card {
+  border: var(--border);
+  border-radius: var(--radius);
+  background: var(--paper);
+  padding: 24px;
+  box-shadow: var(--shadow-md);
+  transition: transform var(--motion-base);
+}
+.stat-card:hover { transform: translate(-3px, -3px); box-shadow: 9px 9px 0 var(--ink); }
+.stat-card.brand { background: var(--brand); color: var(--paper); }
+.stat-card.brand .stat-label { color: var(--paper); opacity: 0.85; }
+.stat-card.yellow { background: var(--acc-yellow); }
+.stat-card.cyan { background: var(--acc-cyan); }
+.stat-card.lime { background: var(--acc-lime); }
+.stat-card.pink { background: var(--acc-pink); }
+
+.stat-value {
+  font-family: var(--font-display);
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+}
+.stat-label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+
+/* === COMMUNICATION PROCESS - 7 ELEMENTS PIPELINE === */
+.process-wrap {
+  border: var(--border);
+  border-radius: var(--radius);
+  background: var(--paper);
+  padding: 40px 32px;
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
+}
+.process-wrap::before {
+  content: "⚡ NOISE ⚡";
+  position: absolute;
+  top: 12px;
+  right: 32px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--brand);
+}
+.process-flow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 8px;
+  align-items: stretch;
+}
+.process-step {
+  background: var(--acc-yellow);
+  border: var(--border-thin);
+  border-radius: var(--radius);
+  padding: 16px 12px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  position: relative;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+.process-step:nth-child(1) { background: var(--acc-yellow); }
+.process-step:nth-child(2) { background: var(--acc-cyan); }
+.process-step:nth-child(3) { background: var(--brand); color: var(--paper); }
+.process-step:nth-child(4) { background: var(--acc-cyan); }
+.process-step:nth-child(5) { background: var(--acc-yellow); }
+.process-step:nth-child(6) { background: var(--acc-lime); }
+.process-step:nth-child(7) { background: var(--acc-pink); }
+
+.process-num {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  opacity: 0.8;
+}
+.process-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.2;
+}
+.process-en {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.04em;
+  opacity: 0.75;
+}
+.feedback-loop {
+  margin-top: 20px;
+  padding: 14px 18px;
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: var(--radius);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/* === 5 FUNCTIONS === */
+.functions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+.fn-card {
+  border: var(--border);
+  border-radius: var(--radius);
+  background: var(--paper);
+  padding: 24px 20px;
+  position: relative;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--motion-base);
+}
+.fn-card:hover { transform: translate(-3px, -3px); box-shadow: 7px 7px 0 var(--ink); }
+.fn-card:nth-child(1) { background: var(--acc-yellow); }
+.fn-card:nth-child(2) { background: var(--acc-pink); }
+.fn-card:nth-child(3) { background: var(--acc-cyan); }
+.fn-card:nth-child(4) { background: var(--acc-lime); }
+.fn-card:nth-child(5) { background: var(--paper); }
+
+.fn-icon {
+  width: 48px;
+  height: 48px;
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: var(--radius);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 18px;
+  margin-bottom: 14px;
+  border: var(--border-thin);
+}
+.fn-card h3 {
+  font-size: 17px;
+  margin-bottom: 4px;
+}
+.fn-card .en {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+  margin-bottom: 10px;
+}
+.fn-card p {
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+/* === BARRIERS vs OVERCOME (Compare) === */
+.barriers-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+@media (max-width: 800px) { .barriers-wrap { grid-template-columns: 1fr; } }
+.barrier-card {
+  border: var(--border);
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  transition: transform var(--motion-base);
+}
+.barrier-bad { background: var(--paper); transform: rotate(-0.4deg); }
+.barrier-good { background: var(--paper); transform: rotate(0.4deg); }
+.barrier-header {
+  padding: 24px;
+  border-bottom: var(--border-thin);
+}
+.barrier-bad .barrier-header { background: var(--brand); color: var(--paper); }
+.barrier-good .barrier-header { background: var(--acc-lime); color: var(--ink); }
+.barrier-icon {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  opacity: 0.85;
+}
+.barrier-title {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+.barrier-en {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  margin-top: 4px;
+  opacity: 0.85;
+}
+.barrier-body {
+  padding: 24px;
+  flex: 1;
+}
+.barrier-body ul { list-style: none; }
+.barrier-body li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px dashed rgba(26,26,26,0.2);
+  font-size: 14px;
+}
+.barrier-body li:last-child { border-bottom: none; }
+.barrier-body li > .li-num {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 12px;
+  border: var(--border-thin);
+}
+.barrier-good .barrier-body li > .li-num { background: var(--brand); }
+.barrier-body li > .li-body {
+  flex: 1;
+  min-width: 0;
+  padding-top: 2px;
+}
+.barrier-body li strong {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 2px;
+}
+.barrier-body li span {
+  display: block;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+/* === 4 DIRECTIONS === */
+.dir-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+.dir-card {
+  border: var(--border);
+  border-radius: var(--radius);
+  background: var(--paper);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--motion-base);
+}
+.dir-card:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--ink); }
+.dir-card:nth-child(odd) { transform: rotate(-0.4deg); }
+.dir-card:nth-child(even) { transform: rotate(0.4deg); }
+.dir-arrow {
+  font-family: var(--font-display);
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--brand);
+  line-height: 1;
+}
+.dir-card h4 {
+  font-size: 18px;
+  margin-bottom: 4px;
+}
+.dir-card .en {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+  margin-bottom: 12px;
+}
+.dir-card p {
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+/* === 3 NETWORKS + GRAPEVINE === */
+.networks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+.net-card {
+  border: var(--border);
+  border-radius: var(--radius);
+  background: var(--paper);
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+}
+.net-header {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 20px;
+  border-bottom: var(--border-thin);
+  text-align: center;
+}
+.net-card:nth-child(1) .net-header { background: var(--brand); }
+.net-card:nth-child(2) .net-header { background: var(--ink); }
+.net-card:nth-child(3) .net-header { background: var(--brand-dark); }
+.net-card:nth-child(4) .net-header { background: var(--acc-yellow); color: var(--ink); }
+
+.net-shape {
+  font-size: 36px;
+  margin-bottom: 8px;
+  display: block;
+  font-weight: 700;
+  font-family: var(--font-display);
+}
+.net-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+.net-en {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  margin-top: 4px;
+  opacity: 0.85;
+}
+.net-body {
+  padding: 20px;
+  flex: 1;
+}
+.net-body p {
+  font-size: 14px;
+  line-height: 1.55;
+  margin-bottom: 10px;
+}
+.net-when {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--brand);
+  letter-spacing: 0.04em;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(26,26,26,0.3);
+}
+
+/* === GM CASE WARNING === */
+.gm-case {
+  border: var(--border);
+  border-radius: var(--radius);
+  background: var(--ink);
+  color: var(--paper);
+  padding: 36px 40px;
+  box-shadow: var(--shadow-brand);
+  margin-top: 40px;
+}
+.gm-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 12px;
+  color: var(--brand);
+}
+.gm-case h3 {
+  color: var(--paper);
+  font-size: 26px;
+  margin-bottom: 16px;
+}
+.gm-case .gm-quote {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 19px;
+  line-height: 1.4;
+  padding: 16px 20px;
+  border-left: 4px solid var(--brand);
+  background: rgba(255,255,255,0.05);
+  border-radius: var(--radius);
+  margin-bottom: 20px;
+  text-wrap: balance;
+}
+.gm-case p {
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 14px;
+  opacity: 0.92;
+}
+.gm-case strong { color: var(--brand); }
+.gm-words {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+  margin-top: 20px;
+}
+.gm-word {
+  border: 2px solid var(--paper);
+  border-radius: var(--radius);
+  padding: 14px;
+  background: rgba(255,255,255,0.05);
+}
+.gm-word .label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  margin-bottom: 4px;
+  opacity: 0.7;
+}
+.gm-word .word-bad {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 17px;
+  color: var(--paper);
+  margin-bottom: 6px;
+}
+.gm-word .word-good {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 17px;
+  color: var(--brand);
+}
+
+/* === 4 SKILLS === */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+.skill-card {
+  border: var(--border);
+  border-radius: var(--radius);
+  background: var(--paper);
+  padding: 24px;
+  box-shadow: var(--shadow-md);
+  position: relative;
+  transition: transform var(--motion-base);
+}
+.skill-card:hover { transform: translate(-3px, -3px); box-shadow: 9px 9px 0 var(--ink); }
+.skill-num {
+  position: absolute;
+  top: -16px;
+  left: 20px;
+  width: 40px;
+  height: 40px;
+  background: var(--brand);
+  color: var(--paper);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 16px;
+  border: var(--border-thin);
+}
+.skill-card:nth-child(1) { background: var(--acc-yellow); }
+.skill-card:nth-child(2) { background: var(--acc-cyan); }
+.skill-card:nth-child(3) { background: var(--acc-lime); }
+.skill-card:nth-child(4) { background: var(--acc-pink); }
+
+.skill-card h3 {
+  font-size: 20px;
+  margin-top: 14px;
+  margin-bottom: 4px;
+}
+.skill-card .en {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+  margin-bottom: 12px;
+}
+.skill-card p {
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+.skill-card .skill-tip {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--brand);
+  letter-spacing: 0.04em;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(26,26,26,0.3);
+}
+
+/* === INSIGHT === */
+.insight {
+  border: var(--border);
+  border-radius: var(--radius);
+  background: var(--acc-pink);
+  padding: 32px 36px;
+  box-shadow: var(--shadow-brand);
+  margin: 40px 0;
+  position: relative;
+}
+.insight::before {
+  content: "✈";
+  position: absolute;
+  top: -16px;
+  left: 24px;
+  width: 40px;
+  height: 40px;
+  background: var(--paper);
+  border: var(--border-thin);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+}
+.insight-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 8px;
+  margin-top: 8px;
+  color: var(--brand);
+}
+.insight h3 { font-size: 22px; margin-bottom: 12px; }
+.insight p { font-size: 16px; line-height: 1.6; }
+
+/* === CTA === */
+.cta-box {
+  border: var(--border);
+  border-radius: var(--radius);
+  background: var(--brand);
+  color: var(--paper);
+  padding: 48px;
+  box-shadow: var(--shadow-md);
+  text-align: center;
+}
+.cta-box h2 {
+  color: var(--paper);
+  font-size: 32px;
+  margin-bottom: 16px;
+}
+.cta-box p {
+  font-size: 17px;
+  line-height: 1.6;
+  max-width: 640px;
+  margin: 0 auto 24px;
+  opacity: 0.95;
+}
+.btn {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 15px;
+  padding: 14px 28px;
+  background: var(--paper);
+  color: var(--ink);
+  border: var(--border);
+  border-radius: var(--radius);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  transition: all var(--motion-fast);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+.btn:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--ink); }
+
+/* === FOOTER === */
+.footer {
+  border-top: var(--border);
+  padding: 40px 0;
+  margin-top: 80px;
+  background: var(--paper-dim);
+}
+.footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: space-between;
+  align-items: center;
+}
+.footer-text {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+}
+.footer-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 6px 12px;
+  border-radius: var(--radius);
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 720px) {
+  .hero { padding: 50px 0 60px; }
+  .hero h1 { font-size: 44px; }
+  .hero-sub { font-size: 17px; }
+  .section { padding: 50px 0; }
+  .section h2 { font-size: 28px; }
+  .stat-value { font-size: 36px; }
+  .barrier-title { font-size: 22px; }
+  .net-title { font-size: 18px; }
+  .insight { padding: 24px; }
+  .gm-case { padding: 24px; }
+  .cta-box { padding: 28px; }
+  .cta-box h2 { font-size: 24px; }
+  .process-wrap { padding: 24px 16px; }
+}
+
+*:focus-visible { outline: 3px solid var(--brand); outline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+  .barrier-bad, .barrier-good, .dir-card { transform: none !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== NAV ===== -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-brand">
+      <div class="nav-logo">14</div>
+      <div class="nav-title">Chương 14 / Truyền&nbsp;thông</div>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#process">Process</a></li>
+      <li><a href="#barriers">Rào&nbsp;cản</a></li>
+      <li><a href="#directions">4 Hướng</a></li>
+      <li><a href="#networks">3 Networks</a></li>
+      <li><a href="#skills">Kỹ&nbsp;năng</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<header class="hero">
+  <div class="container">
+    <div class="hero-tag">Robbins &amp; Coulter / Management 15e / Phần&nbsp;5 Lãnh&nbsp;đạo</div>
+    <h1>Quản trị <span class="em">Truyền thông.</span></h1>
+    <p class="hero-sub">Mọi việc nhà quản trị làm đều liên quan đến truyền thông. Không phải một số việc &mdash; mà MỌI việc. Đây là kỹ năng nền móng mở đầu Phần Lãnh&nbsp;đạo, đứng trước Hành&nbsp;vi cá&nbsp;nhân, Động&nbsp;lực, và Lãnh&nbsp;đạo.</p>
+    <div class="hero-meta">
+      <span class="meta-pill brand">5 Mục tiêu học tập</span>
+      <span class="meta-pill yellow">10 trang tóm tắt</span>
+      <span class="meta-pill cyan">~11.550 từ</span>
+      <span class="meta-pill lime">50 flashcards</span>
+    </div>
+    <div class="hero-sticker">7 YẾU&nbsp;TỐ<br>COMM<br>PROCESS</div>
+  </div>
+</header>
+
+<!-- ===== STATS ===== -->
+<section class="section" style="padding-top: 0;">
+  <div class="container">
+    <div class="stat-grid">
+      <div class="stat-card brand">
+        <div class="stat-value">583</div>
+        <div class="stat-label">Người chết tại Tenerife 1977 do hiểu nhầm chỉ thị</div>
+      </div>
+      <div class="stat-card yellow">
+        <div class="stat-value">124</div>
+        <div class="stat-label">Cái chết tại GM do dán nhãn "customer&nbsp;convenience"</div>
+      </div>
+      <div class="stat-card cyan">
+        <div class="stat-value">13h</div>
+        <div class="stat-label">Trung bình mỗi nhân viên dành xử lý email mỗi tuần</div>
+      </div>
+      <div class="stat-card pink">
+        <div class="stat-value">63%</div>
+        <div class="stat-label">Nhân viên nghe vấn đề quan trọng đầu tiên qua grapevine</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== INSIGHT TENERIFE ===== -->
+<section class="section" style="padding-top: 0;">
+  <div class="container">
+    <div class="insight">
+      <div class="insight-tag">CÂU CHUYỆN MỞ ĐẦU CHƯƠNG / TENERIFE 1977</div>
+      <h3>583 người chết vì một hiểu nhầm về cấp phép cất cánh</h3>
+      <p>Tại sân bay đảo Tenerife, cơ trưởng KLM jumbo <strong>tưởng kiểm soát viên không lưu đã cấp phép cất cánh</strong>. Thực tế thì không. Hiểu nhầm dẫn tới máy bay KLM va chạm trên đường băng với máy bay Pan&nbsp;Am cũng đầy hành khách. Đây vẫn là tai nạn chết người nhất lịch sử hàng không. Bài học: <strong>miscommunication không phải kỹ năng mềm, mà là kỹ năng cứng quyết định sống&nbsp;còn</strong>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 5 FUNCTIONS ===== -->
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-num">LO 14.1 / NỀN TẢNG</div>
+      <h2>5 chức năng truyền thông trong tổ chức</h2>
+      <p class="section-sub">Truyền thông không chỉ "trao đổi thông tin". Nó phục vụ 5 chức năng đan xen, mỗi chức năng giải thích một mặt khác nhau của lý do chúng ta giao tiếp tại nơi làm việc.</p>
+    </div>
+
+    <div class="functions-grid">
+      <div class="fn-card">
+        <div class="fn-icon">M</div>
+        <h3>Management</h3>
+        <div class="en">Quản lý hành vi</div>
+        <p>Tổ chức có thứ bậc và hướng dẫn nhân viên cần tuân theo. Khi nhân viên làm theo job description, truyền thông đang thực hiện chức năng quản lý.</p>
+      </div>
+      <div class="fn-card">
+        <div class="fn-icon">D</div>
+        <h3>Motivation</h3>
+        <div class="en">Tạo động lực</div>
+        <p>Làm rõ <strong>cần làm gì, đang làm tốt thế nào, cải thiện thế nào</strong>. Đặt mục tiêu, làm việc, nhận phản hồi tiến độ.</p>
+      </div>
+      <div class="fn-card">
+        <div class="fn-icon">E</div>
+        <h3>Emotional Sharing</h3>
+        <div class="en">Chia sẻ cảm xúc</div>
+        <p>Nhóm làm việc là nguồn tương tác xã hội chính. Truyền thông là cơ chế cơ bản để thành viên thể hiện thất vọng và hài lòng.</p>
+      </div>
+      <div class="fn-card">
+        <div class="fn-icon">P</div>
+        <h3>Persuasion</h3>
+        <div class="en">Thuyết phục</div>
+        <p>Có thể tốt (lãnh đạo thuyết phục nhóm tin vào trách nhiệm xã hội) hoặc xấu (thuyết phục vi phạm luật để đạt mục tiêu).</p>
+      </div>
+      <div class="fn-card">
+        <div class="fn-icon">I</div>
+        <h3>Information</h3>
+        <div class="en">Trao đổi thông tin</div>
+        <p>Cung cấp thông tin cá nhân và nhóm cần để <strong>ra quyết định</strong>, bằng cách truyền dữ liệu cần để xác định và đánh giá lựa chọn.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 7 ELEMENTS COMMUNICATION PROCESS ===== -->
+<section class="section" id="process">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-num">LO 14.2 / KHUNG SƯỜN CHÍNH</div>
+      <h2>Communication Process &mdash; 7 yếu tố</h2>
+      <p class="section-sub">Hình dung truyền thông như gửi một bưu kiện qua 7 bước. Mỗi bước đều có thể bị <strong>nhiễu (noise)</strong> làm sai lệch. Phản hồi là vòng kín đảm bảo thông điệp thực sự được hiểu.</p>
+    </div>
+
+    <div class="process-wrap">
+      <div class="process-flow">
+        <div class="process-step">
+          <div class="process-num">01</div>
+          <div class="process-name">Source</div>
+          <div class="process-en">Người gửi</div>
+        </div>
+        <div class="process-step">
+          <div class="process-num">02</div>
+          <div class="process-name">Encoding</div>
+          <div class="process-en">Mã hoá</div>
+        </div>
+        <div class="process-step">
+          <div class="process-num">03</div>
+          <div class="process-name">Message</div>
+          <div class="process-en">Thông điệp</div>
+        </div>
+        <div class="process-step">
+          <div class="process-num">04</div>
+          <div class="process-name">Channel</div>
+          <div class="process-en">Kênh</div>
+        </div>
+        <div class="process-step">
+          <div class="process-num">05</div>
+          <div class="process-name">Decoding</div>
+          <div class="process-en">Giải mã</div>
+        </div>
+        <div class="process-step">
+          <div class="process-num">06</div>
+          <div class="process-name">Receiver</div>
+          <div class="process-en">Người nhận</div>
+        </div>
+        <div class="process-step">
+          <div class="process-num">07</div>
+          <div class="process-name">Feedback</div>
+          <div class="process-en">Phản hồi</div>
+        </div>
+      </div>
+      <div class="feedback-loop">↻ Vòng phản hồi đảm bảo ý nghĩa được hiểu đúng như người gửi hình dung</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 5 BARRIERS vs 5 OVERCOME ===== -->
+<section class="section" id="barriers">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-num">LO 14.2 / Phần 2</div>
+      <h2>5 rào cản &mdash; 5 cách vượt</h2>
+      <p class="section-sub">Mọi rào cản đều có cách vượt tương ứng. Đây là khung công cụ tư vấn thực tế nhất cho bất kỳ tình huống truyền thông tổ chức nào.</p>
+    </div>
+
+    <div class="barriers-wrap">
+      <div class="barrier-card barrier-bad">
+        <div class="barrier-header">
+          <div class="barrier-icon">⚠ RÀO CẢN</div>
+          <div class="barrier-title">5 Barriers</div>
+          <div class="barrier-en">5 rào cản truyền thông hiệu quả</div>
+        </div>
+        <div class="barrier-body">
+          <ul>
+            <li><span class="li-num">1</span><span class="li-body"><strong>Information Overload</strong><span>Quá tải thông tin. Trung bình 13&nbsp;giờ/tuần xử lý email.</span></span></li>
+            <li><span class="li-num">2</span><span class="li-body"><strong>Filtering</strong><span>Cố tình thao túng thông tin để trông thuận lợi hơn cho người nhận.</span></span></li>
+            <li><span class="li-num">3</span><span class="li-body"><strong>Emotions</strong><span>Cảm xúc cực đoan thay thế tư duy lý trí bằng phán đoán cảm xúc.</span></span></li>
+            <li><span class="li-num">4</span><span class="li-body"><strong>Language</strong><span>Cùng ngôn ngữ, từ vẫn có nghĩa khác. Jargon (BFOQ, LIFO/FIFO) loại trừ người ngoài.</span></span></li>
+            <li><span class="li-num">5</span><span class="li-body"><strong>Silence</strong><span>Im lặng là <em>thông điệp</em> &mdash; thường có khi bị đối xử tệ hoặc cảm thấy ít quyền lực.</span></span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="barrier-card barrier-good">
+        <div class="barrier-header">
+          <div class="barrier-icon">✓ CÁCH VƯỢT</div>
+          <div class="barrier-title">5 Overcome</div>
+          <div class="barrier-en">5 cách trở thành người truyền thông hiệu quả</div>
+        </div>
+        <div class="barrier-body">
+          <ul>
+            <li><span class="li-num">1</span><span class="li-body"><strong>Use Feedback</strong><span>Đặt câu hỏi để xác nhận. Yêu cầu người nhận kể lại bằng lời của họ.</span></span></li>
+            <li><span class="li-num">2</span><span class="li-body"><strong>Simplify Language</strong><span>Điều chỉnh ngôn ngữ cho đối tượng. Jargon chỉ dùng trong nhóm hiểu nó.</span></span></li>
+            <li><span class="li-num">3</span><span class="li-body"><strong>Active Listening</strong><span>Lắng nghe chủ động: tránh ngắt lời, thấu hiểu trước khi đáp.</span></span></li>
+            <li><span class="li-num">4</span><span class="li-body"><strong>Constrain Emotions</strong><span>Khi cảm xúc dâng cao, tạm dừng truyền thông cho đến khi bình tĩnh lại.</span></span></li>
+            <li><span class="li-num">5</span><span class="li-body"><strong>Watch Nonverbal</strong><span>55% thông điệp là phi ngôn ngữ. Body language phải khớp với lời nói.</span></span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 4 DIRECTIONS ===== -->
+<section class="section" id="directions">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-num">LO 14.3 / Phần 1</div>
+      <h2>4 hướng truyền thông trong tổ chức</h2>
+      <p class="section-sub">Thông tin chảy theo 4 hướng trong tổ chức. Mỗi hướng có vai trò riêng, và quản lý phải đảm bảo cả 4 đều thông suốt &mdash; không chỉ từ trên xuống.</p>
+    </div>
+
+    <div class="dir-grid">
+      <div class="dir-card">
+        <div class="dir-arrow">↓</div>
+        <h4>Downward</h4>
+        <div class="en">Từ trên xuống</div>
+        <p>Manager → Nhân viên. Truyền chính sách, hướng dẫn, mục tiêu, đánh giá. Hướng phổ biến nhất nhưng dễ bị lọc khi đi qua nhiều cấp.</p>
+      </div>
+      <div class="dir-card">
+        <div class="dir-arrow">↑</div>
+        <h4>Upward</h4>
+        <div class="en">Từ dưới lên</div>
+        <p>Nhân viên → Manager. Báo cáo tiến độ, đề xuất, phàn nàn. Tổ chức mở thì hướng này mạnh; tổ chức đóng thì hướng này tắc.</p>
+      </div>
+      <div class="dir-card">
+        <div class="dir-arrow">↔</div>
+        <h4>Lateral</h4>
+        <div class="en">Ngang cấp</div>
+        <p>Giữa các nhân viên cùng cấp hoặc cùng nhóm làm việc. Tiết kiệm thời gian và tạo điều kiện phối hợp.</p>
+      </div>
+      <div class="dir-card">
+        <div class="dir-arrow">↗</div>
+        <h4>Diagonal</h4>
+        <div class="en">Chéo</div>
+        <p>Cắt qua khu vực và cấp tổ chức. Hiệu quả khi cần phối hợp đa chức năng nhanh, nhưng có thể tạo xung đột với chuỗi chỉ huy.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 3 NETWORKS + GRAPEVINE ===== -->
+<section class="section" id="networks">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-num">LO 14.3 / Phần 2</div>
+      <h2>3 Networks chính thức + Grapevine</h2>
+      <p class="section-sub">Bên cạnh 3 mạng truyền thông chính thức, mọi tổ chức đều có Grapevine &mdash; mạng không chính thức. <strong>Chỉ ~10% nhân viên là liaison</strong> truyền tin tới hơn một người khác.</p>
+    </div>
+
+    <div class="networks-grid">
+      <div class="net-card">
+        <div class="net-header">
+          <span class="net-shape">●━●━●</span>
+          <div class="net-title">Chain</div>
+          <div class="net-en">Mạng dây chuyền</div>
+        </div>
+        <div class="net-body">
+          <p>Thông tin đi theo chuỗi chỉ huy chính thức từ trên xuống dưới và ngược lại.</p>
+          <p>Độ chính xác cao, tốc độ trung bình. Lãnh đạo xuất hiện rõ.</p>
+          <div class="net-when">DÙNG KHI / Thứ bậc rõ ràng (quân đội, ngân hàng)</div>
+        </div>
+      </div>
+
+      <div class="net-card">
+        <div class="net-header">
+          <span class="net-shape">✦</span>
+          <div class="net-title">Wheel</div>
+          <div class="net-en">Mạng bánh xe</div>
+        </div>
+        <div class="net-body">
+          <p>Thông tin đi qua một cá nhân trung tâm như trục bánh xe. Nhanh nhất.</p>
+          <p>Lãnh đạo mạnh nhất. Hài lòng thành viên thấp vì phụ thuộc 1 người.</p>
+          <div class="net-when">DÙNG KHI / Khủng hoảng, deadline gấp, lãnh đạo rõ</div>
+        </div>
+      </div>
+
+      <div class="net-card">
+        <div class="net-header">
+          <span class="net-shape">⬡</span>
+          <div class="net-title">All-Channel</div>
+          <div class="net-en">Mạng đa kênh</div>
+        </div>
+        <div class="net-body">
+          <p>Mọi thành viên giao tiếp tự do với mọi người khác.</p>
+          <p>Hài lòng cao nhất, sáng tạo nhất. Không có lãnh đạo rõ.</p>
+          <div class="net-when">DÙNG KHI / R&D, design team, đổi mới</div>
+        </div>
+      </div>
+
+      <div class="net-card">
+        <div class="net-header">
+          <span class="net-shape">🌿</span>
+          <div class="net-title">Grapevine</div>
+          <div class="net-en">Mạng không chính thức</div>
+        </div>
+        <div class="net-body">
+          <p>Hiện diện trong gần như mọi tổ chức. <strong>63% nhân viên</strong> nghe vấn đề quan trọng đầu tiên qua grapevine.</p>
+          <p>Đừng cố tiêu diệt &mdash; học cách dùng. Tin đồn lan nhanh = nhân viên đang lo.</p>
+          <div class="net-when">DÙNG NHƯ / Filter + Feedback mechanism kép</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== GM CASE WARNING ===== -->
+<section class="section">
+  <div class="container">
+    <div class="gm-case">
+      <div class="gm-tag">BÀI HỌC THẤT BẠI / GM CHEVROLET COBALT</div>
+      <h3>124 cái chết do dán nhãn sai &mdash; "Customer Convenience"</h3>
+      <div class="gm-quote">"Một vài từ không phù hợp dường như là nguyên nhân của 124 cái chết và 275 chấn thương."</div>
+      <p>Công tắc đánh lửa Cobalt có lỗi tự tắt, vô hiệu hoá airbag. Nhân viên GM biết từ năm 2004. Nhưng họ <strong>không hành động</strong>. Vì sao? Vì lỗi được dán nhãn là vấn đề <strong>"customer convenience"</strong> &mdash; nghe như chỉ phiền tài xế. Nếu được gọi là <strong>"safety defect"</strong>, công ty sẽ phản ứng ngay lập tức như đã làm với hàng trăm thu hồi khác cùng thập kỷ.</p>
+      <p>Nhân viên GM thực ra <strong>được đào tạo dùng các từ "issue", "matter", hoặc "defect"</strong> khi an toàn liên quan. Nhưng từ ngữ sai đã giết người. GM tạo vị trí mới Vice President for Global Vehicle Safety và chương trình <strong>"Speak Up For Safety"</strong>.</p>
+      <div class="gm-words">
+        <div class="gm-word">
+          <div class="label">TỪ SAI / KHÔNG CẤP BÁCH</div>
+          <div class="word-bad">"Customer Convenience"</div>
+          <div class="word-bad">"Perform to Design"</div>
+        </div>
+        <div class="gm-word">
+          <div class="label">TỪ ĐÚNG / KÍCH HOẠT NHANH</div>
+          <div class="word-good">"Safety Defect"</div>
+          <div class="word-good">"Issue / Matter / Defect"</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 4 PERSONAL SKILLS ===== -->
+<section class="section" id="skills">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-num">LO 14.5 / PHÁT TRIỂN BẢN THÂN</div>
+      <h2>4 kỹ năng cá nhân để truyền thông tốt hơn</h2>
+      <p class="section-sub">Bốn kỹ năng cốt lõi mọi nhà quản trị cần phát triển liên tục. Đây là phần ứng dụng cuối chương &mdash; thứ bạn có thể bắt đầu luyện tập ngay hôm nay.</p>
+    </div>
+
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="skill-num">1</div>
+        <h3>Persuasion</h3>
+        <div class="en">Kỹ năng thuyết phục</div>
+        <p>Khả năng thuyết phục người khác chấp nhận quan điểm của bạn. Kết hợp uy tín, logic, và cảm xúc.</p>
+        <div class="skill-tip">CASE / Richard Branson (Virgin) là ví dụ kinh điển về persuasion</div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-num">2</div>
+        <h3>Speaking</h3>
+        <div class="en">Kỹ năng nói trước công chúng</div>
+        <p>Truyền đạt rõ ràng, có cấu trúc, có cảm xúc. Cần luyện qua các tình huống thực: họp, thuyết trình, gọi 1:1.</p>
+        <div class="skill-tip">QUY TẮC / Chuẩn bị 3x thời gian nói. Test trước với người thật</div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-num">3</div>
+        <h3>Writing</h3>
+        <div class="en">Kỹ năng viết</div>
+        <p>Email, báo cáo, đề xuất. Trong môi trường remote và async hiện đại, viết tốt là lợi thế cạnh tranh lớn.</p>
+        <div class="skill-tip">QUY TẮC / Câu ngắn. Đoạn văn ngắn. Action ở đầu</div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-num">4</div>
+        <h3>Reading</h3>
+        <div class="en">Kỹ năng đọc</div>
+        <p>Đọc nhanh, hiểu sâu, lọc thông tin quan trọng. Ngày nay quá tải thông tin &mdash; đọc tốt giúp ra quyết định nhanh hơn.</p>
+        <div class="skill-tip">QUY TẮC / Skim trước, deep dive sau. Note 3 takeaways mỗi tài liệu</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section class="section">
+  <div class="container">
+    <div class="cta-box">
+      <h2>Sẵn sàng đi sâu vào nội dung đầy đủ?</h2>
+      <p>Bản tóm tắt 10 trang đầy đủ ~11.550 từ kèm 50 flashcards markdown đã có sẵn. Lộ trình ôn tập 5 lần theo Spaced Repetition giúp giữ kiến thức trong trí nhớ dài hạn.</p>
+      <a href="#process" class="btn">Xem lại Communication Process →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-text">Tóm tắt chuyên sâu Chương&nbsp;14 / Robbins &amp; Coulter / Management 15e (2021)</div>
+      <div class="footer-tag">Vũ&nbsp;Hải / Deep&nbsp;Doc&nbsp;Summary</div>
+    </div>
+  </div>
+</footer>
+<style>
+body {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+img {
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
+</style>
+
+<script>
+document.addEventListener('contextmenu', function(e) {
+  e.preventDefault();
+  return false;
+});
+document.addEventListener('keydown', function(e) {
+  if (e.ctrlKey && (e.key === 's' || e.key === 'u' || e.key === 'p' || e.key === 'S' || e.key === 'U' || e.key === 'P')) {
+    e.preventDefault();
+    return false;
+  }
+  if (e.key === 'F12') {
+    e.preventDefault();
+    return false;
+  }
+  if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C' || e.key === 'i' || e.key === 'j' || e.key === 'c')) {
+    e.preventDefault();
+    return false;
+  }
+});
+document.addEventListener('dragstart', function(e) {
+  e.preventDefault();
+  return false;
+});
+</script>
+<style>
+.qt-nav-container { max-width: 1180px; margin: 60px auto 40px; padding: 0 24px; font-family: 'Inter', system-ui, sans-serif; }
+.qt-nav-grid { display: grid; grid-template-columns: 1fr auto 1fr; gap: 16px; align-items: stretch; }
+.qt-nav-btn { background: #FAF8F3; border: 3px solid #1A1A1A; box-shadow: 4px 4px 0 #1A1A1A; border-radius: 4px; padding: 16px 20px; text-decoration: none; color: #1A1A1A; display: flex; flex-direction: column; gap: 4px; transition: transform 0.15s ease, box-shadow 0.15s ease; font-family: inherit; }
+.qt-nav-btn:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 #1A1A1A; }
+.qt-nav-btn-prev { text-align: left; }
+.qt-nav-btn-next { text-align: right; }
+.qt-nav-btn .qt-direction { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #c73937; }
+.qt-nav-btn .qt-chapter { font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 700; line-height: 1.3; }
+.qt-nav-home { background: #1A1A1A; color: #FAF8F3; border: 3px solid #1A1A1A; box-shadow: 4px 4px 0 #c73937; border-radius: 4px; padding: 16px 24px; text-decoration: none; display: flex; flex-direction: column; gap: 4px; align-items: center; justify-content: center; transition: transform 0.15s ease, box-shadow 0.15s ease; font-family: inherit; min-width: 140px; }
+.qt-nav-home:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 #c73937; }
+.qt-nav-home .qt-home-icon { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #F5E4B8; }
+.qt-nav-home .qt-home-text { font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 700; }
+.qt-nav-empty { visibility: hidden; }
+@media (max-width: 640px) { .qt-nav-grid { grid-template-columns: 1fr; } .qt-nav-home { order: -1; } }
+</style>
+
+<nav class="qt-nav-container">
+  <div class="qt-nav-grid">
+    <a href="chuong-13.html" class="qt-nav-btn qt-nav-btn-prev">
+      <span class="qt-direction">← Chương trước</span>
+      <span class="qt-chapter">Chương 13: Quản trị nhóm và đội ngũ</span>
+    </a>
+    <a href="index.html" class="qt-nav-home">
+      <span class="qt-home-icon">⌂ Mục lục</span>
+      <span class="qt-home-text">Trang chủ</span>
+    </a>
+    <a href="chuong-15.html" class="qt-nav-btn qt-nav-btn-next">
+      <span class="qt-direction">Chương sau →</span>
+      <span class="qt-chapter">Chương 15: Tìm hiểu và quản lý hành vi cá nhân</span>
+    </a>
+  </div>
+</nav>
+<style>
+.qt-author-card {
+  max-width: 1180px;
+  margin: 40px auto 60px;
+  padding: 28px 32px;
+  background: #FAF8F3;
+  border: 3px solid #1A1A1A;
+  box-shadow: 6px 6px 0 #c73937;
+  border-radius: 4px;
+  font-family: 'Inter', system-ui, sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.qt-author-label {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #c73937;
+}
+.qt-author-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #1A1A1A;
+}
+.qt-author-role {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #6B6B6B;
+  margin-top: -10px;
+}
+.qt-author-links {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+.qt-author-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: #FAF8F3;
+  border: 2px solid #1A1A1A;
+  border-radius: 4px;
+  text-decoration: none;
+  color: #1A1A1A;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.15s ease;
+}
+.qt-author-link:hover {
+  background: #1A1A1A;
+  color: #FAF8F3;
+  transform: translate(-1px, -1px);
+}
+.qt-author-link-fb { background: #C4DEDC; }
+.qt-author-link-mail { background: #F5E4B8; }
+.qt-author-link-icon {
+  font-size: 16px;
+  font-weight: 700;
+}
+@media (max-width: 640px) {
+  .qt-author-card { margin: 32px 16px 40px; padding: 24px; }
+  .qt-author-links { flex-direction: column; }
+  .qt-author-link { justify-content: center; }
+}
+</style>
+
+<div class="qt-author-card">
+  <div class="qt-author-label">// Liên kết với tác giả</div>
+  <div class="qt-author-name">Vũ Hải</div>
+  <div class="qt-author-role">Business Consultant</div>
+  <div class="qt-author-links">
+    <a href="https://www.facebook.com/vuhai.fitness" target="_blank" rel="noopener noreferrer" class="qt-author-link qt-author-link-fb">
+      <span class="qt-author-link-icon">f</span>
+      <span>Facebook Vũ Hải</span>
+    </a>
+    <a href="mailto:fitnessviet@gmail.com" class="qt-author-link qt-author-link-mail">
+      <span class="qt-author-link-icon">✉</span>
+      <span>fitnessviet@gmail.com</span>
+    </a>
+  </div>
+</div>
+</body>
+</html>

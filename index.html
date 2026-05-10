@@ -767,7 +767,7 @@ a:focus-visible, .chapter-card:focus-visible {
         <div class="name">Vũ Hải</div>
       </div>
       <div class="progress-card">
-        Tiến độ: 11/18&nbsp;chương
+        Tiến độ: 18/18&nbsp;chương
       </div>
     </div>
   </div>
@@ -906,7 +906,7 @@ a:focus-visible, .chapter-card:focus-visible {
         <div class="chapter-card coming special">
           <span class="chapter-num">Chuyên đề</span>
           <h4 class="chapter-title">Lịch sử Quản trị</h4>
-          <span class="chapter-status">Sắp ra mắt</span>
+          <span class="chapter-status">Đã có</span>
         </div>
 
         <a href="chuong-02.html" class="chapter-card available">
@@ -1002,17 +1002,17 @@ a:focus-visible, .chapter-card:focus-visible {
           <span class="chapter-status">Đã có</span>
         </a>
 
-        <div class="chapter-card coming">
+        <a href="chuong-12.html" class="chapter-card available">
           <span class="chapter-num">Chương 12</span>
           <h4 class="chapter-title">Quản trị nguồn nhân lực</h4>
-          <span class="chapter-status">Sắp ra mắt</span>
-        </div>
+          <span class="chapter-status">Đã có</span>
+        </a>
 
-        <div class="chapter-card coming">
+        <a href="chuong-13.html" class="chapter-card available">
           <span class="chapter-num">Chương 13</span>
           <h4 class="chapter-title">Quản trị nhóm và đội ngũ</h4>
-          <span class="chapter-status">Sắp ra mắt</span>
-        </div>
+          <span class="chapter-status">Đã có</span>
+        </a>
 
       </div>
     </div>
@@ -1025,29 +1025,29 @@ a:focus-visible, .chapter-card:focus-visible {
       </div>
       <div class="chapter-grid">
 
-        <div class="chapter-card coming">
+        <a href="chuong-14.html" class="chapter-card available">
           <span class="chapter-num">Chương 14</span>
           <h4 class="chapter-title">Quản trị truyền thông</h4>
-          <span class="chapter-status">Sắp ra mắt</span>
-        </div>
+          <span class="chapter-status">Đã có</span>
+        </a>
 
-        <div class="chapter-card coming">
+        <a href="chuong-15.html" class="chapter-card available">
           <span class="chapter-num">Chương 15</span>
           <h4 class="chapter-title">Tìm hiểu và quản lý hành vi cá nhân</h4>
-          <span class="chapter-status">Sắp ra mắt</span>
-        </div>
+          <span class="chapter-status">Đã có</span>
+        </a>
 
-        <div class="chapter-card coming">
+        <a href="chuong-16.html" class="chapter-card available">
           <span class="chapter-num">Chương 16</span>
           <h4 class="chapter-title">Cách tạo động lực cho nhân viên</h4>
-          <span class="chapter-status">Sắp ra mắt</span>
-        </div>
+          <span class="chapter-status">Đã có</span>
+        </a>
 
-        <div class="chapter-card coming">
+        <a href="chuong-17.html" class="chapter-card available">
           <span class="chapter-num">Chương 17</span>
           <h4 class="chapter-title">Trở thành một nhà lãnh đạo hiệu quả</h4>
-          <span class="chapter-status">Sắp ra mắt</span>
-        </div>
+          <span class="chapter-status">Đã có</span>
+        </a>
 
       </div>
     </div>
@@ -1060,11 +1060,11 @@ a:focus-visible, .chapter-card:focus-visible {
       </div>
       <div class="chapter-grid">
 
-        <div class="chapter-card coming">
+        <a href="chuong-18.html" class="chapter-card available">
           <span class="chapter-num">Chương 18</span>
           <h4 class="chapter-title">Theo dõi và kiểm soát</h4>
-          <span class="chapter-status">Sắp ra mắt</span>
-        </div>
+          <span class="chapter-status">Đã có</span>
+        </a>
 
       </div>
     </div>
@@ -1116,7 +1116,105 @@ a:focus-visible, .chapter-card:focus-visible {
     </div>
   </div>
 </div>
+<!-- LIÊN KẾT VỚI VŨ HẢI -->
+<style>
+.qt-author-section {
+  background: var(--paper);
+  padding: 56px 0;
+  border-bottom: var(--border-thin);
+}
+.qt-author-card {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 32px;
+  background: var(--paper);
+  border: var(--border);
+  box-shadow: 6px 6px 0 var(--brand);
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.qt-author-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--brand);
+}
+.qt-author-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--ink);
+}
+.qt-author-role {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  color: var(--muted);
+  margin-top: -12px;
+}
+.qt-author-links {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+.qt-author-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 18px;
+  background: var(--paper);
+  border: var(--border-thin);
+  border-radius: 4px;
+  text-decoration: none;
+  color: var(--ink);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.15s ease;
+}
+.qt-author-link:hover {
+  background: var(--ink);
+  color: var(--paper);
+  transform: translate(-1px, -1px);
+}
+.qt-author-link-fb { background: var(--cyan); }
+.qt-author-link-mail { background: var(--yellow); }
+.qt-author-link-icon {
+  font-size: 16px;
+  font-weight: 700;
+}
+@media (max-width: 640px) {
+  .qt-author-section { padding: 40px 0; }
+  .qt-author-card { margin: 0 16px; padding: 24px; }
+  .qt-author-links { flex-direction: column; }
+  .qt-author-link { justify-content: center; }
+}
+</style>
 
+<section class="qt-author-section">
+  <div class="container">
+    <div class="qt-author-card">
+      <div class="qt-author-label">// Liên kết với tác giả</div>
+      <div class="qt-author-name">Vũ Hải</div>
+      <div class="qt-author-role">Business Consultant</div>
+      <div class="qt-author-links">
+        <a href="https://www.facebook.com/vuhai.fitness" target="_blank" rel="noopener noreferrer" class="qt-author-link qt-author-link-fb">
+          <span class="qt-author-link-icon">f</span>
+          <span>Facebook Vũ Hải</span>
+        </a>
+        <a href="mailto:fitnessviet@gmail.com" class="qt-author-link qt-author-link-mail">
+          <span class="qt-author-link-icon">✉</span>
+          <span>fitnessviet@gmail.com</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
 <!-- FOOTER -->
 <footer class="site-footer">
   <div class="container footer-inner">

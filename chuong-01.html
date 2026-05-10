@@ -2112,5 +2112,124 @@ document.addEventListener('dragstart', function(e) {
   return false;
 });
 </script>
+<style>
+.qt-nav-container { max-width: 1180px; margin: 60px auto 40px; padding: 0 24px; font-family: 'Inter', system-ui, sans-serif; }
+.qt-nav-grid { display: grid; grid-template-columns: 1fr auto 1fr; gap: 16px; align-items: stretch; }
+.qt-nav-btn { background: #FAF8F3; border: 3px solid #1A1A1A; box-shadow: 4px 4px 0 #1A1A1A; border-radius: 4px; padding: 16px 20px; text-decoration: none; color: #1A1A1A; display: flex; flex-direction: column; gap: 4px; transition: transform 0.15s ease, box-shadow 0.15s ease; font-family: inherit; }
+.qt-nav-btn:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 #1A1A1A; }
+.qt-nav-btn-prev { text-align: left; }
+.qt-nav-btn-next { text-align: right; }
+.qt-nav-btn .qt-direction { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #c73937; }
+.qt-nav-btn .qt-chapter { font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 700; line-height: 1.3; }
+.qt-nav-home { background: #1A1A1A; color: #FAF8F3; border: 3px solid #1A1A1A; box-shadow: 4px 4px 0 #c73937; border-radius: 4px; padding: 16px 24px; text-decoration: none; display: flex; flex-direction: column; gap: 4px; align-items: center; justify-content: center; transition: transform 0.15s ease, box-shadow 0.15s ease; font-family: inherit; min-width: 140px; }
+.qt-nav-home:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 #c73937; }
+.qt-nav-home .qt-home-icon { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #F5E4B8; }
+.qt-nav-home .qt-home-text { font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 700; }
+.qt-nav-empty { visibility: hidden; }
+@media (max-width: 640px) { .qt-nav-grid { grid-template-columns: 1fr; } .qt-nav-home { order: -1; } }
+</style>
+
+<nav class="qt-nav-container">
+  <div class="qt-nav-grid">
+    <div class="qt-nav-empty"></div>
+    <a href="index.html" class="qt-nav-home">
+      <span class="qt-home-icon">⌂ Mục lục</span>
+      <span class="qt-home-text">Trang chủ</span>
+    </a>
+    <a href="chuong-02.html" class="qt-nav-btn qt-nav-btn-next">
+      <span class="qt-direction">Chương sau →</span>
+      <span class="qt-chapter">Chương 02: Cách ra quyết định</span>
+    </a>
+  </div>
+</nav>
+<style>
+.qt-author-card {
+  max-width: 1180px;
+  margin: 40px auto 60px;
+  padding: 28px 32px;
+  background: #FAF8F3;
+  border: 3px solid #1A1A1A;
+  box-shadow: 6px 6px 0 #c73937;
+  border-radius: 4px;
+  font-family: 'Inter', system-ui, sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.qt-author-label {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #c73937;
+}
+.qt-author-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #1A1A1A;
+}
+.qt-author-role {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #6B6B6B;
+  margin-top: -10px;
+}
+.qt-author-links {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+.qt-author-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: #FAF8F3;
+  border: 2px solid #1A1A1A;
+  border-radius: 4px;
+  text-decoration: none;
+  color: #1A1A1A;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.15s ease;
+}
+.qt-author-link:hover {
+  background: #1A1A1A;
+  color: #FAF8F3;
+  transform: translate(-1px, -1px);
+}
+.qt-author-link-fb { background: #C4DEDC; }
+.qt-author-link-mail { background: #F5E4B8; }
+.qt-author-link-icon {
+  font-size: 16px;
+  font-weight: 700;
+}
+@media (max-width: 640px) {
+  .qt-author-card { margin: 32px 16px 40px; padding: 24px; }
+  .qt-author-links { flex-direction: column; }
+  .qt-author-link { justify-content: center; }
+}
+</style>
+
+<div class="qt-author-card">
+  <div class="qt-author-label">// Liên kết với tác giả</div>
+  <div class="qt-author-name">Vũ Hải</div>
+  <div class="qt-author-role">Business Consultant</div>
+  <div class="qt-author-links">
+    <a href="https://www.facebook.com/vuhai.fitness" target="_blank" rel="noopener noreferrer" class="qt-author-link qt-author-link-fb">
+      <span class="qt-author-link-icon">f</span>
+      <span>Facebook Vũ Hải</span>
+    </a>
+    <a href="mailto:fitnessviet@gmail.com" class="qt-author-link qt-author-link-mail">
+      <span class="qt-author-link-icon">✉</span>
+      <span>fitnessviet@gmail.com</span>
+    </a>
+  </div>
+</div>
 </body>
 </html>

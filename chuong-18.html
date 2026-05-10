@@ -1,0 +1,2043 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Chương 18: Theo Dõi và Kiểm Soát — Bản tóm tắt học sâu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap&subset=vietnamese" rel="stylesheet">
+
+<style>
+* { font-style: normal !important; box-sizing: border-box; font-optical-sizing: auto; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { line-height: 1.5; }
+
+:root {
+  --brand: #c73937;
+  --ink: #1a1a1a;
+  --ink-soft: #4a4a4a;
+  --paper: #FAF7F2;
+  --paper-pure: #ffffff;
+  --yellow: #F5E4B8;
+  --cyan: #C4DEDC;
+  --lime: #DDE4C5;
+  --pink: #F0DCDD;
+  --lavender: #E0DCEB;
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --border-thick: 3px solid var(--ink);
+  --border-medium: 2px solid var(--ink);
+  --shadow-hard: 6px 6px 0 var(--ink);
+  --shadow-hard-sm: 4px 4px 0 var(--ink);
+  --shadow-brand: 6px 6px 0 var(--brand);
+  --radius: 4px;
+  --radius-pill: 999px;
+}
+
+h1, h2, h3, h4, h5, h6, .title, .heading, .hero-title, .section-title, .card-title {
+  text-wrap: balance;
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+p, li, .body-text {
+  text-wrap: pretty;
+  font-family: var(--font-body);
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 17px;
+  background-image: radial-gradient(circle, rgba(26,26,26,0.06) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.container { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+
+.topnav {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--ink); color: var(--paper);
+  border-bottom: var(--border-thick);
+  padding: 12px 0;
+}
+.topnav-inner {
+  max-width: 1180px; margin: 0 auto; padding: 0 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; flex-wrap: wrap;
+}
+.topnav-brand {
+  font-family: var(--font-display);
+  font-weight: 700; font-size: 16px;
+  letter-spacing: 0.02em;
+}
+.topnav-brand .dot { color: var(--brand); }
+.topnav-links { display: flex; gap: 6px; flex-wrap: wrap; }
+.topnav-links a {
+  color: var(--paper); text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 12px; font-weight: 500;
+  padding: 6px 10px;
+  border: 1px solid transparent;
+  transition: border-color 0.1s;
+}
+.topnav-links a:hover { border-color: var(--paper); }
+
+.hero { padding: 60px 0 40px; position: relative; overflow: hidden; }
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 40px; align-items: center;
+}
+.hero-meta {
+  font-family: var(--font-mono);
+  font-size: 12px; font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--brand);
+  margin-bottom: 16px;
+  display: flex; align-items: center; gap: 10px;
+}
+.hero-meta::before {
+  content: ""; width: 24px; height: 2px; background: var(--brand);
+}
+.hero-title {
+  font-size: clamp(40px, 6vw, 80px);
+  font-weight: 700; line-height: 0.96;
+  margin-bottom: 24px;
+  letter-spacing: -0.035em;
+}
+.hero-title .accent { color: var(--brand); }
+.hero-title .underline {
+  background: linear-gradient(180deg, transparent 60%, var(--yellow) 60%);
+  padding: 0 4px;
+}
+.hero-sub {
+  font-size: 19px; line-height: 1.55;
+  color: var(--ink-soft);
+  margin-bottom: 28px;
+  text-wrap: balance;
+}
+.hero-stats { display: flex; gap: 12px; flex-wrap: wrap; }
+.stat-pill {
+  background: var(--paper-pure);
+  border: var(--border-medium);
+  padding: 10px 16px;
+  font-family: var(--font-mono);
+  font-size: 13px; font-weight: 700;
+  border-radius: var(--radius);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+.stat-pill .num { color: var(--brand); font-size: 16px; }
+
+.hero-card-stack { position: relative; height: 420px; }
+.sticker-card {
+  position: absolute;
+  background: var(--paper-pure);
+  border: var(--border-thick);
+  padding: 16px 18px;
+  box-shadow: var(--shadow-hard);
+  border-radius: var(--radius);
+}
+.sticker-1 { top: 0; left: 0; width: 200px; background: var(--yellow); transform: rotate(-2deg); }
+.sticker-2 { top: 30px; right: 0; width: 220px; background: var(--cyan); transform: rotate(1.5deg); }
+.sticker-3 { top: 160px; left: 60px; width: 200px; background: var(--lavender); transform: rotate(-1deg); }
+.sticker-4 { bottom: 60px; right: 20px; width: 200px; background: var(--pink); transform: rotate(2deg); }
+.sticker-5 { bottom: 0; left: 20px; width: 220px; background: var(--lime); transform: rotate(-1.5deg); }
+.sticker-num {
+  font-family: var(--font-mono);
+  font-size: 11px; font-weight: 700;
+  color: var(--ink-soft);
+  margin-bottom: 4px;
+  letter-spacing: 0.06em;
+}
+.sticker-title {
+  font-family: var(--font-display);
+  font-weight: 700; font-size: 17px;
+  line-height: 1.15;
+}
+
+.section { padding: 60px 0; border-top: var(--border-thick); }
+.section.alt { background: var(--paper-pure); }
+.section-tag {
+  display: inline-block;
+  background: var(--ink); color: var(--paper);
+  padding: 6px 12px;
+  font-family: var(--font-mono);
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  border-radius: var(--radius);
+}
+.section-title {
+  font-size: clamp(32px, 4.5vw, 52px);
+  font-weight: 700; line-height: 1.05;
+  margin-bottom: 16px;
+  letter-spacing: -0.025em;
+}
+.section-lead {
+  font-size: 18px; color: var(--ink-soft);
+  max-width: 720px; margin-bottom: 40px;
+  line-height: 1.55;
+}
+
+.map-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px; margin-bottom: 40px;
+}
+.map-card {
+  background: var(--paper-pure);
+  border: var(--border-thick);
+  border-radius: var(--radius);
+  padding: 22px 20px;
+  box-shadow: var(--shadow-hard-sm);
+  display: flex; flex-direction: column; gap: 10px;
+  transition: transform 0.12s, box-shadow 0.12s;
+}
+.map-card:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--ink); }
+.map-card .layer-num {
+  font-family: var(--font-mono);
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--brand);
+}
+.map-card .layer-title {
+  font-family: var(--font-display);
+  font-weight: 700; font-size: 19px;
+  line-height: 1.1;
+}
+.map-card .layer-desc {
+  font-size: 13px;
+  color: var(--ink-soft);
+  line-height: 1.45;
+}
+.map-card .layer-tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 10px; font-weight: 700;
+  padding: 4px 8px;
+  border-radius: var(--radius);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  align-self: flex-start;
+  border: 1.5px solid var(--ink);
+  background: var(--paper-pure);
+}
+.map-card.l1 { background: var(--yellow); }
+.map-card.l2 { background: var(--cyan); }
+.map-card.l3 { background: var(--lavender); }
+.map-card.l4 { background: var(--lime); }
+.map-card.l5 { background: var(--pink); }
+
+.warn-callout {
+  background: var(--ink); color: var(--paper);
+  padding: 32px 36px;
+  border-radius: var(--radius);
+  border: var(--border-thick);
+  box-shadow: 6px 6px 0 var(--brand);
+}
+.warn-callout .label {
+  font-family: var(--font-mono);
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--yellow);
+  margin-bottom: 12px;
+}
+.warn-callout h3 {
+  font-size: 28px; font-weight: 700;
+  margin-bottom: 14px;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+.warn-callout > p {
+  font-size: 16px; line-height: 1.6;
+  color: rgba(250, 247, 242, 0.9);
+  margin-bottom: 20px;
+}
+.warn-cases {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+.warn-case {
+  background: var(--paper); color: var(--ink);
+  padding: 16px;
+  border-radius: var(--radius);
+  border: 2px solid var(--paper);
+}
+.warn-case .num {
+  font-family: var(--font-display);
+  font-size: 28px; font-weight: 700;
+  color: var(--brand);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.warn-case .src {
+  font-family: var(--font-mono);
+  font-size: 10px; font-weight: 700;
+  color: var(--ink-soft);
+  margin-bottom: 6px;
+  letter-spacing: 0.04em;
+}
+.warn-case .desc {
+  font-size: 12px; line-height: 1.4;
+}
+
+.hook-box {
+  background: var(--lavender);
+  border: var(--border-thick);
+  border-radius: var(--radius);
+  padding: 24px 28px;
+  margin: 32px 0;
+  box-shadow: var(--shadow-hard-sm);
+  position: relative;
+  transform: rotate(-0.5deg);
+}
+.hook-box::before {
+  content: "💡 MENTAL HOOK";
+  position: absolute;
+  top: -14px; left: 20px;
+  background: var(--ink); color: var(--paper);
+  font-family: var(--font-mono);
+  font-size: 11px; font-weight: 700;
+  padding: 4px 10px;
+  border-radius: var(--radius);
+  letter-spacing: 0.08em;
+}
+.hook-box p {
+  font-size: 16px; line-height: 1.55;
+  font-family: var(--font-body);
+  margin: 0;
+}
+.hook-box p strong { color: var(--brand); font-weight: 700; }
+
+.reasons-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.reason-card {
+  background: var(--paper-pure);
+  border: var(--border-thick);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-hard-sm);
+  padding: 28px 24px;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.reason-card .r-num-bg {
+  display: inline-block;
+  padding: 4px 12px;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius);
+  font-family: var(--font-mono);
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.06em;
+  align-self: flex-start;
+}
+.reason-card.r1 .r-num-bg { background: var(--yellow); }
+.reason-card.r2 .r-num-bg { background: var(--cyan); }
+.reason-card.r3 .r-num-bg { background: var(--lime); }
+.reason-card .r-num {
+  font-family: var(--font-display);
+  font-size: 60px; font-weight: 700;
+  color: var(--brand);
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+}
+.reason-card .r-name {
+  font-family: var(--font-display);
+  font-size: 22px; font-weight: 700;
+  line-height: 1.1;
+}
+.reason-card .r-desc {
+  font-size: 14px; line-height: 1.55;
+  color: var(--ink-soft);
+}
+
+.process-flow {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr;
+  gap: 8px; align-items: stretch;
+}
+.process-step {
+  background: var(--paper-pure);
+  border: var(--border-thick);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-hard);
+  padding: 24px 22px;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.process-step.s1 { background: var(--yellow); }
+.process-step.s2 { background: var(--cyan); }
+.process-step.s3 { background: var(--lime); }
+.process-step .ps-num {
+  font-family: var(--font-mono);
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--brand);
+}
+.process-step .ps-title {
+  font-family: var(--font-display);
+  font-size: 24px; font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+.process-step .ps-en {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-soft);
+}
+.process-step .ps-q {
+  font-size: 13px; line-height: 1.45;
+  padding: 10px 12px;
+  background: var(--paper);
+  border: 1.5px solid var(--ink);
+  border-radius: var(--radius);
+}
+.process-step .ps-q strong {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 10px; font-weight: 700;
+  margin-bottom: 4px;
+  letter-spacing: 0.05em;
+  color: var(--brand);
+}
+.process-arrow {
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 26px; font-weight: 700;
+  color: var(--brand);
+}
+
+.tool-section-title {
+  font-family: var(--font-display);
+  font-size: 28px; font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 40px 0 12px;
+}
+.tool-section-sub {
+  font-size: 15px;
+  color: var(--ink-soft);
+  margin-bottom: 20px;
+  line-height: 1.55;
+}
+
+.sources-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+}
+.source-card {
+  border: var(--border-medium);
+  border-radius: var(--radius);
+  padding: 14px 12px;
+  display: flex; flex-direction: column; gap: 6px;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+.source-card.so1 { background: var(--yellow); }
+.source-card.so2 { background: var(--cyan); }
+.source-card.so3 { background: var(--lavender); }
+.source-card.so4 { background: var(--pink); }
+.source-card.so5 { background: var(--lime); }
+.source-card .icon { font-size: 22px; }
+.source-card .sname {
+  font-family: var(--font-display);
+  font-weight: 700; font-size: 13px;
+  line-height: 1.15;
+}
+.source-card .sen {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--ink-soft);
+}
+.source-card .sdesc {
+  font-size: 11px; line-height: 1.35;
+}
+
+.action-options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+.action-card {
+  border: var(--border-medium);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  background: var(--paper-pure);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+.action-card .ac-label {
+  font-family: var(--font-mono);
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--brand);
+  margin-bottom: 6px;
+}
+.action-card .ac-name {
+  font-family: var(--font-display);
+  font-weight: 700; font-size: 18px;
+  line-height: 1.1;
+  margin-bottom: 8px;
+}
+.action-card .ac-desc {
+  font-size: 13px; line-height: 1.45;
+}
+.action-card.a1 { background: var(--paper); }
+.action-card.a2 { background: var(--yellow); }
+.action-card.a3 { background: var(--pink); }
+
+.imm-basic-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.imm-basic {
+  padding: 16px 18px;
+  border: 1.5px solid var(--ink);
+  border-radius: var(--radius);
+}
+.imm-basic .ib-label {
+  font-family: var(--font-mono);
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.06em;
+  margin-bottom: 6px;
+}
+.imm-basic.imm { background: var(--pink); }
+.imm-basic.basic { background: var(--lime); }
+.imm-basic .ib-desc {
+  font-size: 13px; line-height: 1.45;
+}
+
+.measure-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+.measure-card {
+  background: var(--paper-pure);
+  border: var(--border-thick);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-hard-sm);
+  padding: 28px;
+  display: flex; flex-direction: column; gap: 16px;
+}
+.measure-card h3 {
+  font-family: var(--font-display);
+  font-size: 24px; font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+.measure-card .m-tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 11px; font-weight: 700;
+  padding: 4px 10px;
+  border-radius: var(--radius);
+  background: var(--ink);
+  color: var(--paper);
+  letter-spacing: 0.06em;
+  align-self: flex-start;
+}
+.measure-card p {
+  font-size: 14px; line-height: 1.55;
+  color: var(--ink-soft);
+}
+
+.org-measures {
+  display: flex; flex-direction: column; gap: 8px;
+}
+.org-m {
+  padding: 12px 14px;
+  border: 1.5px solid var(--ink);
+  border-radius: var(--radius);
+  display: flex; gap: 10px;
+  align-items: flex-start;
+}
+.org-m.om1 { background: var(--yellow); }
+.org-m.om2 { background: var(--cyan); }
+.org-m.om3 { background: var(--lime); }
+.org-m .om-num {
+  font-family: var(--font-mono);
+  font-weight: 700; font-size: 11px;
+  background: var(--ink); color: var(--paper);
+  padding: 2px 6px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+.org-m .om-content {
+  font-size: 13px; line-height: 1.45;
+}
+.org-m .om-content strong {
+  font-family: var(--font-display);
+  font-size: 14px;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.fb-principles {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  margin-top: 14px;
+}
+.fb-p {
+  background: var(--paper);
+  border: 1.5px solid var(--ink);
+  border-radius: var(--radius);
+  padding: 10px 6px;
+  text-align: center;
+}
+.fb-p .fb-num {
+  font-family: var(--font-display);
+  font-weight: 700; font-size: 18px;
+  color: var(--brand);
+  line-height: 1;
+}
+.fb-p .fb-name {
+  font-family: var(--font-mono);
+  font-size: 9.5px; font-weight: 700;
+  margin-top: 4px;
+  line-height: 1.2;
+}
+
+.disc-flow {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr auto 1fr;
+  gap: 4px; align-items: stretch;
+  margin-top: 14px;
+}
+.disc-step {
+  padding: 12px 10px;
+  border: 1.5px solid var(--ink);
+  border-radius: var(--radius);
+  display: flex; flex-direction: column; gap: 4px;
+}
+.disc-step.d1 { background: var(--lime); }
+.disc-step.d2 { background: var(--yellow); }
+.disc-step.d3 { background: var(--pink); }
+.disc-step.d4 { background: var(--lavender); }
+.disc-step.d5 { background: var(--brand); color: var(--paper); border-color: var(--ink); }
+.disc-step .d-num {
+  font-family: var(--font-mono);
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.06em;
+}
+.disc-step .d-name {
+  font-family: var(--font-display);
+  font-weight: 700; font-size: 12px;
+  line-height: 1.15;
+}
+.disc-arrow {
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 14px; font-weight: 700;
+  color: var(--brand);
+}
+
+.timing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+.timing-card {
+  background: var(--paper-pure);
+  border: var(--border-thick);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-hard-sm);
+  padding: 22px;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.timing-card.tc1 { background: var(--lime); }
+.timing-card.tc2 { background: var(--yellow); }
+.timing-card.tc3 { background: var(--pink); }
+.timing-card .tc-tag {
+  font-family: var(--font-mono);
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--brand);
+}
+.timing-card .tc-name {
+  font-family: var(--font-display);
+  font-size: 22px; font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+}
+.timing-card .tc-when {
+  font-family: var(--font-mono);
+  font-size: 11px; font-weight: 700;
+  background: var(--ink); color: var(--paper);
+  padding: 4px 10px;
+  border-radius: var(--radius);
+  align-self: flex-start;
+}
+.timing-card .tc-desc {
+  font-size: 13px; line-height: 1.5;
+}
+.timing-card .tc-eg {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-soft);
+  border-top: 1.5px solid var(--ink);
+  padding-top: 8px;
+  line-height: 1.45;
+}
+
+.fin-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+.fin-card {
+  border: var(--border-medium);
+  border-radius: var(--radius);
+  padding: 18px;
+  box-shadow: 3px 3px 0 var(--ink);
+  display: flex; flex-direction: column; gap: 8px;
+}
+.fin-card.f1 { background: var(--cyan); }
+.fin-card.f2 { background: var(--yellow); }
+.fin-card.f3 { background: var(--lavender); }
+.fin-card.f4 { background: var(--lime); }
+.fin-card .f-name {
+  font-family: var(--font-display);
+  font-weight: 700; font-size: 18px;
+  line-height: 1.1;
+}
+.fin-card .f-en {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--ink-soft);
+}
+.fin-card .f-ratios {
+  font-family: var(--font-mono);
+  font-size: 11px; font-weight: 700;
+  background: var(--paper);
+  padding: 6px 8px;
+  border: 1px solid var(--ink);
+  border-radius: 3px;
+}
+.fin-card .f-purpose {
+  font-size: 12px; line-height: 1.4;
+}
+
+.bsc-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 12px;
+  margin-top: 16px;
+}
+.bsc-cell {
+  border: var(--border-thick);
+  border-radius: var(--radius);
+  padding: 22px;
+  box-shadow: var(--shadow-hard-sm);
+  display: flex; flex-direction: column; gap: 10px;
+}
+.bsc-cell.b1 { background: var(--yellow); }
+.bsc-cell.b2 { background: var(--cyan); }
+.bsc-cell.b3 { background: var(--lime); }
+.bsc-cell.b4 { background: var(--pink); }
+.bsc-cell .bsc-num {
+  font-family: var(--font-mono);
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--brand);
+}
+.bsc-cell .bsc-name {
+  font-family: var(--font-display);
+  font-weight: 700; font-size: 22px;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+.bsc-cell .bsc-en {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-soft);
+}
+.bsc-cell .bsc-items {
+  font-size: 13px; line-height: 1.5;
+  margin-top: 4px;
+}
+
+.bench-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 16px;
+}
+.bench-item {
+  background: var(--paper-pure);
+  border: var(--border-medium);
+  border-radius: var(--radius);
+  padding: 14px;
+  box-shadow: 3px 3px 0 var(--ink);
+  display: flex; flex-direction: column; gap: 6px;
+}
+.bench-item .b-num {
+  font-family: var(--font-display);
+  font-weight: 700; font-size: 22px;
+  color: var(--brand);
+  line-height: 1;
+}
+.bench-item .b-name {
+  font-family: var(--font-display);
+  font-weight: 700; font-size: 14px;
+  line-height: 1.15;
+}
+.bench-item .b-desc {
+  font-size: 12px;
+  color: var(--ink-soft);
+  line-height: 1.4;
+}
+
+.issues-list {
+  display: flex; flex-direction: column; gap: 18px;
+}
+.issue-item {
+  background: var(--paper-pure);
+  border: var(--border-thick);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-hard-sm);
+  padding: 26px 30px;
+  display: grid;
+  grid-template-columns: 70px 1fr;
+  gap: 28px;
+  align-items: start;
+}
+.issue-num {
+  font-family: var(--font-display);
+  font-size: 56px; font-weight: 700;
+  line-height: 0.85;
+  color: var(--brand);
+  letter-spacing: -0.04em;
+}
+.issue-content h3 {
+  font-size: 22px; font-weight: 700;
+  margin-bottom: 10px;
+  line-height: 1.2;
+}
+.issue-content p {
+  font-size: 14px; line-height: 1.55;
+  color: var(--ink-soft);
+  margin-bottom: 10px;
+}
+.issue-content p:last-child { margin-bottom: 0; }
+.issue-content strong { color: var(--ink); }
+
+.theft-callout {
+  background: var(--brand);
+  color: var(--paper);
+  border: var(--border-thick);
+  border-radius: var(--radius);
+  padding: 24px 28px;
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 24px;
+  align-items: center;
+}
+.theft-callout .big-pct {
+  font-family: var(--font-display);
+  font-size: 72px; font-weight: 700;
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+  color: var(--yellow);
+}
+.theft-callout .tc-text {
+  font-size: 15px; line-height: 1.5;
+}
+.theft-callout .tc-text strong { color: var(--yellow); }
+
+.sox-callout {
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: var(--radius);
+  padding: 22px 26px;
+  margin-top: 12px;
+  border: var(--border-thick);
+  box-shadow: var(--shadow-brand);
+}
+.sox-callout .label {
+  font-family: var(--font-mono);
+  font-size: 11px; font-weight: 700;
+  color: var(--yellow);
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+}
+.sox-callout h4 {
+  font-family: var(--font-display);
+  font-size: 22px; font-weight: 700;
+  margin-bottom: 10px;
+  line-height: 1.15;
+}
+.sox-callout p {
+  font-size: 14px; line-height: 1.55;
+  color: rgba(250, 247, 242, 0.9);
+}
+.sox-callout strong { color: var(--yellow); }
+
+.privacy-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 12px;
+}
+.privacy-stat {
+  background: var(--paper);
+  border: 1.5px solid var(--ink);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  text-align: center;
+}
+.privacy-stat .pct {
+  font-family: var(--font-display);
+  font-size: 28px; font-weight: 700;
+  color: var(--brand);
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+.privacy-stat .lbl {
+  font-family: var(--font-mono);
+  font-size: 10px; font-weight: 700;
+  margin-top: 6px;
+  line-height: 1.3;
+}
+
+.theft-prongs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 14px;
+}
+.tp-card {
+  border: 1.5px solid var(--ink);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+}
+.tp-card.tp1 { background: var(--lime); }
+.tp-card.tp2 { background: var(--yellow); }
+.tp-card.tp3 { background: var(--pink); }
+.tp-card .tp-label {
+  font-family: var(--font-mono);
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.06em;
+  margin-bottom: 6px;
+  color: var(--brand);
+}
+.tp-card .tp-list {
+  font-size: 11px; line-height: 1.4;
+  list-style: none; padding: 0;
+}
+.tp-card .tp-list li { padding: 2px 0; }
+
+.roadmap {
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: var(--radius);
+  padding: 40px;
+  border: var(--border-thick);
+  box-shadow: var(--shadow-brand);
+}
+.roadmap-header { margin-bottom: 32px; }
+.roadmap-header .label {
+  font-family: var(--font-mono);
+  font-size: 12px; font-weight: 700;
+  color: var(--yellow);
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+}
+.roadmap-header h3 {
+  font-size: 32px; font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.roadmap-timeline {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+}
+.timeline-card {
+  background: var(--paper); color: var(--ink);
+  border-radius: var(--radius);
+  padding: 16px 12px;
+  border: var(--border-medium);
+  display: flex; flex-direction: column; gap: 6px;
+  box-shadow: 3px 3px 0 var(--brand);
+}
+.timeline-card .day {
+  font-family: var(--font-mono);
+  font-weight: 700; font-size: 11px;
+  color: var(--brand);
+  letter-spacing: 0.06em;
+}
+.timeline-card .dur {
+  font-family: var(--font-display);
+  font-weight: 700; font-size: 22px;
+  line-height: 1;
+}
+.timeline-card .task {
+  font-size: 11px; line-height: 1.35;
+  color: var(--ink-soft);
+}
+.timeline-card.long { background: var(--yellow); }
+
+.footer {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 40px 0;
+  border-top: var(--border-thick);
+}
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.footer-text { font-size: 14px; line-height: 1.5; }
+.footer-text strong { color: var(--brand); }
+.footer-meta {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: rgba(250, 247, 242, 0.6);
+  letter-spacing: 0.05em;
+}
+
+.hl-yellow { background: var(--yellow); padding: 0 4px; border-radius: 2px; }
+.hl-cyan { background: var(--cyan); padding: 0 4px; border-radius: 2px; }
+.hl-pink { background: var(--pink); padding: 0 4px; border-radius: 2px; }
+.hl-lime { background: var(--lime); padding: 0 4px; border-radius: 2px; }
+
+@media (max-width: 1024px) {
+  .map-grid { grid-template-columns: repeat(3, 1fr); }
+  .sources-grid { grid-template-columns: repeat(3, 1fr); }
+  .fb-principles { grid-template-columns: repeat(4, 1fr); }
+  .fin-grid { grid-template-columns: repeat(2, 1fr); }
+  .bench-list { grid-template-columns: repeat(2, 1fr); }
+  .warn-cases { grid-template-columns: 1fr; }
+  .privacy-stats { grid-template-columns: 1fr; }
+}
+@media (max-width: 980px) {
+  .hero-grid { grid-template-columns: 1fr; }
+  .hero-card-stack { height: 460px; max-width: 480px; margin: 0 auto; }
+  .reasons-grid { grid-template-columns: 1fr; }
+  .process-flow { grid-template-columns: 1fr; gap: 8px; }
+  .process-arrow { transform: rotate(90deg); padding: 4px; }
+  .action-options { grid-template-columns: 1fr; }
+  .imm-basic-split { grid-template-columns: 1fr; }
+  .measure-grid { grid-template-columns: 1fr; }
+  .timing-grid { grid-template-columns: 1fr; }
+  .bsc-grid { grid-template-columns: 1fr; grid-template-rows: auto; }
+  .disc-flow { grid-template-columns: 1fr; gap: 6px; }
+  .disc-arrow { transform: rotate(90deg); padding: 2px; }
+  .theft-prongs { grid-template-columns: 1fr; }
+  .theft-callout { grid-template-columns: 1fr; gap: 12px; text-align: center; }
+  .roadmap-timeline { grid-template-columns: repeat(4, 1fr); }
+}
+@media (max-width: 640px) {
+  body { font-size: 16px; }
+  .container { padding: 0 16px; }
+  .topnav-inner { padding: 0 16px; }
+  .hero { padding: 40px 0 30px; }
+  .map-grid { grid-template-columns: 1fr; }
+  .sources-grid { grid-template-columns: repeat(2, 1fr); }
+  .fb-principles { grid-template-columns: repeat(2, 1fr); }
+  .fin-grid { grid-template-columns: 1fr; }
+  .bench-list { grid-template-columns: 1fr; }
+  .roadmap { padding: 24px; }
+  .roadmap-timeline { grid-template-columns: repeat(2, 1fr); }
+  .issue-item { grid-template-columns: 1fr; gap: 8px; padding: 22px; }
+  .issue-num { font-size: 44px; }
+  .topnav-links a { font-size: 11px; padding: 4px 8px; }
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px var(--brand);
+  border-radius: var(--radius);
+}
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="topnav-inner">
+    <div class="topnav-brand">CH.18<span class="dot">.</span> Theo Dõi &amp; Kiểm Soát</div>
+    <div class="topnav-links">
+      <a href="#map">Bản đồ</a>
+      <a href="#process">Quy trình 3 bước</a>
+      <a href="#measure">Đo hiệu quả</a>
+      <a href="#tools">Công cụ</a>
+      <a href="#issues">Thế kỷ 21</a>
+      <a href="#roadmap">Lộ trình ôn</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-text">
+        <div class="hero-meta">Chương 18 / Robbins &amp; Coulter (2020)</div>
+        <h1 class="hero-title">
+          Theo Dõi &amp;<br>
+          <span class="underline">Kiểm&nbsp;Soát</span><br>
+          <span class="accent">Hiệu&nbsp;Quả</span>
+        </h1>
+        <p class="hero-sub">
+          Bản tóm tắt học sâu theo phương pháp <strong>SQ3R + Feynman + Active&nbsp;Recall + Spaced&nbsp;Repetition</strong>. 
+          Chức năng cuối cùng trong P-O-L-C. Quy trình 3&nbsp;bước. Bộ công cụ đa dạng. Năm vấn đề thế kỷ&nbsp;21.
+        </p>
+        <div class="hero-stats">
+          <div class="stat-pill"><span class="num">3</span> bước quy trình</div>
+          <div class="stat-pill"><span class="num">5</span> nguồn thông tin</div>
+          <div class="stat-pill"><span class="num">3</span> loại kiểm soát</div>
+          <div class="stat-pill"><span class="num">5</span> vấn đề thế kỷ 21</div>
+        </div>
+      </div>
+
+      <div class="hero-card-stack">
+        <div class="sticker-card sticker-1">
+          <div class="sticker-num">LỚP 01</div>
+          <div class="sticker-title">Định nghĩa Controlling</div>
+        </div>
+        <div class="sticker-card sticker-2">
+          <div class="sticker-num">LỚP 02</div>
+          <div class="sticker-title">Quy trình 3 bước</div>
+        </div>
+        <div class="sticker-card sticker-3">
+          <div class="sticker-num">LỚP 03</div>
+          <div class="sticker-title">Đo hiệu quả tổ chức + nhân viên</div>
+        </div>
+        <div class="sticker-card sticker-4">
+          <div class="sticker-num">LỚP 04</div>
+          <div class="sticker-title">Bộ công cụ đo</div>
+        </div>
+        <div class="sticker-card sticker-5">
+          <div class="sticker-num">LỚP 05</div>
+          <div class="sticker-title">5 vấn đề thế kỷ 21</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="section" id="map">
+  <div class="container">
+    <span class="section-tag">Bản đồ kiến thức</span>
+    <h2 class="section-title">Controlling là chức năng cuối cùng. Nhưng không kém quan trọng.</h2>
+    <p class="section-lead">
+      <strong>Controlling</strong> (kiểm soát) là quá trình theo dõi, so sánh, và sửa hiệu quả công việc. 
+      Là <strong>mắt xích cuối cùng</strong> trong P-O-L-C. Nhà quản lý không thể thực sự biết đơn vị hoạt động đúng hay không cho đến khi đã đánh giá hoạt động và so sánh với tiêu chuẩn.
+    </p>
+
+    <div class="map-grid">
+      <div class="map-card l1">
+        <span class="layer-tag">Lớp 01</span>
+        <div class="layer-num">// FOUNDATION</div>
+        <div class="layer-title">Định nghĩa &amp; tầm quan trọng</div>
+        <div class="layer-desc">Controlling là gì. Vì sao quản lý không thể bỏ qua kiểm soát.</div>
+      </div>
+      <div class="map-card l2">
+        <span class="layer-tag">Lớp 02</span>
+        <div class="layer-num">// PROCESS × 3</div>
+        <div class="layer-title">Quy trình 3 bước</div>
+        <div class="layer-desc">Đo, So sánh, Hành động. Tiêu chuẩn từ Planning là tiền đề.</div>
+      </div>
+      <div class="map-card l3">
+        <span class="layer-tag">Lớp 03</span>
+        <div class="layer-num">// PERFORMANCE</div>
+        <div class="layer-title">Đo hiệu quả tổ chức + nhân viên</div>
+        <div class="layer-desc">Productivity, Effectiveness, Rankings + phản hồi và kỷ luật.</div>
+      </div>
+      <div class="map-card l4">
+        <span class="layer-tag">Lớp 04</span>
+        <div class="layer-num">// TOOLS</div>
+        <div class="layer-title">Bộ công cụ đo</div>
+        <div class="layer-desc">Feedforward/Concurrent/Feedback, Tài chính, MIS, Balanced Scorecard, Benchmarking.</div>
+      </div>
+      <div class="map-card l5">
+        <span class="layer-tag">Lớp 05</span>
+        <div class="layer-num">// REAL × 5</div>
+        <div class="layer-title">5 vấn đề thế kỷ 21</div>
+        <div class="layer-desc">Mạng xã hội, Toàn cầu, Quyền riêng tư, Trộm cắp, Quản trị doanh nghiệp.</div>
+      </div>
+    </div>
+
+    <div class="warn-callout">
+      <div class="label">⚠ KHI KIỂM SOÁT YẾU / 3 VÍ DỤ MỞ ĐẦU CHƯƠNG</div>
+      <h3>Dù kế hoạch tốt đến đâu hay cấu trúc chặt đến đâu, vẫn luôn có khả năng mọi thứ đi chệch hướng.</h3>
+      <p>
+        Hệ thống kiểm soát chính là cơ chế đảm bảo tổ chức đạt được mục tiêu đã đặt. 
+        Khi cơ chế đó yếu, hậu quả có thể nghiêm trọng đến mức khó tin.
+      </p>
+      <div class="warn-cases">
+        <div class="warn-case">
+          <div class="num">$400K</div>
+          <div class="src">IKEA MARYLAND</div>
+          <div class="desc">Suraj&nbsp;Samaroo, nhân viên tổng đài, lợi dụng hệ thống hoàn tiền và sửa hồ sơ tồn kho để biển thủ trong chưa đầy 1&nbsp;năm.</div>
+        </div>
+        <div class="warn-case">
+          <div class="num">$17M</div>
+          <div class="src">AN SINH XÃ HỘI MỸ</div>
+          <div class="desc">Thanh toán nhầm tiền hưu cho 740&nbsp;người đã chết.</div>
+        </div>
+        <div class="warn-case">
+          <div class="num">95%</div>
+          <div class="src">KIỂM TOÁN AN NINH SÂN BAY</div>
+          <div class="desc">Số lần kiểm soát viên có thể đưa lọt vũ khí và chất nổ giả qua chốt an ninh.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section alt">
+  <div class="container">
+    <span class="section-tag">Phần 1 / Vì sao Controlling quan trọng</span>
+    <h2 class="section-title">Một quản lý chỉ Planning mà không Controlling là kẻ mơ mộng.</h2>
+    <p class="section-lead">
+      Có thể lập kế hoạch xong, có thể tạo cấu trúc, có thể tạo động lực qua lãnh đạo tốt. 
+      Tuy nhiên, vẫn không có đảm bảo hoạt động đang diễn ra theo kế hoạch và mục tiêu thực sự được đạt. 
+      Giá trị của Controlling thể hiện ở <strong>3 lĩnh vực cụ thể</strong>.
+    </p>
+
+    <div class="hook-box">
+      <p>
+        Quản lý một tổ chức như <strong>lái một con tàu lớn</strong>. 
+        <strong>Planning</strong> đặt ra điểm đến. 
+        <strong>Organizing</strong> sắp xếp thuỷ thủ và phân công. 
+        <strong>Leading</strong> thúc đẩy thuỷ thủ chèo về phía trước. 
+        Nhưng nếu không có ai đứng ở <strong>bánh lái</strong>, không ai nhìn la bàn, không ai kiểm tra mức nhiên liệu, 
+        thì con tàu rất dễ trôi dạt khỏi đích đến dù mọi người đều đang chèo hết sức.
+      </p>
+    </div>
+
+    <div class="reasons-grid">
+      <article class="reason-card r1">
+        <div class="r-num-bg">REASON 01</div>
+        <div class="r-num">01</div>
+        <div class="r-name">Liên kết với Planning</div>
+        <div class="r-desc">
+          "Kế hoạch tốt nhất của chuột và người vẫn thường đi chệch". 
+          Quản lý phải theo dõi để đảm bảo việc nhân viên phải làm <strong>thực sự đang được làm</strong>. 
+          Controlling tạo ra mắt xích quay lại với Planning.
+        </div>
+      </article>
+      <article class="reason-card r2">
+        <div class="r-num-bg">REASON 02</div>
+        <div class="r-num">02</div>
+        <div class="r-name">Trao quyền cho nhân viên</div>
+        <div class="r-desc">
+          Nhiều quản lý ngại trao quyền vì sợ chịu trách nhiệm. 
+          Sự ngại này có thể giảm nếu xây dựng <strong>hệ thống kiểm soát hiệu quả</strong> 
+          cung cấp thông tin và phản hồi về hiệu quả của nhân viên đã được uỷ quyền.
+        </div>
+      </article>
+      <article class="reason-card r3">
+        <div class="r-num-bg">REASON 03</div>
+        <div class="r-num">03</div>
+        <div class="r-name">Bảo vệ nơi làm việc</div>
+        <div class="r-desc">
+          Môi trường ngày nay tăng nguy cơ từ thảm hoạ tự nhiên, bê bối tài chính, bạo lực, đứt gãy chuỗi cung ứng, vi phạm an ninh, khủng bố. 
+          Kiểm soát toàn diện và <strong>kế hoạch dự phòng</strong> giúp đảm bảo gián đoạn tối thiểu.
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="process">
+  <div class="container">
+    <span class="section-tag">Phần 2 / Quy trình 3 bước</span>
+    <h2 class="section-title">Đo. So sánh. Hành động.</h2>
+    <p class="section-lead">
+      Quy trình 3 bước áp dụng được cho mọi lĩnh vực: doanh số, chất lượng, an toàn, hiệu quả nhân viên. 
+      <strong>Tiền đề:</strong> tiêu chuẩn hiệu quả đã có sẵn từ Planning. <strong>Planning phải đi trước Control.</strong>
+    </p>
+
+    <div class="hook-box">
+      <p>
+        Controlling như <strong>đo nhiệt độ cơ thể khi sốt</strong>. 
+        <strong>Bước 1:</strong> đo bằng nhiệt kế. 
+        <strong>Bước 2:</strong> so sánh với 37&nbsp;độ&nbsp;C. 
+        <strong>Bước 3:</strong> quyết định, không làm gì nếu trong khoảng bình thường, uống thuốc nếu sốt nhẹ, đi viện nếu sốt cao.
+      </p>
+    </div>
+
+    <div class="process-flow">
+      <article class="process-step s1">
+        <div class="ps-num">STEP 01</div>
+        <div class="ps-title">Đo Hiệu quả Thực tế</div>
+        <div class="ps-en">Measuring Actual Performance</div>
+        <div class="ps-q">
+          <strong>2 CÂU HỎI</strong>
+          Đo bằng cách nào? Đo cái gì?
+        </div>
+        <div class="ps-q">
+          <strong>NGUYÊN TẮC THEN CHỐT</strong>
+          Đo cái gì <em>quan trọng hơn</em> đo bằng cách nào. Chọn sai tiêu chí dẫn tới hậu quả phản tác dụng.
+        </div>
+      </article>
+
+      <div class="process-arrow">→</div>
+
+      <article class="process-step s2">
+        <div class="ps-num">STEP 02</div>
+        <div class="ps-title">So Sánh với Tiêu chuẩn</div>
+        <div class="ps-en">Comparing Against Standard</div>
+        <div class="ps-q">
+          <strong>KHÁI NIỆM CỐT LÕI</strong>
+          Range of variation, khoảng biến động chấp nhận được. Chênh lệch ngoài khoảng này cần chú ý.
+        </div>
+        <div class="ps-q">
+          <strong>LƯU Ý</strong>
+          Cả vượt mục tiêu (over-variance) và dưới mục tiêu (under-variance) đều có thể cần chú ý.
+        </div>
+      </article>
+
+      <div class="process-arrow">→</div>
+
+      <article class="process-step s3">
+        <div class="ps-num">STEP 03</div>
+        <div class="ps-title">Hành Động Quản Lý</div>
+        <div class="ps-en">Managerial Action</div>
+        <div class="ps-q">
+          <strong>3 LỰA CHỌN</strong>
+          Không làm gì, sửa hiệu quả thực tế, hoặc sửa tiêu chuẩn.
+        </div>
+        <div class="ps-q">
+          <strong>CẢNH BÁO</strong>
+          Thận trọng khi sửa tiêu chuẩn xuống. Nếu nhân viên không đạt, điều đầu tiên họ tấn công là tiêu chuẩn.
+        </div>
+      </article>
+    </div>
+
+    <h3 class="tool-section-title">5 nguồn thông tin để đo và báo cáo hiệu quả</h3>
+    <p class="tool-section-sub">
+      Quan sát cá nhân cho kiến thức trực tiếp. Báo cáo thống kê hiển thị quan hệ. Máy tính tự theo dõi (Internet&nbsp;of&nbsp;Things) là tương lai. 
+      Báo cáo miệng nhanh, có ngữ điệu. Báo cáo viết chính thức, dễ lưu trữ.
+    </p>
+
+    <div class="sources-grid">
+      <div class="source-card so1">
+        <span class="icon">👁</span>
+        <div class="sname">Personal Observation</div>
+        <div class="sen">Quan sát cá nhân</div>
+        <div class="sdesc">Kiến thức trực tiếp, "management by walking around". Hạn chế: thiên kiến.</div>
+      </div>
+      <div class="source-card so2">
+        <span class="icon">📊</span>
+        <div class="sname">Statistical Reports</div>
+        <div class="sen">Báo cáo thống kê</div>
+        <div class="sdesc">Đồ thị, biểu đồ thanh, số liệu. Hiệu quả khi cần xem mối quan hệ.</div>
+      </div>
+      <div class="source-card so3">
+        <span class="icon">🤖</span>
+        <div class="sname">Self-monitoring Computers</div>
+        <div class="sen">Máy tính tự theo dõi</div>
+        <div class="sdesc">Internet of Things. Cảm biến tự thu thập dữ liệu và khởi động cảnh báo.</div>
+      </div>
+      <div class="source-card so4">
+        <span class="icon">🗣</span>
+        <div class="sname">Oral Reports</div>
+        <div class="sen">Báo cáo miệng</div>
+        <div class="sdesc">Hội nghị, họp, điện thoại. Nhanh, có phản hồi, ngữ điệu.</div>
+      </div>
+      <div class="source-card so5">
+        <span class="icon">📝</span>
+        <div class="sname">Written Reports</div>
+        <div class="sen">Báo cáo viết</div>
+        <div class="sdesc">Chậm hơn nhưng chính thức, toàn diện, dễ lưu trữ.</div>
+      </div>
+    </div>
+
+    <h3 class="tool-section-title">3 lựa chọn ở Bước 3 (Action)</h3>
+
+    <div class="action-options">
+      <div class="action-card a1">
+        <div class="ac-label">OPTION 01</div>
+        <div class="ac-name">Không làm gì</div>
+        <div class="ac-desc">Tự giải thích. Dùng khi chênh lệch nằm trong khoảng chấp nhận được.</div>
+      </div>
+      <div class="action-card a2">
+        <div class="ac-label">OPTION 02</div>
+        <div class="ac-name">Sửa Hiệu quả Thực tế</div>
+        <div class="ac-desc">Thay đổi chiến lược, cấu trúc, lương thưởng, đào tạo, thiết kế lại công việc, thay người.</div>
+      </div>
+      <div class="action-card a3">
+        <div class="ac-label">OPTION 03</div>
+        <div class="ac-name">Sửa Tiêu chuẩn</div>
+        <div class="ac-desc">Khi tiêu chuẩn không thực tế. Thận trọng khi sửa <em>xuống</em>: kiểm tra trước khi đầu hàng.</div>
+      </div>
+    </div>
+
+    <h3 class="tool-section-title">Immediate vs Basic Corrective Action</h3>
+    <p class="tool-section-sub">
+      Phân biệt cốt lõi: Immediate là <em>chữa cháy</em>, dập tắt ngọn lửa hiện tại. Basic là tìm hiểu vì sao có cháy và sửa hệ thống ngừa cháy. 
+      Cả hai đều cần, nhưng nếu chỉ làm Immediate, vấn đề sẽ liên tục quay lại.
+    </p>
+
+    <div class="imm-basic-split">
+      <div class="imm-basic imm">
+        <div class="ib-label">🚒 IMMEDIATE</div>
+        <div class="ib-desc">Sửa vấn đề <strong>ngay</strong> để hiệu quả quay lại đường ray. Như chữa cháy. Nhanh, nhưng vấn đề thường quay lại.</div>
+      </div>
+      <div class="imm-basic basic">
+        <div class="ib-label">🔧 BASIC</div>
+        <div class="ib-desc">Hỏi <strong>tại sao và như thế nào</strong> hiệu quả lệch đi, rồi sửa nguồn gốc. Tốn thời gian nhưng giải quyết tận gốc.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section alt" id="measure">
+  <div class="container">
+    <span class="section-tag">Phần 3 / Đo hiệu quả</span>
+    <h2 class="section-title">Hai cấp độ phải đi cùng nhau.</h2>
+    <p class="section-lead">
+      Tổ chức như <strong>dàn nhạc giao hưởng</strong>. Đo hiệu quả tổ chức là đánh giá toàn bộ buổi diễn. 
+      Đo hiệu quả nhân viên là đánh giá từng nhạc công. Không thể có buổi diễn hay nếu nhạc công kém.
+    </p>
+
+    <div class="measure-grid">
+
+      <article class="measure-card">
+        <div class="m-tag">CẤP ĐỘ 01</div>
+        <h3>Hiệu quả Tổ chức</h3>
+        <p>
+          <strong>Performance</strong> là kết quả cuối của một hoạt động. <strong>Organizational performance</strong> là kết quả tích luỹ của tất cả các hoạt động. 
+          Đây là khái niệm đa diện đo bằng <strong>3 thước đo</strong>:
+        </p>
+
+        <div class="org-measures">
+          <div class="org-m om1">
+            <span class="om-num">01</span>
+            <div class="om-content">
+              <strong>Productivity</strong>
+              Lượng đầu ra chia cho lượng đầu vào. Walmart ép nhà cung cấp giảm giá để giảm đầu vào và giữ "Everyday Low Prices".
+            </div>
+          </div>
+          <div class="org-m om2">
+            <span class="om-num">02</span>
+            <div class="om-content">
+              <strong>Organizational Effectiveness</strong>
+              Mức độ phù hợp của mục tiêu và mức độ đạt được. Điểm mấu chốt cho quản lý, dẫn dắt thiết kế chiến lược.
+            </div>
+          </div>
+          <div class="org-m om3">
+            <span class="om-num">03</span>
+            <div class="om-content">
+              <strong>Industry &amp; Company Rankings</strong>
+              Fortune 500, Global 500, World's Most Admired, 100 Best Companies to Work For, Forbes World's Largest. Wegmans Food&nbsp;Markets có mặt từ 1998.
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="measure-card">
+        <div class="m-tag">CẤP ĐỘ 02</div>
+        <h3>Hiệu quả Nhân viên</h3>
+        <p>
+          Đảm bảo công việc của nhân viên có đủ về <strong>lượng và chất</strong>. 
+          Hai công cụ chính: <strong>phản hồi hiệu quả</strong> và (nếu cần) <strong>hành động kỷ luật</strong>.
+        </p>
+
+        <div>
+          <div style="font-family: var(--font-mono); font-size: 11px; font-weight: 700; color: var(--brand); letter-spacing: 0.06em; margin-bottom: 6px;">7 NGUYÊN TẮC PHẢN HỒI HIỆU QUẢ</div>
+          <div class="fb-principles">
+            <div class="fb-p"><div class="fb-num">01</div><div class="fb-name">Cụ thể<br>hành vi</div></div>
+            <div class="fb-p"><div class="fb-num">02</div><div class="fb-name">Thực tế</div></div>
+            <div class="fb-p"><div class="fb-num">03</div><div class="fb-name">Phi cá<br>nhân</div></div>
+            <div class="fb-p"><div class="fb-num">04</div><div class="fb-name">Hướng<br>mục tiêu</div></div>
+            <div class="fb-p"><div class="fb-num">05</div><div class="fb-name">Đúng<br>thời điểm</div></div>
+            <div class="fb-p"><div class="fb-num">06</div><div class="fb-name">Đảm bảo<br>hiểu</div></div>
+            <div class="fb-p"><div class="fb-num">07</div><div class="fb-name">Ngôn ngữ<br>cơ thể</div></div>
+          </div>
+        </div>
+
+        <div>
+          <div style="font-family: var(--font-mono); font-size: 11px; font-weight: 700; color: var(--brand); letter-spacing: 0.06em; margin-bottom: 6px;">5 BƯỚC PROGRESSIVE DISCIPLINARY ACTION</div>
+          <div class="disc-flow">
+            <div class="disc-step d1">
+              <div class="d-num">01</div>
+              <div class="d-name">Cảnh cáo<br>miệng</div>
+            </div>
+            <div class="disc-arrow">→</div>
+            <div class="disc-step d2">
+              <div class="d-num">02</div>
+              <div class="d-name">Cảnh cáo<br>viết lần 1</div>
+            </div>
+            <div class="disc-arrow">→</div>
+            <div class="disc-step d3">
+              <div class="d-num">03</div>
+              <div class="d-name">Cảnh cáo<br>viết cuối</div>
+            </div>
+            <div class="disc-arrow">→</div>
+            <div class="disc-step d4">
+              <div class="d-num">04</div>
+              <div class="d-name">Đình chỉ<br>tạm</div>
+            </div>
+            <div class="disc-arrow">→</div>
+            <div class="disc-step d5">
+              <div class="d-num">05</div>
+              <div class="d-name">Sa thải<br>có lý do</div>
+            </div>
+          </div>
+        </div>
+
+        <p style="font-size: 13px; color: var(--ink-soft); margin-top: 6px;">
+          Quản lý dành <strong style="color: var(--brand);">26%</strong> thời gian mỗi tuần để huấn luyện nhân viên dưới chuẩn. 
+          Hành động kỷ luật được tài liệu hoá kỹ và đi theo các bước tiệm tiến thường được pháp lý ủng hộ.
+        </p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section class="section" id="tools">
+  <div class="container">
+    <span class="section-tag">Phần 4 / Bộ công cụ đo</span>
+    <h2 class="section-title">Quản lý như bác sĩ. Có nhiều công cụ chẩn đoán.</h2>
+    <p class="section-lead">
+      Đo huyết áp <strong>trước</strong> khi vào (feedforward), nghe tim <strong>trong lúc</strong> khám (concurrent), xét nghiệm máu <strong>sau khi</strong> điều trị (feedback). 
+      Tài chính như xét nghiệm máu, balanced scorecard như khám tổng quát, benchmarking như so với hồ sơ bệnh nhân khác.
+    </p>
+
+    <h3 class="tool-section-title">Tool 01 / 3 loại kiểm soát theo thời gian</h3>
+
+    <div class="timing-grid">
+      <article class="timing-card tc1">
+        <div class="tc-tag">⏪ TRƯỚC</div>
+        <div class="tc-name">Feedforward</div>
+        <div class="tc-when">Trước hoạt động</div>
+        <div class="tc-desc">
+          <strong>Loại đáng mong muốn nhất</strong>. Ngăn ngừa vấn đề trước khi xảy ra. 
+          McDonald's khi mở ở Moscow đã gửi chuyên gia giúp nông dân Nga trồng khoai tây đúng chuẩn.
+        </div>
+        <div class="tc-eg">Cần thông tin kịp thời và chính xác, không phải lúc nào cũng dễ có.</div>
+      </article>
+
+      <article class="timing-card tc2">
+        <div class="tc-tag">▶ TRONG</div>
+        <div class="tc-name">Concurrent</div>
+        <div class="tc-when">Trong khi hoạt động</div>
+        <div class="tc-desc">
+          Hình thức nổi tiếng nhất là <strong>direct supervision</strong>. 
+          Cựu CEO Valley Forge Casino làm việc cùng nhân viên dọn phòng và phát hiện thang máy là điểm chậm.
+        </div>
+        <div class="tc-eg">Quản lý cấp cơ sở đặc biệt có lợi vì sửa được trước khi quá tốn kém.</div>
+      </article>
+
+      <article class="timing-card tc3">
+        <div class="tc-tag">⏩ SAU</div>
+        <div class="tc-name">Feedback</div>
+        <div class="tc-when">Sau khi hoạt động</div>
+        <div class="tc-desc">
+          <strong>Loại phổ biến nhất</strong>. Khi quản lý có thông tin, vấn đề đã xảy ra. 
+          2 lợi thế: cho thông tin về việc lập kế hoạch hiệu quả thế nào + tăng động lực vì người ta muốn biết kết quả.
+        </div>
+        <div class="tc-eg">Nhược điểm chính: lãng phí, hư hỏng, chi phí thêm khi vấn đề đã xảy ra.</div>
+      </article>
+    </div>
+
+    <h3 class="tool-section-title">Tool 02 / 4 nhóm tỉ số tài chính</h3>
+    <p class="tool-section-sub">
+      Tính từ thông tin trong bảng cân đối kế toán và báo cáo thu nhập. <strong>Budgets vừa là công cụ Planning vừa là công cụ Controlling.</strong>
+    </p>
+
+    <div class="fin-grid">
+      <div class="fin-card f1">
+        <div class="f-name">Liquidity</div>
+        <div class="f-en">Thanh khoản</div>
+        <div class="f-ratios">Current ratio, Acid test</div>
+        <div class="f-purpose">Đo khả năng thanh toán nợ ngắn hạn.</div>
+      </div>
+      <div class="fin-card f2">
+        <div class="f-name">Leverage</div>
+        <div class="f-en">Đòn bẩy</div>
+        <div class="f-ratios">Debt to assets, Times interest earned</div>
+        <div class="f-purpose">Đo việc dùng nợ tài trợ tài sản, khả năng trả lãi.</div>
+      </div>
+      <div class="fin-card f3">
+        <div class="f-name">Activity</div>
+        <div class="f-en">Hoạt động</div>
+        <div class="f-ratios">Inventory turnover, Asset turnover</div>
+        <div class="f-purpose">Đo hiệu quả sử dụng tài sản.</div>
+      </div>
+      <div class="fin-card f4">
+        <div class="f-name">Profitability</div>
+        <div class="f-en">Lợi nhuận</div>
+        <div class="f-ratios">Profit margin, Return on investment</div>
+        <div class="f-purpose">Đo hiệu quả tạo lợi nhuận từ tài sản.</div>
+      </div>
+    </div>
+
+    <h3 class="tool-section-title">Tool 03 / Balanced Scorecard, 4 mảng</h3>
+    <p class="tool-section-sub">
+      Cách đánh giá hiệu quả tổ chức từ <strong>nhiều góc</strong> hơn chỉ tài chính. Quản lý nên đặt mục tiêu trong từng mảng và đo xem có đạt không. 
+      Tại IBM Global Services Houston, scorecard xoay quanh chiến lược chính là hài lòng khách hàng, ba mảng còn lại đều hỗ trợ chiến lược đó.
+    </p>
+
+    <div class="bsc-grid">
+      <div class="bsc-cell b1">
+        <div class="bsc-num">QUADRANT 01</div>
+        <div class="bsc-name">Financial</div>
+        <div class="bsc-en">Tài chính</div>
+        <div class="bsc-items">Doanh thu, lợi nhuận, dòng tiền.</div>
+      </div>
+      <div class="bsc-cell b2">
+        <div class="bsc-num">QUADRANT 02</div>
+        <div class="bsc-name">Customer</div>
+        <div class="bsc-en">Khách hàng</div>
+        <div class="bsc-items">Hài lòng, giữ chân, thị phần.</div>
+      </div>
+      <div class="bsc-cell b3">
+        <div class="bsc-num">QUADRANT 03</div>
+        <div class="bsc-name">Internal Processes</div>
+        <div class="bsc-en">Quy trình nội bộ</div>
+        <div class="bsc-items">Chất lượng, thời gian phản hồi.</div>
+      </div>
+      <div class="bsc-cell b4">
+        <div class="bsc-num">QUADRANT 04</div>
+        <div class="bsc-name">People &amp; Innovation</div>
+        <div class="bsc-en">Con người, đổi mới, phát triển</div>
+        <div class="bsc-items">Học hỏi, kỹ năng, đổi mới.</div>
+      </div>
+    </div>
+
+    <h3 class="tool-section-title">Tool 04 / Benchmarking, 6 gợi ý</h3>
+    <p class="tool-section-sub">
+      <strong>Benchmarking</strong> là nhận diện, phân tích, áp dụng các thực hành tốt nhất từ tổ chức khác. 
+      Target đã đối sánh Amazon bằng cách bắt chước giao tã định kỳ, miễn phí ship, giảm giá thành viên. 
+      Thực hành tốt không chỉ tìm ở ngoài, đôi khi đã tồn tại trong tổ chức.
+    </p>
+
+    <div class="bench-list">
+      <div class="bench-item">
+        <div class="b-num">01</div>
+        <div class="b-name">Connect to strategies</div>
+        <div class="b-desc">Gắn thực hành tốt với chiến lược và mục tiêu của tổ chức.</div>
+      </div>
+      <div class="bench-item">
+        <div class="b-num">02</div>
+        <div class="b-name">Identify throughout</div>
+        <div class="b-desc">Tìm xem đâu là thực hành thành công ở các mảng khác nhau.</div>
+      </div>
+      <div class="bench-item">
+        <div class="b-num">03</div>
+        <div class="b-name">Reward systems</div>
+        <div class="b-desc">Có động lực để cá nhân chia sẻ kiến thức.</div>
+      </div>
+      <div class="bench-item">
+        <div class="b-num">04</div>
+        <div class="b-name">Communicate</div>
+        <div class="b-desc">Truyền thông trong toàn tổ chức khi đã nhận diện.</div>
+      </div>
+      <div class="bench-item">
+        <div class="b-num">05</div>
+        <div class="b-name">Knowledge-sharing</div>
+        <div class="b-desc">Cơ chế chính thức để các thành viên tiếp tục chia sẻ.</div>
+      </div>
+      <div class="bench-item">
+        <div class="b-num">06</div>
+        <div class="b-name">Nurture ongoing</div>
+        <div class="b-desc">Văn hoá "ai cũng có thể học", nhấn mạnh chia sẻ.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section alt" id="issues">
+  <div class="container">
+    <span class="section-tag">Phần 5 / 5 vấn đề thế kỷ 21</span>
+    <h2 class="section-title">Bốn loại sóng mới mà thế hệ trước không có.</h2>
+    <p class="section-lead">
+      Quản lý hiện đại như thuyền trưởng phải đối mặt: sóng <strong>mạng xã hội</strong> (khách phản hồi công khai), 
+      sóng <strong>toàn cầu</strong> (kiểm soát qua biên giới), sóng <strong>quyền riêng tư</strong> (giám sát đến đâu là vừa), 
+      sóng <strong>trộm cắp nội bộ</strong>, và <strong>quản trị doanh nghiệp</strong> (ai canh chừng người canh chừng).
+    </p>
+
+    <div class="issues-list">
+
+      <article class="issue-item">
+        <div class="issue-num">01</div>
+        <div class="issue-content">
+          <h3>Mạng Xã hội như Công cụ Kiểm soát</h3>
+          <p>
+            Cả chính phủ và doanh nghiệp đều thấy mạng xã hội là công cụ giá trị cho phản hồi. 
+            Trong các vụ cháy California 2018, quan chức dựa vào mạng xã hội để biết người mắc kẹt và lối thoát.
+          </p>
+          <p>
+            <strong>90%</strong> khách hàng cung cấp phản hồi qua mạng xã hội. 
+            <strong>36%</strong> khách hàng có phản hồi bị bỏ qua sẽ <span class="hl-yellow">dùng mạng xã hội để bêu xấu</span> thương hiệu.
+          </p>
+        </div>
+      </article>
+
+      <article class="issue-item">
+        <div class="issue-num">02</div>
+        <div class="issue-content">
+          <h3>Khác biệt Toàn cầu trong Kiểm soát</h3>
+          <p>
+            Trong tập đoàn toàn cầu, quản lý ở nước ngoài ít bị kiểm soát từ trụ sở. 
+            Khoảng cách tạo xu hướng <strong>chính thức hoá kiểm soát</strong>, dựa vào báo cáo điện tử rộng.
+          </p>
+          <p>
+            Ở nước công nghệ tiên tiến: dùng công cụ <span class="hl-cyan">gián tiếp</span> như báo cáo và phân tích từ máy tính. 
+            Ở nước công nghệ kém phát triển: dùng <span class="hl-pink">giám sát trực tiếp</span> và ra quyết định tập trung.
+          </p>
+          <p>
+            <strong>Vấn đề so sánh:</strong> nhà máy ở Cambodia có thể dùng nhiều lao động hơn ở Scotland để tận dụng lao động rẻ. 
+            Khác biệt này khiến khó so sánh chi phí lao động trên đơn vị.
+          </p>
+        </div>
+      </article>
+
+      <article class="issue-item">
+        <div class="issue-num">03</div>
+        <div class="issue-content">
+          <h3>Quyền Riêng tư Nơi Làm việc</h3>
+          <p>
+            Nhà tuyển dụng có thể đọc email (kể cả "personal"), nghe điện thoại, theo dõi qua máy tính, theo dõi vị trí trong xe công ty. 
+            UPS theo dõi vị trí tài xế và giao thêm <strong>1,4 triệu gói/ngày với 1.000 tài xế ít hơn</strong>.
+          </p>
+
+          <div class="privacy-stats">
+            <div class="privacy-stat">
+              <div class="pct">66%</div>
+              <div class="lbl">Công ty Mỹ theo dõi sử dụng internet</div>
+            </div>
+            <div class="privacy-stat">
+              <div class="pct">45%</div>
+              <div class="lbl">Ghi log gõ phím</div>
+            </div>
+            <div class="privacy-stat">
+              <div class="pct">43%</div>
+              <div class="lbl">Theo dõi email</div>
+            </div>
+          </div>
+          <p style="margin-top: 12px;">
+            <strong>3 lý do quản lý theo dõi:</strong> nhân viên được thuê để làm việc, tránh bị kiện vì môi trường thù địch, đảm bảo bí mật công ty không bị rò.
+          </p>
+        </div>
+      </article>
+
+      <article class="issue-item">
+        <div class="issue-num">04</div>
+        <div class="issue-content">
+          <h3>Trộm cắp của Nhân viên</h3>
+          <p>
+            Tại cửa hàng Saks ở Manhattan, một nhân viên bán hàng 23 tuổi bị bắt vì giả mạo trả hàng trị giá 
+            <strong>130.000 đô la</strong> và chuyển tiền vào thẻ quà.
+          </p>
+
+          <div class="theft-callout">
+            <div class="big-pct">85%</div>
+            <div class="tc-text">
+              mọi vụ trộm cắp và gian lận của tổ chức là do <strong>nhân viên</strong> chứ không phải người ngoài. 
+              Tốn kém ước tính ở Mỹ là <strong>50 tỷ đô la mỗi năm</strong>. 
+              Vì sao? Cơ hội mở ra do kiểm soát lỏng + áp lực tài chính + tự bao biện ("ai cũng làm thế").
+            </div>
+          </div>
+
+          <div class="theft-prongs">
+            <div class="tp-card tp1">
+              <div class="tp-label">⏪ FEEDFORWARD</div>
+              <ul class="tp-list">
+                <li>• Sàng lọc kỹ trước tuyển</li>
+                <li>• Chính sách cụ thể về trộm cắp</li>
+                <li>• Đào tạo về chính sách</li>
+                <li>• Kiểm tra kiểm soát nội bộ</li>
+              </ul>
+            </div>
+            <div class="tp-card tp2">
+              <div class="tp-label">▶ CONCURRENT</div>
+              <ul class="tp-list">
+                <li>• Đối xử tôn trọng</li>
+                <li>• Truyền thông chi phí trộm cắp</li>
+                <li>• Cài "lock-out" trên máy tính</li>
+                <li>• Đường dây nóng + làm gương tốt</li>
+              </ul>
+            </div>
+            <div class="tp-card tp3">
+              <div class="tp-label">⏩ FEEDBACK</div>
+              <ul class="tp-list">
+                <li>• Cho biết khi trộm cắp xảy ra</li>
+                <li>• Dịch vụ điều tra chuyên nghiệp</li>
+                <li>• Thiết kế lại biện pháp kiểm soát</li>
+                <li>• Camera giám sát nếu đáng</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="issue-item">
+        <div class="issue-num">05</div>
+        <div class="issue-content">
+          <h3>Quản trị Doanh nghiệp</h3>
+          <p>
+            <strong>Corporate governance</strong> là hệ thống được dùng để quản trị một công ty cổ phần để bảo vệ lợi ích của chủ sở hữu. 
+            Đã thất bại thê thảm tại CBS với CEO Leslie&nbsp;Moonves: hơn 20&nbsp;năm sai phạm tình dục được hội đồng biết và bỏ qua. 
+            Báo cáo về hành vi đã được trình LAPD từ <strong>1997</strong>. Hội đồng cuối cùng hành động và sa thải ông năm <strong>2018</strong>.
+          </p>
+
+          <div class="sox-callout">
+            <div class="label">⚖ SARBANES-OXLEY ACT 2002</div>
+            <h4>Cải cách 3 lĩnh vực sau bê bối Enron, Tyco, WorldCom.</h4>
+            <p>
+              <strong>Vai trò Hội đồng Quản trị:</strong> đặt yêu cầu lớn hơn lên thành viên hội đồng các công ty đại chúng tại Mỹ phải làm đúng những gì được trao quyền. 
+              <strong>Báo cáo Tài chính:</strong> CEO và CFO giờ phải xác nhận kết quả tài chính. 
+              <strong>Văn phòng Tuân thủ:</strong> bổ nhiệm <em>compliance officer</em> đảm bảo tổ chức tuân thủ luật pháp, quy định, và tiêu chuẩn nghề nghiệp.
+            </p>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section class="section" id="roadmap">
+  <div class="container">
+    <span class="section-tag">Spaced Repetition / Lộ trình ôn</span>
+    <h2 class="section-title">Đọc lại không phải là ôn tập.</h2>
+    <p class="section-lead">
+      Đọc lại làm bạn quen mặt với chữ. Kéo kiến thức từ não ra mới làm kiến thức nằm sâu. 
+      Lộ trình dưới đây áp dụng đường cong quên Ebbinghaus.
+    </p>
+
+    <div class="roadmap">
+      <div class="roadmap-header">
+        <div class="label">⏱ HAI NGUYÊN TẮC CỐT LÕI</div>
+        <h3>Truy hồi thắng đọc lại. Khoảng cách thời gian quan trọng hơn thời lượng.</h3>
+      </div>
+
+      <h4 style="font-family: var(--font-display); font-size: 20px; font-weight: 700; margin-bottom: 16px; color: var(--paper);">
+        Lịch ôn 5 lần + 2 lần dài hạn
+      </h4>
+
+      <div class="roadmap-timeline">
+        <div class="timeline-card">
+          <div class="day">DAY 0</div>
+          <div class="dur">15 phút</div>
+          <div class="task">Lướt cheatsheet, kiểm tra hiểu được 3 bước quy trình + 5 nguồn thông tin + 5 vấn đề</div>
+        </div>
+        <div class="timeline-card">
+          <div class="day">DAY 1</div>
+          <div class="dur">25 phút</div>
+          <div class="task">Gập tài liệu, kể bằng lời 3 lý do quan trọng, 7 nguyên tắc phản hồi, 5 bước kỷ luật. Mở flashcards Q&amp;C</div>
+        </div>
+        <div class="timeline-card">
+          <div class="day">DAY 3</div>
+          <div class="dur">35 phút</div>
+          <div class="task">Áp khái niệm vào tình huống thật. Phân tích 1 doanh nghiệp qua Balanced Scorecard 4 mảng</div>
+        </div>
+        <div class="timeline-card">
+          <div class="day">DAY 7</div>
+          <div class="dur">35 phút</div>
+          <div class="task">Vẽ sơ đồ tích hợp 5 phần. Phân biệt Feedforward/Concurrent/Feedback + Immediate/Basic</div>
+        </div>
+        <div class="timeline-card">
+          <div class="day">DAY 16</div>
+          <div class="dur">45 phút</div>
+          <div class="task">Giảng cho người khác hoặc ghi âm bài giảng dài 15&nbsp;phút về Chương 18</div>
+        </div>
+        <div class="timeline-card long">
+          <div class="day">DAY 35</div>
+          <div class="dur">30 phút</div>
+          <div class="task">Mở lại flashcards, làm sạch những thẻ đã quên</div>
+        </div>
+        <div class="timeline-card long">
+          <div class="day">DAY 75</div>
+          <div class="dur">30 phút</div>
+          <div class="task">Tái áp dụng vào tình huống mới ở chỗ làm. Test trí nhớ bền</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-text">
+        Tài liệu học sâu, biên soạn theo phương pháp <strong>SQ3R + Feynman + Active Recall + Spaced Repetition</strong>.<br>
+        Nguồn: Robbins, S.&nbsp;P. &amp; Coulter, M.&nbsp;A. (2020). <em>Management</em>, Global Edition, Chương&nbsp;18.
+      </div>
+      <div class="footer-meta">
+        CH.18 / THEO DÕI &amp; KIỂM SOÁT<br>
+        DESIGNED, NEO-BRUTALISM v3.4
+      </div>
+    </div>
+  </div>
+</footer>
+<style>
+body {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+img {
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
+</style>
+
+<script>
+document.addEventListener('contextmenu', function(e) {
+  e.preventDefault();
+  return false;
+});
+document.addEventListener('keydown', function(e) {
+  if (e.ctrlKey && (e.key === 's' || e.key === 'u' || e.key === 'p' || e.key === 'S' || e.key === 'U' || e.key === 'P')) {
+    e.preventDefault();
+    return false;
+  }
+  if (e.key === 'F12') {
+    e.preventDefault();
+    return false;
+  }
+  if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C' || e.key === 'i' || e.key === 'j' || e.key === 'c')) {
+    e.preventDefault();
+    return false;
+  }
+});
+document.addEventListener('dragstart', function(e) {
+  e.preventDefault();
+  return false;
+});
+</script>
+<style>
+.qt-nav-container { max-width: 1180px; margin: 60px auto 40px; padding: 0 24px; font-family: 'Inter', system-ui, sans-serif; }
+.qt-nav-grid { display: grid; grid-template-columns: 1fr auto 1fr; gap: 16px; align-items: stretch; }
+.qt-nav-btn { background: #FAF8F3; border: 3px solid #1A1A1A; box-shadow: 4px 4px 0 #1A1A1A; border-radius: 4px; padding: 16px 20px; text-decoration: none; color: #1A1A1A; display: flex; flex-direction: column; gap: 4px; transition: transform 0.15s ease, box-shadow 0.15s ease; font-family: inherit; }
+.qt-nav-btn:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 #1A1A1A; }
+.qt-nav-btn-prev { text-align: left; }
+.qt-nav-btn-next { text-align: right; }
+.qt-nav-btn .qt-direction { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #c73937; }
+.qt-nav-btn .qt-chapter { font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 700; line-height: 1.3; }
+.qt-nav-home { background: #1A1A1A; color: #FAF8F3; border: 3px solid #1A1A1A; box-shadow: 4px 4px 0 #c73937; border-radius: 4px; padding: 16px 24px; text-decoration: none; display: flex; flex-direction: column; gap: 4px; align-items: center; justify-content: center; transition: transform 0.15s ease, box-shadow 0.15s ease; font-family: inherit; min-width: 140px; }
+.qt-nav-home:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 #c73937; }
+.qt-nav-home .qt-home-icon { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #F5E4B8; }
+.qt-nav-home .qt-home-text { font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 700; }
+.qt-nav-empty { visibility: hidden; }
+@media (max-width: 640px) { .qt-nav-grid { grid-template-columns: 1fr; } .qt-nav-home { order: -1; } }
+</style>
+
+<nav class="qt-nav-container">
+  <div class="qt-nav-grid">
+    <a href="chuong-17.html" class="qt-nav-btn qt-nav-btn-prev">
+      <span class="qt-direction">← Chương trước</span>
+      <span class="qt-chapter">Chương 17: Trở thành một nhà lãnh đạo hiệu quả</span>
+    </a>
+    <a href="index.html" class="qt-nav-home">
+      <span class="qt-home-icon">⌂ Mục lục</span>
+      <span class="qt-home-text">Trang chủ</span>
+    </a>
+    <div class="qt-nav-empty"></div>
+  </div>
+</nav>
+<style>
+.qt-author-card {
+  max-width: 1180px;
+  margin: 40px auto 60px;
+  padding: 28px 32px;
+  background: #FAF8F3;
+  border: 3px solid #1A1A1A;
+  box-shadow: 6px 6px 0 #c73937;
+  border-radius: 4px;
+  font-family: 'Inter', system-ui, sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.qt-author-label {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #c73937;
+}
+.qt-author-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #1A1A1A;
+}
+.qt-author-role {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #6B6B6B;
+  margin-top: -10px;
+}
+.qt-author-links {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+.qt-author-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: #FAF8F3;
+  border: 2px solid #1A1A1A;
+  border-radius: 4px;
+  text-decoration: none;
+  color: #1A1A1A;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.15s ease;
+}
+.qt-author-link:hover {
+  background: #1A1A1A;
+  color: #FAF8F3;
+  transform: translate(-1px, -1px);
+}
+.qt-author-link-fb { background: #C4DEDC; }
+.qt-author-link-mail { background: #F5E4B8; }
+.qt-author-link-icon {
+  font-size: 16px;
+  font-weight: 700;
+}
+@media (max-width: 640px) {
+  .qt-author-card { margin: 32px 16px 40px; padding: 24px; }
+  .qt-author-links { flex-direction: column; }
+  .qt-author-link { justify-content: center; }
+}
+</style>
+
+<div class="qt-author-card">
+  <div class="qt-author-label">// Liên kết với tác giả</div>
+  <div class="qt-author-name">Vũ Hải</div>
+  <div class="qt-author-role">Business Consultant</div>
+  <div class="qt-author-links">
+    <a href="https://www.facebook.com/vuhai.fitness" target="_blank" rel="noopener noreferrer" class="qt-author-link qt-author-link-fb">
+      <span class="qt-author-link-icon">f</span>
+      <span>Facebook Vũ Hải</span>
+    </a>
+    <a href="mailto:fitnessviet@gmail.com" class="qt-author-link qt-author-link-mail">
+      <span class="qt-author-link-icon">✉</span>
+      <span>fitnessviet@gmail.com</span>
+    </a>
+  </div>
+</div>
+</body>
+</html>

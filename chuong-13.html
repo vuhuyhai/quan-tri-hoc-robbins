@@ -1,0 +1,1546 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chương 13 — Quản trị Nhóm và Tập thể</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap&subset=vietnamese" rel="stylesheet">
+<style>
+:root {
+  --brand: #c73937;
+  --brand-dark: #A52F2D;
+  --ink: #1A1A1A;
+  --paper: #FAF7F2;
+  --paper-dim: #F2EDE5;
+  --line: #1A1A1A;
+  --muted: #6B6B6B;
+  --acc-yellow: #F5E4B8;
+  --acc-cyan: #C4DEDC;
+  --acc-lime: #DDE4C5;
+  --acc-pink: #F0DCDD;
+
+  --font-display: "Space Grotesk", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --border: 3px solid var(--ink);
+  --border-thin: 2px solid var(--ink);
+  --radius: 4px;
+
+  --shadow-sm: 4px 4px 0 var(--ink);
+  --shadow-md: 6px 6px 0 var(--ink);
+  --shadow-lg: 8px 8px 0 var(--ink);
+  --shadow-brand: 6px 6px 0 var(--brand);
+
+  --motion-fast: 120ms cubic-bezier(0.25, 0, 0, 1);
+  --motion-base: 200ms cubic-bezier(0.25, 0, 0, 1);
+}
+
+* {
+  font-style: normal !important;
+  box-sizing: border-box;
+  font-optical-sizing: auto;
+  margin: 0;
+  padding: 0;
+}
+
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 17px;
+  line-height: 1.65;
+  min-height: 100vh;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(var(--ink) 1px, transparent 1px);
+  background-size: 24px 24px;
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-wrap: balance;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+p, li { text-wrap: pretty; }
+a { color: var(--ink); text-decoration: none; }
+::selection { background: var(--brand); color: var(--paper); }
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  position: relative;
+  z-index: 1;
+}
+
+/* === NAV === */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--paper);
+  border-bottom: var(--border);
+}
+.nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.nav-logo {
+  width: 40px;
+  height: 40px;
+  background: var(--brand);
+  border: var(--border);
+  border-radius: var(--radius);
+  display: grid;
+  place-items: center;
+  color: var(--paper);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18px;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+.nav-title {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.nav-links {
+  display: flex;
+  gap: 8px;
+  list-style: none;
+}
+.nav-links a {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 8px 14px;
+  border: var(--border-thin);
+  border-radius: var(--radius);
+  background: var(--paper);
+  transition: all var(--motion-fast);
+}
+.nav-links a:hover {
+  background: var(--acc-lime);
+  transform: translate(-2px, -2px);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+@media (max-width: 760px) { .nav-links { display: none; } }
+
+/* === HERO === */
+.hero {
+  padding: 80px 0 100px;
+  position: relative;
+}
+.hero-tag {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 8px 16px;
+  display: inline-block;
+  margin-bottom: 24px;
+}
+.hero h1 {
+  font-size: clamp(48px, 8vw, 96px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 0.98;
+  margin-bottom: 32px;
+}
+.hero h1 .em {
+  background: var(--brand);
+  color: var(--paper);
+  padding: 0 16px;
+  display: inline-block;
+  transform: rotate(-1.5deg);
+  margin: 0 4px;
+}
+.hero h1 .em-lime {
+  background: var(--acc-lime);
+  color: var(--ink);
+  padding: 0 12px;
+  display: inline-block;
+  transform: rotate(1deg);
+  border: var(--border-thin);
+}
+.hero-sub {
+  font-size: 21px;
+  font-weight: 500;
+  color: var(--muted);
+  max-width: 720px;
+  margin-bottom: 40px;
+  text-wrap: balance;
+}
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.meta-pill {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 8px 14px;
+  border: var(--border-thin);
+  border-radius: var(--radius);
+  background: var(--paper);
+}
+.meta-pill.brand { background: var(--brand); color: var(--paper); border-color: var(--ink); }
+.meta-pill.yellow { background: var(--acc-yellow); }
+.meta-pill.cyan { background: var(--acc-cyan); }
+.meta-pill.lime { background: var(--acc-lime); }
+
+.hero-sticker {
+  position: absolute;
+  top: 70px;
+  right: 40px;
+  width: 150px;
+  height: 150px;
+  background: var(--acc-lime);
+  border: var(--border);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 1.2;
+  transform: rotate(-7deg);
+  box-shadow: var(--shadow-md);
+  padding: 12px;
+}
+@media (max-width: 900px) { .hero-sticker { display: none; } }
+
+/* === SECTION === */
+.section { padding: 80px 0; }
+.section-head { margin-bottom: 56px; }
+.section-num {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--brand);
+  margin-bottom: 12px;
+}
+.section h2 {
+  font-size: clamp(32px, 5vw, 52px);
+  letter-spacing: -0.02em;
+  margin-bottom: 16px;
+}
+.section-sub {
+  font-size: 18px;
+  color: var(--muted);
+  max-width: 760px;
+  text-wrap: balance;
+}
+
+/* === STATS === */
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-bottom: 60px;
+}
+.stat-card {
+  border: var(--border);
+  border-radius: var(--radius);
+  background: var(--paper);
+  padding: 24px;
+  box-shadow: var(--shadow-md);
+  transition: transform var(--motion-base);
+}
+.stat-card:hover { transform: translate(-3px, -3px); box-shadow: 9px 9px 0 var(--ink); }
+.stat-card.brand { background: var(--brand); color: var(--paper); }
+.stat-card.brand .stat-label { color: var(--paper); opacity: 0.85; }
+.stat-card.yellow { background: var(--acc-yellow); }
+.stat-card.cyan { background: var(--acc-cyan); }
+.stat-card.lime { background: var(--acc-lime); }
+.stat-card.pink { background: var(--acc-pink); }
+
+.stat-value {
+  font-family: var(--font-display);
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+}
+.stat-label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+
+/* === GROUP vs TEAM (cây vs bụi cỏ) === */
+.bigvs-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+@media (max-width: 800px) { .bigvs-wrap { grid-template-columns: 1fr; } }
+.bigvs-card {
+  border: var(--border);
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  transition: transform var(--motion-base);
+}
+.bigvs-card:hover { transform: translate(-3px, -3px); box-shadow: 9px 9px 0 var(--ink); }
+.bigvs-group { background: var(--paper); transform: rotate(-0.4deg); }
+.bigvs-team { background: var(--paper); transform: rotate(0.4deg); }
+.bigvs-header {
+  padding: 28px 24px;
+  border-bottom: var(--border-thin);
+  text-align: center;
+}
+.bigvs-group .bigvs-header { background: var(--acc-yellow); }
+.bigvs-team .bigvs-header { background: var(--brand); color: var(--paper); }
+.bigvs-emoji {
+  font-size: 48px;
+  margin-bottom: 8px;
+  display: block;
+}
+.bigvs-icon {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+  opacity: 0.8;
+}
+.bigvs-title {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.05;
+}
+.bigvs-en {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  margin-top: 4px;
+  opacity: 0.85;
+}
+.bigvs-body {
+  padding: 24px;
+  flex: 1;
+}
+.bigvs-body p {
+  font-size: 14px;
+  line-height: 1.65;
+  margin-bottom: 12px;
+}
+.bigvs-body p:last-child { margin-bottom: 0; }
+.bigvs-quote {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 17px;
+  padding: 12px 16px;
+  border-left: 4px solid var(--brand);
+  background: var(--paper-dim);
+  border-radius: var(--radius);
+  margin-bottom: 16px;
+}
+
+/* === 5 STAGES TIMELINE === */
+.stages-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+.stage-card {
+  border: var(--border);
+  border-radius: var(--radius);
+  background: var(--paper);
+  padding: 24px 20px;
+  position: relative;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--motion-base);
+}
+.stage-card:hover { transform: translate(-3px, -3px); box-shadow: 7px 7px 0 var(--ink); }
+.stage-card:nth-child(1) { background: var(--acc-yellow); }
+.stage-card:nth-child(2) { background: var(--acc-pink); }
+.stage-card:nth-child(3) { background: var(--acc-cyan); }
+.stage-card:nth-child(4) { background: var(--acc-lime); }
+.stage-card:nth-child(5) { background: var(--paper); border-style: dashed; }
+
+.stage-num {
+  position: absolute;
+  top: -18px;
+  left: 18px;
+  width: 44px;
+  height: 44px;
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18px;
+  border: var(--border-thin);
+}
+.stage-card h3 {
+  margin-top: 14px;
+  margin-bottom: 4px;
+  font-size: 19px;
+}
+.stage-card .en {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+  margin-bottom: 12px;
+}
+.stage-card p {
+  font-size: 14px;
+  line-height: 1.55;
+}
+.stage-card .stage-tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-top: 12px;
+  padding: 4px 8px;
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: 2px;
+}
+
+/* === 5 COMPONENTS PERFORMANCE MODEL === */
+.components-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+.comp-card {
+  border: var(--border);
+  border-radius: var(--radius);
+  background: var(--paper);
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  transition: transform var(--motion-base);
+}
+.comp-card:hover { transform: translate(-4px, -4px); box-shadow: 10px 10px 0 var(--ink); }
+.comp-header {
+  background: var(--ink);
+  color: var(--paper);
+  border-bottom: var(--border-thin);
+  padding: 16px 20px;
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+.comp-card:nth-child(1) .comp-header { background: var(--brand); }
+.comp-card:nth-child(2) .comp-header { background: var(--ink); }
+.comp-card:nth-child(3) .comp-header { background: var(--brand); }
+.comp-card:nth-child(4) .comp-header { background: var(--ink); }
+.comp-card:nth-child(5) .comp-header { background: var(--brand); }
+
+.comp-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  opacity: 0.7;
+}
+.comp-title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--paper);
+}
+.comp-en {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  opacity: 0.75;
+  margin-top: 2px;
+  color: var(--paper);
+}
+.comp-body {
+  padding: 20px;
+  flex: 1;
+}
+.comp-body p {
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+.comp-body p:last-child { margin-bottom: 0; }
+.comp-body strong { font-weight: 700; }
+.comp-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+}
+.comp-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 3px 8px;
+  background: var(--paper-dim);
+  border: 1.5px solid var(--ink);
+  border-radius: 2px;
+}
+
+/* === 4 TEAM TYPES === */
+.teams-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+.team-card {
+  border: var(--border);
+  border-radius: var(--radius);
+  background: var(--paper);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--motion-base);
+}
+.team-card:hover { transform: translate(-3px, -3px); box-shadow: 7px 7px 0 var(--ink); }
+.team-card:nth-child(odd) { transform: rotate(-0.4deg); }
+.team-card:nth-child(even) { transform: rotate(0.4deg); }
+.team-icon {
+  width: 56px;
+  height: 56px;
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: var(--radius);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 20px;
+  margin-bottom: 16px;
+  border: var(--border-thin);
+}
+.team-card:nth-child(1) .team-icon { background: var(--brand); }
+.team-card:nth-child(2) .team-icon { background: var(--acc-yellow); color: var(--ink); }
+.team-card:nth-child(3) .team-icon { background: var(--acc-cyan); color: var(--ink); }
+.team-card:nth-child(4) .team-icon { background: var(--ink); }
+.team-card h3 {
+  font-size: 19px;
+  margin-bottom: 4px;
+}
+.team-card .en {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+  margin-bottom: 12px;
+}
+.team-card p {
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+.team-card .example {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--brand);
+  letter-spacing: 0.04em;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(26,26,26,0.3);
+}
+
+/* === 8 EFFECTIVE TEAM CHARS === */
+.chars-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+.char-card {
+  border: var(--border);
+  border-radius: var(--radius);
+  background: var(--paper);
+  padding: 20px;
+  position: relative;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--motion-base);
+}
+.char-card:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--ink); }
+.char-num {
+  position: absolute;
+  top: -14px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  background: var(--brand);
+  color: var(--paper);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14px;
+  border: var(--border-thin);
+}
+.char-card:nth-child(1) { background: var(--acc-yellow); }
+.char-card:nth-child(2) { background: var(--acc-cyan); }
+.char-card:nth-child(3) { background: var(--acc-lime); }
+.char-card:nth-child(4) { background: var(--acc-pink); }
+.char-card:nth-child(5) { background: var(--acc-yellow); }
+.char-card:nth-child(6) { background: var(--acc-cyan); }
+.char-card:nth-child(7) { background: var(--acc-lime); }
+.char-card:nth-child(8) { background: var(--acc-pink); }
+
+.char-card h4 {
+  font-size: 17px;
+  margin-top: 8px;
+  margin-bottom: 6px;
+}
+.char-card .en {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+  margin-bottom: 10px;
+}
+.char-card p {
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+/* === KEY CONCEPTS WARNINGS === */
+.concepts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border: var(--border);
+  border-radius: var(--radius);
+  background: var(--paper);
+  padding: 8px;
+  box-shadow: var(--shadow-md);
+}
+.concept-row {
+  display: flex;
+  gap: 16px;
+  padding: 18px;
+  align-items: flex-start;
+  border-radius: var(--radius);
+  background: var(--paper-dim);
+  border: var(--border-thin);
+}
+.concept-row > .concept-icon {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  background: var(--brand);
+  color: var(--paper);
+  border-radius: var(--radius);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 20px;
+  border: var(--border-thin);
+}
+.concept-row:nth-child(2) > .concept-icon { background: var(--ink); }
+.concept-row:nth-child(3) > .concept-icon { background: var(--acc-yellow); color: var(--ink); }
+.concept-row:nth-child(4) > .concept-icon { background: var(--brand-dark); }
+.concept-row > .concept-content {
+  flex: 1;
+  min-width: 0;
+}
+.concept-row h4 {
+  font-size: 17px;
+  margin-bottom: 4px;
+}
+.concept-row .concept-en {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+}
+.concept-row p {
+  font-size: 14px;
+  line-height: 1.55;
+}
+.concept-row .concept-case {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--brand);
+  letter-spacing: 0.05em;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px dashed rgba(26,26,26,0.3);
+}
+
+/* === INSIGHT === */
+.insight {
+  border: var(--border);
+  border-radius: var(--radius);
+  background: var(--acc-lime);
+  padding: 32px 36px;
+  box-shadow: var(--shadow-brand);
+  margin: 40px 0;
+  position: relative;
+}
+.insight::before {
+  content: "🚒";
+  position: absolute;
+  top: -16px;
+  left: 24px;
+  width: 40px;
+  height: 40px;
+  background: var(--paper);
+  border: var(--border-thin);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+}
+.insight-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 8px;
+  margin-top: 8px;
+}
+.insight h3 { font-size: 22px; margin-bottom: 12px; }
+.insight p { font-size: 16px; line-height: 1.6; }
+
+/* === DARK TRIAD WARNING === */
+.darktriad {
+  border: var(--border);
+  border-radius: var(--radius);
+  background: var(--ink);
+  color: var(--paper);
+  padding: 36px 40px;
+  box-shadow: var(--shadow-brand);
+  margin-top: 40px;
+}
+.darktriad-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 12px;
+  color: var(--brand);
+}
+.darktriad h3 {
+  color: var(--paper);
+  font-size: 26px;
+  margin-bottom: 16px;
+}
+.darktriad p {
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 14px;
+  opacity: 0.92;
+}
+.darktriad-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+  margin-top: 20px;
+}
+.darktriad-item {
+  border: 2px solid var(--paper);
+  border-radius: var(--radius);
+  padding: 16px;
+  background: rgba(255,255,255,0.05);
+}
+.darktriad-item h4 {
+  color: var(--brand);
+  font-size: 16px;
+  margin-bottom: 6px;
+}
+.darktriad-item p {
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 0;
+  opacity: 0.9;
+}
+
+/* === CTA === */
+.cta-box {
+  border: var(--border);
+  border-radius: var(--radius);
+  background: var(--brand);
+  color: var(--paper);
+  padding: 48px;
+  box-shadow: var(--shadow-md);
+  text-align: center;
+}
+.cta-box h2 {
+  color: var(--paper);
+  font-size: 32px;
+  margin-bottom: 16px;
+}
+.cta-box p {
+  font-size: 17px;
+  line-height: 1.6;
+  max-width: 640px;
+  margin: 0 auto 24px;
+  opacity: 0.95;
+}
+.btn {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 15px;
+  padding: 14px 28px;
+  background: var(--paper);
+  color: var(--ink);
+  border: var(--border);
+  border-radius: var(--radius);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  transition: all var(--motion-fast);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+.btn:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--ink); }
+
+/* === FOOTER === */
+.footer {
+  border-top: var(--border);
+  padding: 40px 0;
+  margin-top: 80px;
+  background: var(--paper-dim);
+}
+.footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: space-between;
+  align-items: center;
+}
+.footer-text {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+}
+.footer-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 6px 12px;
+  border-radius: var(--radius);
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 720px) {
+  .hero { padding: 50px 0 60px; }
+  .hero h1 { font-size: 44px; }
+  .hero-sub { font-size: 17px; }
+  .section { padding: 50px 0; }
+  .section h2 { font-size: 28px; }
+  .stat-value { font-size: 36px; }
+  .comp-title { font-size: 17px; }
+  .bigvs-title { font-size: 26px; }
+  .insight { padding: 24px; }
+  .darktriad { padding: 24px; }
+  .cta-box { padding: 28px; }
+  .cta-box h2 { font-size: 24px; }
+}
+
+*:focus-visible { outline: 3px solid var(--brand); outline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+  .bigvs-group, .bigvs-team, .team-card { transform: none !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== NAV ===== -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-brand">
+      <div class="nav-logo">13</div>
+      <div class="nav-title">Chương 13 / Nhóm &amp; Tập&nbsp;thể</div>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#groupteam">Group vs Team</a></li>
+      <li><a href="#stages">5 Giai&nbsp;đoạn</a></li>
+      <li><a href="#performance">Hiệu&nbsp;suất</a></li>
+      <li><a href="#teamtypes">4 Loại Team</a></li>
+      <li><a href="#effective">8 Đặc&nbsp;điểm</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<header class="hero">
+  <div class="container">
+    <div class="hero-tag">Robbins &amp; Coulter / Management 15e / Phần&nbsp;4</div>
+    <h1>Quản trị <span class="em">Nhóm</span><br>và <span class="em-lime">Tập&nbsp;thể</span>.</h1>
+    <p class="hero-sub">Mọi đội đều là nhóm, nhưng không phải mọi nhóm đều là đội. Một số việc chỉ cần bụi cỏ là đủ. Một số đòi hỏi cây cổ&nbsp;thụ. Hiểu rõ khi nào dùng cái nào là kỹ năng cốt lõi của nhà quản trị.</p>
+    <div class="hero-meta">
+      <span class="meta-pill brand">3 Mục tiêu học tập</span>
+      <span class="meta-pill yellow">10 trang tóm tắt</span>
+      <span class="meta-pill cyan">~11.150 từ</span>
+      <span class="meta-pill lime">50 flashcards</span>
+    </div>
+    <div class="hero-sticker">5&nbsp;GIAI<br>ĐOẠN<br>TUCKMAN</div>
+  </div>
+</header>
+
+<!-- ===== STATS ===== -->
+<section class="section" style="padding-top: 0;">
+  <div class="container">
+    <div class="stat-grid">
+      <div class="stat-card brand">
+        <div class="stat-value">50%</div>
+        <div class="stat-label">Lãnh đạo dành thời gian cho con người và đội</div>
+      </div>
+      <div class="stat-card yellow">
+        <div class="stat-value">91%</div>
+        <div class="stat-label">Nhân viên làm dự án ngoài khu vực chức năng</div>
+      </div>
+      <div class="stat-card cyan">
+        <div class="stat-value">30K</div>
+        <div class="stat-label">Nhân viên SAP ở 60 quốc gia làm việc qua Virtual&nbsp;Team</div>
+      </div>
+      <div class="stat-card lime">
+        <div class="stat-value">1/3</div>
+        <div class="stat-label">Người tham gia thí nghiệm Asch tuân theo nhóm dù sai</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== GROUP vs TEAM ===== -->
+<section class="section" id="groupteam">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-num">LO 13.1 / 13.3 — KHÁI NIỆM CỐT LÕI</div>
+      <h2>Group vs Team: Bụi cỏ và Cây cổ thụ</h2>
+      <p class="section-sub">Hai khái niệm dễ nhầm nhưng khác bản chất. Group chỉ cần tương tác và phụ thuộc. Team đòi hỏi synergy và mutual&nbsp;accountability. Cốt lõi: 1+1=3.</p>
+    </div>
+
+    <div class="bigvs-wrap">
+      <div class="bigvs-card bigvs-group">
+        <div class="bigvs-header">
+          <span class="bigvs-emoji">🌾</span>
+          <div class="bigvs-icon">BỤI CỎ</div>
+          <div class="bigvs-title">Group</div>
+          <div class="bigvs-en">Nhóm &mdash; Tương tác và phụ thuộc lẫn&nbsp;nhau</div>
+        </div>
+        <div class="bigvs-body">
+          <div class="bigvs-quote">2 người trở lên tương tác và phụ thuộc lẫn nhau, kết hợp để đạt mục tiêu cụ&nbsp;thể.</div>
+          <p>Nhiều cây cỏ riêng lẻ mọc gần nhau, cùng nhận ánh sáng và nước, nhưng <strong>mỗi cây vẫn tự sống</strong>.</p>
+          <p>Có thể đơn giản như 5 nhân viên ăn trưa chung mỗi ngày (informal&nbsp;group). Hoặc là Command&nbsp;Group khớp với cấu trúc báo cáo.</p>
+          <p><strong>Đo hiệu suất gián tiếp</strong> theo ảnh hưởng tới người khác. Lãnh đạo quyết định và uỷ quyền.</p>
+        </div>
+      </div>
+
+      <div class="bigvs-card bigvs-team">
+        <div class="bigvs-header">
+          <span class="bigvs-emoji">🌳</span>
+          <div class="bigvs-icon">CÂY CỔ THỤ</div>
+          <div class="bigvs-title">Team</div>
+          <div class="bigvs-en">Đội &mdash; Synergy + Mutual&nbsp;Accountability</div>
+        </div>
+        <div class="bigvs-body">
+          <div class="bigvs-quote">Mỗi lá, mỗi cành, mỗi nhánh đều phụ thuộc vào nhau. Bỏ một phần đi, cả cây bị ảnh&nbsp;hưởng.</div>
+          <p>Lá quang hợp gửi năng lượng cho cành. Cành đỡ lá. Rễ hút nước cho cả cây. Đó là <strong>synergy: 1+1=3</strong>.</p>
+          <p>Thành viên làm việc <strong>tích cực vào mục tiêu chung</strong>, dùng synergy tích cực, kỹ năng bổ sung. Họ chịu trách nhiệm với nhau, không chỉ với sếp.</p>
+          <p><strong>Đo trực tiếp</strong> bằng sản lượng tập thể. Quyết định và làm cùng nhau. Có thể nhanh chóng tập hợp, triển khai, tái tập trung, giải&nbsp;tán.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== INSIGHT ===== -->
+<section class="section" style="padding-top: 0;">
+  <div class="container">
+    <div class="insight">
+      <div class="insight-tag">CÂU CHUYỆN MỞ ĐẦU CHƯƠNG</div>
+      <h3>Lính cứu hoả &mdash; Sống hay chết phụ thuộc đồng đội</h3>
+      <p>Các sở cứu hoả trên toàn thế giới phụ thuộc vào <strong>một mẫu số chung: teamwork</strong>. Nếu một thành viên đội thất bại trong nhiệm vụ, có thể mất mạng người. Đa số nhóm trong tổ chức không xử lý tình huống sống chết, nhưng <strong>50% nhà lãnh đạo dành nhiều thời gian cho con người và đội hơn là cho dự án cá nhân</strong>. Cách quản lý nhóm sẽ quyết định kết quả.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 5 STAGES ===== -->
+<section class="section" id="stages">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-num">LO 13.1 / TUCKMAN MODEL</div>
+      <h2>5 giai đoạn phát triển nhóm</h2>
+      <p class="section-sub">Mọi nhóm đi qua 5 giai đoạn. Đừng kỳ vọng nhóm vào Performing ngay &mdash; cố ép qua Storming sẽ tạo bất ổn ngầm về sau. Adjourning chỉ áp dụng cho nhóm tạm thời.</p>
+    </div>
+
+    <div class="stages-grid">
+      <div class="stage-card">
+        <div class="stage-num">1</div>
+        <h3>Forming</h3>
+        <div class="en">Hình thành</div>
+        <p>Người tham gia nhóm. Định nghĩa mục đích, cấu trúc, lãnh đạo. <strong>Nhiều bất định</strong> khi thành viên "thử nước" để xác định hành vi nào được chấp nhận.</p>
+        <span class="stage-tag">THỬ NƯỚC</span>
+      </div>
+      <div class="stage-card">
+        <div class="stage-num">2</div>
+        <h3>Storming</h3>
+        <div class="en">Xung đột</div>
+        <p>Xung đột nội bộ về <strong>ai sẽ kiểm soát nhóm</strong> và <strong>nhóm cần làm gì</strong>. Một thứ bậc lãnh đạo và đồng thuận về hướng đi xuất hiện.</p>
+        <span class="stage-tag">TRANH GIÀNH</span>
+      </div>
+      <div class="stage-card">
+        <div class="stage-num">3</div>
+        <h3>Norming</h3>
+        <div class="en">Chuẩn hoá</div>
+        <p>Quan hệ gần gũi phát triển và <strong>nhóm trở nên gắn kết</strong>. Cảm giác mạnh về danh tính nhóm và tình đồng đội. Bộ kỳ vọng chung được đồng hoá.</p>
+        <span class="stage-tag">GẮN KẾT</span>
+      </div>
+      <div class="stage-card">
+        <div class="stage-num">4</div>
+        <h3>Performing</h3>
+        <div class="en">Thực hiện</div>
+        <p>Cấu trúc nhóm đã sẵn sàng. Năng lượng đã chuyển từ <strong>tìm hiểu nhau sang làm việc trên nhiệm vụ</strong>. Đây là giai đoạn cuối với nhóm cố định.</p>
+        <span class="stage-tag">LÀM VIỆC</span>
+      </div>
+      <div class="stage-card">
+        <div class="stage-num">5</div>
+        <h3>Adjourning</h3>
+        <div class="en">Giải tán</div>
+        <p>Chỉ áp dụng cho nhóm tạm thời (đội dự án, lực lượng đặc nhiệm). Nhóm chuẩn bị tan rã, tập trung <strong>đóng gói hoạt động</strong> thay vì hiệu suất nhiệm vụ.</p>
+        <span class="stage-tag">CHỈ NHÓM TẠM</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 5 COMPONENTS PERFORMANCE MODEL ===== -->
+<section class="section" id="performance">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-num">LO 13.2 / MÔ HÌNH TOÀN DIỆN</div>
+      <h2>5 thành phần quyết định hiệu suất nhóm</h2>
+      <p class="section-sub">Đây là phần dài nhất chương. 5 thành phần tương tác với nhau và quyết định cuối cùng <strong>Performance + Satisfaction</strong> của nhóm. Hiểu mô hình này = hiểu vì sao nhóm thành công hay thất bại.</p>
+    </div>
+
+    <div class="components-grid">
+      <div class="comp-card">
+        <div class="comp-header">
+          <span class="comp-num">01</span>
+          <div>
+            <div class="comp-title">Điều kiện bên ngoài</div>
+            <div class="comp-en">External Conditions</div>
+          </div>
+        </div>
+        <div class="comp-body">
+          <p>Nhóm bị ảnh hưởng bởi điều kiện áp đặt từ tổ chức.</p>
+          <p>Nhóm cải thiện chất lượng tại Boeing phải sống với <strong>tiêu chí tuyển dụng tập đoàn, ràng buộc ngân sách, chính sách công ty</strong>.</p>
+          <div class="comp-tags">
+            <span class="comp-tag">CHIẾN LƯỢC</span>
+            <span class="comp-tag">QUYỀN HẠN</span>
+            <span class="comp-tag">QUY TẮC</span>
+            <span class="comp-tag">NGUỒN LỰC</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="comp-card">
+        <div class="comp-header">
+          <span class="comp-num">02</span>
+          <div>
+            <div class="comp-title">Nguồn lực thành viên</div>
+            <div class="comp-en">Member Resources</div>
+          </div>
+        </div>
+        <div class="comp-body">
+          <p>Tiềm năng nhóm phụ thuộc vào nguồn lực <strong>mỗi cá nhân mang vào</strong>.</p>
+          <p>Kỹ năng giao tiếp, quản lý xung đột, giải quyết vấn đề là <strong>quan trọng cho hiệu suất cao</strong>.</p>
+          <div class="comp-tags">
+            <span class="comp-tag">KIẾN THỨC</span>
+            <span class="comp-tag">NĂNG LỰC</span>
+            <span class="comp-tag">KỸ NĂNG</span>
+            <span class="comp-tag">TÍNH CÁCH</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="comp-card">
+        <div class="comp-header">
+          <span class="comp-num">03</span>
+          <div>
+            <div class="comp-title">Cấu trúc nhóm</div>
+            <div class="comp-en">Group Structure</div>
+          </div>
+        </div>
+        <div class="comp-body">
+          <p>Bao gồm 6 yếu tố con: <strong>Roles, Norms, Conformity, Status, Size, Cohesiveness</strong>.</p>
+          <p>Thí nghiệm Asch: <strong>1/3 người tuân theo nhóm</strong> dù biết câu trả lời sai (conformity).</p>
+          <div class="comp-tags">
+            <span class="comp-tag">ROLES</span>
+            <span class="comp-tag">NORMS</span>
+            <span class="comp-tag">STATUS</span>
+            <span class="comp-tag">COHESION</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="comp-card">
+        <div class="comp-header">
+          <span class="comp-num">04</span>
+          <div>
+            <div class="comp-title">Quy trình nhóm</div>
+            <div class="comp-en">Group Processes</div>
+          </div>
+        </div>
+        <div class="comp-body">
+          <p>Cách nhóm <strong>giao tiếp, ra quyết định, quản lý xung đột</strong>.</p>
+          <p>Cảnh giác Groupthink (NASA Challenger 1986), Social Loafing (lười biếng xã hội), 3 loại xung đột: Task, Relationship, Process.</p>
+          <div class="comp-tags">
+            <span class="comp-tag">GROUPTHINK</span>
+            <span class="comp-tag">CONFLICT</span>
+            <span class="comp-tag">DECISION</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="comp-card">
+        <div class="comp-header">
+          <span class="comp-num">05</span>
+          <div>
+            <div class="comp-title">Nhiệm vụ nhóm</div>
+            <div class="comp-en">Group Tasks</div>
+          </div>
+        </div>
+        <div class="comp-body">
+          <p>Tác động của Processes lên Performance phụ thuộc <strong>nhiệm vụ nhóm đang làm</strong>.</p>
+          <p>Nhiệm vụ <strong>phức tạp + phụ thuộc lẫn nhau cao</strong> đòi hỏi quy trình tốt; nhiệm vụ đơn giản thì ít quan trọng hơn.</p>
+          <div class="comp-tags">
+            <span class="comp-tag">COMPLEXITY</span>
+            <span class="comp-tag">INTERDEPENDENCE</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== KEY CONCEPTS WARNINGS ===== -->
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-num">CẢNH BÁO / 4 KHÁI NIỆM PHẢI BIẾT</div>
+      <h2>4 cạm bẫy nhóm cần tránh</h2>
+      <p class="section-sub">Đây là 4 khái niệm Robbins nhấn mạnh đặc biệt. Mỗi khái niệm tương ứng với một cạm bẫy phổ biến trong quản lý nhóm.</p>
+    </div>
+
+    <div class="concepts-list">
+      <div class="concept-row">
+        <div class="concept-icon">⚠</div>
+        <div class="concept-content">
+          <h4>Groupthink</h4>
+          <div class="concept-en">Tư duy nhóm</div>
+          <p>Nhóm gây áp lực thành viên đồng ý, ngăn cản đánh giá khách quan. Thành viên giữ ý kiến phản đối cho riêng mình để giữ hài hoà.</p>
+          <div class="concept-case">CASE / NASA CHALLENGER 1986 &mdash; bỏ qua cảnh báo kỹ sư về O-ring</div>
+        </div>
+      </div>
+
+      <div class="concept-row">
+        <div class="concept-icon">😴</div>
+        <div class="concept-content">
+          <h4>Social Loafing</h4>
+          <div class="concept-en">Lười biếng xã hội</div>
+          <p>Cá nhân làm <strong>ít nỗ lực hơn khi làm việc tập thể</strong> so với khi làm một mình. Hiệu ứng tăng theo kích cỡ nhóm.</p>
+          <div class="concept-case">SỐ LIỆU / Cá nhân trong nhóm 8 người chỉ dùng ~50% năng lực so với khi làm một mình</div>
+        </div>
+      </div>
+
+      <div class="concept-row">
+        <div class="concept-icon">⚖</div>
+        <div class="concept-content">
+          <h4>Asch Conformity</h4>
+          <div class="concept-en">Tuân thủ Asch</div>
+          <p>Thí nghiệm cổ điển: <strong>1/3 người tuân theo câu trả lời sai của nhóm</strong> dù họ biết đáp án đúng. Áp lực tuân thủ là sức mạnh ngầm cực mạnh.</p>
+          <div class="concept-case">CASE / ASCH 1951 &mdash; thí nghiệm so sánh độ dài đường thẳng</div>
+        </div>
+      </div>
+
+      <div class="concept-row">
+        <div class="concept-icon">⚔</div>
+        <div class="concept-content">
+          <h4>3 loại xung đột</h4>
+          <div class="concept-en">Task / Relationship / Process Conflict</div>
+          <p><strong>Task</strong> (về nội dung): có thể tốt cho hiệu suất. <strong>Relationship</strong> (về quan hệ cá nhân): luôn có hại. <strong>Process</strong> (về cách làm việc): trung tính, cần làm rõ.</p>
+          <div class="concept-case">QUY TẮC / Khuyến khích Task conflict, dập tắt Relationship conflict</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 4 TEAM TYPES ===== -->
+<section class="section" id="teamtypes">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-num">LO 13.3 / Phần 1</div>
+      <h2>4 loại Work Teams</h2>
+      <p class="section-sub">Chọn dạng đội đúng theo nhu cầu. Vấn đề trong 1 phòng → Problem-solving. Cần đa chuyên môn → Cross-functional. Nhân viên có năng lực muốn tự chủ → Self-managed. Nhân viên ở các địa điểm khác nhau → Virtual.</p>
+    </div>
+
+    <div class="teams-grid">
+      <div class="team-card">
+        <div class="team-icon">PS</div>
+        <h3>Problem-Solving</h3>
+        <div class="en">Đội giải quyết vấn đề</div>
+        <p>Đội từ <strong>cùng phòng ban</strong> tham gia cải thiện hoặc giải quyết vấn đề cụ thể. Chia sẻ ý tưởng nhưng <strong>hiếm khi có thẩm quyền triển khai</strong>.</p>
+        <div class="example">CASE / Đại học Mỹ &mdash; Đội giảng viên nghiên cứu giữ chân</div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-icon">SM</div>
+        <h3>Self-Managed</h3>
+        <div class="en">Đội tự quản</div>
+        <p>Hoạt động <strong>không có quản lý</strong>, chịu trách nhiệm quy trình hoàn chỉnh: lập lịch, phân công, kiểm soát tốc độ, ra quyết định vận hành.</p>
+        <div class="example">CASE / GE Bromont, Canada &mdash; Đội nhân viên ngồi trong "hội đồng" cùng điều hành</div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-icon">CF</div>
+        <h3>Cross-Functional</h3>
+        <div class="en">Đội đa chức năng</div>
+        <p>Cá nhân từ <strong>các chuyên môn chức năng khác nhau</strong>. Kết hợp kỹ năng đa dạng cho dự án phức tạp.</p>
+        <div class="example">CASE / Novartis BioCamp &mdash; 60 sinh viên từ 18 quốc gia / 91% nhân viên dự án ngoài chức năng</div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-icon">VT</div>
+        <h3>Virtual</h3>
+        <div class="en">Đội ảo</div>
+        <p>Dùng <strong>công nghệ máy tính liên kết thành viên phân tán</strong>. WAN, social media, videoconferencing, email.</p>
+        <div class="example">CASE / SAP &mdash; 30.000 nhân viên / 60 quốc gia / R&D Đức + Ấn + Trung + Israel + Mỹ</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 8 EFFECTIVE TEAM CHARS ===== -->
+<section class="section" id="effective">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-num">LO 13.3 / Phần 2</div>
+      <h2>8 đặc điểm của đội hiệu quả</h2>
+      <p class="section-sub">Đội không tự nhiên hiệu quả. Robbins tổng hợp 8 đặc điểm thường liên quan đến đội hiệu suất cao &mdash; khung công cụ chính cho cả tư vấn tổ chức nhóm.</p>
+    </div>
+
+    <div class="chars-grid">
+      <div class="char-card">
+        <div class="char-num">1</div>
+        <h4>Clear Goals</h4>
+        <div class="en">Mục tiêu rõ ràng</div>
+        <p>Hiểu rõ mục tiêu cần đạt. Cam kết với mục tiêu đội. Biết được mong đợi đạt được gì.</p>
+      </div>
+      <div class="char-card">
+        <div class="char-num">2</div>
+        <h4>Relevant Skills</h4>
+        <div class="en">Kỹ năng phù hợp</div>
+        <p>Kỹ năng kỹ thuật <strong>và</strong> kỹ năng giao tiếp. Không phải ai có năng lực kỹ thuật cũng làm việc tốt theo đội.</p>
+      </div>
+      <div class="char-card">
+        <div class="char-num">3</div>
+        <h4>Mutual Trust</h4>
+        <div class="en">Tin tưởng lẫn nhau</div>
+        <p>Tin vào năng lực, tính cách, và sự liêm chính của nhau. Đặc trưng đội hiệu quả.</p>
+      </div>
+      <div class="char-card">
+        <div class="char-num">4</div>
+        <h4>Unified Commitment</h4>
+        <div class="en">Cam kết thống nhất</div>
+        <p>Tận tuỵ với mục tiêu đội. Sẵn sàng dành ra <strong>năng lượng phi thường</strong> để đạt mục tiêu.</p>
+      </div>
+      <div class="char-card">
+        <div class="char-num">5</div>
+        <h4>Good Communication</h4>
+        <div class="en">Giao tiếp tốt</div>
+        <p>Truyền đạt rõ ràng, phản hồi liên tục. Như cặp đôi đã ở bên nhau lâu &mdash; chia sẻ ý tưởng nhanh và hiệu quả.</p>
+      </div>
+      <div class="char-card">
+        <div class="char-num">6</div>
+        <h4>Negotiating Skills</h4>
+        <div class="en">Kỹ năng đàm phán</div>
+        <p>Liên tục điều chỉnh ai làm gì. Đối mặt và <strong>hoà giải khác biệt</strong> khi vấn đề và quan hệ thay đổi.</p>
+      </div>
+      <div class="char-card">
+        <div class="char-num">7</div>
+        <h4>Appropriate Leadership</h4>
+        <div class="en">Lãnh đạo phù hợp</div>
+        <p>Lãnh đạo hành động như <strong>coach và facilitator</strong>. Giúp dẫn dắt và hỗ trợ nhưng không kiểm soát.</p>
+      </div>
+      <div class="char-card">
+        <div class="char-num">8</div>
+        <h4>Internal &amp; External Support</h4>
+        <div class="en">Hỗ trợ nội và ngoại</div>
+        <p>Cơ sở hạ tầng vững (đào tạo, đo lường, thưởng) bên trong + nguồn lực đầy đủ từ tổ chức bên ngoài.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== DARK TRIAD WARNING (Workplace Confidential) ===== -->
+<section class="section">
+  <div class="container">
+    <div class="darktriad">
+      <div class="darktriad-tag">WORKPLACE CONFIDENTIAL / DẤU HIỆU CẢNH BÁO</div>
+      <h3>Dark Triad &mdash; 3 tính cách độc hại trong nhóm</h3>
+      <p>Robbins cảnh báo về 3 đặc điểm tính cách nguy hiểm. Người có 1 hoặc nhiều đặc điểm này phá hợp tác đội từ bên trong. Khi tuyển dụng và quản lý nhóm, biết nhận diện sớm để xử lý kịp thời.</p>
+      <div class="darktriad-grid">
+        <div class="darktriad-item">
+          <h4>Psychopathy</h4>
+          <p>Thiếu đồng cảm, thiếu hối hận. Hành vi chống xã hội, lạnh lùng với cảm xúc người khác.</p>
+        </div>
+        <div class="darktriad-item">
+          <h4>Machiavellianism</h4>
+          <p>Thực dụng cực đoan, sẵn sàng thao túng người khác để đạt mục tiêu cá nhân. Cứu cánh biện minh phương tiện.</p>
+        </div>
+        <div class="darktriad-item">
+          <h4>Narcissism</h4>
+          <p>Tự yêu bản thân quá mức, thiếu đồng cảm. Cần sự ngưỡng mộ liên tục, coi mình hơn người khác.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section class="section">
+  <div class="container">
+    <div class="cta-box">
+      <h2>Sẵn sàng đi sâu vào nội dung đầy đủ?</h2>
+      <p>Bản tóm tắt 10 trang đầy đủ ~11.150 từ kèm 50 flashcards markdown đã có sẵn. Lộ trình ôn tập 5 lần theo Spaced Repetition giúp giữ kiến thức trong trí nhớ dài hạn.</p>
+      <a href="#groupteam" class="btn">Xem lại Group vs Team →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-text">Tóm tắt chuyên sâu Chương&nbsp;13 / Robbins &amp; Coulter / Management 15e (2021)</div>
+      <div class="footer-tag">Vũ&nbsp;Hải / Deep&nbsp;Doc&nbsp;Summary</div>
+    </div>
+  </div>
+</footer>
+<style>
+body {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+img {
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
+</style>
+
+<script>
+document.addEventListener('contextmenu', function(e) {
+  e.preventDefault();
+  return false;
+});
+document.addEventListener('keydown', function(e) {
+  if (e.ctrlKey && (e.key === 's' || e.key === 'u' || e.key === 'p' || e.key === 'S' || e.key === 'U' || e.key === 'P')) {
+    e.preventDefault();
+    return false;
+  }
+  if (e.key === 'F12') {
+    e.preventDefault();
+    return false;
+  }
+  if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C' || e.key === 'i' || e.key === 'j' || e.key === 'c')) {
+    e.preventDefault();
+    return false;
+  }
+});
+document.addEventListener('dragstart', function(e) {
+  e.preventDefault();
+  return false;
+});
+</script>
+<style>
+.qt-nav-container { max-width: 1180px; margin: 60px auto 40px; padding: 0 24px; font-family: 'Inter', system-ui, sans-serif; }
+.qt-nav-grid { display: grid; grid-template-columns: 1fr auto 1fr; gap: 16px; align-items: stretch; }
+.qt-nav-btn { background: #FAF8F3; border: 3px solid #1A1A1A; box-shadow: 4px 4px 0 #1A1A1A; border-radius: 4px; padding: 16px 20px; text-decoration: none; color: #1A1A1A; display: flex; flex-direction: column; gap: 4px; transition: transform 0.15s ease, box-shadow 0.15s ease; font-family: inherit; }
+.qt-nav-btn:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 #1A1A1A; }
+.qt-nav-btn-prev { text-align: left; }
+.qt-nav-btn-next { text-align: right; }
+.qt-nav-btn .qt-direction { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #c73937; }
+.qt-nav-btn .qt-chapter { font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 700; line-height: 1.3; }
+.qt-nav-home { background: #1A1A1A; color: #FAF8F3; border: 3px solid #1A1A1A; box-shadow: 4px 4px 0 #c73937; border-radius: 4px; padding: 16px 24px; text-decoration: none; display: flex; flex-direction: column; gap: 4px; align-items: center; justify-content: center; transition: transform 0.15s ease, box-shadow 0.15s ease; font-family: inherit; min-width: 140px; }
+.qt-nav-home:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 #c73937; }
+.qt-nav-home .qt-home-icon { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #F5E4B8; }
+.qt-nav-home .qt-home-text { font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 700; }
+.qt-nav-empty { visibility: hidden; }
+@media (max-width: 640px) { .qt-nav-grid { grid-template-columns: 1fr; } .qt-nav-home { order: -1; } }
+</style>
+
+<nav class="qt-nav-container">
+  <div class="qt-nav-grid">
+    <a href="chuong-12.html" class="qt-nav-btn qt-nav-btn-prev">
+      <span class="qt-direction">← Chương trước</span>
+      <span class="qt-chapter">Chương 12: Quản trị nguồn nhân lực</span>
+    </a>
+    <a href="index.html" class="qt-nav-home">
+      <span class="qt-home-icon">⌂ Mục lục</span>
+      <span class="qt-home-text">Trang chủ</span>
+    </a>
+    <a href="chuong-14.html" class="qt-nav-btn qt-nav-btn-next">
+      <span class="qt-direction">Chương sau →</span>
+      <span class="qt-chapter">Chương 14: Quản trị truyền thông</span>
+    </a>
+  </div>
+</nav>
+<style>
+.qt-author-card {
+  max-width: 1180px;
+  margin: 40px auto 60px;
+  padding: 28px 32px;
+  background: #FAF8F3;
+  border: 3px solid #1A1A1A;
+  box-shadow: 6px 6px 0 #c73937;
+  border-radius: 4px;
+  font-family: 'Inter', system-ui, sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.qt-author-label {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #c73937;
+}
+.qt-author-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #1A1A1A;
+}
+.qt-author-role {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #6B6B6B;
+  margin-top: -10px;
+}
+.qt-author-links {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+.qt-author-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: #FAF8F3;
+  border: 2px solid #1A1A1A;
+  border-radius: 4px;
+  text-decoration: none;
+  color: #1A1A1A;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.15s ease;
+}
+.qt-author-link:hover {
+  background: #1A1A1A;
+  color: #FAF8F3;
+  transform: translate(-1px, -1px);
+}
+.qt-author-link-fb { background: #C4DEDC; }
+.qt-author-link-mail { background: #F5E4B8; }
+.qt-author-link-icon {
+  font-size: 16px;
+  font-weight: 700;
+}
+@media (max-width: 640px) {
+  .qt-author-card { margin: 32px 16px 40px; padding: 24px; }
+  .qt-author-links { flex-direction: column; }
+  .qt-author-link { justify-content: center; }
+}
+</style>
+
+<div class="qt-author-card">
+  <div class="qt-author-label">// Liên kết với tác giả</div>
+  <div class="qt-author-name">Vũ Hải</div>
+  <div class="qt-author-role">Business Consultant</div>
+  <div class="qt-author-links">
+    <a href="https://www.facebook.com/vuhai.fitness" target="_blank" rel="noopener noreferrer" class="qt-author-link qt-author-link-fb">
+      <span class="qt-author-link-icon">f</span>
+      <span>Facebook Vũ Hải</span>
+    </a>
+    <a href="mailto:fitnessviet@gmail.com" class="qt-author-link qt-author-link-mail">
+      <span class="qt-author-link-icon">✉</span>
+      <span>fitnessviet@gmail.com</span>
+    </a>
+  </div>
+</div>
+</body>
+</html>
